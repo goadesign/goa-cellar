@@ -14,7 +14,8 @@
 # - all is the default target, it runs all the targets in the order above.
 #
 DEPEND=github.com/raphael/goa \
-	github.com/raphael/goa/goagen
+	github.com/raphael/goa/goagen \
+	bitbucket.org/pkg/inflect
 
 CURRENT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
