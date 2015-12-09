@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/raphael/goa"
-	"github.com/raphael/goa-middleware"
 	"github.com/raphael/goa/examples/cellar/app"
 	"github.com/raphael/goa/examples/cellar/controllers"
 	"github.com/raphael/goa/examples/cellar/js"
@@ -29,7 +28,7 @@ func main() {
 	// Setup basic middleware
 	service.Use(goa.RequestID())
 	service.Use(goa.LogRequest())
-	service.Use(middleware.DeferPanic(service, dpkey))
+	service.Use(goa.Recover())
 
 	// Mount account controller onto service
 	ac := controllers.NewAccount(service)
