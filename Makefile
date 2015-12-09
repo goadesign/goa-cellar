@@ -14,14 +14,14 @@
 # - all is the default target, it runs all the targets in the order above.
 #
 DEPEND=github.com/raphael/goa \
-  github.com/raphael/goa/goagen
+	github.com/raphael/goa/goagen
 
 CURRENT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 all: depend clean generate build
 
 depend:
-  @go get $(DEPEND)
+	@go get $(DEPEND)
 
 clean:
 	@rm -rf app

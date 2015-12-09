@@ -1,3 +1,4 @@
 # Ignore executable
+cellar
 goa-cellar
 goa-cellar.json
