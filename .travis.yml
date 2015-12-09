@@ -1,0 +1,18 @@
+language: go
+go:
+  - 1.5
+
+sudo: false
+
+install:
+  - go get -v ./...
+  - export PATH=$PATH:$HOME/gopath/bin
+
+script:
+  - make
+
+deploy:
+   provider: gae
+   keyfile: "goa-cellar.json"
+   default: true
+   project: "goa-cellar"
