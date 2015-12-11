@@ -15,7 +15,8 @@
 #
 DEPEND=github.com/raphael/goa \
 	github.com/raphael/goa/goagen \
-	bitbucket.org/pkg/inflect
+	bitbucket.org/pkg/inflect \
+	golang.org/x/tools/cmd/goimports
 
 CURRENT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
