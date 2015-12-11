@@ -35,10 +35,8 @@ clean:
 
 generate:
 	@goagen app     -d github.com/raphael/goa-cellar/design
-	@goagen client  -d github.com/raphael/goa-cellar/design
 	@goagen swagger -d github.com/raphael/goa-cellar/design
 	@goagen schema -d github.com/raphael/goa-cellar/design
-	@goagen js -d github.com/raphael/goa-cellar/design
 
 build:
 	@go build -o cellar
