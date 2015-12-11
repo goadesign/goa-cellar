@@ -1,11 +1,12 @@
 language: go
 go:
-  - 1.5
-
+- 1.5
 sudo: false
-
+before_install:
+- openssl aes-256-cbc -K $encrypted_ec2e6f7d2278_key -iv $encrypted_ec2e6f7d2278_iv
+  -in goa-cellar.json.enc -out goa-cellar.json -d
 deploy:
-   provider: gae
-   keyfile: "goa-cellar.json"
-   default: true
-   project: "goa-cellar"
+  provider: gae
+  keyfile: goa-cellar.json
+  default: true
+  project: goa-cellar
