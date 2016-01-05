@@ -3,9 +3,6 @@
 package main
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/raphael/goa"
 	"github.com/raphael/goa/examples/cellar/app"
 	"github.com/raphael/goa/examples/cellar/controllers"
@@ -15,13 +12,6 @@ import (
 )
 
 func main() {
-	// Make sure DeferPanic key exists in environment
-	dpkey := os.Getenv("DPKEY")
-	if dpkey == "" {
-		fmt.Fprint(os.Stderr, "DeferPanic key DPKEY env var missing, aborting.")
-		os.Exit(1)
-	}
-
 	// Create goa service
 	service := goa.New("cellar")
 

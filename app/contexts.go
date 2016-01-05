@@ -1,11 +1,10 @@
 //************************************************************************//
-// cellar: Application Contexts
+// API "cellar": Application Contexts
 //
 // Generated with goagen v0.0.1, command line:
 // $ goagen
-// --out=$(GOPATH)/src/github.com/raphael/goa-cellar
-// --design=github.com/raphael/goa-cellar/design
-// --pkg=app
+// --out=$(GOPATH)/src/github.com/raphael/goa/examples/cellar
+// --design=github.com/raphael/goa/examples/cellar/design
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//
@@ -90,13 +89,11 @@ type DeleteAccountContext struct {
 func NewDeleteAccountContext(c *goa.Context) (*DeleteAccountContext, error) {
 	var err error
 	ctx := DeleteAccountContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
 	return &ctx, err
 }
@@ -122,13 +119,11 @@ type ShowAccountContext struct {
 func NewShowAccountContext(c *goa.Context) (*ShowAccountContext, error) {
 	var err error
 	ctx := ShowAccountContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
 	return &ctx, err
 }
@@ -160,13 +155,11 @@ type UpdateAccountContext struct {
 func NewUpdateAccountContext(c *goa.Context) (*UpdateAccountContext, error) {
 	var err error
 	ctx := UpdateAccountContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
 	p, err := NewUpdateAccountPayload(c.Payload())
 	if err != nil {
@@ -233,13 +226,11 @@ type CreateBottleContext struct {
 func NewCreateBottleContext(c *goa.Context) (*CreateBottleContext, error) {
 	var err error
 	ctx := CreateBottleContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
 	p, err := NewCreateBottlePayload(c.Payload())
 	if err != nil {
@@ -301,7 +292,7 @@ func UnmarshalCreateBottlePayload(source interface{}, inErr error) (target *Crea
 			}
 			if err == nil {
 				if len(tmp4) < 2 {
-					err = goa.InvalidLengthError(`payload.Country`, tmp4, 2, true, err)
+					err = goa.InvalidLengthError(`payload.Country`, tmp4, len(tmp4), 2, true, err)
 				}
 			}
 			target.Country = tmp4
@@ -315,7 +306,7 @@ func UnmarshalCreateBottlePayload(source interface{}, inErr error) (target *Crea
 			}
 			if err == nil {
 				if len(tmp5) < 2 {
-					err = goa.InvalidLengthError(`payload.Name`, tmp5, 2, true, err)
+					err = goa.InvalidLengthError(`payload.Name`, tmp5, len(tmp5), 2, true, err)
 				}
 			}
 			target.Name = tmp5
@@ -340,10 +331,10 @@ func UnmarshalCreateBottlePayload(source interface{}, inErr error) (target *Crea
 			}
 			if err == nil {
 				if len(tmp7) < 10 {
-					err = goa.InvalidLengthError(`payload.Review`, tmp7, 10, true, err)
+					err = goa.InvalidLengthError(`payload.Review`, tmp7, len(tmp7), 10, true, err)
 				}
 				if len(tmp7) > 300 {
-					err = goa.InvalidLengthError(`payload.Review`, tmp7, 300, false, err)
+					err = goa.InvalidLengthError(`payload.Review`, tmp7, len(tmp7), 300, false, err)
 				}
 			}
 			target.Review = tmp7
@@ -374,7 +365,7 @@ func UnmarshalCreateBottlePayload(source interface{}, inErr error) (target *Crea
 			}
 			if err == nil {
 				if len(tmp9) < 4 {
-					err = goa.InvalidLengthError(`payload.Varietal`, tmp9, 4, true, err)
+					err = goa.InvalidLengthError(`payload.Varietal`, tmp9, len(tmp9), 4, true, err)
 				}
 			}
 			target.Varietal = tmp9
@@ -390,7 +381,7 @@ func UnmarshalCreateBottlePayload(source interface{}, inErr error) (target *Crea
 			}
 			if err == nil {
 				if len(tmp10) < 2 {
-					err = goa.InvalidLengthError(`payload.Vineyard`, tmp10, 2, true, err)
+					err = goa.InvalidLengthError(`payload.Vineyard`, tmp10, len(tmp10), 2, true, err)
 				}
 			}
 			target.Vineyard = tmp10
@@ -439,21 +430,17 @@ type DeleteBottleContext struct {
 func NewDeleteBottleContext(c *goa.Context) (*DeleteBottleContext, error) {
 	var err error
 	ctx := DeleteBottleContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
-	rawBottleID, ok := c.Get("bottleID")
-	if ok {
-		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
-		} else {
-			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
-		}
+	rawBottleID := c.Get("bottleID")
+	if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
+		ctx.BottleID = int(bottleID)
+	} else {
+		err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 	}
 	return &ctx, err
 }
@@ -482,28 +469,24 @@ type ListBottleContext struct {
 func NewListBottleContext(c *goa.Context) (*ListBottleContext, error) {
 	var err error
 	ctx := ListBottleContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
+	}
+	rawYears := c.Get("years")
+	elemsYears := strings.Split(rawYears, ",")
+	elemsYears2 := make([]int, len(elemsYears))
+	for i, rawElem := range elemsYears {
+		if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
+			elemsYears2[i] = int(elem)
 		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
+			err = goa.InvalidParamTypeError("elem", rawElem, "integer", err)
 		}
 	}
-	rawYears, ok := c.Get("years")
-	if ok {
-		elemsYears := strings.Split(rawYears, ",")
-		elemsYears2 := make([]int, len(elemsYears))
-		for i, rawElem := range elemsYears {
-			if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
-				elemsYears2[i] = int(elem)
-			} else {
-				err = goa.InvalidParamTypeError("elem", rawElem, "integer", err)
-			}
-		}
-		ctx.Years = elemsYears2
-		ctx.HasYears = true
-	}
+	ctx.Years = elemsYears2
+	ctx.HasYears = true
 	return &ctx, err
 }
 
@@ -535,21 +518,17 @@ type RateBottleContext struct {
 func NewRateBottleContext(c *goa.Context) (*RateBottleContext, error) {
 	var err error
 	ctx := RateBottleContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
-	rawBottleID, ok := c.Get("bottleID")
-	if ok {
-		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
-		} else {
-			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
-		}
+	rawBottleID := c.Get("bottleID")
+	if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
+		ctx.BottleID = int(bottleID)
+	} else {
+		err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 	}
 	p, err := NewRateBottlePayload(c.Payload())
 	if err != nil {
@@ -624,21 +603,17 @@ type ShowBottleContext struct {
 func NewShowBottleContext(c *goa.Context) (*ShowBottleContext, error) {
 	var err error
 	ctx := ShowBottleContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
-	rawBottleID, ok := c.Get("bottleID")
-	if ok {
-		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
-		} else {
-			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
-		}
+	rawBottleID := c.Get("bottleID")
+	if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
+		ctx.BottleID = int(bottleID)
+	} else {
+		err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 	}
 	return &ctx, err
 }
@@ -671,21 +646,17 @@ type UpdateBottleContext struct {
 func NewUpdateBottleContext(c *goa.Context) (*UpdateBottleContext, error) {
 	var err error
 	ctx := UpdateBottleContext{Context: c}
-	rawAccountID, ok := c.Get("accountID")
-	if ok {
-		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
-		} else {
-			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
-		}
+	rawAccountID := c.Get("accountID")
+	if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+		ctx.AccountID = int(accountID)
+	} else {
+		err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 	}
-	rawBottleID, ok := c.Get("bottleID")
-	if ok {
-		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
-		} else {
-			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
-		}
+	rawBottleID := c.Get("bottleID")
+	if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
+		ctx.BottleID = int(bottleID)
+	} else {
+		err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 	}
 	p, err := NewUpdateBottlePayload(c.Payload())
 	if err != nil {
@@ -745,7 +716,7 @@ func UnmarshalUpdateBottlePayload(source interface{}, inErr error) (target *Upda
 			}
 			if err == nil {
 				if len(tmp14) < 2 {
-					err = goa.InvalidLengthError(`payload.Country`, tmp14, 2, true, err)
+					err = goa.InvalidLengthError(`payload.Country`, tmp14, len(tmp14), 2, true, err)
 				}
 			}
 			target.Country = tmp14
@@ -759,7 +730,7 @@ func UnmarshalUpdateBottlePayload(source interface{}, inErr error) (target *Upda
 			}
 			if err == nil {
 				if len(tmp15) < 2 {
-					err = goa.InvalidLengthError(`payload.Name`, tmp15, 2, true, err)
+					err = goa.InvalidLengthError(`payload.Name`, tmp15, len(tmp15), 2, true, err)
 				}
 			}
 			target.Name = tmp15
@@ -782,10 +753,10 @@ func UnmarshalUpdateBottlePayload(source interface{}, inErr error) (target *Upda
 			}
 			if err == nil {
 				if len(tmp17) < 10 {
-					err = goa.InvalidLengthError(`payload.Review`, tmp17, 10, true, err)
+					err = goa.InvalidLengthError(`payload.Review`, tmp17, len(tmp17), 10, true, err)
 				}
 				if len(tmp17) > 300 {
-					err = goa.InvalidLengthError(`payload.Review`, tmp17, 300, false, err)
+					err = goa.InvalidLengthError(`payload.Review`, tmp17, len(tmp17), 300, false, err)
 				}
 			}
 			target.Review = tmp17
@@ -816,7 +787,7 @@ func UnmarshalUpdateBottlePayload(source interface{}, inErr error) (target *Upda
 			}
 			if err == nil {
 				if len(tmp19) < 4 {
-					err = goa.InvalidLengthError(`payload.Varietal`, tmp19, 4, true, err)
+					err = goa.InvalidLengthError(`payload.Varietal`, tmp19, len(tmp19), 4, true, err)
 				}
 			}
 			target.Varietal = tmp19
@@ -830,7 +801,7 @@ func UnmarshalUpdateBottlePayload(source interface{}, inErr error) (target *Upda
 			}
 			if err == nil {
 				if len(tmp20) < 2 {
-					err = goa.InvalidLengthError(`payload.Vineyard`, tmp20, 2, true, err)
+					err = goa.InvalidLengthError(`payload.Vineyard`, tmp20, len(tmp20), 2, true, err)
 				}
 			}
 			target.Vineyard = tmp20

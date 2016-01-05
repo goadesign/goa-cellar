@@ -1,11 +1,10 @@
 //************************************************************************//
-// cellar: Application Media Types
+// API "cellar": Application Media Types
 //
 // Generated with goagen v0.0.1, command line:
 // $ goagen
-// --out=$(GOPATH)/src/github.com/raphael/goa-cellar
-// --design=github.com/raphael/goa-cellar/design
-// --pkg=app
+// --out=$(GOPATH)/src/github.com/raphael/goa/examples/cellar
+// --design=github.com/raphael/goa/examples/cellar/design
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//
@@ -263,7 +262,7 @@ func (mt *Bottle) Validate() (err error) {
 		}
 	}
 	if len(mt.Country) < 2 {
-		err = goa.InvalidLengthError(`response.country`, mt.Country, 2, true, err)
+		err = goa.InvalidLengthError(`response.country`, mt.Country, len(mt.Country), 2, true, err)
 	}
 	if mt.CreatedAt != "" {
 		if err2 := goa.ValidateFormat(goa.FormatDateTime, mt.CreatedAt); err2 != nil {
@@ -271,7 +270,7 @@ func (mt *Bottle) Validate() (err error) {
 		}
 	}
 	if len(mt.Name) < 2 {
-		err = goa.InvalidLengthError(`response.name`, mt.Name, 2, true, err)
+		err = goa.InvalidLengthError(`response.name`, mt.Name, len(mt.Name), 2, true, err)
 	}
 	if mt.Rating < 1 {
 		err = goa.InvalidRangeError(`response.rating`, mt.Rating, 1, true, err)
@@ -280,10 +279,10 @@ func (mt *Bottle) Validate() (err error) {
 		err = goa.InvalidRangeError(`response.rating`, mt.Rating, 5, false, err)
 	}
 	if len(mt.Review) < 10 {
-		err = goa.InvalidLengthError(`response.review`, mt.Review, 10, true, err)
+		err = goa.InvalidLengthError(`response.review`, mt.Review, len(mt.Review), 10, true, err)
 	}
 	if len(mt.Review) > 300 {
-		err = goa.InvalidLengthError(`response.review`, mt.Review, 300, false, err)
+		err = goa.InvalidLengthError(`response.review`, mt.Review, len(mt.Review), 300, false, err)
 	}
 	if mt.Sweetness < 1 {
 		err = goa.InvalidRangeError(`response.sweetness`, mt.Sweetness, 1, true, err)
@@ -297,10 +296,10 @@ func (mt *Bottle) Validate() (err error) {
 		}
 	}
 	if len(mt.Varietal) < 4 {
-		err = goa.InvalidLengthError(`response.varietal`, mt.Varietal, 4, true, err)
+		err = goa.InvalidLengthError(`response.varietal`, mt.Varietal, len(mt.Varietal), 4, true, err)
 	}
 	if len(mt.Vineyard) < 2 {
-		err = goa.InvalidLengthError(`response.vineyard`, mt.Vineyard, 2, true, err)
+		err = goa.InvalidLengthError(`response.vineyard`, mt.Vineyard, len(mt.Vineyard), 2, true, err)
 	}
 	if mt.Vintage < 1900 {
 		err = goa.InvalidRangeError(`response.vintage`, mt.Vintage, 1900, true, err)
@@ -316,7 +315,7 @@ func (mt *Bottle) Validate() (err error) {
 func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if len(source.Name) < 2 {
-		err = goa.InvalidLengthError(`.name`, source.Name, 2, true, err)
+		err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
 	}
 	if source.Rating < 1 {
 		err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
@@ -325,10 +324,10 @@ func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, 
 		err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
 	}
 	if len(source.Varietal) < 4 {
-		err = goa.InvalidLengthError(`.varietal`, source.Varietal, 4, true, err)
+		err = goa.InvalidLengthError(`.varietal`, source.Varietal, len(source.Varietal), 4, true, err)
 	}
 	if len(source.Vineyard) < 2 {
-		err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, 2, true, err)
+		err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, len(source.Vineyard), 2, true, err)
 	}
 	if source.Vintage < 1900 {
 		err = goa.InvalidRangeError(`.vintage`, source.Vintage, 1900, true, err)
@@ -364,7 +363,7 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		}
 	}
 	if len(source.Country) < 2 {
-		err = goa.InvalidLengthError(`.country`, source.Country, 2, true, err)
+		err = goa.InvalidLengthError(`.country`, source.Country, len(source.Country), 2, true, err)
 	}
 	if source.CreatedAt != "" {
 		if err2 := goa.ValidateFormat(goa.FormatDateTime, source.CreatedAt); err2 != nil {
@@ -372,7 +371,7 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		}
 	}
 	if len(source.Name) < 2 {
-		err = goa.InvalidLengthError(`.name`, source.Name, 2, true, err)
+		err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
 	}
 	if source.Rating < 1 {
 		err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
@@ -381,10 +380,10 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
 	}
 	if len(source.Review) < 10 {
-		err = goa.InvalidLengthError(`.review`, source.Review, 10, true, err)
+		err = goa.InvalidLengthError(`.review`, source.Review, len(source.Review), 10, true, err)
 	}
 	if len(source.Review) > 300 {
-		err = goa.InvalidLengthError(`.review`, source.Review, 300, false, err)
+		err = goa.InvalidLengthError(`.review`, source.Review, len(source.Review), 300, false, err)
 	}
 	if source.Sweetness < 1 {
 		err = goa.InvalidRangeError(`.sweetness`, source.Sweetness, 1, true, err)
@@ -398,10 +397,10 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		}
 	}
 	if len(source.Varietal) < 4 {
-		err = goa.InvalidLengthError(`.varietal`, source.Varietal, 4, true, err)
+		err = goa.InvalidLengthError(`.varietal`, source.Varietal, len(source.Varietal), 4, true, err)
 	}
 	if len(source.Vineyard) < 2 {
-		err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, 2, true, err)
+		err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, len(source.Vineyard), 2, true, err)
 	}
 	if source.Vintage < 1900 {
 		err = goa.InvalidRangeError(`.vintage`, source.Vintage, 1900, true, err)
@@ -442,7 +441,7 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 func MarshalBottleTiny(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if len(source.Name) < 2 {
-		err = goa.InvalidLengthError(`.name`, source.Name, 2, true, err)
+		err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
 	}
 	if source.Rating < 1 {
 		err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
@@ -500,7 +499,7 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			}
 			if err == nil {
 				if len(tmp34) < 2 {
-					err = goa.InvalidLengthError(`load.Country`, tmp34, 2, true, err)
+					err = goa.InvalidLengthError(`load.Country`, tmp34, len(tmp34), 2, true, err)
 				}
 			}
 			target.Country = tmp34
@@ -548,7 +547,7 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			}
 			if err == nil {
 				if len(tmp38) < 2 {
-					err = goa.InvalidLengthError(`load.Name`, tmp38, 2, true, err)
+					err = goa.InvalidLengthError(`load.Name`, tmp38, len(tmp38), 2, true, err)
 				}
 			}
 			target.Name = tmp38
@@ -588,10 +587,10 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			}
 			if err == nil {
 				if len(tmp41) < 10 {
-					err = goa.InvalidLengthError(`load.Review`, tmp41, 10, true, err)
+					err = goa.InvalidLengthError(`load.Review`, tmp41, len(tmp41), 10, true, err)
 				}
 				if len(tmp41) > 300 {
-					err = goa.InvalidLengthError(`load.Review`, tmp41, 300, false, err)
+					err = goa.InvalidLengthError(`load.Review`, tmp41, len(tmp41), 300, false, err)
 				}
 			}
 			target.Review = tmp41
@@ -638,7 +637,7 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			}
 			if err == nil {
 				if len(tmp44) < 4 {
-					err = goa.InvalidLengthError(`load.Varietal`, tmp44, 4, true, err)
+					err = goa.InvalidLengthError(`load.Varietal`, tmp44, len(tmp44), 4, true, err)
 				}
 			}
 			target.Varietal = tmp44
@@ -652,7 +651,7 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			}
 			if err == nil {
 				if len(tmp45) < 2 {
-					err = goa.InvalidLengthError(`load.Vineyard`, tmp45, 2, true, err)
+					err = goa.InvalidLengthError(`load.Vineyard`, tmp45, len(tmp45), 2, true, err)
 				}
 			}
 			target.Vineyard = tmp45
@@ -744,7 +743,7 @@ func (mt BottleCollection) Validate() (err error) {
 			}
 		}
 		if len(e.Country) < 2 {
-			err = goa.InvalidLengthError(`response[*].country`, e.Country, 2, true, err)
+			err = goa.InvalidLengthError(`response[*].country`, e.Country, len(e.Country), 2, true, err)
 		}
 		if e.CreatedAt != "" {
 			if err2 := goa.ValidateFormat(goa.FormatDateTime, e.CreatedAt); err2 != nil {
@@ -752,7 +751,7 @@ func (mt BottleCollection) Validate() (err error) {
 			}
 		}
 		if len(e.Name) < 2 {
-			err = goa.InvalidLengthError(`response[*].name`, e.Name, 2, true, err)
+			err = goa.InvalidLengthError(`response[*].name`, e.Name, len(e.Name), 2, true, err)
 		}
 		if e.Rating < 1 {
 			err = goa.InvalidRangeError(`response[*].rating`, e.Rating, 1, true, err)
@@ -761,10 +760,10 @@ func (mt BottleCollection) Validate() (err error) {
 			err = goa.InvalidRangeError(`response[*].rating`, e.Rating, 5, false, err)
 		}
 		if len(e.Review) < 10 {
-			err = goa.InvalidLengthError(`response[*].review`, e.Review, 10, true, err)
+			err = goa.InvalidLengthError(`response[*].review`, e.Review, len(e.Review), 10, true, err)
 		}
 		if len(e.Review) > 300 {
-			err = goa.InvalidLengthError(`response[*].review`, e.Review, 300, false, err)
+			err = goa.InvalidLengthError(`response[*].review`, e.Review, len(e.Review), 300, false, err)
 		}
 		if e.Sweetness < 1 {
 			err = goa.InvalidRangeError(`response[*].sweetness`, e.Sweetness, 1, true, err)
@@ -778,10 +777,10 @@ func (mt BottleCollection) Validate() (err error) {
 			}
 		}
 		if len(e.Varietal) < 4 {
-			err = goa.InvalidLengthError(`response[*].varietal`, e.Varietal, 4, true, err)
+			err = goa.InvalidLengthError(`response[*].varietal`, e.Varietal, len(e.Varietal), 4, true, err)
 		}
 		if len(e.Vineyard) < 2 {
-			err = goa.InvalidLengthError(`response[*].vineyard`, e.Vineyard, 2, true, err)
+			err = goa.InvalidLengthError(`response[*].vineyard`, e.Vineyard, len(e.Vineyard), 2, true, err)
 		}
 		if e.Vintage < 1900 {
 			err = goa.InvalidRangeError(`response[*].vintage`, e.Vintage, 1900, true, err)
@@ -820,8 +819,8 @@ func UnmarshalBottleCollection(source interface{}, inErr error) (target BottleCo
 	err = inErr
 	if val, ok := source.([]interface{}); ok {
 		target = make([]*Bottle, len(val))
-		for i, v := range val {
-			target[i], err = UnmarshalBottle(v, err)
+		for tmp51, v := range val {
+			target[tmp51], err = UnmarshalBottle(v, err)
 		}
 	} else {
 		err = goa.InvalidAttributeTypeError(`load`, source, "array", err)
