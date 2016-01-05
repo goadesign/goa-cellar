@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/raphael/goa/examples/cellar/client"
+	"github.com/raphael/goa-cellar/client"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -99,11 +99,11 @@ func RegisterCommands(app *kingpin.Application) map[string]client.ActionCommand 
 	var command, sub *kingpin.CmdClause
 	command = app.Command("create", "create action")
 	tmp1 := new(CreateAccountCommand)
-	sub = command.Command("account", "Create new account")
+	sub = command.Command("account", "")
 	tmp1.RegisterFlags(sub)
 	res["create account"] = tmp1
 	tmp2 := new(CreateBottleCommand)
-	sub = command.Command("bottle", "Record new bottle")
+	sub = command.Command("bottle", "")
 	tmp2.RegisterFlags(sub)
 	res["create bottle"] = tmp2
 	command = app.Command("delete", "delete action")
@@ -117,7 +117,7 @@ func RegisterCommands(app *kingpin.Application) map[string]client.ActionCommand 
 	res["delete bottle"] = tmp4
 	command = app.Command("list", "List all bottles in account optionally filtering by year")
 	tmp5 := new(ListBottleCommand)
-	sub = command.Command("bottle", "List all bottles in account optionally filtering by year")
+	sub = command.Command("bottle", "")
 	tmp5.RegisterFlags(sub)
 	res["list bottle"] = tmp5
 	command = app.Command("rate", "")
@@ -127,16 +127,16 @@ func RegisterCommands(app *kingpin.Application) map[string]client.ActionCommand 
 	res["rate bottle"] = tmp6
 	command = app.Command("show", "show action")
 	tmp7 := new(ShowAccountCommand)
-	sub = command.Command("account", "Retrieve account with given id")
+	sub = command.Command("account", "")
 	tmp7.RegisterFlags(sub)
 	res["show account"] = tmp7
 	tmp8 := new(ShowBottleCommand)
-	sub = command.Command("bottle", "Retrieve bottle with given id")
+	sub = command.Command("bottle", "")
 	tmp8.RegisterFlags(sub)
 	res["show bottle"] = tmp8
 	command = app.Command("update", "update action")
 	tmp9 := new(UpdateAccountCommand)
-	sub = command.Command("account", "Change account name")
+	sub = command.Command("account", "")
 	tmp9.RegisterFlags(sub)
 	res["update account"] = tmp9
 	tmp10 := new(UpdateBottleCommand)
