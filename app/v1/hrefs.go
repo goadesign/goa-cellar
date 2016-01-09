@@ -1,5 +1,5 @@
 //************************************************************************//
-// API "cellar": Application Resource Href Factories
+// API "cellar" version 1.0: Application Resource Href Factories
 //
 // Generated with goagen v0.0.1, command line:
 // $ goagen
@@ -10,11 +10,11 @@
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//
 
-package app
+package v1
 
 import "fmt"
 
-// AccountHref returns the resource href.
-func AccountHref(accountID interface{}) string {
-	return fmt.Sprintf("/cellar/accounts/%v", accountID)
+// BottleHref returns the resource href.
+func BottleHref(accountID, bottleID interface{}) string {
+	return fmt.Sprintf("/1.0/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }

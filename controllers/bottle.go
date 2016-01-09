@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/raphael/goa"
-	"github.com/raphael/goa/examples/cellar/app"
+	"github.com/raphael/goa-cellar/app"
 )
 
 // BottleController implements the bottle resource.

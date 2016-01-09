@@ -4,11 +4,11 @@ package main
 
 import (
 	"github.com/raphael/goa"
-	"github.com/raphael/goa/examples/cellar/app"
-	"github.com/raphael/goa/examples/cellar/controllers"
-	"github.com/raphael/goa/examples/cellar/js"
-	"github.com/raphael/goa/examples/cellar/schema"
-	"github.com/raphael/goa/examples/cellar/swagger"
+	"github.com/raphael/goa-cellar/app"
+	"github.com/raphael/goa-cellar/controllers"
+	"github.com/raphael/goa-cellar/js"
+	"github.com/raphael/goa-cellar/schema"
+	"github.com/raphael/goa-cellar/swagger"
 )
 
 func main() {

@@ -8,9 +8,9 @@ import (
 
 	"github.com/raphael/goa"
 	"github.com/raphael/goa-middleware/cors"
-	"github.com/raphael/goa/examples/cellar/app"
-	"github.com/raphael/goa/examples/cellar/controllers"
-	"github.com/raphael/goa/examples/cellar/swagger"
+	"github.com/raphael/goa-cellar/app"
+	"github.com/raphael/goa-cellar/controllers"
+	"github.com/raphael/goa-cellar/swagger"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
