@@ -1,5 +1,5 @@
 //************************************************************************//
-// cellar: Application Media Types
+// API "cellar": Application Media Types
 //
 // Generated with goagen v0.0.1, command line:
 // $ goagen
@@ -39,8 +39,7 @@ const (
 	AccountLinkView AccountViewEnum = "link"
 )
 
-// LoadAccount loads raw data into an instance of Account running all the
-// validations. Raw data is defined by data that the JSON unmarshaler would create when unmarshaling
+// LoadAccount loads raw data into an instance of Account
 // into a variable of type interface{}. See https://golang.org/pkg/encoding/json/#Unmarshal for the
 // complete list of supported data types.
 func LoadAccount(raw interface{}) (res *Account, err error) {
@@ -62,6 +61,14 @@ func (mt *Account) Dump(view AccountViewEnum) (res map[string]interface{}, err e
 
 // Validate validates the media type instance.
 func (mt *Account) Validate() (err error) {
+
+	if mt.Href == "" {
+		err = goa.MissingAttributeError(`response`, "href", err)
+	}
+	if mt.Name == "" {
+		err = goa.MissingAttributeError(`response`, "name", err)
+	}
+
 	if mt.CreatedAt != "" {
 		if err2 := goa.ValidateFormat(goa.FormatDateTime, mt.CreatedAt); err2 != nil {
 			err = goa.InvalidFormatError(`response.created_at`, mt.CreatedAt, goa.FormatDateTime, err2, err)
@@ -79,24 +86,29 @@ func (mt *Account) Validate() (err error) {
 // using view "default".
 func MarshalAccount(source *Account, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
-	if source.CreatedAt != "" {
-		if err2 := goa.ValidateFormat(goa.FormatDateTime, source.CreatedAt); err2 != nil {
-			err = goa.InvalidFormatError(`.created_at`, source.CreatedAt, goa.FormatDateTime, err2, err)
+
+	if err == nil {
+		if err == nil {
+			if source.CreatedAt != "" {
+				if err2 := goa.ValidateFormat(goa.FormatDateTime, source.CreatedAt); err2 != nil {
+					err = goa.InvalidFormatError(`.created_at`, source.CreatedAt, goa.FormatDateTime, err2, err)
+				}
+			}
+			if source.CreatedBy != "" {
+				if err2 := goa.ValidateFormat(goa.FormatEmail, source.CreatedBy); err2 != nil {
+					err = goa.InvalidFormatError(`.created_by`, source.CreatedBy, goa.FormatEmail, err2, err)
+				}
+			}
+			tmp22 := map[string]interface{}{
+				"created_at": source.CreatedAt,
+				"created_by": source.CreatedBy,
+				"href":       source.Href,
+				"id":         source.ID,
+				"name":       source.Name,
+			}
+			target = tmp22
 		}
 	}
-	if source.CreatedBy != "" {
-		if err2 := goa.ValidateFormat(goa.FormatEmail, source.CreatedBy); err2 != nil {
-			err = goa.InvalidFormatError(`.created_by`, source.CreatedBy, goa.FormatEmail, err2, err)
-		}
-	}
-	tmp22 := map[string]interface{}{
-		"created_at": source.CreatedAt,
-		"created_by": source.CreatedBy,
-		"href":       source.Href,
-		"id":         source.ID,
-		"name":       source.Name,
-	}
-	target = tmp22
 	return
 }
 
@@ -104,12 +116,17 @@ func MarshalAccount(source *Account, inErr error) (target map[string]interface{}
 // using view "link".
 func MarshalAccountLink(source *Account, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
-	tmp23 := map[string]interface{}{
-		"href": source.Href,
-		"id":   source.ID,
-		"name": source.Name,
+
+	if err == nil {
+		if err == nil {
+			tmp23 := map[string]interface{}{
+				"href": source.Href,
+				"id":   source.ID,
+				"name": source.Name,
+			}
+			target = tmp23
+		}
 	}
-	target = tmp23
 	return
 }
 
@@ -158,6 +175,8 @@ func UnmarshalAccount(source interface{}, inErr error) (target *Account, err err
 				err = goa.InvalidAttributeTypeError(`load.Href`, v, "string", err)
 			}
 			target.Href = tmp26
+		} else {
+			err = goa.MissingAttributeError(`load`, "href", err)
 		}
 		if v, ok := val["id"]; ok {
 			var tmp27 int
@@ -167,6 +186,8 @@ func UnmarshalAccount(source interface{}, inErr error) (target *Account, err err
 				err = goa.InvalidAttributeTypeError(`load.ID`, v, "int", err)
 			}
 			target.ID = tmp27
+		} else {
+			err = goa.MissingAttributeError(`load`, "id", err)
 		}
 		if v, ok := val["name"]; ok {
 			var tmp28 string
@@ -176,6 +197,8 @@ func UnmarshalAccount(source interface{}, inErr error) (target *Account, err err
 				err = goa.InvalidAttributeTypeError(`load.Name`, v, "string", err)
 			}
 			target.Name = tmp28
+		} else {
+			err = goa.MissingAttributeError(`load`, "name", err)
 		}
 	} else {
 		err = goa.InvalidAttributeTypeError(`load`, source, "dictionary", err)
@@ -221,8 +244,7 @@ const (
 	BottleTinyView BottleViewEnum = "tiny"
 )
 
-// LoadBottle loads raw data into an instance of Bottle running all the
-// validations. Raw data is defined by data that the JSON unmarshaler would create when unmarshaling
+// LoadBottle loads raw data into an instance of Bottle
 // into a variable of type interface{}. See https://golang.org/pkg/encoding/json/#Unmarshal for the
 // complete list of supported data types.
 func LoadBottle(raw interface{}) (res *Bottle, err error) {
@@ -247,6 +269,14 @@ func (mt *Bottle) Dump(view BottleViewEnum) (res map[string]interface{}, err err
 
 // Validate validates the media type instance.
 func (mt *Bottle) Validate() (err error) {
+
+	if mt.Href == "" {
+		err = goa.MissingAttributeError(`response`, "href", err)
+	}
+	if mt.Name == "" {
+		err = goa.MissingAttributeError(`response`, "name", err)
+	}
+
 	if mt.Account.CreatedAt != "" {
 		if err2 := goa.ValidateFormat(goa.FormatDateTime, mt.Account.CreatedAt); err2 != nil {
 			err = goa.InvalidFormatError(`response.account.created_at`, mt.Account.CreatedAt, goa.FormatDateTime, err2, err)
@@ -315,37 +345,42 @@ func (mt *Bottle) Validate() (err error) {
 // using view "default".
 func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
-	if len(source.Name) < 2 {
-		err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
+
+	if err == nil {
+		if err == nil {
+			if len(source.Name) < 2 {
+				err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
+			}
+			if source.Rating < 1 {
+				err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
+			}
+			if source.Rating > 5 {
+				err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
+			}
+			if len(source.Varietal) < 4 {
+				err = goa.InvalidLengthError(`.varietal`, source.Varietal, len(source.Varietal), 4, true, err)
+			}
+			if len(source.Vineyard) < 2 {
+				err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, len(source.Vineyard), 2, true, err)
+			}
+			if source.Vintage < 1900 {
+				err = goa.InvalidRangeError(`.vintage`, source.Vintage, 1900, true, err)
+			}
+			if source.Vintage > 2020 {
+				err = goa.InvalidRangeError(`.vintage`, source.Vintage, 2020, false, err)
+			}
+			tmp29 := map[string]interface{}{
+				"href":     source.Href,
+				"id":       source.ID,
+				"name":     source.Name,
+				"rating":   source.Rating,
+				"varietal": source.Varietal,
+				"vineyard": source.Vineyard,
+				"vintage":  source.Vintage,
+			}
+			target = tmp29
+		}
 	}
-	if source.Rating < 1 {
-		err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
-	}
-	if source.Rating > 5 {
-		err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
-	}
-	if len(source.Varietal) < 4 {
-		err = goa.InvalidLengthError(`.varietal`, source.Varietal, len(source.Varietal), 4, true, err)
-	}
-	if len(source.Vineyard) < 2 {
-		err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, len(source.Vineyard), 2, true, err)
-	}
-	if source.Vintage < 1900 {
-		err = goa.InvalidRangeError(`.vintage`, source.Vintage, 1900, true, err)
-	}
-	if source.Vintage > 2020 {
-		err = goa.InvalidRangeError(`.vintage`, source.Vintage, 2020, false, err)
-	}
-	tmp29 := map[string]interface{}{
-		"href":     source.Href,
-		"id":       source.ID,
-		"name":     source.Name,
-		"rating":   source.Rating,
-		"varietal": source.Varietal,
-		"vineyard": source.Vineyard,
-		"vintage":  source.Vintage,
-	}
-	target = tmp29
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -358,77 +393,82 @@ func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, 
 // using view "full".
 func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
-	if source.Color != "" {
-		if !(source.Color == "red" || source.Color == "white" || source.Color == "rose" || source.Color == "yellow" || source.Color == "sparkling") {
-			err = goa.InvalidEnumValueError(`.color`, source.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}, err)
+
+	if err == nil {
+		if err == nil {
+			if source.Color != "" {
+				if !(source.Color == "red" || source.Color == "white" || source.Color == "rose" || source.Color == "yellow" || source.Color == "sparkling") {
+					err = goa.InvalidEnumValueError(`.color`, source.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}, err)
+				}
+			}
+			if len(source.Country) < 2 {
+				err = goa.InvalidLengthError(`.country`, source.Country, len(source.Country), 2, true, err)
+			}
+			if source.CreatedAt != "" {
+				if err2 := goa.ValidateFormat(goa.FormatDateTime, source.CreatedAt); err2 != nil {
+					err = goa.InvalidFormatError(`.created_at`, source.CreatedAt, goa.FormatDateTime, err2, err)
+				}
+			}
+			if len(source.Name) < 2 {
+				err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
+			}
+			if source.Rating < 1 {
+				err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
+			}
+			if source.Rating > 5 {
+				err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
+			}
+			if len(source.Review) < 10 {
+				err = goa.InvalidLengthError(`.review`, source.Review, len(source.Review), 10, true, err)
+			}
+			if len(source.Review) > 300 {
+				err = goa.InvalidLengthError(`.review`, source.Review, len(source.Review), 300, false, err)
+			}
+			if source.Sweetness < 1 {
+				err = goa.InvalidRangeError(`.sweetness`, source.Sweetness, 1, true, err)
+			}
+			if source.Sweetness > 5 {
+				err = goa.InvalidRangeError(`.sweetness`, source.Sweetness, 5, false, err)
+			}
+			if source.UpdatedAt != "" {
+				if err2 := goa.ValidateFormat(goa.FormatDateTime, source.UpdatedAt); err2 != nil {
+					err = goa.InvalidFormatError(`.updated_at`, source.UpdatedAt, goa.FormatDateTime, err2, err)
+				}
+			}
+			if len(source.Varietal) < 4 {
+				err = goa.InvalidLengthError(`.varietal`, source.Varietal, len(source.Varietal), 4, true, err)
+			}
+			if len(source.Vineyard) < 2 {
+				err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, len(source.Vineyard), 2, true, err)
+			}
+			if source.Vintage < 1900 {
+				err = goa.InvalidRangeError(`.vintage`, source.Vintage, 1900, true, err)
+			}
+			if source.Vintage > 2020 {
+				err = goa.InvalidRangeError(`.vintage`, source.Vintage, 2020, false, err)
+			}
+			tmp30 := map[string]interface{}{
+				"color":      source.Color,
+				"country":    source.Country,
+				"created_at": source.CreatedAt,
+				"href":       source.Href,
+				"id":         source.ID,
+				"name":       source.Name,
+				"rating":     source.Rating,
+				"region":     source.Region,
+				"review":     source.Review,
+				"sweetness":  source.Sweetness,
+				"updated_at": source.UpdatedAt,
+				"varietal":   source.Varietal,
+				"vineyard":   source.Vineyard,
+				"vintage":    source.Vintage,
+			}
+			if source.Account != nil {
+				tmp30["account"], err = MarshalAccount(source.Account, err)
+			}
+			target = tmp30
 		}
 	}
-	if len(source.Country) < 2 {
-		err = goa.InvalidLengthError(`.country`, source.Country, len(source.Country), 2, true, err)
-	}
-	if source.CreatedAt != "" {
-		if err2 := goa.ValidateFormat(goa.FormatDateTime, source.CreatedAt); err2 != nil {
-			err = goa.InvalidFormatError(`.created_at`, source.CreatedAt, goa.FormatDateTime, err2, err)
-		}
-	}
-	if len(source.Name) < 2 {
-		err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
-	}
-	if source.Rating < 1 {
-		err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
-	}
-	if source.Rating > 5 {
-		err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
-	}
-	if len(source.Review) < 10 {
-		err = goa.InvalidLengthError(`.review`, source.Review, len(source.Review), 10, true, err)
-	}
-	if len(source.Review) > 300 {
-		err = goa.InvalidLengthError(`.review`, source.Review, len(source.Review), 300, false, err)
-	}
-	if source.Sweetness < 1 {
-		err = goa.InvalidRangeError(`.sweetness`, source.Sweetness, 1, true, err)
-	}
-	if source.Sweetness > 5 {
-		err = goa.InvalidRangeError(`.sweetness`, source.Sweetness, 5, false, err)
-	}
-	if source.UpdatedAt != "" {
-		if err2 := goa.ValidateFormat(goa.FormatDateTime, source.UpdatedAt); err2 != nil {
-			err = goa.InvalidFormatError(`.updated_at`, source.UpdatedAt, goa.FormatDateTime, err2, err)
-		}
-	}
-	if len(source.Varietal) < 4 {
-		err = goa.InvalidLengthError(`.varietal`, source.Varietal, len(source.Varietal), 4, true, err)
-	}
-	if len(source.Vineyard) < 2 {
-		err = goa.InvalidLengthError(`.vineyard`, source.Vineyard, len(source.Vineyard), 2, true, err)
-	}
-	if source.Vintage < 1900 {
-		err = goa.InvalidRangeError(`.vintage`, source.Vintage, 1900, true, err)
-	}
-	if source.Vintage > 2020 {
-		err = goa.InvalidRangeError(`.vintage`, source.Vintage, 2020, false, err)
-	}
-	tmp30 := map[string]interface{}{
-		"color":      source.Color,
-		"country":    source.Country,
-		"created_at": source.CreatedAt,
-		"href":       source.Href,
-		"id":         source.ID,
-		"name":       source.Name,
-		"rating":     source.Rating,
-		"region":     source.Region,
-		"review":     source.Review,
-		"sweetness":  source.Sweetness,
-		"updated_at": source.UpdatedAt,
-		"varietal":   source.Varietal,
-		"vineyard":   source.Vineyard,
-		"vintage":    source.Vintage,
-	}
-	if source.Account != nil {
-		tmp30["account"], err = MarshalAccount(source.Account, err)
-	}
-	target = tmp30
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -441,22 +481,27 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 // using view "tiny".
 func MarshalBottleTiny(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
-	if len(source.Name) < 2 {
-		err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
+
+	if err == nil {
+		if err == nil {
+			if len(source.Name) < 2 {
+				err = goa.InvalidLengthError(`.name`, source.Name, len(source.Name), 2, true, err)
+			}
+			if source.Rating < 1 {
+				err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
+			}
+			if source.Rating > 5 {
+				err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
+			}
+			tmp31 := map[string]interface{}{
+				"href":   source.Href,
+				"id":     source.ID,
+				"name":   source.Name,
+				"rating": source.Rating,
+			}
+			target = tmp31
+		}
 	}
-	if source.Rating < 1 {
-		err = goa.InvalidRangeError(`.rating`, source.Rating, 1, true, err)
-	}
-	if source.Rating > 5 {
-		err = goa.InvalidRangeError(`.rating`, source.Rating, 5, false, err)
-	}
-	tmp31 := map[string]interface{}{
-		"href":   source.Href,
-		"id":     source.ID,
-		"name":   source.Name,
-		"rating": source.Rating,
-	}
-	target = tmp31
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -529,6 +574,8 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				err = goa.InvalidAttributeTypeError(`load.Href`, v, "string", err)
 			}
 			target.Href = tmp36
+		} else {
+			err = goa.MissingAttributeError(`load`, "href", err)
 		}
 		if v, ok := val["id"]; ok {
 			var tmp37 int
@@ -538,6 +585,8 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				err = goa.InvalidAttributeTypeError(`load.ID`, v, "int", err)
 			}
 			target.ID = tmp37
+		} else {
+			err = goa.MissingAttributeError(`load`, "id", err)
 		}
 		if v, ok := val["name"]; ok {
 			var tmp38 string
@@ -552,6 +601,8 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				}
 			}
 			target.Name = tmp38
+		} else {
+			err = goa.MissingAttributeError(`load`, "name", err)
 		}
 		if v, ok := val["rating"]; ok {
 			var tmp39 int
@@ -694,8 +745,7 @@ const (
 	BottleCollectionTinyView BottleCollectionViewEnum = "tiny"
 )
 
-// LoadBottleCollection loads raw data into an instance of BottleCollection running all the
-// validations. Raw data is defined by data that the JSON unmarshaler would create when unmarshaling
+// LoadBottleCollection loads raw data into an instance of BottleCollection
 // into a variable of type interface{}. See https://golang.org/pkg/encoding/json/#Unmarshal for the
 // complete list of supported data types.
 func LoadBottleCollection(raw interface{}) (res BottleCollection, err error) {

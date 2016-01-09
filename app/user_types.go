@@ -1,5 +1,5 @@
 //************************************************************************//
-// cellar: Application User Types
+// API "cellar": Application User Types
 //
 // Generated with goagen v0.0.1, command line:
 // $ goagen
@@ -12,9 +12,7 @@
 
 package app
 
-import (
-	"github.com/raphael/goa"
-)
+import "github.com/raphael/goa"
 
 // BottlePayload type
 type BottlePayload struct {

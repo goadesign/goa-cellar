@@ -18,6 +18,7 @@ var Account = MediaType("application/vnd.account+json", func() {
 		Attribute("created_by", String, "Email of account owner", func() {
 			Format("email")
 		})
+		Required("id", "href", "name")
 	})
 
 	View("default", func() {
@@ -63,6 +64,8 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 		Attribute("country")
 		Attribute("region")
 		Attribute("review")
+
+		Required("id", "href", "name")
 
 		Links(func() {
 			Link("account")
