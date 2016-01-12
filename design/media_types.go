@@ -18,6 +18,7 @@ var Account = MediaType("application/vnd.account+json", func() {
 		Attribute("created_by", String, "Email of account owner", func() {
 			Format("email")
 		})
+
 		Required("id", "href", "name")
 	})
 
@@ -65,50 +66,50 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 		Attribute("region")
 		Attribute("review")
 
-		Required("id", "href", "name")
+		Required("id", "href", "name", "vineyard", "varietal", "vintage", "color")
+	})
 
-		Links(func() {
-			Link("account")
-		})
+	Links(func() {
+		Link("account")
+	})
 
-		View("default", func() {
-			Attribute("id")
-			Attribute("href")
-			Attribute("name")
-			Attribute("rating")
-			Attribute("vineyard")
-			Attribute("varietal")
-			Attribute("vintage")
-			Attribute("links")
-		})
+	View("default", func() {
+		Attribute("id")
+		Attribute("href")
+		Attribute("name")
+		Attribute("rating")
+		Attribute("vineyard")
+		Attribute("varietal")
+		Attribute("vintage")
+		Attribute("links")
+	})
 
-		View("tiny", func() {
-			Attribute("id")
-			Attribute("href")
-			Attribute("name")
-			Attribute("rating")
-			Attribute("links")
-		})
+	View("tiny", func() {
+		Attribute("id")
+		Attribute("href")
+		Attribute("name")
+		Attribute("rating")
+		Attribute("links")
+	})
 
-		View("full", func() {
-			Attribute("id")
-			Attribute("href")
-			Attribute("name")
-			Attribute("account", func() {
-				View("full")
-			})
-			Attribute("rating")
-			Attribute("vineyard")
-			Attribute("varietal")
-			Attribute("vintage")
-			Attribute("color")
-			Attribute("sweetness")
-			Attribute("country")
-			Attribute("region")
-			Attribute("review")
-			Attribute("created_at")
-			Attribute("updated_at")
-			Attribute("links")
+	View("full", func() {
+		Attribute("id")
+		Attribute("href")
+		Attribute("name")
+		Attribute("account", func() {
+			View("full")
 		})
+		Attribute("rating")
+		Attribute("vineyard")
+		Attribute("varietal")
+		Attribute("vintage")
+		Attribute("color")
+		Attribute("sweetness")
+		Attribute("country")
+		Attribute("region")
+		Attribute("review")
+		Attribute("created_at")
+		Attribute("updated_at")
+		Attribute("links")
 	})
 })

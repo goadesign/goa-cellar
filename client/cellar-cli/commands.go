@@ -89,7 +89,7 @@ func (cmd *CreateAccountCommand) RegisterFlags(cc *kingpin.CmdClause) {
 
 // Run makes the HTTP request corresponding to the DeleteAccountCommand command.
 func (cmd *DeleteAccountCommand) Run(c *client.Client) (*http.Response, error) {
-	return c.DeleteAccount(cmd.Path)
+	return c.DeleteAccount(cmd.Pathnil)
 }
 
 // RegisterFlags registers the command flags with the command line.
@@ -99,7 +99,7 @@ func (cmd *DeleteAccountCommand) RegisterFlags(cc *kingpin.CmdClause) {
 
 // Run makes the HTTP request corresponding to the ShowAccountCommand command.
 func (cmd *ShowAccountCommand) Run(c *client.Client) (*http.Response, error) {
-	return c.ShowAccount(cmd.Path)
+	return c.ShowAccount(cmd.Pathnil)
 }
 
 // RegisterFlags registers the command flags with the command line.
@@ -145,7 +145,7 @@ func (cmd *CreateBottleCommand) RegisterFlags(cc *kingpin.CmdClause) {
 
 // Run makes the HTTP request corresponding to the DeleteBottleCommand command.
 func (cmd *DeleteBottleCommand) Run(c *client.Client) (*http.Response, error) {
-	return c.DeleteBottle(cmd.Path)
+	return c.DeleteBottle(cmd.Pathnil)
 }
 
 // RegisterFlags registers the command flags with the command line.
@@ -155,7 +155,7 @@ func (cmd *DeleteBottleCommand) RegisterFlags(cc *kingpin.CmdClause) {
 
 // Run makes the HTTP request corresponding to the ListBottleCommand command.
 func (cmd *ListBottleCommand) Run(c *client.Client) (*http.Response, error) {
-	return c.ListBottle(cmd.Path, cmd.Years)
+	return c.ListBottle(cmd.Pathnil, cmd.Years)
 }
 
 // RegisterFlags registers the command flags with the command line.
@@ -184,7 +184,7 @@ func (cmd *RateBottleCommand) RegisterFlags(cc *kingpin.CmdClause) {
 
 // Run makes the HTTP request corresponding to the ShowBottleCommand command.
 func (cmd *ShowBottleCommand) Run(c *client.Client) (*http.Response, error) {
-	return c.ShowBottle(cmd.Path)
+	return c.ShowBottle(cmd.Pathnil)
 }
 
 // RegisterFlags registers the command flags with the command line.

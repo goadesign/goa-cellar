@@ -13,15 +13,15 @@ import (
 
 // CreateBottlePayload is the data structure used to initialize the bottle create request body.
 type CreateBottlePayload struct {
-	Color     string `json:"color"`
-	Country   string `json:"country,omitempty"`
-	Name      string `json:"name"`
-	Region    string `json:"region,omitempty"`
-	Review    string `json:"review,omitempty"`
-	Sweetness int    `json:"sweetness,omitempty"`
-	Varietal  string `json:"varietal"`
-	Vineyard  string `json:"vineyard"`
-	Vintage   int    `json:"vintage"`
+	Color     string
+	Country   *string
+	Name      string
+	Region    *string
+	Review    *string
+	Sweetness *int
+	Varietal  string
+	Vineyard  string
+	Vintage   int
 }
 
 // Record new bottle
@@ -80,7 +80,7 @@ func (c *Client) ListBottle(path string, years []int) (*http.Response, error) {
 // RateBottlePayload is the data structure used to initialize the bottle rate request body.
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating int `json:"rating"`
+	Rating int
 }
 
 // RateBottle makes a request to the rate action endpoint of the bottle resource
@@ -116,15 +116,15 @@ func (c *Client) ShowBottle(path string) (*http.Response, error) {
 
 // UpdateBottlePayload is the data structure used to initialize the bottle update request body.
 type UpdateBottlePayload struct {
-	Color     string `json:"color,omitempty"`
-	Country   string `json:"country,omitempty"`
-	Name      string `json:"name,omitempty"`
-	Region    string `json:"region,omitempty"`
-	Review    string `json:"review,omitempty"`
-	Sweetness int    `json:"sweetness,omitempty"`
-	Varietal  string `json:"varietal,omitempty"`
-	Vineyard  string `json:"vineyard,omitempty"`
-	Vintage   int    `json:"vintage,omitempty"`
+	Color     *string
+	Country   *string
+	Name      *string
+	Region    *string
+	Review    *string
+	Sweetness *int
+	Varietal  *string
+	Vineyard  *string
+	Vintage   *int
 }
 
 // UpdateBottle makes a request to the update action endpoint of the bottle resource

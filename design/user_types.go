@@ -33,7 +33,7 @@ var BottlePayload = Type("BottlePayload", func() {
 	})
 	Attribute("region")
 	Attribute("review", func() {
-		MinLength(10)
+		MinLength(3)
 		MaxLength(300)
 	})
 })

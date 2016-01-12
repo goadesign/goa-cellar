@@ -23,7 +23,7 @@ func NewBottle(service goa.Service) *BottleController {
 func (b *BottleController) List(ctx *app.ListBottleContext) error {
 	var bottles []*app.Bottle
 	var err error
-	if ctx.HasYears {
+	if ctx.Years != nil {
 		bottles, err = b.db.GetBottlesByYears(ctx.AccountID, ctx.Years)
 	} else {
 		bottles, err = b.db.GetBottles(ctx.AccountID)
@@ -56,16 +56,16 @@ func (b *BottleController) Create(ctx *app.CreateBottleContext) error {
 	if payload.Color != "" {
 		bottle.Color = payload.Color
 	}
-	if payload.Sweetness != 0 {
+	if payload.Sweetness != nil {
 		bottle.Sweetness = payload.Sweetness
 	}
-	if payload.Country != "" {
+	if payload.Country != nil {
 		bottle.Country = payload.Country
 	}
-	if payload.Region != "" {
+	if payload.Region != nil {
 		bottle.Region = payload.Region
 	}
-	if payload.Review != "" {
+	if payload.Review != nil {
 		bottle.Review = payload.Review
 	}
 	ctx.Header().Set("Location", app.BottleHref(ctx.AccountID, bottle.ID))
@@ -79,31 +79,31 @@ func (b *BottleController) Update(ctx *app.UpdateBottleContext) error {
 		return ctx.NotFound()
 	}
 	payload := ctx.Payload
-	if payload.Name != "" {
-		bottle.Name = payload.Name
+	if payload.Name != nil {
+		bottle.Name = *payload.Name
 	}
-	if payload.Vintage != 0 {
-		bottle.Vintage = payload.Vintage
+	if payload.Vintage != nil {
+		bottle.Vintage = *payload.Vintage
 	}
-	if payload.Vineyard != "" {
-		bottle.Vineyard = payload.Vineyard
+	if payload.Vineyard != nil {
+		bottle.Vineyard = *payload.Vineyard
 	}
-	if payload.Varietal != "" {
-		bottle.Varietal = payload.Varietal
+	if payload.Varietal != nil {
+		bottle.Varietal = *payload.Varietal
 	}
-	if payload.Color != "" {
-		bottle.Color = payload.Color
+	if payload.Color != nil {
+		bottle.Color = *payload.Color
 	}
-	if payload.Sweetness != 0 {
+	if payload.Sweetness != nil {
 		bottle.Sweetness = payload.Sweetness
 	}
-	if payload.Country != "" {
+	if payload.Country != nil {
 		bottle.Country = payload.Country
 	}
-	if payload.Region != "" {
+	if payload.Region != nil {
 		bottle.Region = payload.Region
 	}
-	if payload.Review != "" {
+	if payload.Review != nil {
 		bottle.Review = payload.Review
 	}
 	b.db.SaveBottle(bottle)
@@ -126,7 +126,7 @@ func (b *BottleController) Rate(ctx *app.RateBottleContext) error {
 	if bottle == nil {
 		return ctx.NotFound()
 	}
-	bottle.Rating = ctx.Payload.Rating
+	bottle.Rating = &ctx.Payload.Rating
 	b.db.SaveBottle(bottle)
 	return ctx.NoContent()
 }

@@ -12,7 +12,7 @@ import (
 // CreateAccountPayload is the data structure used to initialize the account create request body.
 type CreateAccountPayload struct {
 	// Name of account
-	Name string `json:"name"`
+	Name string
 }
 
 // Create new account
@@ -62,7 +62,7 @@ func (c *Client) ShowAccount(path string) (*http.Response, error) {
 // UpdateAccountPayload is the data structure used to initialize the account update request body.
 type UpdateAccountPayload struct {
 	// Name of account
-	Name string `json:"name"`
+	Name string
 }
 
 // Change account name

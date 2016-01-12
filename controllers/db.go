@@ -19,6 +19,17 @@ type DB struct {
 func NewDB() *DB {
 	account := &app.Account{ID: 1, Name: "account 1", Href: app.AccountHref(1)}
 	account2 := &app.Account{ID: 2, Name: "account 2", Href: app.AccountHref(2)}
+	one := 1
+	three := 3
+	four := 4
+	five := 5
+	usa := "USA"
+	ca := "CA"
+	gv := "Great value"
+	gbe := "Good but expensive"
+	ok := "OK"
+	fav := "Favorite"
+	solid := "Solid Pinot"
 	bottles := map[int][]*app.Bottle{
 		1: []*app.Bottle{
 			&app.Bottle{
@@ -30,11 +41,11 @@ func NewDB() *DB {
 				Varietal:  "Merlot",
 				Vintage:   2012,
 				Color:     "red",
-				Sweetness: 1,
-				Country:   "USA",
-				Region:    "California",
-				Review:    "Great value",
-				Rating:    4,
+				Sweetness: &one,
+				Country:   &usa,
+				Region:    &ca,
+				Review:    &gv,
+				Rating:    &four,
 			},
 			&app.Bottle{
 				ID:        101,
@@ -45,11 +56,11 @@ func NewDB() *DB {
 				Varietal:  "Mourvedre",
 				Vintage:   2012,
 				Color:     "red",
-				Sweetness: 1,
-				Country:   "USA",
-				Region:    "California",
-				Review:    "Good but expensive",
-				Rating:    3,
+				Sweetness: &one,
+				Country:   &usa,
+				Region:    &ca,
+				Review:    &gbe,
+				Rating:    &three,
 			},
 			&app.Bottle{
 				ID:        102,
@@ -60,11 +71,11 @@ func NewDB() *DB {
 				Varietal:  "Cabernet Franc with Merlot, Malbec, Cabernet Sauvignon and Syrah",
 				Vintage:   2012,
 				Color:     "red",
-				Sweetness: 1,
-				Country:   "USA",
-				Region:    "California",
-				Review:    "Favorite",
-				Rating:    5,
+				Sweetness: &one,
+				Country:   &usa,
+				Region:    &ca,
+				Review:    &fav,
+				Rating:    &five,
 			},
 		},
 		2: []*app.Bottle{
@@ -77,11 +88,11 @@ func NewDB() *DB {
 				Varietal:  "Merlot",
 				Vintage:   2012,
 				Color:     "red",
-				Sweetness: 1,
-				Country:   "USA",
-				Region:    "California",
-				Review:    "OK",
-				Rating:    3,
+				Sweetness: &one,
+				Country:   &usa,
+				Region:    &ca,
+				Review:    &ok,
+				Rating:    &three,
 			},
 			&app.Bottle{
 				ID:        201,
@@ -92,11 +103,11 @@ func NewDB() *DB {
 				Varietal:  "Pinot Noir",
 				Vintage:   2012,
 				Color:     "red",
-				Sweetness: 1,
-				Country:   "USA",
-				Region:    "California",
-				Review:    "Solid Pinot",
-				Rating:    4,
+				Sweetness: &one,
+				Country:   &usa,
+				Region:    &ca,
+				Review:    &solid,
+				Rating:    &four,
 			},
 		},
 	}
