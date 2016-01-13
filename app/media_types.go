@@ -128,11 +128,6 @@ func UnmarshalAccount(source interface{}, inErr error) (target *Account, err err
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.CreatedAt`, v, "string", err)
 			}
-			if err == nil {
-				if err2 := goa.ValidateFormat(goa.FormatDateTime, tmp38); err2 != nil {
-					err = goa.InvalidFormatError(`load.CreatedAt`, tmp38, goa.FormatDateTime, err2, err)
-				}
-			}
 			target.CreatedAt = &tmp38
 		}
 		if v, ok := val["created_by"]; ok {
@@ -141,11 +136,6 @@ func UnmarshalAccount(source interface{}, inErr error) (target *Account, err err
 				tmp39 = val
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.CreatedBy`, v, "string", err)
-			}
-			if err == nil {
-				if err2 := goa.ValidateFormat(goa.FormatEmail, tmp39); err2 != nil {
-					err = goa.InvalidFormatError(`load.CreatedBy`, tmp39, goa.FormatEmail, err2, err)
-				}
 			}
 			target.CreatedBy = &tmp39
 		}
@@ -184,6 +174,9 @@ func UnmarshalAccount(source interface{}, inErr error) (target *Account, err err
 		}
 	} else {
 		err = goa.InvalidAttributeTypeError(`load`, source, "dictionary", err)
+	}
+	if err2 := target.Validate(); err2 != nil {
+		err = goa.ReportError(err, err2)
 	}
 	return
 }
@@ -444,11 +437,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Color`, v, "string", err)
 			}
-			if err == nil {
-				if !(tmp47 == "red" || tmp47 == "white" || tmp47 == "rose" || tmp47 == "yellow" || tmp47 == "sparkling") {
-					err = goa.InvalidEnumValueError(`load.Color`, tmp47, []interface{}{"red", "white", "rose", "yellow", "sparkling"}, err)
-				}
-			}
 			target.Color = tmp47
 		} else {
 			err = goa.MissingAttributeError(`load`, "color", err)
@@ -460,11 +448,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Country`, v, "string", err)
 			}
-			if err == nil {
-				if len(tmp48) < 2 {
-					err = goa.InvalidLengthError(`load.Country`, tmp48, len(tmp48), 2, true, err)
-				}
-			}
 			target.Country = &tmp48
 		}
 		if v, ok := val["created_at"]; ok {
@@ -473,11 +456,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				tmp49 = val
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.CreatedAt`, v, "string", err)
-			}
-			if err == nil {
-				if err2 := goa.ValidateFormat(goa.FormatDateTime, tmp49); err2 != nil {
-					err = goa.InvalidFormatError(`load.CreatedAt`, tmp49, goa.FormatDateTime, err2, err)
-				}
 			}
 			target.CreatedAt = &tmp49
 		}
@@ -510,11 +488,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Name`, v, "string", err)
 			}
-			if err == nil {
-				if len(tmp52) < 2 {
-					err = goa.InvalidLengthError(`load.Name`, tmp52, len(tmp52), 2, true, err)
-				}
-			}
 			target.Name = tmp52
 		} else {
 			err = goa.MissingAttributeError(`load`, "name", err)
@@ -525,14 +498,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				tmp53 = int(f)
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Rating`, v, "int", err)
-			}
-			if err == nil {
-				if tmp53 < 1 {
-					err = goa.InvalidRangeError(`load.Rating`, tmp53, 1, true, err)
-				}
-				if tmp53 > 5 {
-					err = goa.InvalidRangeError(`load.Rating`, tmp53, 5, false, err)
-				}
 			}
 			target.Rating = &tmp53
 		}
@@ -552,14 +517,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Review`, v, "string", err)
 			}
-			if err == nil {
-				if len(tmp55) < 3 {
-					err = goa.InvalidLengthError(`load.Review`, tmp55, len(tmp55), 3, true, err)
-				}
-				if len(tmp55) > 300 {
-					err = goa.InvalidLengthError(`load.Review`, tmp55, len(tmp55), 300, false, err)
-				}
-			}
 			target.Review = &tmp55
 		}
 		if v, ok := val["sweetness"]; ok {
@@ -568,14 +525,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				tmp56 = int(f)
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Sweetness`, v, "int", err)
-			}
-			if err == nil {
-				if tmp56 < 1 {
-					err = goa.InvalidRangeError(`load.Sweetness`, tmp56, 1, true, err)
-				}
-				if tmp56 > 5 {
-					err = goa.InvalidRangeError(`load.Sweetness`, tmp56, 5, false, err)
-				}
 			}
 			target.Sweetness = &tmp56
 		}
@@ -586,11 +535,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.UpdatedAt`, v, "string", err)
 			}
-			if err == nil {
-				if err2 := goa.ValidateFormat(goa.FormatDateTime, tmp57); err2 != nil {
-					err = goa.InvalidFormatError(`load.UpdatedAt`, tmp57, goa.FormatDateTime, err2, err)
-				}
-			}
 			target.UpdatedAt = &tmp57
 		}
 		if v, ok := val["varietal"]; ok {
@@ -599,11 +543,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 				tmp58 = val
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Varietal`, v, "string", err)
-			}
-			if err == nil {
-				if len(tmp58) < 4 {
-					err = goa.InvalidLengthError(`load.Varietal`, tmp58, len(tmp58), 4, true, err)
-				}
 			}
 			target.Varietal = tmp58
 		} else {
@@ -616,11 +555,6 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Vineyard`, v, "string", err)
 			}
-			if err == nil {
-				if len(tmp59) < 2 {
-					err = goa.InvalidLengthError(`load.Vineyard`, tmp59, len(tmp59), 2, true, err)
-				}
-			}
 			target.Vineyard = tmp59
 		} else {
 			err = goa.MissingAttributeError(`load`, "vineyard", err)
@@ -632,20 +566,15 @@ func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error
 			} else {
 				err = goa.InvalidAttributeTypeError(`load.Vintage`, v, "int", err)
 			}
-			if err == nil {
-				if tmp60 < 1900 {
-					err = goa.InvalidRangeError(`load.Vintage`, tmp60, 1900, true, err)
-				}
-				if tmp60 > 2020 {
-					err = goa.InvalidRangeError(`load.Vintage`, tmp60, 2020, false, err)
-				}
-			}
 			target.Vintage = tmp60
 		} else {
 			err = goa.MissingAttributeError(`load`, "vintage", err)
 		}
 	} else {
 		err = goa.InvalidAttributeTypeError(`load`, source, "dictionary", err)
+	}
+	if err2 := target.Validate(); err2 != nil {
+		err = goa.ReportError(err, err2)
 	}
 	return
 }
@@ -806,6 +735,9 @@ func UnmarshalBottleCollection(source interface{}, inErr error) (target BottleCo
 		}
 	} else {
 		err = goa.InvalidAttributeTypeError(`load`, source, "array", err)
+	}
+	if err2 := target.Validate(); err2 != nil {
+		err = goa.ReportError(err, err2)
 	}
 	return
 }
