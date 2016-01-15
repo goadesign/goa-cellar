@@ -51,7 +51,7 @@ func (payload *CreateAccountPayload) Validate() (err error) {
 
 // Created sends a HTTP response with status code 201.
 func (ctx *CreateAccountContext) Created() error {
-	return ctx.Respond(201, nil)
+	return ctx.RespondBytes(201, nil)
 }
 
 // DeleteAccountContext provides the account delete action context.
@@ -78,12 +78,12 @@ func NewDeleteAccountContext(c *goa.Context) (*DeleteAccountContext, error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *DeleteAccountContext) NoContent() error {
-	return ctx.Respond(204, nil)
+	return ctx.RespondBytes(204, nil)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *DeleteAccountContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // ShowAccountContext provides the account show action context.
@@ -110,7 +110,7 @@ func NewShowAccountContext(c *goa.Context) (*ShowAccountContext, error) {
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowAccountContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // OK sends a HTTP response with status code 200.
@@ -120,7 +120,7 @@ func (ctx *ShowAccountContext) OK(resp *Account, view AccountViewEnum) error {
 		return fmt.Errorf("invalid response: %s", err)
 	}
 	ctx.Header().Set("Content-Type", "application/vnd.account+json; charset=utf-8")
-	return ctx.JSON(200, r)
+	return ctx.Respond(200, r)
 }
 
 // UpdateAccountContext provides the account update action context.
@@ -163,12 +163,12 @@ func (payload *UpdateAccountPayload) Validate() (err error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *UpdateAccountContext) NoContent() error {
-	return ctx.Respond(204, nil)
+	return ctx.RespondBytes(204, nil)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *UpdateAccountContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // CreateBottleContext provides the bottle create action context.
@@ -271,7 +271,7 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 
 // Created sends a HTTP response with status code 201.
 func (ctx *CreateBottleContext) Created() error {
-	return ctx.Respond(201, nil)
+	return ctx.RespondBytes(201, nil)
 }
 
 // DeleteBottleContext provides the bottle delete action context.
@@ -307,12 +307,12 @@ func NewDeleteBottleContext(c *goa.Context) (*DeleteBottleContext, error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *DeleteBottleContext) NoContent() error {
-	return ctx.Respond(204, nil)
+	return ctx.RespondBytes(204, nil)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *DeleteBottleContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // ListBottleContext provides the bottle list action context.
@@ -353,7 +353,7 @@ func NewListBottleContext(c *goa.Context) (*ListBottleContext, error) {
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListBottleContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // OK sends a HTTP response with status code 200.
@@ -363,7 +363,7 @@ func (ctx *ListBottleContext) OK(resp BottleCollection, view BottleCollectionVie
 		return fmt.Errorf("invalid response: %s", err)
 	}
 	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection; charset=utf-8")
-	return ctx.JSON(200, r)
+	return ctx.Respond(200, r)
 }
 
 // RateBottleContext provides the bottle rate action context.
@@ -418,12 +418,12 @@ func (payload *RateBottlePayload) Validate() (err error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *RateBottleContext) NoContent() error {
-	return ctx.Respond(204, nil)
+	return ctx.RespondBytes(204, nil)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *RateBottleContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // ShowBottleContext provides the bottle show action context.
@@ -459,7 +459,7 @@ func NewShowBottleContext(c *goa.Context) (*ShowBottleContext, error) {
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowBottleContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
 
 // OK sends a HTTP response with status code 200.
@@ -469,7 +469,7 @@ func (ctx *ShowBottleContext) OK(resp *Bottle, view BottleViewEnum) error {
 		return fmt.Errorf("invalid response: %s", err)
 	}
 	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; charset=utf-8")
-	return ctx.JSON(200, r)
+	return ctx.Respond(200, r)
 }
 
 // UpdateBottleContext provides the bottle update action context.
@@ -579,10 +579,10 @@ func (payload *UpdateBottlePayload) Validate() (err error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *UpdateBottleContext) NoContent() error {
-	return ctx.Respond(204, nil)
+	return ctx.RespondBytes(204, nil)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *UpdateBottleContext) NotFound() error {
-	return ctx.Respond(404, nil)
+	return ctx.RespondBytes(404, nil)
 }
