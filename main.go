@@ -9,6 +9,7 @@ import (
 	"github.com/raphael/goa-cellar/js"
 	"github.com/raphael/goa-cellar/schema"
 	"github.com/raphael/goa-cellar/swagger"
+	"github.com/raphael/goa-middleware/middleware"
 )
 
 func main() {
@@ -16,9 +17,9 @@ func main() {
 	service := goa.New("cellar")
 
 	// Setup basic middleware
-	service.Use(goa.RequestID())
-	service.Use(goa.LogRequest())
-	service.Use(goa.Recover())
+	service.Use(middleware.RequestID())
+	service.Use(middleware.LogRequest())
+	service.Use(middleware.Recover())
 
 	// Mount account controller onto service
 	ac := controllers.NewAccount(service)
