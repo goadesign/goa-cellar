@@ -68,8 +68,7 @@ func MountAccountController(service goa.Service, ctrl AccountController) {
 // unmarshalCreateAccountPayload unmarshals the request body.
 func unmarshalCreateAccountPayload(ctx *goa.Context) error {
 	payload := &CreateAccountPayload{}
-	req := ctx.Request()
-	if err := ctx.Service().Decode(ctx, req.Body, payload, req.Header.Get("Content-Type")); err != nil {
+	if err := ctx.Service().DecodeRequest(ctx, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -82,8 +81,7 @@ func unmarshalCreateAccountPayload(ctx *goa.Context) error {
 // unmarshalUpdateAccountPayload unmarshals the request body.
 func unmarshalUpdateAccountPayload(ctx *goa.Context) error {
 	payload := &UpdateAccountPayload{}
-	req := ctx.Request()
-	if err := ctx.Service().Decode(ctx, req.Body, payload, req.Header.Get("Content-Type")); err != nil {
+	if err := ctx.Service().DecodeRequest(ctx, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -167,8 +165,7 @@ func MountBottleController(service goa.Service, ctrl BottleController) {
 // unmarshalCreateBottlePayload unmarshals the request body.
 func unmarshalCreateBottlePayload(ctx *goa.Context) error {
 	payload := &CreateBottlePayload{}
-	req := ctx.Request()
-	if err := ctx.Service().Decode(ctx, req.Body, payload, req.Header.Get("Content-Type")); err != nil {
+	if err := ctx.Service().DecodeRequest(ctx, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -181,8 +178,7 @@ func unmarshalCreateBottlePayload(ctx *goa.Context) error {
 // unmarshalRateBottlePayload unmarshals the request body.
 func unmarshalRateBottlePayload(ctx *goa.Context) error {
 	payload := &RateBottlePayload{}
-	req := ctx.Request()
-	if err := ctx.Service().Decode(ctx, req.Body, payload, req.Header.Get("Content-Type")); err != nil {
+	if err := ctx.Service().DecodeRequest(ctx, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -195,8 +191,7 @@ func unmarshalRateBottlePayload(ctx *goa.Context) error {
 // unmarshalUpdateBottlePayload unmarshals the request body.
 func unmarshalUpdateBottlePayload(ctx *goa.Context) error {
 	payload := &UpdateBottlePayload{}
-	req := ctx.Request()
-	if err := ctx.Service().Decode(ctx, req.Body, payload, req.Header.Get("Content-Type")); err != nil {
+	if err := ctx.Service().DecodeRequest(ctx, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
