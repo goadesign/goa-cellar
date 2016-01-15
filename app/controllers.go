@@ -29,6 +29,7 @@ func MountAccountController(service goa.Service, ctrl AccountController) {
 	mux := service.ServeMux()
 	h = func(c *goa.Context) error {
 		ctx, err := NewCreateAccountContext(c)
+		ctx.Payload = ctx.RawPayload().(*CreateAccountPayload)
 		if err != nil {
 			return goa.NewBadRequestError(err)
 		}
@@ -56,6 +57,7 @@ func MountAccountController(service goa.Service, ctrl AccountController) {
 	service.Info("mount", "ctrl", "Account", "action", "Show", "route", "GET /cellar/accounts/:accountID")
 	h = func(c *goa.Context) error {
 		ctx, err := NewUpdateAccountContext(c)
+		ctx.Payload = ctx.RawPayload().(*UpdateAccountPayload)
 		if err != nil {
 			return goa.NewBadRequestError(err)
 		}
@@ -108,6 +110,7 @@ func MountBottleController(service goa.Service, ctrl BottleController) {
 	mux := service.ServeMux()
 	h = func(c *goa.Context) error {
 		ctx, err := NewCreateBottleContext(c)
+		ctx.Payload = ctx.RawPayload().(*CreateBottlePayload)
 		if err != nil {
 			return goa.NewBadRequestError(err)
 		}
@@ -135,6 +138,7 @@ func MountBottleController(service goa.Service, ctrl BottleController) {
 	service.Info("mount", "ctrl", "Bottle", "action", "List", "route", "GET /cellar/accounts/:accountID/bottles")
 	h = func(c *goa.Context) error {
 		ctx, err := NewRateBottleContext(c)
+		ctx.Payload = ctx.RawPayload().(*RateBottlePayload)
 		if err != nil {
 			return goa.NewBadRequestError(err)
 		}
@@ -153,6 +157,7 @@ func MountBottleController(service goa.Service, ctrl BottleController) {
 	service.Info("mount", "ctrl", "Bottle", "action", "Show", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID")
 	h = func(c *goa.Context) error {
 		ctx, err := NewUpdateBottleContext(c)
+		ctx.Payload = ctx.RawPayload().(*UpdateBottlePayload)
 		if err != nil {
 			return goa.NewBadRequestError(err)
 		}
