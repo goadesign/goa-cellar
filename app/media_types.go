@@ -37,15 +37,9 @@ const (
 	AccountDefaultView AccountViewEnum = "default"
 	// Account link view
 	AccountLinkView AccountViewEnum = "link"
+	// Account tiny view
+	AccountTinyView AccountViewEnum = "tiny"
 )
-
-// LoadAccount loads raw data into an instance of Account
-// into a variable of type interface{}. See https://golang.org/pkg/encoding/json/#Unmarshal for the
-// complete list of supported data types.
-func LoadAccount(raw interface{}) (res *Account, err error) {
-	res, err = UnmarshalAccount(raw, err)
-	return
-}
 
 // Dump produces raw data from an instance of Account running all the
 // validations. See LoadAccount for the definition of raw data.
@@ -55,6 +49,9 @@ func (mt *Account) Dump(view AccountViewEnum) (res map[string]interface{}, err e
 	}
 	if view == AccountLinkView {
 		res, err = MarshalAccountLink(mt, err)
+	}
+	if view == AccountTinyView {
+		res, err = MarshalAccountTiny(mt, err)
 	}
 	return
 }
@@ -87,16 +84,17 @@ func (mt *Account) Validate() (err error) {
 func MarshalAccount(source *Account, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if err2 := source.Validate(); err2 != nil {
-		return nil, goa.ReportError(err, err2)
+		err = goa.ReportError(err, err2)
+		return
 	}
-	tmp36 := map[string]interface{}{
+	tmp15 := map[string]interface{}{
 		"created_at": source.CreatedAt,
 		"created_by": source.CreatedBy,
 		"href":       source.Href,
 		"id":         source.ID,
 		"name":       source.Name,
 	}
-	target = tmp36
+	target = tmp15
 	return
 }
 
@@ -105,79 +103,31 @@ func MarshalAccount(source *Account, inErr error) (target map[string]interface{}
 func MarshalAccountLink(source *Account, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if err2 := source.Validate(); err2 != nil {
-		return nil, goa.ReportError(err, err2)
+		err = goa.ReportError(err, err2)
+		return
 	}
-	tmp37 := map[string]interface{}{
+	tmp16 := map[string]interface{}{
+		"href": source.Href,
+		"id":   source.ID,
+	}
+	target = tmp16
+	return
+}
+
+// MarshalAccountTiny validates and renders an instance of Account into a interface{}
+// using view "tiny".
+func MarshalAccountTiny(source *Account, inErr error) (target map[string]interface{}, err error) {
+	err = inErr
+	if err2 := source.Validate(); err2 != nil {
+		err = goa.ReportError(err, err2)
+		return
+	}
+	tmp17 := map[string]interface{}{
 		"href": source.Href,
 		"id":   source.ID,
 		"name": source.Name,
 	}
-	target = tmp37
-	return
-}
-
-// UnmarshalAccount unmarshals and validates a raw interface{} into an instance of Account
-func UnmarshalAccount(source interface{}, inErr error) (target *Account, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(Account)
-		if v, ok := val["created_at"]; ok {
-			var tmp38 string
-			if val, ok := v.(string); ok {
-				tmp38 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.CreatedAt`, v, "string", err)
-			}
-			target.CreatedAt = &tmp38
-		}
-		if v, ok := val["created_by"]; ok {
-			var tmp39 string
-			if val, ok := v.(string); ok {
-				tmp39 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.CreatedBy`, v, "string", err)
-			}
-			target.CreatedBy = &tmp39
-		}
-		if v, ok := val["href"]; ok {
-			var tmp40 string
-			if val, ok := v.(string); ok {
-				tmp40 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Href`, v, "string", err)
-			}
-			target.Href = tmp40
-		} else {
-			err = goa.MissingAttributeError(`load`, "href", err)
-		}
-		if v, ok := val["id"]; ok {
-			var tmp41 int
-			if f, ok := v.(float64); ok {
-				tmp41 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.ID`, v, "int", err)
-			}
-			target.ID = tmp41
-		} else {
-			err = goa.MissingAttributeError(`load`, "id", err)
-		}
-		if v, ok := val["name"]; ok {
-			var tmp42 string
-			if val, ok := v.(string); ok {
-				tmp42 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Name`, v, "string", err)
-			}
-			target.Name = tmp42
-		} else {
-			err = goa.MissingAttributeError(`load`, "name", err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`load`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
+	target = tmp17
 	return
 }
 
@@ -218,14 +168,6 @@ const (
 	// Bottle tiny view
 	BottleTinyView BottleViewEnum = "tiny"
 )
-
-// LoadBottle loads raw data into an instance of Bottle
-// into a variable of type interface{}. See https://golang.org/pkg/encoding/json/#Unmarshal for the
-// complete list of supported data types.
-func LoadBottle(raw interface{}) (res *Bottle, err error) {
-	res, err = UnmarshalBottle(raw, err)
-	return
-}
 
 // Dump produces raw data from an instance of Bottle running all the
 // validations. See LoadBottle for the definition of raw data.
@@ -343,9 +285,10 @@ func (mt *Bottle) Validate() (err error) {
 func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if err2 := source.Validate(); err2 != nil {
-		return nil, goa.ReportError(err, err2)
+		err = goa.ReportError(err, err2)
+		return
 	}
-	tmp43 := map[string]interface{}{
+	tmp18 := map[string]interface{}{
 		"href":     source.Href,
 		"id":       source.ID,
 		"name":     source.Name,
@@ -354,7 +297,10 @@ func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, 
 		"vineyard": source.Vineyard,
 		"vintage":  source.Vintage,
 	}
-	target = tmp43
+	if source.Account != nil {
+		tmp18["account"], err = MarshalAccountTiny(source.Account, err)
+	}
+	target = tmp18
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -368,9 +314,10 @@ func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, 
 func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if err2 := source.Validate(); err2 != nil {
-		return nil, goa.ReportError(err, err2)
+		err = goa.ReportError(err, err2)
+		return
 	}
-	tmp44 := map[string]interface{}{
+	tmp19 := map[string]interface{}{
 		"color":      source.Color,
 		"country":    source.Country,
 		"created_at": source.CreatedAt,
@@ -387,9 +334,9 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		"vintage":    source.Vintage,
 	}
 	if source.Account != nil {
-		tmp44["account"], err = MarshalAccount(source.Account, err)
+		tmp19["account"], err = MarshalAccount(source.Account, err)
 	}
-	target = tmp44
+	target = tmp19
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -403,178 +350,20 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 func MarshalBottleTiny(source *Bottle, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if err2 := source.Validate(); err2 != nil {
-		return nil, goa.ReportError(err, err2)
+		err = goa.ReportError(err, err2)
+		return
 	}
-	tmp45 := map[string]interface{}{
+	tmp20 := map[string]interface{}{
 		"href":   source.Href,
 		"id":     source.ID,
 		"name":   source.Name,
 		"rating": source.Rating,
 	}
-	target = tmp45
+	target = tmp20
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
 		target["links"] = links
-	}
-	return
-}
-
-// UnmarshalBottle unmarshals and validates a raw interface{} into an instance of Bottle
-func UnmarshalBottle(source interface{}, inErr error) (target *Bottle, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(Bottle)
-		if v, ok := val["account"]; ok {
-			var tmp46 *Account
-			tmp46, err = UnmarshalAccount(v, err)
-			target.Account = tmp46
-		}
-		if v, ok := val["color"]; ok {
-			var tmp47 string
-			if val, ok := v.(string); ok {
-				tmp47 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Color`, v, "string", err)
-			}
-			target.Color = tmp47
-		} else {
-			err = goa.MissingAttributeError(`load`, "color", err)
-		}
-		if v, ok := val["country"]; ok {
-			var tmp48 string
-			if val, ok := v.(string); ok {
-				tmp48 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Country`, v, "string", err)
-			}
-			target.Country = &tmp48
-		}
-		if v, ok := val["created_at"]; ok {
-			var tmp49 string
-			if val, ok := v.(string); ok {
-				tmp49 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.CreatedAt`, v, "string", err)
-			}
-			target.CreatedAt = &tmp49
-		}
-		if v, ok := val["href"]; ok {
-			var tmp50 string
-			if val, ok := v.(string); ok {
-				tmp50 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Href`, v, "string", err)
-			}
-			target.Href = tmp50
-		} else {
-			err = goa.MissingAttributeError(`load`, "href", err)
-		}
-		if v, ok := val["id"]; ok {
-			var tmp51 int
-			if f, ok := v.(float64); ok {
-				tmp51 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.ID`, v, "int", err)
-			}
-			target.ID = tmp51
-		} else {
-			err = goa.MissingAttributeError(`load`, "id", err)
-		}
-		if v, ok := val["name"]; ok {
-			var tmp52 string
-			if val, ok := v.(string); ok {
-				tmp52 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Name`, v, "string", err)
-			}
-			target.Name = tmp52
-		} else {
-			err = goa.MissingAttributeError(`load`, "name", err)
-		}
-		if v, ok := val["rating"]; ok {
-			var tmp53 int
-			if f, ok := v.(float64); ok {
-				tmp53 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Rating`, v, "int", err)
-			}
-			target.Rating = &tmp53
-		}
-		if v, ok := val["region"]; ok {
-			var tmp54 string
-			if val, ok := v.(string); ok {
-				tmp54 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Region`, v, "string", err)
-			}
-			target.Region = &tmp54
-		}
-		if v, ok := val["review"]; ok {
-			var tmp55 string
-			if val, ok := v.(string); ok {
-				tmp55 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Review`, v, "string", err)
-			}
-			target.Review = &tmp55
-		}
-		if v, ok := val["sweetness"]; ok {
-			var tmp56 int
-			if f, ok := v.(float64); ok {
-				tmp56 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Sweetness`, v, "int", err)
-			}
-			target.Sweetness = &tmp56
-		}
-		if v, ok := val["updated_at"]; ok {
-			var tmp57 string
-			if val, ok := v.(string); ok {
-				tmp57 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.UpdatedAt`, v, "string", err)
-			}
-			target.UpdatedAt = &tmp57
-		}
-		if v, ok := val["varietal"]; ok {
-			var tmp58 string
-			if val, ok := v.(string); ok {
-				tmp58 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Varietal`, v, "string", err)
-			}
-			target.Varietal = tmp58
-		} else {
-			err = goa.MissingAttributeError(`load`, "varietal", err)
-		}
-		if v, ok := val["vineyard"]; ok {
-			var tmp59 string
-			if val, ok := v.(string); ok {
-				tmp59 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Vineyard`, v, "string", err)
-			}
-			target.Vineyard = tmp59
-		} else {
-			err = goa.MissingAttributeError(`load`, "vineyard", err)
-		}
-		if v, ok := val["vintage"]; ok {
-			var tmp60 int
-			if f, ok := v.(float64); ok {
-				tmp60 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Vintage`, v, "int", err)
-			}
-			target.Vintage = tmp60
-		} else {
-			err = goa.MissingAttributeError(`load`, "vintage", err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`load`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
 	}
 	return
 }
@@ -593,31 +382,23 @@ const (
 	BottleCollectionTinyView BottleCollectionViewEnum = "tiny"
 )
 
-// LoadBottleCollection loads raw data into an instance of BottleCollection
-// into a variable of type interface{}. See https://golang.org/pkg/encoding/json/#Unmarshal for the
-// complete list of supported data types.
-func LoadBottleCollection(raw interface{}) (res BottleCollection, err error) {
-	res, err = UnmarshalBottleCollection(raw, err)
-	return
-}
-
 // Dump produces raw data from an instance of BottleCollection running all the
 // validations. See LoadBottleCollection for the definition of raw data.
 func (mt BottleCollection) Dump(view BottleCollectionViewEnum) (res []map[string]interface{}, err error) {
 	if view == BottleCollectionDefaultView {
 		res = make([]map[string]interface{}, len(mt))
-		for i, tmp61 := range mt {
-			var tmp62 map[string]interface{}
-			tmp62, err = MarshalBottle(tmp61, err)
-			res[i] = tmp62
+		for i, tmp21 := range mt {
+			var tmp22 map[string]interface{}
+			tmp22, err = MarshalBottle(tmp21, err)
+			res[i] = tmp22
 		}
 	}
 	if view == BottleCollectionTinyView {
 		res = make([]map[string]interface{}, len(mt))
-		for i, tmp63 := range mt {
-			var tmp64 map[string]interface{}
-			tmp64, err = MarshalBottleTiny(tmp63, err)
-			res[i] = tmp64
+		for i, tmp23 := range mt {
+			var tmp24 map[string]interface{}
+			tmp24, err = MarshalBottleTiny(tmp23, err)
+			res[i] = tmp24
 		}
 	}
 	return
@@ -721,23 +502,6 @@ func MarshalBottleCollectionTiny(source BottleCollection, inErr error) (target [
 	target = make([]map[string]interface{}, len(source))
 	for i, res := range source {
 		target[i], err = MarshalBottleTiny(res, err)
-	}
-	return
-}
-
-// UnmarshalBottleCollection unmarshals and validates a raw interface{} into an instance of BottleCollection
-func UnmarshalBottleCollection(source interface{}, inErr error) (target BottleCollection, err error) {
-	err = inErr
-	if val, ok := source.([]interface{}); ok {
-		target = make([]*Bottle, len(val))
-		for tmp65, v := range val {
-			target[tmp65], err = UnmarshalBottle(v, err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`load`, source, "array", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
 	}
 	return
 }

@@ -31,11 +31,6 @@ type CreateAccountContext struct {
 func NewCreateAccountContext(c *goa.Context) (*CreateAccountContext, error) {
 	var err error
 	ctx := CreateAccountContext{Context: c}
-	p, err := NewCreateAccountPayload(c.Payload())
-	if err != nil {
-		return nil, err
-	}
-	ctx.Payload = p
 	return &ctx, err
 }
 
@@ -45,39 +40,7 @@ type CreateAccountPayload struct {
 	Name string
 }
 
-// NewCreateAccountPayload instantiates a CreateAccountPayload from a raw request body.
-// It validates each field and returns an error if any validation fails.
-func NewCreateAccountPayload(raw interface{}) (p *CreateAccountPayload, err error) {
-	p, err = UnmarshalCreateAccountPayload(raw, err)
-	return
-}
-
-// UnmarshalCreateAccountPayload unmarshals and validates a raw interface{} into an instance of CreateAccountPayload
-func UnmarshalCreateAccountPayload(source interface{}, inErr error) (target *CreateAccountPayload, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(CreateAccountPayload)
-		if v, ok := val["name"]; ok {
-			var tmp1 string
-			if val, ok := v.(string); ok {
-				tmp1 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Name`, v, "string", err)
-			}
-			target.Name = tmp1
-		} else {
-			err = goa.MissingAttributeError(`payload`, "name", err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`payload`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
-	return
-}
-
-// Validate validates the type instance.
+// Validate runs the validation rules defined in the design.
 func (payload *CreateAccountPayload) Validate() (err error) {
 	if payload.Name == "" {
 		err = goa.MissingAttributeError(`raw`, "name", err)
@@ -180,11 +143,6 @@ func NewUpdateAccountContext(c *goa.Context) (*UpdateAccountContext, error) {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	p, err := NewUpdateAccountPayload(c.Payload())
-	if err != nil {
-		return nil, err
-	}
-	ctx.Payload = p
 	return &ctx, err
 }
 
@@ -194,39 +152,7 @@ type UpdateAccountPayload struct {
 	Name string
 }
 
-// NewUpdateAccountPayload instantiates a UpdateAccountPayload from a raw request body.
-// It validates each field and returns an error if any validation fails.
-func NewUpdateAccountPayload(raw interface{}) (p *UpdateAccountPayload, err error) {
-	p, err = UnmarshalUpdateAccountPayload(raw, err)
-	return
-}
-
-// UnmarshalUpdateAccountPayload unmarshals and validates a raw interface{} into an instance of UpdateAccountPayload
-func UnmarshalUpdateAccountPayload(source interface{}, inErr error) (target *UpdateAccountPayload, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(UpdateAccountPayload)
-		if v, ok := val["name"]; ok {
-			var tmp5 string
-			if val, ok := v.(string); ok {
-				tmp5 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Name`, v, "string", err)
-			}
-			target.Name = tmp5
-		} else {
-			err = goa.MissingAttributeError(`payload`, "name", err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`payload`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
-	return
-}
-
-// Validate validates the type instance.
+// Validate runs the validation rules defined in the design.
 func (payload *UpdateAccountPayload) Validate() (err error) {
 	if payload.Name == "" {
 		err = goa.MissingAttributeError(`raw`, "name", err)
@@ -265,11 +191,6 @@ func NewCreateBottleContext(c *goa.Context) (*CreateBottleContext, error) {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	p, err := NewCreateBottlePayload(c.Payload())
-	if err != nil {
-		return nil, err
-	}
-	ctx.Payload = p
 	return &ctx, err
 }
 
@@ -286,119 +207,7 @@ type CreateBottlePayload struct {
 	Vintage   int
 }
 
-// NewCreateBottlePayload instantiates a CreateBottlePayload from a raw request body.
-// It validates each field and returns an error if any validation fails.
-func NewCreateBottlePayload(raw interface{}) (p *CreateBottlePayload, err error) {
-	p, err = UnmarshalCreateBottlePayload(raw, err)
-	return
-}
-
-// UnmarshalCreateBottlePayload unmarshals and validates a raw interface{} into an instance of CreateBottlePayload
-func UnmarshalCreateBottlePayload(source interface{}, inErr error) (target *CreateBottlePayload, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(CreateBottlePayload)
-		if v, ok := val["color"]; ok {
-			var tmp7 string
-			if val, ok := v.(string); ok {
-				tmp7 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Color`, v, "string", err)
-			}
-			target.Color = tmp7
-		} else {
-			err = goa.MissingAttributeError(`payload`, "color", err)
-		}
-		if v, ok := val["country"]; ok {
-			var tmp8 string
-			if val, ok := v.(string); ok {
-				tmp8 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Country`, v, "string", err)
-			}
-			target.Country = &tmp8
-		}
-		if v, ok := val["name"]; ok {
-			var tmp9 string
-			if val, ok := v.(string); ok {
-				tmp9 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Name`, v, "string", err)
-			}
-			target.Name = tmp9
-		} else {
-			err = goa.MissingAttributeError(`payload`, "name", err)
-		}
-		if v, ok := val["region"]; ok {
-			var tmp10 string
-			if val, ok := v.(string); ok {
-				tmp10 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Region`, v, "string", err)
-			}
-			target.Region = &tmp10
-		}
-		if v, ok := val["review"]; ok {
-			var tmp11 string
-			if val, ok := v.(string); ok {
-				tmp11 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Review`, v, "string", err)
-			}
-			target.Review = &tmp11
-		}
-		if v, ok := val["sweetness"]; ok {
-			var tmp12 int
-			if f, ok := v.(float64); ok {
-				tmp12 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Sweetness`, v, "int", err)
-			}
-			target.Sweetness = &tmp12
-		}
-		if v, ok := val["varietal"]; ok {
-			var tmp13 string
-			if val, ok := v.(string); ok {
-				tmp13 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Varietal`, v, "string", err)
-			}
-			target.Varietal = tmp13
-		} else {
-			err = goa.MissingAttributeError(`payload`, "varietal", err)
-		}
-		if v, ok := val["vineyard"]; ok {
-			var tmp14 string
-			if val, ok := v.(string); ok {
-				tmp14 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Vineyard`, v, "string", err)
-			}
-			target.Vineyard = tmp14
-		} else {
-			err = goa.MissingAttributeError(`payload`, "vineyard", err)
-		}
-		if v, ok := val["vintage"]; ok {
-			var tmp15 int
-			if f, ok := v.(float64); ok {
-				tmp15 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Vintage`, v, "int", err)
-			}
-			target.Vintage = tmp15
-		} else {
-			err = goa.MissingAttributeError(`payload`, "vintage", err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`payload`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
-	return
-}
-
-// Validate validates the type instance.
+// Validate runs the validation rules defined in the design.
 func (payload *CreateBottlePayload) Validate() (err error) {
 	if payload.Name == "" {
 		err = goa.MissingAttributeError(`raw`, "name", err)
@@ -586,11 +395,6 @@ func NewRateBottleContext(c *goa.Context) (*RateBottleContext, error) {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
 	}
-	p, err := NewRateBottlePayload(c.Payload())
-	if err != nil {
-		return nil, err
-	}
-	ctx.Payload = p
 	return &ctx, err
 }
 
@@ -600,39 +404,7 @@ type RateBottlePayload struct {
 	Rating int
 }
 
-// NewRateBottlePayload instantiates a RateBottlePayload from a raw request body.
-// It validates each field and returns an error if any validation fails.
-func NewRateBottlePayload(raw interface{}) (p *RateBottlePayload, err error) {
-	p, err = UnmarshalRateBottlePayload(raw, err)
-	return
-}
-
-// UnmarshalRateBottlePayload unmarshals and validates a raw interface{} into an instance of RateBottlePayload
-func UnmarshalRateBottlePayload(source interface{}, inErr error) (target *RateBottlePayload, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(RateBottlePayload)
-		if v, ok := val["rating"]; ok {
-			var tmp22 int
-			if f, ok := v.(float64); ok {
-				tmp22 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Rating`, v, "int", err)
-			}
-			target.Rating = tmp22
-		} else {
-			err = goa.MissingAttributeError(`payload`, "rating", err)
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`payload`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
-	return
-}
-
-// Validate validates the type instance.
+// Validate runs the validation rules defined in the design.
 func (payload *RateBottlePayload) Validate() (err error) {
 
 	if payload.Rating < 1 {
@@ -729,11 +501,6 @@ func NewUpdateBottleContext(c *goa.Context) (*UpdateBottleContext, error) {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
 	}
-	p, err := NewUpdateBottlePayload(c.Payload())
-	if err != nil {
-		return nil, err
-	}
-	ctx.Payload = p
 	return &ctx, err
 }
 
@@ -750,109 +517,7 @@ type UpdateBottlePayload struct {
 	Vintage   *int
 }
 
-// NewUpdateBottlePayload instantiates a UpdateBottlePayload from a raw request body.
-// It validates each field and returns an error if any validation fails.
-func NewUpdateBottlePayload(raw interface{}) (p *UpdateBottlePayload, err error) {
-	p, err = UnmarshalUpdateBottlePayload(raw, err)
-	return
-}
-
-// UnmarshalUpdateBottlePayload unmarshals and validates a raw interface{} into an instance of UpdateBottlePayload
-func UnmarshalUpdateBottlePayload(source interface{}, inErr error) (target *UpdateBottlePayload, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(UpdateBottlePayload)
-		if v, ok := val["color"]; ok {
-			var tmp27 string
-			if val, ok := v.(string); ok {
-				tmp27 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Color`, v, "string", err)
-			}
-			target.Color = &tmp27
-		}
-		if v, ok := val["country"]; ok {
-			var tmp28 string
-			if val, ok := v.(string); ok {
-				tmp28 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Country`, v, "string", err)
-			}
-			target.Country = &tmp28
-		}
-		if v, ok := val["name"]; ok {
-			var tmp29 string
-			if val, ok := v.(string); ok {
-				tmp29 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Name`, v, "string", err)
-			}
-			target.Name = &tmp29
-		}
-		if v, ok := val["region"]; ok {
-			var tmp30 string
-			if val, ok := v.(string); ok {
-				tmp30 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Region`, v, "string", err)
-			}
-			target.Region = &tmp30
-		}
-		if v, ok := val["review"]; ok {
-			var tmp31 string
-			if val, ok := v.(string); ok {
-				tmp31 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Review`, v, "string", err)
-			}
-			target.Review = &tmp31
-		}
-		if v, ok := val["sweetness"]; ok {
-			var tmp32 int
-			if f, ok := v.(float64); ok {
-				tmp32 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Sweetness`, v, "int", err)
-			}
-			target.Sweetness = &tmp32
-		}
-		if v, ok := val["varietal"]; ok {
-			var tmp33 string
-			if val, ok := v.(string); ok {
-				tmp33 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Varietal`, v, "string", err)
-			}
-			target.Varietal = &tmp33
-		}
-		if v, ok := val["vineyard"]; ok {
-			var tmp34 string
-			if val, ok := v.(string); ok {
-				tmp34 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Vineyard`, v, "string", err)
-			}
-			target.Vineyard = &tmp34
-		}
-		if v, ok := val["vintage"]; ok {
-			var tmp35 int
-			if f, ok := v.(float64); ok {
-				tmp35 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`payload.Vintage`, v, "int", err)
-			}
-			target.Vintage = &tmp35
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`payload`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
-	return
-}
-
-// Validate validates the type instance.
+// Validate runs the validation rules defined in the design.
 func (payload *UpdateBottlePayload) Validate() (err error) {
 	if payload.Color != nil {
 		if !(*payload.Color == "red" || *payload.Color == "white" || *payload.Color == "rose" || *payload.Color == "yellow" || *payload.Color == "sparkling") {

@@ -91,9 +91,10 @@ func (ut *BottlePayload) Validate() (err error) {
 func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string]interface{}, err error) {
 	err = inErr
 	if err2 := source.Validate(); err2 != nil {
-		return nil, goa.ReportError(err, err2)
+		err = goa.ReportError(err, err2)
+		return
 	}
-	tmp66 := map[string]interface{}{
+	tmp25 := map[string]interface{}{
 		"color":     source.Color,
 		"country":   source.Country,
 		"name":      source.Name,
@@ -104,101 +105,6 @@ func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string
 		"vineyard":  source.Vineyard,
 		"vintage":   source.Vintage,
 	}
-	target = tmp66
-	return
-}
-
-// UnmarshalBottlePayload unmarshals and validates a raw interface{} into an instance of BottlePayload
-func UnmarshalBottlePayload(source interface{}, inErr error) (target *BottlePayload, err error) {
-	err = inErr
-	if val, ok := source.(map[string]interface{}); ok {
-		target = new(BottlePayload)
-		if v, ok := val["color"]; ok {
-			var tmp67 string
-			if val, ok := v.(string); ok {
-				tmp67 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Color`, v, "string", err)
-			}
-			target.Color = &tmp67
-		}
-		if v, ok := val["country"]; ok {
-			var tmp68 string
-			if val, ok := v.(string); ok {
-				tmp68 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Country`, v, "string", err)
-			}
-			target.Country = &tmp68
-		}
-		if v, ok := val["name"]; ok {
-			var tmp69 string
-			if val, ok := v.(string); ok {
-				tmp69 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Name`, v, "string", err)
-			}
-			target.Name = &tmp69
-		}
-		if v, ok := val["region"]; ok {
-			var tmp70 string
-			if val, ok := v.(string); ok {
-				tmp70 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Region`, v, "string", err)
-			}
-			target.Region = &tmp70
-		}
-		if v, ok := val["review"]; ok {
-			var tmp71 string
-			if val, ok := v.(string); ok {
-				tmp71 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Review`, v, "string", err)
-			}
-			target.Review = &tmp71
-		}
-		if v, ok := val["sweetness"]; ok {
-			var tmp72 int
-			if f, ok := v.(float64); ok {
-				tmp72 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Sweetness`, v, "int", err)
-			}
-			target.Sweetness = &tmp72
-		}
-		if v, ok := val["varietal"]; ok {
-			var tmp73 string
-			if val, ok := v.(string); ok {
-				tmp73 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Varietal`, v, "string", err)
-			}
-			target.Varietal = &tmp73
-		}
-		if v, ok := val["vineyard"]; ok {
-			var tmp74 string
-			if val, ok := v.(string); ok {
-				tmp74 = val
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Vineyard`, v, "string", err)
-			}
-			target.Vineyard = &tmp74
-		}
-		if v, ok := val["vintage"]; ok {
-			var tmp75 int
-			if f, ok := v.(float64); ok {
-				tmp75 = int(f)
-			} else {
-				err = goa.InvalidAttributeTypeError(`load.Vintage`, v, "int", err)
-			}
-			target.Vintage = &tmp75
-		}
-	} else {
-		err = goa.InvalidAttributeTypeError(`load`, source, "dictionary", err)
-	}
-	if err2 := target.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-	}
+	target = tmp25
 	return
 }

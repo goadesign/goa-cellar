@@ -30,10 +30,14 @@ var Account = MediaType("application/vnd.account+json", func() {
 		Attribute("created_by")
 	})
 
-	View("link", func() {
+	View("tiny", func() {
 		Attribute("id")
 		Attribute("href")
 		Attribute("name")
+	})
+	View("link", func() {
+		Attribute("id")
+		Attribute("href")
 	})
 })
 
@@ -81,6 +85,9 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 		Attribute("vineyard")
 		Attribute("varietal")
 		Attribute("vintage")
+		Attribute("account", func() {
+			View("tiny")
+		})
 		Attribute("links")
 	})
 
@@ -96,9 +103,7 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 		Attribute("id")
 		Attribute("href")
 		Attribute("name")
-		Attribute("account", func() {
-			View("full")
-		})
+		Attribute("account")
 		Attribute("rating")
 		Attribute("vineyard")
 		Attribute("varietal")
