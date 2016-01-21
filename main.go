@@ -3,13 +3,13 @@
 package main
 
 import (
-	"github.com/raphael/goa"
-	"github.com/raphael/goa-cellar/app"
-	"github.com/raphael/goa-cellar/controllers"
-	"github.com/raphael/goa-cellar/js"
-	"github.com/raphael/goa-cellar/schema"
-	"github.com/raphael/goa-cellar/swagger"
-	"github.com/raphael/goa-middleware/middleware"
+	"github.com/goadesign/goa"
+	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/controllers"
+	"github.com/goadesign/goa-cellar/js"
+	"github.com/goadesign/goa-cellar/schema"
+	"github.com/goadesign/goa-cellar/swagger"
+	"github.com/goadesign/goa-middleware/middleware"
 )
 
 func main() {

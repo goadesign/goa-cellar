@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/raphael/goa-cellar/client"
+	"github.com/goadesign/goa-cellar/client"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 

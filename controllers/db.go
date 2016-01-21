@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/raphael/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/app"
 )
 
 // DB emulates a database driver using in-memory data structures.

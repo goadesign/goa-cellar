@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/raphael/goa"
-	"github.com/raphael/goa-middleware/cors"
-	"github.com/raphael/goa-cellar/app"
-	"github.com/raphael/goa-cellar/controllers"
-	"github.com/raphael/goa-cellar/swagger"
+	"github.com/goadesign/goa"
+	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/controllers"
+	"github.com/goadesign/goa-cellar/swagger"
+	"github.com/goadesign/goa-middleware/cors"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 

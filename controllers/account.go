@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/raphael/goa"
-	"github.com/raphael/goa-cellar/app"
+	"github.com/goadesign/goa"
+	"github.com/goadesign/goa-cellar/app"
 )
 
 // AccountController implements the account resource.

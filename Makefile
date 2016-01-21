@@ -13,8 +13,8 @@
 # Meta targets:
 # - all is the default target, it runs all the targets in the order above.
 #
-DEPEND=github.com/raphael/goa \
-	github.com/raphael/goa/goagen \
+DEPEND=github.com/goadesign/goa \
+	github.com/goadesign/goa/goagen \
 	bitbucket.org/pkg/inflect \
 	golang.org/x/tools/cmd/goimports
 
@@ -34,11 +34,11 @@ clean:
 	@rm -f cellar
 
 generate:
-	@goagen app     -d github.com/raphael/goa-cellar/design
-	@goagen swagger -d github.com/raphael/goa-cellar/design
-	@goagen schema  -d github.com/raphael/goa-cellar/design
-	@goagen client  -d github.com/raphael/goa-cellar/design
-	@goagen js      -d github.com/raphael/goa-cellar/design
+	@goagen app     -d github.com/goadesign/goa-cellar/design
+	@goagen swagger -d github.com/goadesign/goa-cellar/design
+	@goagen schema  -d github.com/goadesign/goa-cellar/design
+	@goagen client  -d github.com/goadesign/goa-cellar/design
+	@goagen js      -d github.com/goadesign/goa-cellar/design
 
 build:
 	@go build -o cellar
