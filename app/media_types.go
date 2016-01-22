@@ -18,15 +18,15 @@ import "github.com/goadesign/goa"
 // Identifier: application/vnd.account+json
 type Account struct {
 	// Date of creation
-	CreatedAt *string
+	CreatedAt *string `json:"created_at,omitempty"`
 	// Email of account owner
-	CreatedBy *string
+	CreatedBy *string `json:"created_by,omitempty"`
 	// API href of account
-	Href string
+	Href string `json:"href"`
 	// ID of account
-	ID int
+	ID int `json:"id"`
 	// Name of account
-	Name string
+	Name string `json:"name"`
 }
 
 // Account views
@@ -135,26 +135,26 @@ func MarshalAccountTiny(source *Account, inErr error) (target map[string]interfa
 // Identifier: application/vnd.bottle+json
 type Bottle struct {
 	// Account that owns bottle
-	Account *Account
-	Color   string
-	Country *string
+	Account *Account `json:"account,omitempty"`
+	Color   string   `json:"color"`
+	Country *string  `json:"country,omitempty"`
 	// Date of creation
-	CreatedAt *string
+	CreatedAt *string `json:"created_at,omitempty"`
 	// API href of bottle
-	Href string
+	Href string `json:"href"`
 	// ID of bottle
-	ID   int
-	Name string
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 	// Rating of bottle between 1 and 5
-	Rating    *int
-	Region    *string
-	Review    *string
-	Sweetness *int
+	Rating    *int    `json:"rating,omitempty"`
+	Region    *string `json:"region,omitempty"`
+	Review    *string `json:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty"`
 	// Date of last update
-	UpdatedAt *string
-	Varietal  string
-	Vineyard  string
-	Vintage   int
+	UpdatedAt *string `json:"updated_at,omitempty"`
+	Varietal  string  `json:"varietal"`
+	Vineyard  string  `json:"vineyard"`
+	Vintage   int     `json:"vintage"`
 }
 
 // Bottle views
