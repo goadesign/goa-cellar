@@ -10,7 +10,7 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/swagger"
-	"github.com/goadesign/goa-middleware/cors"
+	"github.com/goadesign/middleware/cors"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 

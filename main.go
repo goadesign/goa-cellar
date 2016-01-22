@@ -9,7 +9,7 @@ import (
 	"github.com/goadesign/goa-cellar/js"
 	"github.com/goadesign/goa-cellar/schema"
 	"github.com/goadesign/goa-cellar/swagger"
-	"github.com/goadesign/goa-middleware/middleware"
+	"github.com/goadesign/middleware"
 )
 
 func main() {
