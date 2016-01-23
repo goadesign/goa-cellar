@@ -16,15 +16,15 @@ import "github.com/goadesign/goa"
 
 // BottlePayload type
 type BottlePayload struct {
-	Color     *string
-	Country   *string
-	Name      *string
-	Region    *string
-	Review    *string
-	Sweetness *int
-	Varietal  *string
-	Vineyard  *string
-	Vintage   *int
+	Color     *string `json:"color,omitempty"`
+	Country   *string `json:"country,omitempty"`
+	Name      *string `json:"name,omitempty"`
+	Region    *string `json:"region,omitempty"`
+	Review    *string `json:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty"`
 }
 
 // Validate validates the type instance.
@@ -94,7 +94,7 @@ func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp25 := map[string]interface{}{
+	tmp29 := map[string]interface{}{
 		"color":     source.Color,
 		"country":   source.Country,
 		"name":      source.Name,
@@ -105,6 +105,6 @@ func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string
 		"vineyard":  source.Vineyard,
 		"vintage":   source.Vintage,
 	}
-	target = tmp25
+	target = tmp29
 	return
 }

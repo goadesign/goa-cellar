@@ -25,6 +25,13 @@ type AccountController interface {
 
 // MountAccountController "mounts" a Account resource controller on the given service.
 func MountAccountController(service goa.Service, ctrl AccountController) {
+	// Setup encoders and decoders. This is idempotent and is done by each MountXXX function.
+	tmp15 := goa.JSONEncoderFactory()
+	service.SetEncoder(tmp15, true, "application/json", "application/xml", "text/xml")
+	tmp16 := goa.JSONDecoderFactory()
+	service.SetDecoder(tmp16, true, "application/json", "application/xml", "text/xml")
+
+	// Setup endpoint handler
 	var h goa.Handler
 	mux := service.ServeMux()
 	h = func(c *goa.Context) error {
@@ -106,6 +113,13 @@ type BottleController interface {
 
 // MountBottleController "mounts" a Bottle resource controller on the given service.
 func MountBottleController(service goa.Service, ctrl BottleController) {
+	// Setup encoders and decoders. This is idempotent and is done by each MountXXX function.
+	tmp17 := goa.JSONEncoderFactory()
+	service.SetEncoder(tmp17, true, "application/json", "application/xml", "text/xml")
+	tmp18 := goa.JSONDecoderFactory()
+	service.SetDecoder(tmp18, true, "application/json", "application/xml", "text/xml")
+
+	// Setup endpoint handler
 	var h goa.Handler
 	mux := service.ServeMux()
 	h = func(c *goa.Context) error {

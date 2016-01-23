@@ -87,14 +87,14 @@ func MarshalAccount(source *Account, inErr error) (target map[string]interface{}
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp15 := map[string]interface{}{
+	tmp19 := map[string]interface{}{
 		"created_at": source.CreatedAt,
 		"created_by": source.CreatedBy,
 		"href":       source.Href,
 		"id":         source.ID,
 		"name":       source.Name,
 	}
-	target = tmp15
+	target = tmp19
 	return
 }
 
@@ -106,11 +106,11 @@ func MarshalAccountLink(source *Account, inErr error) (target map[string]interfa
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp16 := map[string]interface{}{
+	tmp20 := map[string]interface{}{
 		"href": source.Href,
 		"id":   source.ID,
 	}
-	target = tmp16
+	target = tmp20
 	return
 }
 
@@ -122,12 +122,12 @@ func MarshalAccountTiny(source *Account, inErr error) (target map[string]interfa
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp17 := map[string]interface{}{
+	tmp21 := map[string]interface{}{
 		"href": source.Href,
 		"id":   source.ID,
 		"name": source.Name,
 	}
-	target = tmp17
+	target = tmp21
 	return
 }
 
@@ -288,7 +288,7 @@ func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, 
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp18 := map[string]interface{}{
+	tmp22 := map[string]interface{}{
 		"href":     source.Href,
 		"id":       source.ID,
 		"name":     source.Name,
@@ -298,9 +298,9 @@ func MarshalBottle(source *Bottle, inErr error) (target map[string]interface{}, 
 		"vintage":  source.Vintage,
 	}
 	if source.Account != nil {
-		tmp18["account"], err = MarshalAccountTiny(source.Account, err)
+		tmp22["account"], err = MarshalAccountTiny(source.Account, err)
 	}
-	target = tmp18
+	target = tmp22
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -317,7 +317,7 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp19 := map[string]interface{}{
+	tmp23 := map[string]interface{}{
 		"color":      source.Color,
 		"country":    source.Country,
 		"created_at": source.CreatedAt,
@@ -334,9 +334,9 @@ func MarshalBottleFull(source *Bottle, inErr error) (target map[string]interface
 		"vintage":    source.Vintage,
 	}
 	if source.Account != nil {
-		tmp19["account"], err = MarshalAccount(source.Account, err)
+		tmp23["account"], err = MarshalAccount(source.Account, err)
 	}
-	target = tmp19
+	target = tmp23
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -353,13 +353,13 @@ func MarshalBottleTiny(source *Bottle, inErr error) (target map[string]interface
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp20 := map[string]interface{}{
+	tmp24 := map[string]interface{}{
 		"href":   source.Href,
 		"id":     source.ID,
 		"name":   source.Name,
 		"rating": source.Rating,
 	}
-	target = tmp20
+	target = tmp24
 	if err == nil {
 		links := make(map[string]interface{})
 		links["account"], err = MarshalAccountLink(source.Account, err)
@@ -387,18 +387,18 @@ const (
 func (mt BottleCollection) Dump(view BottleCollectionViewEnum) (res []map[string]interface{}, err error) {
 	if view == BottleCollectionDefaultView {
 		res = make([]map[string]interface{}, len(mt))
-		for i, tmp21 := range mt {
-			var tmp22 map[string]interface{}
-			tmp22, err = MarshalBottle(tmp21, err)
-			res[i] = tmp22
+		for i, tmp25 := range mt {
+			var tmp26 map[string]interface{}
+			tmp26, err = MarshalBottle(tmp25, err)
+			res[i] = tmp26
 		}
 	}
 	if view == BottleCollectionTinyView {
 		res = make([]map[string]interface{}, len(mt))
-		for i, tmp23 := range mt {
-			var tmp24 map[string]interface{}
-			tmp24, err = MarshalBottleTiny(tmp23, err)
-			res[i] = tmp24
+		for i, tmp27 := range mt {
+			var tmp28 map[string]interface{}
+			tmp28, err = MarshalBottleTiny(tmp27, err)
+			res[i] = tmp28
 		}
 	}
 	return
