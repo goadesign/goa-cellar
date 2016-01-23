@@ -94,7 +94,7 @@ func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string
 		err = goa.ReportError(err, err2)
 		return
 	}
-	tmp29 := map[string]interface{}{
+	tmp37 := map[string]interface{}{
 		"color":     source.Color,
 		"country":   source.Country,
 		"name":      source.Name,
@@ -105,6 +105,6 @@ func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string
 		"vineyard":  source.Vineyard,
 		"vintage":   source.Vintage,
 	}
-	target = tmp29
+	target = tmp37
 	return
 }
