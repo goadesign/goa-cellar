@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa-cellar/client"
 	"github.com/spf13/cobra"

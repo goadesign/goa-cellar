@@ -7,6 +7,8 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
+	"strings"
 )
 
 // CreateBottlePayload is the data structure used to initialize the bottle create request body.
