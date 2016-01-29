@@ -14,10 +14,9 @@ package app
 
 import (
 	"fmt"
+	"github.com/goadesign/goa"
 	"strconv"
 	"strings"
-
-	"github.com/goadesign/goa"
 )
 
 // CreateAccountContext provides the account create action context.
@@ -37,7 +36,7 @@ func NewCreateAccountContext(c *goa.Context) (*CreateAccountContext, error) {
 // CreateAccountPayload is the account create action payload.
 type CreateAccountPayload struct {
 	// Name of account
-	Name string `json:"name"`
+	Name string `json:"name" xml:"name"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -149,7 +148,7 @@ func NewUpdateAccountContext(c *goa.Context) (*UpdateAccountContext, error) {
 // UpdateAccountPayload is the account update action payload.
 type UpdateAccountPayload struct {
 	// Name of account
-	Name string `json:"name"`
+	Name string `json:"name" xml:"name"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -196,15 +195,15 @@ func NewCreateBottleContext(c *goa.Context) (*CreateBottleContext, error) {
 
 // CreateBottlePayload is the bottle create action payload.
 type CreateBottlePayload struct {
-	Color     string  `json:"color"`
-	Country   *string `json:"country,omitempty"`
-	Name      string  `json:"name"`
-	Region    *string `json:"region,omitempty"`
-	Review    *string `json:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty"`
-	Varietal  string  `json:"varietal"`
-	Vineyard  string  `json:"vineyard"`
-	Vintage   int     `json:"vintage"`
+	Color     string  `json:"color" xml:"color"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+	Name      string  `json:"name" xml:"name"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  string  `json:"varietal" xml:"varietal"`
+	Vineyard  string  `json:"vineyard" xml:"vineyard"`
+	Vintage   int     `json:"vintage" xml:"vintage"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -401,7 +400,7 @@ func NewRateBottleContext(c *goa.Context) (*RateBottleContext, error) {
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating int `json:"rating"`
+	Rating int `json:"rating" xml:"rating"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -506,15 +505,15 @@ func NewUpdateBottleContext(c *goa.Context) (*UpdateBottleContext, error) {
 
 // UpdateBottlePayload is the bottle update action payload.
 type UpdateBottlePayload struct {
-	Color     *string `json:"color,omitempty"`
-	Country   *string `json:"country,omitempty"`
-	Name      *string `json:"name,omitempty"`
-	Region    *string `json:"region,omitempty"`
-	Review    *string `json:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty"`
+	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.

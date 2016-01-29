@@ -18,15 +18,15 @@ import "github.com/goadesign/goa"
 // Identifier: application/vnd.account+json
 type Account struct {
 	// Date of creation
-	CreatedAt *string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty" xml:"created_at,omitempty"`
 	// Email of account owner
-	CreatedBy *string `json:"created_by,omitempty"`
+	CreatedBy *string `json:"created_by,omitempty" xml:"created_by,omitempty"`
 	// API href of account
-	Href string `json:"href"`
+	Href string `json:"href" xml:"href"`
 	// ID of account
-	ID int `json:"id"`
+	ID int `json:"id" xml:"id"`
 	// Name of account
-	Name string `json:"name"`
+	Name string `json:"name" xml:"name"`
 }
 
 // Account views
@@ -135,26 +135,26 @@ func MarshalAccountTiny(source *Account, inErr error) (target map[string]interfa
 // Identifier: application/vnd.bottle+json
 type Bottle struct {
 	// Account that owns bottle
-	Account *Account `json:"account,omitempty"`
-	Color   string   `json:"color"`
-	Country *string  `json:"country,omitempty"`
+	Account *Account `json:"account,omitempty" xml:"account,omitempty"`
+	Color   string   `json:"color" xml:"color"`
+	Country *string  `json:"country,omitempty" xml:"country,omitempty"`
 	// Date of creation
-	CreatedAt *string `json:"created_at,omitempty"`
+	CreatedAt *string `json:"created_at,omitempty" xml:"created_at,omitempty"`
 	// API href of bottle
-	Href string `json:"href"`
+	Href string `json:"href" xml:"href"`
 	// ID of bottle
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID   int    `json:"id" xml:"id"`
+	Name string `json:"name" xml:"name"`
 	// Rating of bottle between 1 and 5
-	Rating    *int    `json:"rating,omitempty"`
-	Region    *string `json:"region,omitempty"`
-	Review    *string `json:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty"`
+	Rating    *int    `json:"rating,omitempty" xml:"rating,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
 	// Date of last update
-	UpdatedAt *string `json:"updated_at,omitempty"`
-	Varietal  string  `json:"varietal"`
-	Vineyard  string  `json:"vineyard"`
-	Vintage   int     `json:"vintage"`
+	UpdatedAt *string `json:"updated_at,omitempty" xml:"updated_at,omitempty"`
+	Varietal  string  `json:"varietal" xml:"varietal"`
+	Vineyard  string  `json:"vineyard" xml:"vineyard"`
+	Vintage   int     `json:"vintage" xml:"vintage"`
 }
 
 // Bottle views
@@ -204,14 +204,16 @@ func (mt *Bottle) Validate() (err error) {
 		err = goa.MissingAttributeError(`response`, "color", err)
 	}
 
-	if mt.Account.CreatedAt != nil {
-		if err2 := goa.ValidateFormat(goa.FormatDateTime, *mt.Account.CreatedAt); err2 != nil {
-			err = goa.InvalidFormatError(`response.account.created_at`, *mt.Account.CreatedAt, goa.FormatDateTime, err2, err)
+	if mt.Account != nil {
+		if mt.Account.CreatedAt != nil {
+			if err2 := goa.ValidateFormat(goa.FormatDateTime, *mt.Account.CreatedAt); err2 != nil {
+				err = goa.InvalidFormatError(`response.account.created_at`, *mt.Account.CreatedAt, goa.FormatDateTime, err2, err)
+			}
 		}
-	}
-	if mt.Account.CreatedBy != nil {
-		if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.Account.CreatedBy); err2 != nil {
-			err = goa.InvalidFormatError(`response.account.created_by`, *mt.Account.CreatedBy, goa.FormatEmail, err2, err)
+		if mt.Account.CreatedBy != nil {
+			if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.Account.CreatedBy); err2 != nil {
+				err = goa.InvalidFormatError(`response.account.created_by`, *mt.Account.CreatedBy, goa.FormatEmail, err2, err)
+			}
 		}
 	}
 	if !(mt.Color == "red" || mt.Color == "white" || mt.Color == "rose" || mt.Color == "yellow" || mt.Color == "sparkling") {
@@ -407,14 +409,16 @@ func (mt BottleCollection) Dump(view BottleCollectionViewEnum) (res []map[string
 // Validate validates the media type instance.
 func (mt BottleCollection) Validate() (err error) {
 	for _, e := range mt {
-		if e.Account.CreatedAt != nil {
-			if err2 := goa.ValidateFormat(goa.FormatDateTime, *e.Account.CreatedAt); err2 != nil {
-				err = goa.InvalidFormatError(`response[*].account.created_at`, *e.Account.CreatedAt, goa.FormatDateTime, err2, err)
+		if e.Account != nil {
+			if e.Account.CreatedAt != nil {
+				if err2 := goa.ValidateFormat(goa.FormatDateTime, *e.Account.CreatedAt); err2 != nil {
+					err = goa.InvalidFormatError(`response[*].account.created_at`, *e.Account.CreatedAt, goa.FormatDateTime, err2, err)
+				}
 			}
-		}
-		if e.Account.CreatedBy != nil {
-			if err2 := goa.ValidateFormat(goa.FormatEmail, *e.Account.CreatedBy); err2 != nil {
-				err = goa.InvalidFormatError(`response[*].account.created_by`, *e.Account.CreatedBy, goa.FormatEmail, err2, err)
+			if e.Account.CreatedBy != nil {
+				if err2 := goa.ValidateFormat(goa.FormatEmail, *e.Account.CreatedBy); err2 != nil {
+					err = goa.InvalidFormatError(`response[*].account.created_by`, *e.Account.CreatedBy, goa.FormatEmail, err2, err)
+				}
 			}
 		}
 		if !(e.Color == "red" || e.Color == "white" || e.Color == "rose" || e.Color == "yellow" || e.Color == "sparkling") {

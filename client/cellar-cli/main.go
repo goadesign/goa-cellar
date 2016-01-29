@@ -3,11 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
-
 	"github.com/goadesign/goa-cellar/client"
-	"gopkg.in/alecthomas/kingpin.v2"
+	"github.com/spf13/cobra"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"time"
 )
 
 // PrettyPrint is true if the tool output should be formatted for human consumption.
@@ -15,37 +16,31 @@ var PrettyPrint bool
 
 func main() {
 	// Create command line parser
-	app := kingpin.New("cellar-cli", "CLI client for the cellar service (http://goa.design/getting-started.html)")
+	app := &cobra.Command{
+		Use:   "cellar-cli",
+		Short: "CLI client for the cellar service (http://goa.design/getting-started.html)",
+	}
 	c := client.New()
 	c.UserAgent = "cellar-cli/1.0"
-	app.Flag("scheme", "Set the requests scheme").Short('s').Default("http").StringVar(&c.Scheme)
-	app.Flag("host", "API hostname").Short('h').Default("cellar.goa.design").StringVar(&c.Host)
-	app.Flag("timeout", "Set the request timeout, defaults to 20s").Short('t').Default("20s").DurationVar(&c.Timeout)
-	app.Flag("dump", "Dump HTTP request and response.").BoolVar(&c.Dump)
-	app.Flag("pp", "Pretty print response body").BoolVar(&PrettyPrint)
-	commands := RegisterCommands(app)
-	// Make "client-cli <action> [<resource>] --help" equivalent to
-	// "client-cli help <action> [<resource>]"
-	if os.Args[len(os.Args)-1] == "--help" {
-		args := append([]string{os.Args[0], "help"}, os.Args[1:len(os.Args)-1]...)
-		os.Args = args
+	app.PersistentFlags().StringVarP(&c.Scheme, "scheme", "s", "http", "Set the requests scheme")
+	app.PersistentFlags().StringVarP(&c.Host, "host", "H", "cellar.goa.design", "API hostname")
+	app.PersistentFlags().DurationVarP(&c.Timeout, "timeout", "t", time.Duration(20)*time.Second, "Set the request timeout, defaults to 20s")
+	app.PersistentFlags().BoolVar(&c.Dump, "dump", false, "Dump HTTP request and response.")
+	app.PersistentFlags().BoolVar(&PrettyPrint, "pp", false, "Pretty print response body")
+	RegisterCommands(app, c)
+	if err := app.Execute(); err != nil {
+		fmt.Fprintf(os.Stderr, "request failed: %s", err)
+		os.Exit(-1)
 	}
-	cmdName, err := app.Parse(os.Args[1:])
-	if err != nil {
-		kingpin.Fatalf(err.Error())
-	}
-	cmd, ok := commands[cmdName]
-	if !ok {
-		kingpin.Fatalf("unknown command %s", cmdName)
-	}
-	resp, err := cmd.Run(c)
-	if err != nil {
-		kingpin.Fatalf("request failed: %s", err)
-	}
+}
+
+// HandleResponse unmarshals the response body and analyzes the status code to print then exit.
+func HandleResponse(c *client.Client, resp *http.Response) {
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		kingpin.Fatalf("failed to read body: %s", err)
+		fmt.Fprintf(os.Stderr, "failed to read body: %s", err)
+		os.Exit(-1)
 	}
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		// Let user know if something went wrong
@@ -94,55 +89,117 @@ func main() {
 }
 
 // RegisterCommands all the resource action subcommands to the application command line.
-func RegisterCommands(app *kingpin.Application) map[string]client.ActionCommand {
-	res := make(map[string]client.ActionCommand)
-	var command, sub *kingpin.CmdClause
-	command = app.Command("create", "create action")
+func RegisterCommands(app *cobra.Command, c *client.Client) {
+	var command, sub *cobra.Command
+	command = &cobra.Command{
+		Use:   "create",
+		Short: "create action",
+	}
 	tmp1 := new(CreateAccountCommand)
-	sub = command.Command("account", "")
+	sub = &cobra.Command{
+		Use:   "account",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
+	}
 	tmp1.RegisterFlags(sub)
-	res["create account"] = tmp1
+	command.AddCommand(sub)
 	tmp2 := new(CreateBottleCommand)
-	sub = command.Command("bottle", "")
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
+	}
 	tmp2.RegisterFlags(sub)
-	res["create bottle"] = tmp2
-	command = app.Command("delete", "delete action")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "delete",
+		Short: "delete action",
+	}
 	tmp3 := new(DeleteAccountCommand)
-	sub = command.Command("account", "")
+	sub = &cobra.Command{
+		Use:   "account",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
+	}
 	tmp3.RegisterFlags(sub)
-	res["delete account"] = tmp3
+	command.AddCommand(sub)
 	tmp4 := new(DeleteBottleCommand)
-	sub = command.Command("bottle", "")
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
+	}
 	tmp4.RegisterFlags(sub)
-	res["delete bottle"] = tmp4
-	command = app.Command("list", "List all bottles in account optionally filtering by year")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "list",
+		Short: "List all bottles in account optionally filtering by year",
+	}
 	tmp5 := new(ListBottleCommand)
-	sub = command.Command("bottle", "")
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
+	}
 	tmp5.RegisterFlags(sub)
-	res["list bottle"] = tmp5
-	command = app.Command("rate", "")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "rate",
+		Short: "",
+	}
 	tmp6 := new(RateBottleCommand)
-	sub = command.Command("bottle", "")
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
+	}
 	tmp6.RegisterFlags(sub)
-	res["rate bottle"] = tmp6
-	command = app.Command("show", "show action")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "show",
+		Short: "show action",
+	}
 	tmp7 := new(ShowAccountCommand)
-	sub = command.Command("account", "")
+	sub = &cobra.Command{
+		Use:   "account",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
+	}
 	tmp7.RegisterFlags(sub)
-	res["show account"] = tmp7
+	command.AddCommand(sub)
 	tmp8 := new(ShowBottleCommand)
-	sub = command.Command("bottle", "")
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
+	}
 	tmp8.RegisterFlags(sub)
-	res["show bottle"] = tmp8
-	command = app.Command("update", "update action")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "update",
+		Short: "update action",
+	}
 	tmp9 := new(UpdateAccountCommand)
-	sub = command.Command("account", "")
+	sub = &cobra.Command{
+		Use:   "account",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
+	}
 	tmp9.RegisterFlags(sub)
-	res["update account"] = tmp9
+	command.AddCommand(sub)
 	tmp10 := new(UpdateBottleCommand)
-	sub = command.Command("bottle", "")
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
+	}
 	tmp10.RegisterFlags(sub)
-	res["update bottle"] = tmp10
+	command.AddCommand(sub)
+	app.AddCommand(command)
 
-	return res
 }
