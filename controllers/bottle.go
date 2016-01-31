@@ -5,6 +5,23 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 )
 
+// ToBottleMedia converts a bottle model into a bottle media type
+func ToBottleMedia(b *BottleModel) *app.Bottle {
+	account := ToAccountMedia(b.Account)
+	link := ToAccountLink(b.Account)
+	return &app.Bottle{
+		Account:  account,
+		Href:     b.Href,
+		ID:       b.ID,
+		Links:    &app.BottleLinks{Account: link},
+		Name:     b.Name,
+		Rating:   b.Rating,
+		Varietal: b.Varietal,
+		Vineyard: b.Vineyard,
+		Vintage:  b.Vintage,
+	}
+}
+
 // BottleController implements the bottle resource.
 type BottleController struct {
 	goa.Controller
@@ -21,7 +38,7 @@ func NewBottle(service goa.Service) *BottleController {
 
 // List lists all the bottles in the account optionally filtering by year.
 func (b *BottleController) List(ctx *app.ListBottleContext) error {
-	var bottles []*app.Bottle
+	var bottles []*BottleModel
 	var err error
 	if ctx.Years != nil {
 		bottles, err = b.db.GetBottlesByYears(ctx.AccountID, ctx.Years)
@@ -31,7 +48,11 @@ func (b *BottleController) List(ctx *app.ListBottleContext) error {
 	if err != nil {
 		return ctx.NotFound()
 	}
-	return ctx.OK(bottles, "default")
+	bs := make([]*app.Bottle, len(bottles))
+	for i, b := range bottles {
+		bs[i] = ToBottleMedia(b)
+	}
+	return ctx.OK(bs)
 }
 
 // Show retrieves the bottle with the given id.
@@ -40,7 +61,7 @@ func (b *BottleController) Show(ctx *app.ShowBottleContext) error {
 	if bottle == nil {
 		return ctx.NotFound()
 	}
-	return ctx.OK(bottle, "default")
+	return ctx.OK(ToBottleMedia(bottle))
 }
 
 // Create records a new bottle.

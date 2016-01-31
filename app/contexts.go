@@ -13,7 +13,6 @@
 package app
 
 import (
-	"fmt"
 	"github.com/goadesign/goa"
 	"strconv"
 	"strings"
@@ -113,13 +112,15 @@ func (ctx *ShowAccountContext) NotFound() error {
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ShowAccountContext) OK(resp *Account, view AccountViewEnum) error {
-	r, err := resp.Dump(view)
-	if err != nil {
-		return fmt.Errorf("invalid response: %s", err)
-	}
-	ctx.Header().Set("Content-Type", "application/vnd.account+json; charset=utf-8")
-	return ctx.Respond(200, r)
+func (ctx *ShowAccountContext) OK(resp *Account) error {
+	ctx.Header().Set("Content-Type", "application/vnd.account")
+	return ctx.Respond(200, resp)
+}
+
+// OKTiny sends a HTTP response with status code 200.
+func (ctx *ShowAccountContext) OKTiny(resp *AccountTiny) error {
+	ctx.Header().Set("Content-Type", "application/vnd.account")
+	return ctx.Respond(200, resp)
 }
 
 // UpdateAccountContext provides the account update action context.
@@ -356,13 +357,15 @@ func (ctx *ListBottleContext) NotFound() error {
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ListBottleContext) OK(resp BottleCollection, view BottleCollectionViewEnum) error {
-	r, err := resp.Dump(view)
-	if err != nil {
-		return fmt.Errorf("invalid response: %s", err)
-	}
-	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection; charset=utf-8")
-	return ctx.Respond(200, r)
+func (ctx *ListBottleContext) OK(resp BottleCollection) error {
+	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	return ctx.Respond(200, resp)
+}
+
+// OKTiny sends a HTTP response with status code 200.
+func (ctx *ListBottleContext) OKTiny(resp BottleTinyCollection) error {
+	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	return ctx.Respond(200, resp)
 }
 
 // RateBottleContext provides the bottle rate action context.
@@ -462,13 +465,21 @@ func (ctx *ShowBottleContext) NotFound() error {
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ShowBottleContext) OK(resp *Bottle, view BottleViewEnum) error {
-	r, err := resp.Dump(view)
-	if err != nil {
-		return fmt.Errorf("invalid response: %s", err)
-	}
-	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; charset=utf-8")
-	return ctx.Respond(200, r)
+func (ctx *ShowBottleContext) OK(resp *Bottle) error {
+	ctx.Header().Set("Content-Type", "application/vnd.bottle")
+	return ctx.Respond(200, resp)
+}
+
+// OKFull sends a HTTP response with status code 200.
+func (ctx *ShowBottleContext) OKFull(resp *BottleFull) error {
+	ctx.Header().Set("Content-Type", "application/vnd.bottle")
+	return ctx.Respond(200, resp)
+}
+
+// OKTiny sends a HTTP response with status code 200.
+func (ctx *ShowBottleContext) OKTiny(resp *BottleTiny) error {
+	ctx.Header().Set("Content-Type", "application/vnd.bottle")
+	return ctx.Respond(200, resp)
 }
 
 // UpdateBottleContext provides the bottle update action context.

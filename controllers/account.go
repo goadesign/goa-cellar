@@ -5,6 +5,25 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 )
 
+// ToAccountMedia builds an account media type from an account model.
+func ToAccountMedia(account *AccountModel) *app.Account {
+	return &app.Account{
+		CreatedAt: account.CreatedAt,
+		CreatedBy: account.CreatedBy,
+		Href:      account.Href,
+		ID:        account.ID,
+		Name:      account.Name,
+	}
+}
+
+// ToAccountLink builds an account link from an account model.
+func ToAccountLink(account *AccountModel) *app.AccountLink {
+	return &app.AccountLink{
+		Href: account.Href,
+		ID:   account.ID,
+	}
+}
+
 // AccountController implements the account resource.
 type AccountController struct {
 	goa.Controller
@@ -25,7 +44,14 @@ func (b *AccountController) Show(c *app.ShowAccountContext) error {
 	if account == nil {
 		return c.NotFound()
 	}
-	return c.OK(account, "default")
+	a := &app.Account{
+		CreatedAt: account.CreatedAt,
+		CreatedBy: account.CreatedBy,
+		Href:      account.Href,
+		ID:        account.ID,
+		Name:      account.Name,
+	}
+	return c.OK(a)
 }
 
 // Create records a new account.

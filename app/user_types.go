@@ -86,25 +86,3 @@ func (ut *BottlePayload) Validate() (err error) {
 	}
 	return
 }
-
-// MarshalBottlePayload validates and renders an instance of BottlePayload into a interface{}
-func MarshalBottlePayload(source *BottlePayload, inErr error) (target map[string]interface{}, err error) {
-	err = inErr
-	if err2 := source.Validate(); err2 != nil {
-		err = goa.ReportError(err, err2)
-		return
-	}
-	tmp37 := map[string]interface{}{
-		"color":     source.Color,
-		"country":   source.Country,
-		"name":      source.Name,
-		"region":    source.Region,
-		"review":    source.Review,
-		"sweetness": source.Sweetness,
-		"varietal":  source.Varietal,
-		"vineyard":  source.Vineyard,
-		"vintage":   source.Vintage,
-	}
-	target = tmp37
-	return
-}
