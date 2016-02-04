@@ -70,4 +70,4 @@ Vary: Origin
 }
 ```
 
-The complete documentation for the example is available on [swagger.goa.design](http://swagger.goa.design/?url=raphael%2Fgoa%2Fexamples%2Fcellar%2Fdesign).
+The complete documentation for the example is available on [swagger.goa.design](http://swagger.goa.design/?url=goadesign%2Fgoa-cellar%2Fdesign).
