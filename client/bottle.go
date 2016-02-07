@@ -60,13 +60,13 @@ func (c *Client) ListBottle(path string, years []int) (*http.Response, error) {
 	var body io.Reader
 	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
 	values := u.Query()
-	tmp12 := make([]string, len(years))
+	tmp13 := make([]string, len(years))
 	for i, e := range years {
-		tmp13 := strconv.Itoa(e)
-		tmp12[i] = tmp13
+		tmp14 := strconv.Itoa(e)
+		tmp13[i] = tmp14
 	}
-	tmp11 := strings.Join(tmp12, ",")
-	values.Set("years", tmp11)
+	tmp12 := strings.Join(tmp13, ",")
+	values.Set("years", tmp12)
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), body)
 	if err != nil {

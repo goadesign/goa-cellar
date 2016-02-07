@@ -14,6 +14,44 @@ package app
 
 import "github.com/goadesign/goa"
 
+// A tenant account
+// Identifier: application/vnd.account+json
+type Account struct {
+	// Date of creation
+	CreatedAt *string `json:"created_at,omitempty" xml:"created_at,omitempty"`
+	// Email of account owner
+	CreatedBy *string `json:"created_by,omitempty" xml:"created_by,omitempty"`
+	// API href of account
+	Href string `json:"href" xml:"href"`
+	// ID of account
+	ID int `json:"id" xml:"id"`
+	// Name of account
+	Name string `json:"name" xml:"name"`
+}
+
+// Validate validates the media type instance.
+func (mt *Account) Validate() (err error) {
+
+	if mt.Href == "" {
+		err = goa.MissingAttributeError(`response`, "href", err)
+	}
+	if mt.Name == "" {
+		err = goa.MissingAttributeError(`response`, "name", err)
+	}
+
+	if mt.CreatedAt != nil {
+		if err2 := goa.ValidateFormat(goa.FormatDateTime, *mt.CreatedAt); err2 != nil {
+			err = goa.InvalidFormatError(`response.created_at`, *mt.CreatedAt, goa.FormatDateTime, err2, err)
+		}
+	}
+	if mt.CreatedBy != nil {
+		if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.CreatedBy); err2 != nil {
+			err = goa.InvalidFormatError(`response.created_by`, *mt.CreatedBy, goa.FormatEmail, err2, err)
+		}
+	}
+	return
+}
+
 // A tenant account, tiny view
 // Identifier: application/vnd.account+json
 type AccountTiny struct {
@@ -54,44 +92,6 @@ func (mt *AccountLink) Validate() (err error) {
 		err = goa.MissingAttributeError(`response`, "href", err)
 	}
 
-	return
-}
-
-// A tenant account
-// Identifier: application/vnd.account+json
-type Account struct {
-	// Date of creation
-	CreatedAt *string `json:"created_at,omitempty" xml:"created_at,omitempty"`
-	// Email of account owner
-	CreatedBy *string `json:"created_by,omitempty" xml:"created_by,omitempty"`
-	// API href of account
-	Href string `json:"href" xml:"href"`
-	// ID of account
-	ID int `json:"id" xml:"id"`
-	// Name of account
-	Name string `json:"name" xml:"name"`
-}
-
-// Validate validates the media type instance.
-func (mt *Account) Validate() (err error) {
-
-	if mt.Href == "" {
-		err = goa.MissingAttributeError(`response`, "href", err)
-	}
-	if mt.Name == "" {
-		err = goa.MissingAttributeError(`response`, "name", err)
-	}
-
-	if mt.CreatedAt != nil {
-		if err2 := goa.ValidateFormat(goa.FormatDateTime, *mt.CreatedAt); err2 != nil {
-			err = goa.InvalidFormatError(`response.created_at`, *mt.CreatedAt, goa.FormatDateTime, err2, err)
-		}
-	}
-	if mt.CreatedBy != nil {
-		if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.CreatedBy); err2 != nil {
-			err = goa.InvalidFormatError(`response.created_by`, *mt.CreatedBy, goa.FormatEmail, err2, err)
-		}
-	}
 	return
 }
 
@@ -341,30 +341,6 @@ type BottleLinks struct {
 	Account *AccountLink `json:"account,omitempty" xml:"account,omitempty"`
 }
 
-// , tiny view
-// Identifier: application/vnd.bottle+json; type=collection
-type BottleTinyCollection []*BottleTiny
-
-// Validate validates the media type instance.
-func (mt BottleTinyCollection) Validate() (err error) {
-	for _, e := range mt {
-		if len(e.Name) < 2 {
-			err = goa.InvalidLengthError(`response[*].name`, e.Name, len(e.Name), 2, true, err)
-		}
-		if e.Rating != nil {
-			if *e.Rating < 1 {
-				err = goa.InvalidRangeError(`response[*].rating`, *e.Rating, 1, true, err)
-			}
-		}
-		if e.Rating != nil {
-			if *e.Rating > 5 {
-				err = goa.InvalidRangeError(`response[*].rating`, *e.Rating, 5, false, err)
-			}
-		}
-	}
-	return
-}
-
 // , default view
 // Identifier: application/vnd.bottle+json; type=collection
 type BottleCollection []*Bottle
@@ -408,6 +384,30 @@ func (mt BottleCollection) Validate() (err error) {
 		}
 		if e.Vintage > 2020 {
 			err = goa.InvalidRangeError(`response[*].vintage`, e.Vintage, 2020, false, err)
+		}
+	}
+	return
+}
+
+// , tiny view
+// Identifier: application/vnd.bottle+json; type=collection
+type BottleTinyCollection []*BottleTiny
+
+// Validate validates the media type instance.
+func (mt BottleTinyCollection) Validate() (err error) {
+	for _, e := range mt {
+		if len(e.Name) < 2 {
+			err = goa.InvalidLengthError(`response[*].name`, e.Name, len(e.Name), 2, true, err)
+		}
+		if e.Rating != nil {
+			if *e.Rating < 1 {
+				err = goa.InvalidRangeError(`response[*].rating`, *e.Rating, 1, true, err)
+			}
+		}
+		if e.Rating != nil {
+			if *e.Rating > 5 {
+				err = goa.InvalidRangeError(`response[*].rating`, *e.Rating, 5, false, err)
+			}
 		}
 	}
 	return

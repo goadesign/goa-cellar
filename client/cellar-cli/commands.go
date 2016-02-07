@@ -218,7 +218,8 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *ListBottleCommand) RegisterFlags(cc *cobra.Command) {
-	cc.Flags().IntSliceVar(&cmd.Years, "years", nil, "Filter by years")
+	var tmp11 []int
+	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp11, "Filter by years")
 }
 
 // Run makes the HTTP request corresponding to the RateBottleCommand command.
