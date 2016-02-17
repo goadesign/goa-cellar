@@ -52,6 +52,25 @@ func (mt *Account) Validate() (err error) {
 	return
 }
 
+// A tenant account, link view
+// Identifier: application/vnd.account+json
+type AccountLink struct {
+	// API href of account
+	Href string `json:"href" xml:"href"`
+	// ID of account
+	ID int `json:"id" xml:"id"`
+}
+
+// Validate validates the media type instance.
+func (mt *AccountLink) Validate() (err error) {
+
+	if mt.Href == "" {
+		err = goa.MissingAttributeError(`response`, "href", err)
+	}
+
+	return
+}
+
 // A tenant account, tiny view
 // Identifier: application/vnd.account+json
 type AccountTiny struct {
@@ -71,25 +90,6 @@ func (mt *AccountTiny) Validate() (err error) {
 	}
 	if mt.Name == "" {
 		err = goa.MissingAttributeError(`response`, "name", err)
-	}
-
-	return
-}
-
-// A tenant account, link view
-// Identifier: application/vnd.account+json
-type AccountLink struct {
-	// API href of account
-	Href string `json:"href" xml:"href"`
-	// ID of account
-	ID int `json:"id" xml:"id"`
-}
-
-// Validate validates the media type instance.
-func (mt *AccountLink) Validate() (err error) {
-
-	if mt.Href == "" {
-		err = goa.MissingAttributeError(`response`, "href", err)
 	}
 
 	return
@@ -166,46 +166,6 @@ func (mt *Bottle) Validate() (err error) {
 	}
 	if mt.Vintage > 2020 {
 		err = goa.InvalidRangeError(`response.vintage`, mt.Vintage, 2020, false, err)
-	}
-	return
-}
-
-// A bottle of wine, tiny view
-// Identifier: application/vnd.bottle+json
-type BottleTiny struct {
-	// API href of bottle
-	Href string `json:"href" xml:"href"`
-	// ID of bottle
-	ID int `json:"id" xml:"id"`
-	// Links to related resources
-	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty"`
-	Name  string       `json:"name" xml:"name"`
-	// Rating of bottle between 1 and 5
-	Rating *int `json:"rating,omitempty" xml:"rating,omitempty"`
-}
-
-// Validate validates the media type instance.
-func (mt *BottleTiny) Validate() (err error) {
-
-	if mt.Href == "" {
-		err = goa.MissingAttributeError(`response`, "href", err)
-	}
-	if mt.Name == "" {
-		err = goa.MissingAttributeError(`response`, "name", err)
-	}
-
-	if len(mt.Name) < 2 {
-		err = goa.InvalidLengthError(`response.name`, mt.Name, len(mt.Name), 2, true, err)
-	}
-	if mt.Rating != nil {
-		if *mt.Rating < 1 {
-			err = goa.InvalidRangeError(`response.rating`, *mt.Rating, 1, true, err)
-		}
-	}
-	if mt.Rating != nil {
-		if *mt.Rating > 5 {
-			err = goa.InvalidRangeError(`response.rating`, *mt.Rating, 5, false, err)
-		}
 	}
 	return
 }
@@ -332,6 +292,46 @@ func (mt *BottleFull) Validate() (err error) {
 	}
 	if mt.Vintage > 2020 {
 		err = goa.InvalidRangeError(`response.vintage`, mt.Vintage, 2020, false, err)
+	}
+	return
+}
+
+// A bottle of wine, tiny view
+// Identifier: application/vnd.bottle+json
+type BottleTiny struct {
+	// API href of bottle
+	Href string `json:"href" xml:"href"`
+	// ID of bottle
+	ID int `json:"id" xml:"id"`
+	// Links to related resources
+	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty"`
+	Name  string       `json:"name" xml:"name"`
+	// Rating of bottle between 1 and 5
+	Rating *int `json:"rating,omitempty" xml:"rating,omitempty"`
+}
+
+// Validate validates the media type instance.
+func (mt *BottleTiny) Validate() (err error) {
+
+	if mt.Href == "" {
+		err = goa.MissingAttributeError(`response`, "href", err)
+	}
+	if mt.Name == "" {
+		err = goa.MissingAttributeError(`response`, "name", err)
+	}
+
+	if len(mt.Name) < 2 {
+		err = goa.InvalidLengthError(`response.name`, mt.Name, len(mt.Name), 2, true, err)
+	}
+	if mt.Rating != nil {
+		if *mt.Rating < 1 {
+			err = goa.InvalidRangeError(`response.rating`, *mt.Rating, 1, true, err)
+		}
+	}
+	if mt.Rating != nil {
+		if *mt.Rating > 5 {
+			err = goa.InvalidRangeError(`response.rating`, *mt.Rating, 5, false, err)
+		}
 	}
 	return
 }

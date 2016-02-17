@@ -14,22 +14,26 @@ package app
 
 import (
 	"github.com/goadesign/goa"
+	"golang.org/x/net/context"
 	"strconv"
 	"strings"
 )
 
 // CreateAccountContext provides the account create action context.
 type CreateAccountContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	Payload *CreateAccountPayload
 }
 
 // NewCreateAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller create action.
-func NewCreateAccountContext(c *goa.Context) (*CreateAccountContext, error) {
+func NewCreateAccountContext(ctx context.Context) (*CreateAccountContext, error) {
 	var err error
-	ctx := CreateAccountContext{Context: c}
-	return &ctx, err
+	req := goa.Request(ctx)
+	rctx := CreateAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	return &rctx, err
 }
 
 // CreateAccountPayload is the account create action payload.
@@ -49,101 +53,114 @@ func (payload *CreateAccountPayload) Validate() (err error) {
 
 // Created sends a HTTP response with status code 201.
 func (ctx *CreateAccountContext) Created() error {
-	return ctx.RespondBytes(201, nil)
+	ctx.ResponseData.WriteHeader(201)
+	return nil
 }
 
 // DeleteAccountContext provides the account delete action context.
 type DeleteAccountContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 }
 
 // NewDeleteAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller delete action.
-func NewDeleteAccountContext(c *goa.Context) (*DeleteAccountContext, error) {
+func NewDeleteAccountContext(ctx context.Context) (*DeleteAccountContext, error) {
 	var err error
-	ctx := DeleteAccountContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := DeleteAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *DeleteAccountContext) NoContent() error {
-	return ctx.RespondBytes(204, nil)
+	ctx.ResponseData.WriteHeader(204)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *DeleteAccountContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // ShowAccountContext provides the account show action context.
 type ShowAccountContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 }
 
 // NewShowAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller show action.
-func NewShowAccountContext(c *goa.Context) (*ShowAccountContext, error) {
+func NewShowAccountContext(ctx context.Context) (*ShowAccountContext, error) {
 	var err error
-	ctx := ShowAccountContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := ShowAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ShowAccountContext) OK(resp *Account) error {
-	ctx.Header().Set("Content-Type", "application/vnd.account")
-	return ctx.Respond(200, resp)
+func (ctx *ShowAccountContext) OK(r *Account) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
-func (ctx *ShowAccountContext) OKTiny(resp *AccountTiny) error {
-	ctx.Header().Set("Content-Type", "application/vnd.account")
-	return ctx.Respond(200, resp)
+func (ctx *ShowAccountContext) OKTiny(r *AccountTiny) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowAccountContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // UpdateAccountContext provides the account update action context.
 type UpdateAccountContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	Payload   *UpdateAccountPayload
 }
 
 // NewUpdateAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller update action.
-func NewUpdateAccountContext(c *goa.Context) (*UpdateAccountContext, error) {
+func NewUpdateAccountContext(ctx context.Context) (*UpdateAccountContext, error) {
 	var err error
-	ctx := UpdateAccountContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := UpdateAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // UpdateAccountPayload is the account update action payload.
@@ -163,35 +180,40 @@ func (payload *UpdateAccountPayload) Validate() (err error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *UpdateAccountContext) NoContent() error {
-	return ctx.RespondBytes(204, nil)
+	ctx.ResponseData.WriteHeader(204)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *UpdateAccountContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // CreateBottleContext provides the bottle create action context.
 type CreateBottleContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	Payload   *CreateBottlePayload
 }
 
 // NewCreateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller create action.
-func NewCreateBottleContext(c *goa.Context) (*CreateBottleContext, error) {
+func NewCreateBottleContext(ctx context.Context) (*CreateBottleContext, error) {
 	var err error
-	ctx := CreateBottleContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := CreateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // CreateBottlePayload is the bottle create action payload.
@@ -271,71 +293,80 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 
 // Created sends a HTTP response with status code 201.
 func (ctx *CreateBottleContext) Created() error {
-	return ctx.RespondBytes(201, nil)
+	ctx.ResponseData.WriteHeader(201)
+	return nil
 }
 
 // DeleteBottleContext provides the bottle delete action context.
 type DeleteBottleContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	BottleID  int
 }
 
 // NewDeleteBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller delete action.
-func NewDeleteBottleContext(c *goa.Context) (*DeleteBottleContext, error) {
+func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
 	var err error
-	ctx := DeleteBottleContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := DeleteBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	rawBottleID := c.Get("bottleID")
+	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
+			rctx.BottleID = int(bottleID)
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *DeleteBottleContext) NoContent() error {
-	return ctx.RespondBytes(204, nil)
+	ctx.ResponseData.WriteHeader(204)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *DeleteBottleContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // ListBottleContext provides the bottle list action context.
 type ListBottleContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	Years     []int
 }
 
 // NewListBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller list action.
-func NewListBottleContext(c *goa.Context) (*ListBottleContext, error) {
+func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
 	var err error
-	ctx := ListBottleContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := ListBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	rawYears := c.Get("years")
+	rawYears := req.Params.Get("years")
 	if rawYears != "" {
 		elemsYears := strings.Split(rawYears, ",")
 		elemsYears2 := make([]int, len(elemsYears))
@@ -346,31 +377,34 @@ func NewListBottleContext(c *goa.Context) (*ListBottleContext, error) {
 				err = goa.InvalidParamTypeError("elem", rawElem, "integer", err)
 			}
 		}
-		ctx.Years = elemsYears2
+		rctx.Years = elemsYears2
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ListBottleContext) OK(resp BottleCollection) error {
-	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
-	return ctx.Respond(200, resp)
+func (ctx *ListBottleContext) OK(r BottleCollection) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
-func (ctx *ListBottleContext) OKTiny(resp BottleTinyCollection) error {
-	ctx.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
-	return ctx.Respond(200, resp)
+func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListBottleContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // RateBottleContext provides the bottle rate action context.
 type RateBottleContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	BottleID  int
 	Payload   *RateBottlePayload
@@ -378,26 +412,27 @@ type RateBottleContext struct {
 
 // NewRateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller rate action.
-func NewRateBottleContext(c *goa.Context) (*RateBottleContext, error) {
+func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
 	var err error
-	ctx := RateBottleContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := RateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	rawBottleID := c.Get("bottleID")
+	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
+			rctx.BottleID = int(bottleID)
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // RateBottlePayload is the bottle rate action payload.
@@ -420,71 +455,79 @@ func (payload *RateBottlePayload) Validate() (err error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *RateBottleContext) NoContent() error {
-	return ctx.RespondBytes(204, nil)
+	ctx.ResponseData.WriteHeader(204)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *RateBottleContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // ShowBottleContext provides the bottle show action context.
 type ShowBottleContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	BottleID  int
 }
 
 // NewShowBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller show action.
-func NewShowBottleContext(c *goa.Context) (*ShowBottleContext, error) {
+func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
 	var err error
-	ctx := ShowBottleContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := ShowBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	rawBottleID := c.Get("bottleID")
+	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
+			rctx.BottleID = int(bottleID)
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *ShowBottleContext) OK(resp *Bottle) error {
-	ctx.Header().Set("Content-Type", "application/vnd.bottle")
-	return ctx.Respond(200, resp)
+func (ctx *ShowBottleContext) OK(r *Bottle) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // OKFull sends a HTTP response with status code 200.
-func (ctx *ShowBottleContext) OKFull(resp *BottleFull) error {
-	ctx.Header().Set("Content-Type", "application/vnd.bottle")
-	return ctx.Respond(200, resp)
+func (ctx *ShowBottleContext) OKFull(r *BottleFull) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
-func (ctx *ShowBottleContext) OKTiny(resp *BottleTiny) error {
-	ctx.Header().Set("Content-Type", "application/vnd.bottle")
-	return ctx.Respond(200, resp)
+func (ctx *ShowBottleContext) OKTiny(r *BottleTiny) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle")
+	return ctx.ResponseData.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowBottleContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }
 
 // UpdateBottleContext provides the bottle update action context.
 type UpdateBottleContext struct {
-	*goa.Context
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
 	AccountID int
 	BottleID  int
 	Payload   *UpdateBottlePayload
@@ -492,26 +535,27 @@ type UpdateBottleContext struct {
 
 // NewUpdateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller update action.
-func NewUpdateBottleContext(c *goa.Context) (*UpdateBottleContext, error) {
+func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
 	var err error
-	ctx := UpdateBottleContext{Context: c}
-	rawAccountID := c.Get("accountID")
+	req := goa.Request(ctx)
+	rctx := UpdateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			ctx.AccountID = int(accountID)
+			rctx.AccountID = int(accountID)
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
 	}
-	rawBottleID := c.Get("bottleID")
+	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			ctx.BottleID = int(bottleID)
+			rctx.BottleID = int(bottleID)
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
 	}
-	return &ctx, err
+	return &rctx, err
 }
 
 // UpdateBottlePayload is the bottle update action payload.
@@ -589,10 +633,12 @@ func (payload *UpdateBottlePayload) Validate() (err error) {
 
 // NoContent sends a HTTP response with status code 204.
 func (ctx *UpdateBottleContext) NoContent() error {
-	return ctx.RespondBytes(204, nil)
+	ctx.ResponseData.WriteHeader(204)
+	return nil
 }
 
 // NotFound sends a HTTP response with status code 404.
 func (ctx *UpdateBottleContext) NotFound() error {
-	return ctx.RespondBytes(404, nil)
+	ctx.ResponseData.WriteHeader(404)
+	return nil
 }

@@ -18,7 +18,7 @@ func main() {
 
 	// Setup basic middleware
 	service.Use(middleware.RequestID())
-	service.Use(middleware.LogRequest())
+	service.Use(middleware.LogRequest(true))
 	service.Use(middleware.Recover())
 
 	// Mount account controller onto service

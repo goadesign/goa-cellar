@@ -59,7 +59,7 @@ func (b *AccountController) Create(c *app.CreateAccountContext) error {
 	account := b.db.NewAccount()
 	payload := c.Payload
 	account.Name = payload.Name
-	c.Header().Set("Location", app.AccountHref(account.ID))
+	c.ResponseData.Header().Set("Location", app.AccountHref(account.ID))
 	return c.Created()
 }
 
