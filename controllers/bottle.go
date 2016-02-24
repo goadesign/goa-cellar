@@ -24,12 +24,12 @@ func ToBottleMedia(b *BottleModel) *app.Bottle {
 
 // BottleController implements the bottle resource.
 type BottleController struct {
-	goa.Controller
+	*goa.Controller
 	db *DB
 }
 
 // NewBottle creates a bottle controller.
-func NewBottle(service goa.Service) *BottleController {
+func NewBottle(service *goa.Service) *BottleController {
 	return &BottleController{
 		Controller: service.NewController("Bottle"),
 		db:         NewDB(),

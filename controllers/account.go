@@ -26,12 +26,12 @@ func ToAccountLink(account *AccountModel) *app.AccountLink {
 
 // AccountController implements the account resource.
 type AccountController struct {
-	goa.Controller
+	*goa.Controller
 	db *DB
 }
 
 // NewAccount creates a account controller.
-func NewAccount(service goa.Service) *AccountController {
+func NewAccount(service *goa.Service) *AccountController {
 	return &AccountController{
 		Controller: service.NewController("Account"),
 		db:         NewDB(),
