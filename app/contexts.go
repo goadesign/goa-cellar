@@ -74,7 +74,7 @@ func NewDeleteAccountContext(ctx context.Context) (*DeleteAccountContext, error)
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -111,7 +111,7 @@ func NewShowAccountContext(ctx context.Context) (*ShowAccountContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -155,7 +155,7 @@ func NewUpdateAccountContext(ctx context.Context) (*UpdateAccountContext, error)
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -208,7 +208,7 @@ func NewCreateBottleContext(ctx context.Context) (*CreateBottleContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -315,7 +315,7 @@ func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -323,7 +323,7 @@ func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
 	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			rctx.BottleID = int(bottleID)
+			rctx.BottleID = bottleID
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
@@ -361,7 +361,7 @@ func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -372,7 +372,7 @@ func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
 		elemsYears2 := make([]int, len(elemsYears))
 		for i, rawElem := range elemsYears {
 			if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
-				elemsYears2[i] = int(elem)
+				elemsYears2[i] = elem
 			} else {
 				err = goa.InvalidParamTypeError("elem", rawElem, "integer", err)
 			}
@@ -419,7 +419,7 @@ func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -427,7 +427,7 @@ func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
 	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			rctx.BottleID = int(bottleID)
+			rctx.BottleID = bottleID
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
@@ -483,7 +483,7 @@ func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -491,7 +491,7 @@ func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
 	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			rctx.BottleID = int(bottleID)
+			rctx.BottleID = bottleID
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
@@ -542,7 +542,7 @@ func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
-			rctx.AccountID = int(accountID)
+			rctx.AccountID = accountID
 		} else {
 			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
 		}
@@ -550,7 +550,7 @@ func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
 	rawBottleID := req.Params.Get("bottleID")
 	if rawBottleID != "" {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
-			rctx.BottleID = int(bottleID)
+			rctx.BottleID = bottleID
 		} else {
 			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
 		}
