@@ -111,33 +111,28 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp2.RegisterFlags(sub)
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "delete",
-		Short: "delete action",
-	}
-	tmp3 := new(DeleteAccountCommand)
+	tmp3 := new(CreateGenericBottleCommand)
 	sub = &cobra.Command{
-		Use:   "account",
+		Use:   "generic_bottle",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
 	tmp3.RegisterFlags(sub)
 	command.AddCommand(sub)
-	tmp4 := new(DeleteBottleCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "delete",
+		Short: "delete action",
+	}
+	tmp4 := new(DeleteAccountCommand)
 	sub = &cobra.Command{
-		Use:   "bottle",
+		Use:   "account",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
 	tmp4.RegisterFlags(sub)
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "list",
-		Short: "List all bottles in account optionally filtering by year",
-	}
-	tmp5 := new(ListBottleCommand)
+	tmp5 := new(DeleteBottleCommand)
 	sub = &cobra.Command{
 		Use:   "bottle",
 		Short: "",
@@ -145,14 +140,9 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp5.RegisterFlags(sub)
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "rate",
-		Short: "",
-	}
-	tmp6 := new(RateBottleCommand)
+	tmp6 := new(DeleteGenericBottleCommand)
 	sub = &cobra.Command{
-		Use:   "bottle",
+		Use:   "generic_bottle",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
@@ -160,20 +150,20 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "show",
-		Short: "show action",
+		Use:   "list",
+		Short: "list action",
 	}
-	tmp7 := new(ShowAccountCommand)
+	tmp7 := new(ListBottleCommand)
 	sub = &cobra.Command{
-		Use:   "account",
+		Use:   "bottle",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
 	tmp7.RegisterFlags(sub)
 	command.AddCommand(sub)
-	tmp8 := new(ShowBottleCommand)
+	tmp8 := new(ListGenericBottleCommand)
 	sub = &cobra.Command{
-		Use:   "bottle",
+		Use:   "generic_bottle",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
@@ -181,24 +171,82 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "update",
-		Short: "update action",
+		Use:   "rate",
+		Short: "rate action",
 	}
-	tmp9 := new(UpdateAccountCommand)
+	tmp9 := new(RateBottleCommand)
 	sub = &cobra.Command{
-		Use:   "account",
+		Use:   "bottle",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
 	tmp9.RegisterFlags(sub)
 	command.AddCommand(sub)
-	tmp10 := new(UpdateBottleCommand)
+	tmp10 := new(RateGenericBottleCommand)
 	sub = &cobra.Command{
-		Use:   "bottle",
+		Use:   "generic_bottle",
 		Short: "",
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
 	tmp10.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "show",
+		Short: "show action",
+	}
+	tmp11 := new(ShowAccountCommand)
+	sub = &cobra.Command{
+		Use:   "account",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+	}
+	tmp11.RegisterFlags(sub)
+	command.AddCommand(sub)
+	tmp12 := new(ShowBottleCommand)
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
+	}
+	tmp12.RegisterFlags(sub)
+	command.AddCommand(sub)
+	tmp13 := new(ShowGenericBottleCommand)
+	sub = &cobra.Command{
+		Use:   "generic_bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp13.Run(c, args) },
+	}
+	tmp13.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "update",
+		Short: "update action",
+	}
+	tmp14 := new(UpdateAccountCommand)
+	sub = &cobra.Command{
+		Use:   "account",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp14.Run(c, args) },
+	}
+	tmp14.RegisterFlags(sub)
+	command.AddCommand(sub)
+	tmp15 := new(UpdateBottleCommand)
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp15.Run(c, args) },
+	}
+	tmp15.RegisterFlags(sub)
+	command.AddCommand(sub)
+	tmp16 := new(UpdateGenericBottleCommand)
+	sub = &cobra.Command{
+		Use:   "generic_bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp16.Run(c, args) },
+	}
+	tmp16.RegisterFlags(sub)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 

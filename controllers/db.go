@@ -7,6 +7,20 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 )
 
+var (
+	one   = 1
+	three = 3
+	four  = 4
+	five  = 5
+	usa   = "USA"
+	ca    = "CA"
+	gv    = "Great value"
+	gbe   = "Good but expensive"
+	ok    = "OK"
+	fav   = "Favorite"
+	solid = "Solid Pinot"
+)
+
 // DB emulates a database driver using in-memory data structures.
 type DB struct {
 	sync.Mutex
@@ -21,6 +35,7 @@ type BottleModel struct {
 	Href      string
 	Account   *AccountModel
 	Name      string
+	Kind      string
 	Color     string
 	Country   *string
 	CreatedAt *string
@@ -47,17 +62,6 @@ type AccountModel struct {
 func NewDB() *DB {
 	account := &AccountModel{ID: 1, Name: "account 1", Href: app.AccountHref(1)}
 	account2 := &AccountModel{ID: 2, Name: "account 2", Href: app.AccountHref(2)}
-	one := 1
-	three := 3
-	four := 4
-	five := 5
-	usa := "USA"
-	ca := "CA"
-	gv := "Great value"
-	gbe := "Good but expensive"
-	ok := "OK"
-	fav := "Favorite"
-	solid := "Solid Pinot"
 	bottles := map[int][]*BottleModel{
 		1: []*BottleModel{
 			&BottleModel{
@@ -65,6 +69,7 @@ func NewDB() *DB {
 				Account:   account,
 				Href:      app.BottleHref(1, 100),
 				Name:      "Number 8",
+				Kind:      "wine",
 				Vineyard:  "Asti Winery",
 				Varietal:  "Merlot",
 				Vintage:   2012,
@@ -80,6 +85,7 @@ func NewDB() *DB {
 				Account:   account,
 				Href:      app.BottleHref(1, 101),
 				Name:      "Mourvedre",
+				Kind:      "wine",
 				Vineyard:  "Rideau",
 				Varietal:  "Mourvedre",
 				Vintage:   2012,
@@ -95,6 +101,7 @@ func NewDB() *DB {
 				Account:   account,
 				Href:      app.BottleHref(1, 102),
 				Name:      "Blue's Cuvee",
+				Kind:      "wine",
 				Vineyard:  "Longoria",
 				Varietal:  "Cabernet Franc with Merlot, Malbec, Cabernet Sauvignon and Syrah",
 				Vintage:   2012,
@@ -112,6 +119,7 @@ func NewDB() *DB {
 				Account:   account2,
 				Href:      app.BottleHref(42, 200),
 				Name:      "Blackstone Merlot",
+				Kind:      "wine",
 				Vineyard:  "Blackstone",
 				Varietal:  "Merlot",
 				Vintage:   2012,
@@ -127,6 +135,7 @@ func NewDB() *DB {
 				Account:   account2,
 				Href:      app.BottleHref(42, 201),
 				Name:      "Wild Horse",
+				Kind:      "wine",
 				Vineyard:  "Wild Horse",
 				Varietal:  "Pinot Noir",
 				Vintage:   2012,

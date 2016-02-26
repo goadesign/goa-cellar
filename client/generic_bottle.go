@@ -11,10 +11,12 @@ import (
 	"strings"
 )
 
-// CreateBottlePayload is the data structure used to initialize the bottle create request body.
-type CreateBottlePayload struct {
-	Color     string  `json:"color" xml:"color"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+// CreateGenericBottlePayload is the data structure used to initialize the generic_bottle create request body.
+type CreateGenericBottlePayload struct {
+	Color   string  `json:"color" xml:"color"`
+	Country *string `json:"country,omitempty" xml:"country,omitempty"`
+	// Bottle kind
+	Kind      string  `json:"kind" xml:"kind"`
 	Name      string  `json:"name" xml:"name"`
 	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
 	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
@@ -25,7 +27,7 @@ type CreateBottlePayload struct {
 }
 
 // Record new bottle
-func (c *Client) CreateBottle(path string, payload *CreateBottlePayload) (*http.Response, error) {
+func (c *Client) CreateGenericBottle(path string, payload *CreateGenericBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -42,8 +44,8 @@ func (c *Client) CreateBottle(path string, payload *CreateBottlePayload) (*http.
 	return c.Client.Do(req)
 }
 
-// DeleteBottle makes a request to the delete action endpoint of the bottle resource
-func (c *Client) DeleteBottle(path string) (*http.Response, error) {
+// DeleteGenericBottle makes a request to the delete action endpoint of the generic_bottle resource
+func (c *Client) DeleteGenericBottle(path string) (*http.Response, error) {
 	var body io.Reader
 	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
 	req, err := http.NewRequest("DELETE", u.String(), body)
@@ -56,17 +58,17 @@ func (c *Client) DeleteBottle(path string) (*http.Response, error) {
 }
 
 // List all bottles in account optionally filtering by year
-func (c *Client) ListBottle(path string, years []int) (*http.Response, error) {
+func (c *Client) ListGenericBottle(path string, years []int) (*http.Response, error) {
 	var body io.Reader
 	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
 	values := u.Query()
-	tmp20 := make([]string, len(years))
+	tmp23 := make([]string, len(years))
 	for i, e := range years {
-		tmp21 := strconv.Itoa(e)
-		tmp20[i] = tmp21
+		tmp24 := strconv.Itoa(e)
+		tmp23[i] = tmp24
 	}
-	tmp19 := strings.Join(tmp20, ",")
-	values.Set("years", tmp19)
+	tmp22 := strings.Join(tmp23, ",")
+	values.Set("years", tmp22)
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), body)
 	if err != nil {
@@ -77,14 +79,14 @@ func (c *Client) ListBottle(path string, years []int) (*http.Response, error) {
 	return c.Client.Do(req)
 }
 
-// RateBottlePayload is the data structure used to initialize the bottle rate request body.
-type RateBottlePayload struct {
+// RateGenericBottlePayload is the data structure used to initialize the generic_bottle rate request body.
+type RateGenericBottlePayload struct {
 	// Rating of bottle between 1 and 5
 	Rating int `json:"rating" xml:"rating"`
 }
 
-// RateBottle makes a request to the rate action endpoint of the bottle resource
-func (c *Client) RateBottle(path string, payload *RateBottlePayload) (*http.Response, error) {
+// RateGenericBottle makes a request to the rate action endpoint of the generic_bottle resource
+func (c *Client) RateGenericBottle(path string, payload *RateGenericBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -102,7 +104,7 @@ func (c *Client) RateBottle(path string, payload *RateBottlePayload) (*http.Resp
 }
 
 // Retrieve bottle with given id
-func (c *Client) ShowBottle(path string) (*http.Response, error) {
+func (c *Client) ShowGenericBottle(path string) (*http.Response, error) {
 	var body io.Reader
 	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), body)
@@ -114,10 +116,12 @@ func (c *Client) ShowBottle(path string) (*http.Response, error) {
 	return c.Client.Do(req)
 }
 
-// UpdateBottlePayload is the data structure used to initialize the bottle update request body.
-type UpdateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+// UpdateGenericBottlePayload is the data structure used to initialize the generic_bottle update request body.
+type UpdateGenericBottlePayload struct {
+	Color   *string `json:"color,omitempty" xml:"color,omitempty"`
+	Country *string `json:"country,omitempty" xml:"country,omitempty"`
+	// Bottle kind
+	Kind      *string `json:"kind,omitempty" xml:"kind,omitempty"`
 	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
 	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
 	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
@@ -127,8 +131,8 @@ type UpdateBottlePayload struct {
 	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
-// UpdateBottle makes a request to the update action endpoint of the bottle resource
-func (c *Client) UpdateBottle(path string, payload *UpdateBottlePayload) (*http.Response, error) {
+// UpdateGenericBottle makes a request to the update action endpoint of the generic_bottle resource
+func (c *Client) UpdateGenericBottle(path string, payload *UpdateGenericBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {

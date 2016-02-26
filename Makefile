@@ -13,9 +13,11 @@
 # Meta targets:
 # - all is the default target, it runs all the targets in the order above.
 #
-DEPEND=github.com/goadesign/goa \
+DEPEND=	bitbucket.org/pkg/inflect \
+	github.com/goadesign/goa \
 	github.com/goadesign/goa/goagen \
-	bitbucket.org/pkg/inflect \
+	github.com/goadesign/logging/logrus \
+	github.com/Sirupsen/logrus \
 	golang.org/x/tools/cmd/goimports
 
 CURRENT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))

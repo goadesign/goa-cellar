@@ -3,16 +3,23 @@
 package main
 
 import (
+	"github.com/Sirupsen/logrus"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/app/v2"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/js"
 	"github.com/goadesign/goa-cellar/schema"
 	"github.com/goadesign/goa-cellar/swagger"
+	"github.com/goadesign/logging/logrus"
 	"github.com/goadesign/middleware"
 )
 
 func main() {
+	// Setup logger
+	logger := logrus.New()
+	goa.Log = goalogrus.New(logger)
+
 	// Create goa service
 	service := goa.New("cellar")
 
@@ -29,6 +36,10 @@ func main() {
 	bc := controllers.NewBottle(service)
 	app.MountBottleController(service, bc)
 
+	// Mount generic bottle controller onto service (API 2.0)
+	gc := controllers.NewGeneric(service)
+	v2.MountGenericBottleController(service, gc)
+
 	// Mount Swagger Spec controller onto service
 	swagger.MountController(service)
 
@@ -39,5 +50,7 @@ func main() {
 	js.MountController(service)
 
 	// Run service
-	service.ListenAndServe(":8080")
+	if err := service.ListenAndServe(":8080"); err != nil {
+		goa.Error(goa.RootContext, err.Error())
+	}
 }
