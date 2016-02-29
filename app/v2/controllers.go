@@ -63,7 +63,7 @@ func MountGenericBottleController(service *goa.Service, ctrl GenericBottleContro
 		}
 		return ctrl.Create(rctx)
 	}
-	mux.Handle("POST", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("Create", "2.0", h, unmarshalCreateGenericBottlePayload))
+	mux.Handle("POST", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("Create", h, unmarshalCreateGenericBottlePayload))
 	goa.Info(goa.RootContext, "mount", goa.KV{"ctrl", "GenericBottle"}, goa.KV{"version", "2.0"}, goa.KV{"action", "Create"}, goa.KV{"route", "POST /cellar/accounts/:accountID/bottles"})
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewDeleteGenericBottleContext(ctx)
@@ -73,7 +73,7 @@ func MountGenericBottleController(service *goa.Service, ctrl GenericBottleContro
 		rctx.APIVersion = "2.0"
 		return ctrl.Delete(rctx)
 	}
-	mux.Handle("DELETE", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Delete", "2.0", h, nil))
+	mux.Handle("DELETE", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Delete", h, nil))
 	goa.Info(goa.RootContext, "mount", goa.KV{"ctrl", "GenericBottle"}, goa.KV{"version", "2.0"}, goa.KV{"action", "Delete"}, goa.KV{"route", "DELETE /cellar/accounts/:accountID/bottles/:bottleID"})
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewListGenericBottleContext(ctx)
@@ -83,7 +83,7 @@ func MountGenericBottleController(service *goa.Service, ctrl GenericBottleContro
 		rctx.APIVersion = "2.0"
 		return ctrl.List(rctx)
 	}
-	mux.Handle("GET", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("List", "2.0", h, nil))
+	mux.Handle("GET", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("List", h, nil))
 	goa.Info(goa.RootContext, "mount", goa.KV{"ctrl", "GenericBottle"}, goa.KV{"version", "2.0"}, goa.KV{"action", "List"}, goa.KV{"route", "GET /cellar/accounts/:accountID/bottles"})
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewRateGenericBottleContext(ctx)
@@ -96,7 +96,7 @@ func MountGenericBottleController(service *goa.Service, ctrl GenericBottleContro
 		}
 		return ctrl.Rate(rctx)
 	}
-	mux.Handle("PUT", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", ctrl.MuxHandler("Rate", "2.0", h, unmarshalRateGenericBottlePayload))
+	mux.Handle("PUT", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", ctrl.MuxHandler("Rate", h, unmarshalRateGenericBottlePayload))
 	goa.Info(goa.RootContext, "mount", goa.KV{"ctrl", "GenericBottle"}, goa.KV{"version", "2.0"}, goa.KV{"action", "Rate"}, goa.KV{"route", "PUT /cellar/accounts/:accountID/bottles/:bottleID/actions/rate"})
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewShowGenericBottleContext(ctx)
@@ -106,7 +106,7 @@ func MountGenericBottleController(service *goa.Service, ctrl GenericBottleContro
 		rctx.APIVersion = "2.0"
 		return ctrl.Show(rctx)
 	}
-	mux.Handle("GET", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Show", "2.0", h, nil))
+	mux.Handle("GET", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Show", h, nil))
 	goa.Info(goa.RootContext, "mount", goa.KV{"ctrl", "GenericBottle"}, goa.KV{"version", "2.0"}, goa.KV{"action", "Show"}, goa.KV{"route", "GET /cellar/accounts/:accountID/bottles/:bottleID"})
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewUpdateGenericBottleContext(ctx)
@@ -119,7 +119,7 @@ func MountGenericBottleController(service *goa.Service, ctrl GenericBottleContro
 		}
 		return ctrl.Update(rctx)
 	}
-	mux.Handle("PATCH", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Update", "2.0", h, unmarshalUpdateGenericBottlePayload))
+	mux.Handle("PATCH", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Update", h, unmarshalUpdateGenericBottlePayload))
 	goa.Info(goa.RootContext, "mount", goa.KV{"ctrl", "GenericBottle"}, goa.KV{"version", "2.0"}, goa.KV{"action", "Update"}, goa.KV{"route", "PATCH /cellar/accounts/:accountID/bottles/:bottleID"})
 }
 
