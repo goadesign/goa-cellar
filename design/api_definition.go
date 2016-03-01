@@ -10,8 +10,6 @@ import (
 var _ = API("cellar", func() {
 	Title("The virtual wine cellar")
 	Description("A basic example of a CRUD API implemented with goa")
-	VersionQuery("version")
-	VersionHeader("X-Api-Version")
 	Contact(func() {
 		Name("goa team")
 		Email("admin@goa.design")
@@ -38,8 +36,4 @@ var _ = API("cellar", func() {
 			})
 		})
 	})
-})
-
-var _ = Version("2.0", func() {
-	Title("Virtual wine cellar 2.0 - now with rum support!")
 })

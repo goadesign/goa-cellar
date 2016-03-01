@@ -6,7 +6,6 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
-	"github.com/goadesign/goa-cellar/app/v2"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/js"
 	"github.com/goadesign/goa-cellar/schema"
@@ -35,10 +34,6 @@ func main() {
 	// Mount bottle controller onto service
 	bc := controllers.NewBottle(service)
 	app.MountBottleController(service, bc)
-
-	// Mount generic bottle controller onto service (API 2.0)
-	gc := controllers.NewGeneric(service)
-	v2.MountGenericBottleController(service, gc)
 
 	// Mount Swagger Spec controller onto service
 	swagger.MountController(service)

@@ -54,35 +54,6 @@ type (
 	UpdateBottleCommand struct {
 		Payload string
 	}
-
-	// CreateGenericBottleCommand is the command line data structure for the create action of generic_bottle
-	CreateGenericBottleCommand struct {
-		Payload string
-	}
-
-	// DeleteGenericBottleCommand is the command line data structure for the delete action of generic_bottle
-	DeleteGenericBottleCommand struct {
-	}
-
-	// ListGenericBottleCommand is the command line data structure for the list action of generic_bottle
-	ListGenericBottleCommand struct {
-		// Filter by years
-		Years []int
-	}
-
-	// RateGenericBottleCommand is the command line data structure for the rate action of generic_bottle
-	RateGenericBottleCommand struct {
-		Payload string
-	}
-
-	// ShowGenericBottleCommand is the command line data structure for the show action of generic_bottle
-	ShowGenericBottleCommand struct {
-	}
-
-	// UpdateGenericBottleCommand is the command line data structure for the update action of generic_bottle
-	UpdateGenericBottleCommand struct {
-		Payload string
-	}
 )
 
 // Run makes the HTTP request corresponding to the CreateAccountCommand command.
@@ -247,8 +218,8 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *ListBottleCommand) RegisterFlags(cc *cobra.Command) {
-	var tmp17 []int
-	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp17, "Filter by years")
+	var tmp11 []int
+	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp11, "Filter by years")
 }
 
 // Run makes the HTTP request corresponding to the RateBottleCommand command.
@@ -324,151 +295,5 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *UpdateBottleCommand) RegisterFlags(cc *cobra.Command) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
-}
-
-// Run makes the HTTP request corresponding to the CreateGenericBottleCommand command.
-func (cmd *CreateGenericBottleCommand) Run(c *client.Client, args []string) error {
-	var path string
-	if len(args) > 0 {
-		path = args[0]
-	} else {
-		return fmt.Errorf("missing path argument")
-	}
-	var payload client.CreateGenericBottlePayload
-	if cmd.Payload != "" {
-		err := json.Unmarshal([]byte(cmd.Payload), &payload)
-		if err != nil {
-			return fmt.Errorf("failed to deserialize payload: %s", err)
-		}
-	}
-	resp, err := c.CreateGenericBottle(path, &payload)
-	if err != nil {
-		return err
-	}
-	HandleResponse(c, resp)
-	return nil
-}
-
-// RegisterFlags registers the command flags with the command line.
-func (cmd *CreateGenericBottleCommand) RegisterFlags(cc *cobra.Command) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
-}
-
-// Run makes the HTTP request corresponding to the DeleteGenericBottleCommand command.
-func (cmd *DeleteGenericBottleCommand) Run(c *client.Client, args []string) error {
-	var path string
-	if len(args) > 0 {
-		path = args[0]
-	} else {
-		return fmt.Errorf("missing path argument")
-	}
-	resp, err := c.DeleteGenericBottle(path)
-	if err != nil {
-		return err
-	}
-	HandleResponse(c, resp)
-	return nil
-}
-
-// RegisterFlags registers the command flags with the command line.
-func (cmd *DeleteGenericBottleCommand) RegisterFlags(cc *cobra.Command) {
-}
-
-// Run makes the HTTP request corresponding to the ListGenericBottleCommand command.
-func (cmd *ListGenericBottleCommand) Run(c *client.Client, args []string) error {
-	var path string
-	if len(args) > 0 {
-		path = args[0]
-	} else {
-		return fmt.Errorf("missing path argument")
-	}
-	resp, err := c.ListGenericBottle(path, cmd.Years)
-	if err != nil {
-		return err
-	}
-	HandleResponse(c, resp)
-	return nil
-}
-
-// RegisterFlags registers the command flags with the command line.
-func (cmd *ListGenericBottleCommand) RegisterFlags(cc *cobra.Command) {
-	var tmp18 []int
-	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp18, "Filter by years")
-}
-
-// Run makes the HTTP request corresponding to the RateGenericBottleCommand command.
-func (cmd *RateGenericBottleCommand) Run(c *client.Client, args []string) error {
-	var path string
-	if len(args) > 0 {
-		path = args[0]
-	} else {
-		return fmt.Errorf("missing path argument")
-	}
-	var payload client.RateGenericBottlePayload
-	if cmd.Payload != "" {
-		err := json.Unmarshal([]byte(cmd.Payload), &payload)
-		if err != nil {
-			return fmt.Errorf("failed to deserialize payload: %s", err)
-		}
-	}
-	resp, err := c.RateGenericBottle(path, &payload)
-	if err != nil {
-		return err
-	}
-	HandleResponse(c, resp)
-	return nil
-}
-
-// RegisterFlags registers the command flags with the command line.
-func (cmd *RateGenericBottleCommand) RegisterFlags(cc *cobra.Command) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
-}
-
-// Run makes the HTTP request corresponding to the ShowGenericBottleCommand command.
-func (cmd *ShowGenericBottleCommand) Run(c *client.Client, args []string) error {
-	var path string
-	if len(args) > 0 {
-		path = args[0]
-	} else {
-		return fmt.Errorf("missing path argument")
-	}
-	resp, err := c.ShowGenericBottle(path)
-	if err != nil {
-		return err
-	}
-	HandleResponse(c, resp)
-	return nil
-}
-
-// RegisterFlags registers the command flags with the command line.
-func (cmd *ShowGenericBottleCommand) RegisterFlags(cc *cobra.Command) {
-}
-
-// Run makes the HTTP request corresponding to the UpdateGenericBottleCommand command.
-func (cmd *UpdateGenericBottleCommand) Run(c *client.Client, args []string) error {
-	var path string
-	if len(args) > 0 {
-		path = args[0]
-	} else {
-		return fmt.Errorf("missing path argument")
-	}
-	var payload client.UpdateGenericBottlePayload
-	if cmd.Payload != "" {
-		err := json.Unmarshal([]byte(cmd.Payload), &payload)
-		if err != nil {
-			return fmt.Errorf("failed to deserialize payload: %s", err)
-		}
-	}
-	resp, err := c.UpdateGenericBottle(path, &payload)
-	if err != nil {
-		return err
-	}
-	HandleResponse(c, resp)
-	return nil
-}
-
-// RegisterFlags registers the command flags with the command line.
-func (cmd *UpdateGenericBottleCommand) RegisterFlags(cc *cobra.Command) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
 }

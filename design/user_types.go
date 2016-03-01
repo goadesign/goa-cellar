@@ -37,22 +37,3 @@ var BottlePayload = Type("BottlePayload", func() {
 		MaxLength(300)
 	})
 })
-
-// GenericBottlePayload defines the data structure used in the create bottle request body for API
-// version 2.0.
-var GenericBottlePayload = Type("GenericBottlePayload", func() {
-	Reference(BottlePayload)
-	APIVersion("2.0")
-	Attribute("name")
-	Attribute("kind", String, "Bottle kind", func() {
-		Enum("wine", "rum")
-	})
-	Attribute("vineyard")
-	Attribute("varietal")
-	Attribute("vintage")
-	Attribute("color")
-	Attribute("sweetness")
-	Attribute("country")
-	Attribute("region")
-	Attribute("review")
-})
