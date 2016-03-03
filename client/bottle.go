@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/goadesign/goa-cellar/app"
 	"io"
 	"net/http"
 	"net/url"
@@ -11,21 +12,8 @@ import (
 	"strings"
 )
 
-// CreateBottlePayload is the data structure used to initialize the bottle create request body.
-type CreateBottlePayload struct {
-	Color     string  `json:"color" xml:"color"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      string  `json:"name" xml:"name"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  string  `json:"varietal" xml:"varietal"`
-	Vineyard  string  `json:"vineyard" xml:"vineyard"`
-	Vintage   int     `json:"vintage" xml:"vintage"`
-}
-
 // Record new bottle
-func (c *Client) CreateBottle(path string, payload *CreateBottlePayload) (*http.Response, error) {
+func (c *Client) CreateBottle(path string, payload *app.CreateBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -77,14 +65,8 @@ func (c *Client) ListBottle(path string, years []int) (*http.Response, error) {
 	return c.Client.Do(req)
 }
 
-// RateBottlePayload is the data structure used to initialize the bottle rate request body.
-type RateBottlePayload struct {
-	// Rating of bottle between 1 and 5
-	Rating int `json:"rating" xml:"rating"`
-}
-
 // RateBottle makes a request to the rate action endpoint of the bottle resource
-func (c *Client) RateBottle(path string, payload *RateBottlePayload) (*http.Response, error) {
+func (c *Client) RateBottle(path string, payload *app.RateBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -114,21 +96,8 @@ func (c *Client) ShowBottle(path string) (*http.Response, error) {
 	return c.Client.Do(req)
 }
 
-// UpdateBottlePayload is the data structure used to initialize the bottle update request body.
-type UpdateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
-}
-
 // UpdateBottle makes a request to the update action endpoint of the bottle resource
-func (c *Client) UpdateBottle(path string, payload *UpdateBottlePayload) (*http.Response, error) {
+func (c *Client) UpdateBottle(path string, payload *app.UpdateBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {

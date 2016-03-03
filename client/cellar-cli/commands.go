@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/client"
 	"github.com/spf13/cobra"
 )
@@ -64,7 +65,7 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		path = "/cellar/accounts"
 	}
-	var payload client.CreateAccountPayload
+	var payload app.CreateAccountPayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
@@ -132,7 +133,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload client.UpdateAccountPayload
+	var payload app.UpdateAccountPayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
@@ -160,7 +161,7 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload client.CreateBottlePayload
+	var payload app.CreateBottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
@@ -230,7 +231,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload client.RateBottlePayload
+	var payload app.RateBottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
@@ -278,7 +279,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload client.UpdateBottlePayload
+	var payload app.UpdateBottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {

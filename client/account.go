@@ -4,19 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/goadesign/goa-cellar/app"
 	"io"
 	"net/http"
 	"net/url"
 )
 
-// CreateAccountPayload is the data structure used to initialize the account create request body.
-type CreateAccountPayload struct {
-	// Name of account
-	Name string `json:"name" xml:"name"`
-}
-
 // Create new account
-func (c *Client) CreateAccount(path string, payload *CreateAccountPayload) (*http.Response, error) {
+func (c *Client) CreateAccount(path string, payload *app.CreateAccountPayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -59,14 +54,8 @@ func (c *Client) ShowAccount(path string) (*http.Response, error) {
 	return c.Client.Do(req)
 }
 
-// UpdateAccountPayload is the data structure used to initialize the account update request body.
-type UpdateAccountPayload struct {
-	// Name of account
-	Name string `json:"name" xml:"name"`
-}
-
 // Change account name
-func (c *Client) UpdateAccount(path string, payload *UpdateAccountPayload) (*http.Response, error) {
+func (c *Client) UpdateAccount(path string, payload *app.UpdateAccountPayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
