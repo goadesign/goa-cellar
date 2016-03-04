@@ -27,13 +27,18 @@ func initService(service *goa.Service) {
 		return
 	}
 	inited = true
+
 	// Setup encoders and decoders
-	service.SetEncoder(goa.GobEncoderFactory(), false, "application/gob", "application/x-gob")
-	service.SetEncoder(goa.JSONEncoderFactory(), true, "application/json")
-	service.SetEncoder(goa.XMLEncoderFactory(), false, "application/xml", "text/xml")
-	service.SetDecoder(goa.GobDecoderFactory(), false, "application/gob", "application/x-gob")
-	service.SetDecoder(goa.JSONDecoderFactory(), true, "application/json")
-	service.SetDecoder(goa.XMLDecoderFactory(), false, "application/xml", "text/xml")
+	service.Encoder(goa.NewJSONEncoder, "application/json")
+	service.Encoder(goa.NewXMLEncoder, "application/xml")
+	service.Encoder(goa.NewGobEncoder, "application/gob", "application/x-gob")
+	service.Decoder(goa.NewJSONDecoder, "application/json")
+	service.Decoder(goa.NewXMLDecoder, "application/xml")
+	service.Decoder(goa.NewGobDecoder, "application/gob", "application/x-gob")
+
+	// Setup default encoder and decoder
+	service.Encoder(goa.NewJSONEncoder, "application/json")
+	service.Decoder(goa.NewJSONDecoder, "application/json")
 }
 
 // AccountController is the controller interface for the Account actions.

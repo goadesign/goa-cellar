@@ -14,7 +14,8 @@ package app
 
 import "github.com/goadesign/goa"
 
-// A tenant account
+// Account media type.
+//
 // Identifier: application/vnd.account+json
 type Account struct {
 	// Date of creation
@@ -29,7 +30,7 @@ type Account struct {
 	Name string `json:"name" xml:"name"`
 }
 
-// Validate validates the media type instance.
+// Validate validates the Account media type instance.
 func (mt *Account) Validate() (err error) {
 
 	if mt.Href == "" {
@@ -52,7 +53,8 @@ func (mt *Account) Validate() (err error) {
 	return
 }
 
-// A tenant account, link view
+// AccountLink media type.
+//
 // Identifier: application/vnd.account+json
 type AccountLink struct {
 	// API href of account
@@ -61,7 +63,7 @@ type AccountLink struct {
 	ID int `json:"id" xml:"id"`
 }
 
-// Validate validates the media type instance.
+// Validate validates the AccountLink media type instance.
 func (mt *AccountLink) Validate() (err error) {
 
 	if mt.Href == "" {
@@ -71,7 +73,8 @@ func (mt *AccountLink) Validate() (err error) {
 	return
 }
 
-// A tenant account, tiny view
+// AccountTiny media type.
+//
 // Identifier: application/vnd.account+json
 type AccountTiny struct {
 	// API href of account
@@ -82,7 +85,7 @@ type AccountTiny struct {
 	Name string `json:"name" xml:"name"`
 }
 
-// Validate validates the media type instance.
+// Validate validates the AccountTiny media type instance.
 func (mt *AccountTiny) Validate() (err error) {
 
 	if mt.Href == "" {
@@ -95,7 +98,8 @@ func (mt *AccountTiny) Validate() (err error) {
 	return
 }
 
-// A bottle of wine
+// Bottle media type.
+//
 // Identifier: application/vnd.bottle+json
 type Bottle struct {
 	// Account that owns bottle
@@ -114,7 +118,7 @@ type Bottle struct {
 	Vintage  int    `json:"vintage" xml:"vintage"`
 }
 
-// Validate validates the media type instance.
+// Validate validates the Bottle media type instance.
 func (mt *Bottle) Validate() (err error) {
 
 	if mt.Href == "" {
@@ -170,7 +174,8 @@ func (mt *Bottle) Validate() (err error) {
 	return
 }
 
-// A bottle of wine, full view
+// BottleFull media type.
+//
 // Identifier: application/vnd.bottle+json
 type BottleFull struct {
 	// Account that owns bottle
@@ -198,7 +203,7 @@ type BottleFull struct {
 	Vintage   int     `json:"vintage" xml:"vintage"`
 }
 
-// Validate validates the media type instance.
+// Validate validates the BottleFull media type instance.
 func (mt *BottleFull) Validate() (err error) {
 
 	if mt.Href == "" {
@@ -296,7 +301,8 @@ func (mt *BottleFull) Validate() (err error) {
 	return
 }
 
-// A bottle of wine, tiny view
+// BottleTiny media type.
+//
 // Identifier: application/vnd.bottle+json
 type BottleTiny struct {
 	// API href of bottle
@@ -310,7 +316,7 @@ type BottleTiny struct {
 	Rating *int `json:"rating,omitempty" xml:"rating,omitempty"`
 }
 
-// Validate validates the media type instance.
+// Validate validates the BottleTiny media type instance.
 func (mt *BottleTiny) Validate() (err error) {
 
 	if mt.Href == "" {
@@ -341,11 +347,12 @@ type BottleLinks struct {
 	Account *AccountLink `json:"account,omitempty" xml:"account,omitempty"`
 }
 
-// , default view
+// BottleCollection media type is a collection of Bottle.
+//
 // Identifier: application/vnd.bottle+json; type=collection
 type BottleCollection []*Bottle
 
-// Validate validates the media type instance.
+// Validate validates the BottleCollection media type instance.
 func (mt BottleCollection) Validate() (err error) {
 	for _, e := range mt {
 		if e.Account != nil {
@@ -389,11 +396,12 @@ func (mt BottleCollection) Validate() (err error) {
 	return
 }
 
-// , tiny view
+// BottleTinyCollection media type is a collection of BottleTiny.
+//
 // Identifier: application/vnd.bottle+json; type=collection
 type BottleTinyCollection []*BottleTiny
 
-// Validate validates the media type instance.
+// Validate validates the BottleTinyCollection media type instance.
 func (mt BottleTinyCollection) Validate() (err error) {
 	for _, e := range mt {
 		if len(e.Name) < 2 {

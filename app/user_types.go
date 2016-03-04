@@ -14,7 +14,7 @@ package app
 
 import "github.com/goadesign/goa"
 
-// BottlePayload type
+// BottlePayload user type.
 type BottlePayload struct {
 	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
 	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
@@ -27,7 +27,7 @@ type BottlePayload struct {
 	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
-// Validate validates the type instance.
+// Validate validates the BottlePayload type instance.
 func (ut *BottlePayload) Validate() (err error) {
 	if ut.Color != nil {
 		if !(*ut.Color == "red" || *ut.Color == "white" || *ut.Color == "rose" || *ut.Color == "yellow" || *ut.Color == "sparkling") {
