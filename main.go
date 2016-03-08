@@ -15,12 +15,12 @@ import (
 )
 
 func main() {
-	// Setup logger
-	logger := logrus.New()
-	goa.Log = goalogrus.New(logger)
-
 	// Create goa service
 	service := goa.New("cellar")
+
+	// Setup logger
+	logger := logrus.New()
+	service.UseLogger(goalogrus.New(logger))
 
 	// Setup basic middleware
 	service.Use(middleware.RequestID())
@@ -46,6 +46,6 @@ func main() {
 
 	// Run service
 	if err := service.ListenAndServe(":8080"); err != nil {
-		goa.Error(goa.RootContext, err.Error())
+		service.Error(err.Error())
 	}
 }
