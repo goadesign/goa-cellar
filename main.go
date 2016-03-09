@@ -3,15 +3,15 @@
 package main
 
 import (
-	"github.com/Sirupsen/logrus"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/js"
 	"github.com/goadesign/goa-cellar/schema"
 	"github.com/goadesign/goa-cellar/swagger"
-	"github.com/goadesign/logging/logrus"
+	"github.com/goadesign/logging/log15"
 	"github.com/goadesign/middleware"
+	"gopkg.in/inconshreveable/log15.v2"
 )
 
 func main() {
@@ -19,8 +19,8 @@ func main() {
 	service := goa.New("cellar")
 
 	// Setup logger
-	logger := logrus.New()
-	service.UseLogger(goalogrus.New(logger))
+	logger := log15.New()
+	service.UseLogger(goalog15.New(logger))
 
 	// Setup basic middleware
 	service.Use(middleware.RequestID())
