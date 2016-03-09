@@ -133,6 +133,7 @@ type BottleController interface {
 	Rate(*RateBottleContext) error
 	Show(*ShowBottleContext) error
 	Update(*UpdateBottleContext) error
+	Watch(*WatchBottleContext) error
 }
 
 // MountBottleController "mounts" a Bottle resource controller on the given service.
@@ -202,6 +203,15 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	}
 	service.Mux.Handle("PATCH", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Update", h, unmarshalUpdateBottlePayload))
 	service.Info("mount", "ctrl", "Bottle", "action", "Update", "route", "PATCH /cellar/accounts/:accountID/bottles/:bottleID")
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		rctx, err := NewWatchBottleContext(ctx)
+		if err != nil {
+			return goa.NewBadRequestError(err)
+		}
+		return ctrl.Watch(rctx)
+	}
+	service.Mux.Handle("GET", "/cellar/accounts/:accountID/bottles/:bottleID/watch", ctrl.MuxHandler("Watch", h, nil))
+	service.Info("mount", "ctrl", "Bottle", "action", "Watch", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID/watch")
 }
 
 // unmarshalCreateBottlePayload unmarshals the request body into the context request data Payload field.

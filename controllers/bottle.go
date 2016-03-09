@@ -1,8 +1,12 @@
 package controllers
 
 import (
+	"fmt"
+	"io"
+
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
+	"golang.org/x/net/websocket"
 )
 
 // ToBottleMedia converts a bottle model into a bottle media type
@@ -62,6 +66,21 @@ func (b *BottleController) Show(ctx *app.ShowBottleContext) error {
 		return ctx.NotFound()
 	}
 	return ctx.OK(ToBottleMedia(bottle))
+}
+
+// Watch watches the bottle with the given id.
+func (b *BottleController) Watch(ctx *app.WatchBottleContext) error {
+	Watcher(ctx.AccountID, ctx.BottleID).ServeHTTP(ctx.ResponseWriter, ctx.Request)
+	return nil
+}
+
+// Echo the data received on the WebSocket.
+func Watcher(accountID, bottleID int) websocket.Handler {
+	return func(ws *websocket.Conn) {
+		watched := fmt.Sprintf("Account: %d, Bottle: %d", accountID, bottleID)
+		ws.Write([]byte(watched))
+		io.Copy(ws, ws)
+	}
 }
 
 // Create records a new bottle.

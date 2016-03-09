@@ -642,3 +642,37 @@ func (ctx *UpdateBottleContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
 	return nil
 }
+
+// WatchBottleContext provides the bottle watch action context.
+type WatchBottleContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+	AccountID int
+	BottleID  int
+}
+
+// NewWatchBottleContext parses the incoming request URL and body, performs validations and creates the
+// context used by the bottle controller watch action.
+func NewWatchBottleContext(ctx context.Context) (*WatchBottleContext, error) {
+	var err error
+	req := goa.Request(ctx)
+	rctx := WatchBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	rawAccountID := req.Params.Get("accountID")
+	if rawAccountID != "" {
+		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
+			rctx.AccountID = accountID
+		} else {
+			err = goa.InvalidParamTypeError("accountID", rawAccountID, "integer", err)
+		}
+	}
+	rawBottleID := req.Params.Get("bottleID")
+	if rawBottleID != "" {
+		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
+			rctx.BottleID = bottleID
+		} else {
+			err = goa.InvalidParamTypeError("bottleID", rawBottleID, "integer", err)
+		}
+	}
+	return &rctx, err
+}

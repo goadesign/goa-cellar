@@ -97,6 +97,17 @@ var _ = Resource("bottle", func() {
 		Response(NotFound)
 	})
 
+	Action("watch", func() {
+		Routing(
+			GET("/:bottleID/watch"),
+		)
+		Scheme("ws", "wss")
+		Description("Retrieve bottle with given id")
+		Params(func() {
+			Param("bottleID", Integer)
+		})
+	})
+
 	Action("create", func() {
 		Routing(
 			POST(""),

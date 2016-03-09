@@ -48,13 +48,13 @@ func (c *Client) ListBottle(path string, years []int) (*http.Response, error) {
 	var body io.Reader
 	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
 	values := u.Query()
-	tmp13 := make([]string, len(years))
+	tmp14 := make([]string, len(years))
 	for i, e := range years {
-		tmp14 := strconv.Itoa(e)
-		tmp13[i] = tmp14
+		tmp15 := strconv.Itoa(e)
+		tmp14[i] = tmp15
 	}
-	tmp12 := strings.Join(tmp13, ",")
-	values.Set("years", tmp12)
+	tmp13 := strings.Join(tmp14, ",")
+	values.Set("years", tmp13)
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), body)
 	if err != nil {
@@ -106,6 +106,19 @@ func (c *Client) UpdateBottle(path string, payload *app.UpdateBottlePayload) (*h
 	body = bytes.NewBuffer(b)
 	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
 	req, err := http.NewRequest("PATCH", u.String(), body)
+	if err != nil {
+		return nil, err
+	}
+	header := req.Header
+	header.Set("Content-Type", "application/json")
+	return c.Client.Do(req)
+}
+
+// Retrieve bottle with given id
+func (c *Client) WatchBottle(path string) (*http.Response, error) {
+	var body io.Reader
+	u := url.URL{Host: c.Host, Scheme: c.Scheme, Path: path}
+	req, err := http.NewRequest("GET", u.String(), body)
 	if err != nil {
 		return nil, err
 	}

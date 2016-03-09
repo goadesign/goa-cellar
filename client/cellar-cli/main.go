@@ -201,5 +201,18 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	tmp10.RegisterFlags(sub)
 	command.AddCommand(sub)
 	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "watch",
+		Short: "Retrieve bottle with given id",
+	}
+	tmp11 := new(WatchBottleCommand)
+	sub = &cobra.Command{
+		Use:   "bottle",
+		Short: "",
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+	}
+	tmp11.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
 
 }

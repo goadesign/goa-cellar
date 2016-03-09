@@ -55,6 +55,10 @@ type (
 	UpdateBottleCommand struct {
 		Payload string
 	}
+
+	// WatchBottleCommand is the command line data structure for the watch action of bottle
+	WatchBottleCommand struct {
+	}
 )
 
 // Run makes the HTTP request corresponding to the CreateAccountCommand command.
@@ -219,8 +223,8 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *ListBottleCommand) RegisterFlags(cc *cobra.Command) {
-	var tmp11 []int
-	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp11, "Filter by years")
+	var tmp12 []int
+	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp12, "Filter by years")
 }
 
 // Run makes the HTTP request corresponding to the RateBottleCommand command.
@@ -297,4 +301,24 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 // RegisterFlags registers the command flags with the command line.
 func (cmd *UpdateBottleCommand) RegisterFlags(cc *cobra.Command) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+}
+
+// Run makes the HTTP request corresponding to the WatchBottleCommand command.
+func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		return fmt.Errorf("missing path argument")
+	}
+	resp, err := c.WatchBottle(path)
+	if err != nil {
+		return err
+	}
+	HandleResponse(c, resp)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *WatchBottleCommand) RegisterFlags(cc *cobra.Command) {
 }
