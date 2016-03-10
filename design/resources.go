@@ -101,7 +101,7 @@ var _ = Resource("bottle", func() {
 		Routing(
 			GET("/:bottleID/watch"),
 		)
-		Scheme("ws", "wss")
+		Scheme("ws")
 		Description("Retrieve bottle with given id")
 		Params(func() {
 			Param("bottleID", Integer)

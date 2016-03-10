@@ -3,9 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/client"
+	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"
+	"golang.org/x/net/context"
+	"log"
+	"os"
 )
 
 type (
@@ -13,49 +18,39 @@ type (
 	CreateAccountCommand struct {
 		Payload string
 	}
-
 	// DeleteAccountCommand is the command line data structure for the delete action of account
 	DeleteAccountCommand struct {
 	}
-
 	// ShowAccountCommand is the command line data structure for the show action of account
 	ShowAccountCommand struct {
 	}
-
 	// UpdateAccountCommand is the command line data structure for the update action of account
 	UpdateAccountCommand struct {
 		Payload string
 	}
-
 	// CreateBottleCommand is the command line data structure for the create action of bottle
 	CreateBottleCommand struct {
 		Payload string
 	}
-
 	// DeleteBottleCommand is the command line data structure for the delete action of bottle
 	DeleteBottleCommand struct {
 	}
-
 	// ListBottleCommand is the command line data structure for the list action of bottle
 	ListBottleCommand struct {
 		// Filter by years
 		Years []int
 	}
-
 	// RateBottleCommand is the command line data structure for the rate action of bottle
 	RateBottleCommand struct {
 		Payload string
 	}
-
 	// ShowBottleCommand is the command line data structure for the show action of bottle
 	ShowBottleCommand struct {
 	}
-
 	// UpdateBottleCommand is the command line data structure for the update action of bottle
 	UpdateBottleCommand struct {
 		Payload string
 	}
-
 	// WatchBottleCommand is the command line data structure for the watch action of bottle
 	WatchBottleCommand struct {
 	}
@@ -76,11 +71,15 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	resp, err := c.CreateAccount(path, &payload)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.CreateAccount(ctx, path, &payload)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -97,11 +96,15 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	resp, err := c.DeleteAccount(path)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.DeleteAccount(ctx, path)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -117,11 +120,15 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	resp, err := c.ShowAccount(path)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.ShowAccount(ctx, path)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -144,11 +151,15 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	resp, err := c.UpdateAccount(path, &payload)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.UpdateAccount(ctx, path, &payload)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -172,11 +183,15 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	resp, err := c.CreateBottle(path, &payload)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.CreateBottle(ctx, path, &payload)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -193,11 +208,15 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	resp, err := c.DeleteBottle(path)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.DeleteBottle(ctx, path)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -213,11 +232,15 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	resp, err := c.ListBottle(path, cmd.Years)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.ListBottle(ctx, path, cmd.Years)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -242,11 +265,15 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	resp, err := c.RateBottle(path, &payload)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.RateBottle(ctx, path, &payload)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -263,11 +290,15 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	resp, err := c.ShowBottle(path)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.ShowBottle(ctx, path)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -290,11 +321,15 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	resp, err := c.UpdateBottle(path, &payload)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	resp, err := c.UpdateBottle(ctx, path, &payload)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+
+	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
 	return nil
 }
 
@@ -303,7 +338,7 @@ func (cmd *UpdateBottleCommand) RegisterFlags(cc *cobra.Command) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
 }
 
-// Run makes the HTTP request corresponding to the WatchBottleCommand command.
+// Run establishes a websocket connection for the WatchBottleCommand command.
 func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
@@ -311,11 +346,16 @@ func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	resp, err := c.WatchBottle(path)
+	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.UseLogger(context.Background(), logger)
+	ws, err := c.WatchBottle(ctx, path)
 	if err != nil {
+		goa.Error(ctx, "failed", "err", err)
 		return err
 	}
-	HandleResponse(c, resp)
+	go goaclient.WSWrite(ws)
+	goaclient.WSRead(ws)
+
 	return nil
 }
 
