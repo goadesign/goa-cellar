@@ -57,7 +57,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateAccountContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateAccountPayload)
@@ -69,7 +69,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewDeleteAccountContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		return ctrl.Delete(rctx)
 	}
@@ -78,7 +78,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewShowAccountContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		return ctrl.Show(rctx)
 	}
@@ -87,7 +87,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewUpdateAccountContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateAccountPayload)
@@ -143,7 +143,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateBottlePayload)
@@ -155,7 +155,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewDeleteBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		return ctrl.Delete(rctx)
 	}
@@ -164,7 +164,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewListBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		return ctrl.List(rctx)
 	}
@@ -173,7 +173,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewRateBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*RateBottlePayload)
@@ -185,7 +185,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewShowBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		return ctrl.Show(rctx)
 	}
@@ -194,7 +194,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewUpdateBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateBottlePayload)
@@ -206,7 +206,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewWatchBottleContext(ctx)
 		if err != nil {
-			return goa.NewBadRequestError(err)
+			return err
 		}
 		return ctrl.Watch(rctx)
 	}
