@@ -10,6 +10,7 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/swagger"
+	"github.com/goadesign/middleware"
 	"github.com/goadesign/middleware/cors"
 	"gopkg.in/inconshreveable/log15.v2"
 )
@@ -40,9 +41,9 @@ func init() {
 	}
 
 	// Setup middleware
-	service.Use(goa.RequestID())
+	service.Use(middleware.RequestID())
 	service.Use(cors.Middleware(spec))
-	service.Use(goa.Recover())
+	service.Use(middleware.Recover())
 
 	// Mount account controller onto application
 	ac := controllers.NewAccount(service)
