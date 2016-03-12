@@ -27,6 +27,15 @@ var _ = API("cellar", func() {
 	Scheme("http")
 	BasePath("/cellar")
 
+	BasicAuthSecurity("admin_pass", func() {
+		Description(`Basic authentication method, for global admin authentication.
+
+Here are very secret credentials:
+* username: wine
+* password: lover
+`)
+	})
+
 	ResponseTemplate(Created, func(pattern string) {
 		Description("Resource created")
 		Status(201)

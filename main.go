@@ -44,6 +44,8 @@ func main() {
 	// Mount JavaScript example
 	js.MountController(service)
 
+	app.AdminPassSecurity.Use(adminPasswordMiddleware)
+
 	// Run service
 	if err := service.ListenAndServe(":8080"); err != nil {
 		service.Error(err.Error())

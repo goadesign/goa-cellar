@@ -14,7 +14,7 @@ var _ = Resource("account", func() {
 		Routing(
 			GET("/:accountID"),
 		)
-		Description("Retrieve account with given id")
+		Description("Retrieve account with given id. IDs 1 and 2 pre-exist in the system.")
 		Params(func() {
 			Param("accountID", Integer, "Account ID")
 		})
@@ -23,6 +23,7 @@ var _ = Resource("account", func() {
 	})
 
 	Action("create", func() {
+		Security("admin_pass")
 		Routing(
 			POST(""),
 		)
