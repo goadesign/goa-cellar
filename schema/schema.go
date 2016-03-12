@@ -2,8 +2,8 @@
 // cellar JSON Hyper-schema
 //
 // Generated with goagen v0.0.1, command line:
-// $ goagen
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// $ goagen.exe
+// --out=$(GOPATH)\src\github.com\goadesign\goa-cellar
 // --design=github.com/goadesign/goa-cellar/design
 // --url=http://localhost
 //
