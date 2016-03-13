@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/goadesign/goa-cellar/app"
 )
@@ -38,12 +39,12 @@ type BottleModel struct {
 	Kind      string
 	Color     string
 	Country   *string
-	CreatedAt *string
+	CreatedAt *time.Time
 	Rating    *int
 	Region    *string
 	Review    *string
 	Sweetness *int
-	UpdatedAt *string
+	UpdatedAt *time.Time
 	Varietal  string
 	Vineyard  string
 	Vintage   int
@@ -54,7 +55,7 @@ type AccountModel struct {
 	ID        int
 	Href      string
 	Name      string
-	CreatedAt *string
+	CreatedAt *time.Time
 	CreatedBy *string
 }
 
