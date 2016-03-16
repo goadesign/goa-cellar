@@ -45,7 +45,7 @@ func init() {
 	service.Use(middleware.RequestID())
 	service.Use(cors.Middleware(spec))
 	service.Use(middleware.Recover())
-	app.AdminPassSecurity.Use(basicauth.New("wine", "lover"))
+	app.ConfigureAdminPassSecurity(service, basicauth.New("wine", "lover"))
 
 	// Mount account controller onto application
 	ac := controllers.NewAccount(service)
