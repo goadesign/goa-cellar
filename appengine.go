@@ -12,6 +12,7 @@ import (
 	"github.com/goadesign/goa-cellar/swagger"
 	"github.com/goadesign/middleware"
 	"github.com/goadesign/middleware/cors"
+	"github.com/goadesign/middleware/security/basicauth"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
@@ -44,6 +45,7 @@ func init() {
 	service.Use(middleware.RequestID())
 	service.Use(cors.Middleware(spec))
 	service.Use(middleware.Recover())
+	app.ConfigureAdminPassSecurity(service, basicauth.New("wine", "lover"))
 
 	// Mount account controller onto application
 	ac := controllers.NewAccount(service)
