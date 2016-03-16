@@ -65,8 +65,9 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		}
 		return ctrl.Create(rctx)
 	}
+	h = handleSecurity(service, "admin_pass", h)
 	service.Mux.Handle("POST", "/cellar/accounts", ctrl.MuxHandler("Create", h, unmarshalCreateAccountPayload))
-	service.Info("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts")
+	service.Info("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts", "security", "admin_pass")
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewDeleteAccountContext(ctx)
 		if err != nil {

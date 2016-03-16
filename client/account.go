@@ -50,7 +50,7 @@ func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response
 	return c.Client.Do(ctx, req)
 }
 
-// Retrieve account with given id
+// Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
 func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, error) {
 	var body io.Reader
 	scheme := c.Scheme
