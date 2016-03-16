@@ -137,7 +137,7 @@ define(['axios'] , function (axios) {
     return client(cfg);
   }
 
-  // Retrieve account with given id
+  // Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
   // path is the request path, the format is "/cellar/accounts/:accountID"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
