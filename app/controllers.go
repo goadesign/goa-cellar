@@ -54,6 +54,7 @@ type AccountController interface {
 func MountAccountController(service *goa.Service, ctrl AccountController) {
 	initService(service)
 	var h goa.Handler
+
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateAccountContext(ctx)
 		if err != nil {
@@ -140,6 +141,7 @@ type BottleController interface {
 func MountBottleController(service *goa.Service, ctrl BottleController) {
 	initService(service)
 	var h goa.Handler
+
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateBottleContext(ctx)
 		if err != nil {
