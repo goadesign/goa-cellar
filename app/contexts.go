@@ -240,7 +240,6 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 	if payload.Varietal == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "varietal"))
 	}
-
 	if payload.Color == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "color"))
 	}
@@ -443,7 +442,6 @@ type RateBottlePayload struct {
 
 // Validate runs the validation rules defined in the design.
 func (payload *RateBottlePayload) Validate() (err error) {
-
 	if payload.Rating < 1 {
 		err = goa.StackErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 1, true))
 	}

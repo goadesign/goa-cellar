@@ -8,7 +8,7 @@ definitions:
   Account:
     description: A tenant account
     example:
-      created_at: 1972-12-04T20:47:40-08:00
+      created_at: 2008-01-22T00:07:16-08:00
       created_by: Vero est mollitia eos voluptas.
       href: Enim suscipit est explicabo eveniet dolore.
       id: 7.9748073e+18
@@ -16,7 +16,7 @@ definitions:
     properties:
       created_at:
         description: Date of creation
-        example: 1996-01-11T07:54:48-08:00
+        example: 2015-09-23T11:51:57-07:00
         format: date-time
         type: string
       created_by:
@@ -47,14 +47,14 @@ definitions:
     description: A bottle of wine
     example:
       account:
-        created_at: 2013-05-12T02:11:12-07:00
+        created_at: 1988-08-18T23:20:28-07:00
         created_by: Iure tenetur sapiente et ut.
         href: Voluptatem voluptatem voluptas veritatis.
         id: 9.182515e+18
         name: Sunt ut accusamus soluta.
       color: Nostrum dolore et maiores quidem iusto.
       country: Qui aut quaerat id unde sed.
-      created_at: 1983-06-23T12:24:28-07:00
+      created_at: 2001-07-20T06:36:36-07:00
       href: Ut nisi est.
       id: 4.0907748e+18
       name: Quis ipsa occaecati dolorum.
@@ -62,7 +62,7 @@ definitions:
       region: Rem voluptatem.
       review: Recusandae quam qui labore animi.
       sweetness: 1.03773165e+18
-      updated_at: 1973-10-03T17:04:42-07:00
+      updated_at: 1987-01-07T15:39:20-08:00
       varietal: Pariatur quam quo laudantium qui ducimus.
       vineyard: Eos a provident quia omnis iure atque.
       vintage: 8.3677744e+18
@@ -70,7 +70,7 @@ definitions:
       account:
         description: Account that owns bottle
         example:
-          created_at: 1999-04-30T14:23:38-07:00
+          created_at: 1970-12-24T20:38:00-08:00
           created_by: Earum repellat eos.
           href: Corrupti corrupti qui.
           id: 6.34671e+18
@@ -78,7 +78,7 @@ definitions:
         properties:
           created_at:
             description: Date of creation
-            example: 1996-01-11T07:54:48-08:00
+            example: 2015-09-23T11:51:57-07:00
             format: date-time
             type: string
           created_by:
@@ -119,7 +119,7 @@ definitions:
         type: string
       created_at:
         description: Date of creation
-        example: 1970-06-26T23:37:02-07:00
+        example: 2002-01-26T17:01:26-08:00
         format: date-time
         type: string
       href:
@@ -156,7 +156,7 @@ definitions:
         type: integer
       updated_at:
         description: Date of last update
-        example: 2009-12-24T05:01:10-08:00
+        example: 1994-04-05T12:08:05-07:00
         format: date-time
         type: string
       varietal:
@@ -185,14 +185,14 @@ definitions:
   BottleCollection:
     example:
     - account:
-        created_at: 1983-05-24T16:49:05-07:00
+        created_at: 1997-11-14T12:42:49-08:00
         created_by: Optio corporis quam delectus.
         href: Exercitationem alias est dolores.
         id: 3.3478612e+18
         name: Ducimus expedita in quam eos distinctio.
       color: Ut molestiae possimus.
       country: Aliquam itaque quam beatae veniam quaerat sint.
-      created_at: 1973-08-21T03:14:26-07:00
+      created_at: 2000-07-18T03:19:44-07:00
       href: Sit qui ut delectus.
       id: 7.6403293e+18
       name: Nulla architecto magni eos tempora sapiente.
@@ -200,21 +200,21 @@ definitions:
       region: Beatae eveniet et tempora nobis enim.
       review: Dolorum libero qui.
       sweetness: 2.5772294e+18
-      updated_at: 1982-06-07T20:59:42-07:00
+      updated_at: 1980-11-29T23:07:41-08:00
       varietal: Iste dolorem officiis aut magnam commodi.
       vineyard: Voluptatem deserunt cupiditate eveniet repellat qui.
       vintage: 2.0464565e+18
     items:
       example:
         account:
-          created_at: 1988-06-14T01:39:11-07:00
+          created_at: 2014-10-24T15:06:00-07:00
           created_by: Aut non necessitatibus ab repellendus quidem modi.
           href: Incidunt recusandae.
           id: 2.8548622e+17
           name: Voluptatem ut qui.
         color: Sunt sit dolor magnam dolores.
         country: Quibusdam aut quibusdam.
-        created_at: 1973-11-27T03:40:06-08:00
+        created_at: 1996-10-24T19:50:17-07:00
         href: Quis aut rem vel veritatis aut.
         id: 3.4591565e+18
         name: Aut aut.
@@ -222,7 +222,7 @@ definitions:
         region: Aliquid facere.
         review: Placeat ea vel molestiae incidunt earum.
         sweetness: 1.3609932e+18
-        updated_at: 1994-06-04T02:11:38-07:00
+        updated_at: 1982-09-15T22:09:33-07:00
         varietal: Iusto aut officia rerum.
         vineyard: Qui natus et aut soluta minus.
         vintage: 6.290062e+18
@@ -230,7 +230,7 @@ definitions:
         account:
           description: Account that owns bottle
           example:
-            created_at: 1999-04-30T14:23:38-07:00
+            created_at: 1970-12-24T20:38:00-08:00
             created_by: Earum repellat eos.
             href: Corrupti corrupti qui.
             id: 6.34671e+18
@@ -238,7 +238,7 @@ definitions:
           properties:
             created_at:
               description: Date of creation
-              example: 1996-01-11T07:54:48-08:00
+              example: 2015-09-23T11:51:57-07:00
               format: date-time
               type: string
             created_by:
@@ -279,7 +279,7 @@ definitions:
           type: string
         created_at:
           description: Date of creation
-          example: 1970-06-26T23:37:02-07:00
+          example: 2002-01-26T17:01:26-08:00
           format: date-time
           type: string
         href:
@@ -316,7 +316,7 @@ definitions:
           type: integer
         updated_at:
           description: Date of last update
-          example: 2009-12-24T05:01:10-08:00
+          example: 1994-04-05T12:08:05-07:00
           format: date-time
           type: string
         varietal:

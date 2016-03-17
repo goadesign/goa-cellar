@@ -35,7 +35,6 @@ type Account struct {
 
 // Validate validates the Account media type instance.
 func (mt *Account) Validate() (err error) {
-
 	if mt.Href == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -63,7 +62,6 @@ type AccountLink struct {
 
 // Validate validates the AccountLink media type instance.
 func (mt *AccountLink) Validate() (err error) {
-
 	if mt.Href == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -85,7 +83,6 @@ type AccountTiny struct {
 
 // Validate validates the AccountTiny media type instance.
 func (mt *AccountTiny) Validate() (err error) {
-
 	if mt.Href == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -118,7 +115,6 @@ type Bottle struct {
 
 // Validate validates the Bottle media type instance.
 func (mt *Bottle) Validate() (err error) {
-
 	if mt.Href == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -133,7 +129,6 @@ func (mt *Bottle) Validate() (err error) {
 	}
 
 	if mt.Account != nil {
-
 		if mt.Account.Href == "" {
 			err = goa.StackErrors(err, goa.MissingAttributeError(`response.account`, "href"))
 		}
@@ -149,7 +144,6 @@ func (mt *Bottle) Validate() (err error) {
 	}
 	if mt.Links != nil {
 		if mt.Links.Account != nil {
-
 			if mt.Links.Account.Href == "" {
 				err = goa.StackErrors(err, goa.MissingAttributeError(`response.links.account`, "href"))
 			}
@@ -215,7 +209,6 @@ type BottleFull struct {
 
 // Validate validates the BottleFull media type instance.
 func (mt *BottleFull) Validate() (err error) {
-
 	if mt.Href == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -228,13 +221,11 @@ func (mt *BottleFull) Validate() (err error) {
 	if mt.Varietal == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "varietal"))
 	}
-
 	if mt.Color == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "color"))
 	}
 
 	if mt.Account != nil {
-
 		if mt.Account.Href == "" {
 			err = goa.StackErrors(err, goa.MissingAttributeError(`response.account`, "href"))
 		}
@@ -258,7 +249,6 @@ func (mt *BottleFull) Validate() (err error) {
 	}
 	if mt.Links != nil {
 		if mt.Links.Account != nil {
-
 			if mt.Links.Account.Href == "" {
 				err = goa.StackErrors(err, goa.MissingAttributeError(`response.links.account`, "href"))
 			}
@@ -330,7 +320,6 @@ type BottleTiny struct {
 
 // Validate validates the BottleTiny media type instance.
 func (mt *BottleTiny) Validate() (err error) {
-
 	if mt.Href == "" {
 		err = goa.StackErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
@@ -340,7 +329,6 @@ func (mt *BottleTiny) Validate() (err error) {
 
 	if mt.Links != nil {
 		if mt.Links.Account != nil {
-
 			if mt.Links.Account.Href == "" {
 				err = goa.StackErrors(err, goa.MissingAttributeError(`response.links.account`, "href"))
 			}
@@ -371,7 +359,6 @@ type BottleLinks struct {
 // Validate validates the BottleLinks type instance.
 func (ut *BottleLinks) Validate() (err error) {
 	if ut.Account != nil {
-
 		if ut.Account.Href == "" {
 			err = goa.StackErrors(err, goa.MissingAttributeError(`response.account`, "href"))
 		}
@@ -388,7 +375,6 @@ type BottleCollection []*Bottle
 // Validate validates the BottleCollection media type instance.
 func (mt BottleCollection) Validate() (err error) {
 	for _, e := range mt {
-
 		if e.Href == "" {
 			err = goa.StackErrors(err, goa.MissingAttributeError(`response[*]`, "href"))
 		}
@@ -403,7 +389,6 @@ func (mt BottleCollection) Validate() (err error) {
 		}
 
 		if e.Account != nil {
-
 			if e.Account.Href == "" {
 				err = goa.StackErrors(err, goa.MissingAttributeError(`response[*].account`, "href"))
 			}
@@ -419,7 +404,6 @@ func (mt BottleCollection) Validate() (err error) {
 		}
 		if e.Links != nil {
 			if e.Links.Account != nil {
-
 				if e.Links.Account.Href == "" {
 					err = goa.StackErrors(err, goa.MissingAttributeError(`response[*].links.account`, "href"))
 				}
@@ -463,7 +447,6 @@ type BottleTinyCollection []*BottleTiny
 // Validate validates the BottleTinyCollection media type instance.
 func (mt BottleTinyCollection) Validate() (err error) {
 	for _, e := range mt {
-
 		if e.Href == "" {
 			err = goa.StackErrors(err, goa.MissingAttributeError(`response[*]`, "href"))
 		}
@@ -473,7 +456,6 @@ func (mt BottleTinyCollection) Validate() (err error) {
 
 		if e.Links != nil {
 			if e.Links.Account != nil {
-
 				if e.Links.Account.Href == "" {
 					err = goa.StackErrors(err, goa.MissingAttributeError(`response[*].links.account`, "href"))
 				}
@@ -504,7 +486,6 @@ type BottleLinksArray []*BottleLinks
 func (ut BottleLinksArray) Validate() (err error) {
 	for _, e := range ut {
 		if e.Account != nil {
-
 			if e.Account.Href == "" {
 				err = goa.StackErrors(err, goa.MissingAttributeError(`response[*].account`, "href"))
 			}
