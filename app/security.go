@@ -13,7 +13,6 @@
 package app
 
 import (
-	"errors"
 	"github.com/goadesign/goa"
 	"golang.org/x/net/context"
 	"net/http"
@@ -33,13 +32,12 @@ func ConfigureAdminPassSecurity(service *goa.Service, f goa.BasicAuthSecurityCon
 	service.Context = context.WithValue(service.Context, securitySchemeKey("admin_pass"), middleware)
 }
 
-func handleSecurity(service *goa.Service, schemeName string, h goa.Handler, scopes ...string) goa.Handler {
+func handleSecurity(schemeName string, h goa.Handler, scopes ...string) goa.Handler {
 	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		scheme := service.Context.Value(securitySchemeKey(schemeName))
+		scheme := ctx.Value(securitySchemeKey(schemeName))
 		middleware, ok := scheme.(goa.Middleware)
 		if !ok {
-			goa.RequestService(ctx).Error("security scheme not configured")
-			return errors.New("security scheme not configured")
+			return goa.NoSecurityScheme(schemeName)
 		}
 
 		if len(scopes) != 0 {
