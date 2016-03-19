@@ -107,6 +107,7 @@ var _ = Resource("bottle", func() {
 		Params(func() {
 			Param("bottleID", Integer)
 		})
+		Response(SwitchingProtocols)
 	})
 
 	Action("create", func() {

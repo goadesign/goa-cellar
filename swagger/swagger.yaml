@@ -704,6 +704,9 @@ paths:
         name: bottleID
         required: true
         type: integer
+      responses:
+        "101":
+          description: Switching Protocols
       schemes:
       - ws
 produces:
@@ -720,6 +723,8 @@ responses:
     description: OK
     schema:
       $ref: '#/definitions/Account'
+  SwitchingProtocols:
+    description: Switching Protocols
 schemes:
 - http
 securityDefinitions:
