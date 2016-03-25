@@ -55,6 +55,8 @@ type AccountController interface {
 func MountAccountController(service *goa.Service, ctrl AccountController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/cellar/accounts", cors.HandlePreflight(service.Context, handleAccountOrigin))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", cors.HandlePreflight(service.Context, handleAccountOrigin))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateAccountContext(ctx)
@@ -67,10 +69,9 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		return ctrl.Create(rctx)
 	}
 	h = handleAccountOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts", cors.HandlePreflight(service.Context, handleAccountOrigin))
 	h = handleSecurity("admin_pass", h)
 	service.Mux.Handle("POST", "/cellar/accounts", ctrl.MuxHandler("Create", h, unmarshalCreateAccountPayload))
-	service.Info("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts", "security", "admin_pass")
+	service.LogInfo("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts", "security", "admin_pass")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewDeleteAccountContext(ctx)
@@ -80,9 +81,8 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		return ctrl.Delete(rctx)
 	}
 	h = handleAccountOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", cors.HandlePreflight(service.Context, handleAccountOrigin))
 	service.Mux.Handle("DELETE", "/cellar/accounts/:accountID", ctrl.MuxHandler("Delete", h, nil))
-	service.Info("mount", "ctrl", "Account", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID")
+	service.LogInfo("mount", "ctrl", "Account", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewShowAccountContext(ctx)
@@ -92,9 +92,8 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		return ctrl.Show(rctx)
 	}
 	h = handleAccountOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", cors.HandlePreflight(service.Context, handleAccountOrigin))
 	service.Mux.Handle("GET", "/cellar/accounts/:accountID", ctrl.MuxHandler("Show", h, nil))
-	service.Info("mount", "ctrl", "Account", "action", "Show", "route", "GET /cellar/accounts/:accountID")
+	service.LogInfo("mount", "ctrl", "Account", "action", "Show", "route", "GET /cellar/accounts/:accountID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewUpdateAccountContext(ctx)
@@ -107,9 +106,8 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		return ctrl.Update(rctx)
 	}
 	h = handleAccountOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", cors.HandlePreflight(service.Context, handleAccountOrigin))
 	service.Mux.Handle("PUT", "/cellar/accounts/:accountID", ctrl.MuxHandler("Update", h, unmarshalUpdateAccountPayload))
-	service.Info("mount", "ctrl", "Account", "action", "Update", "route", "PUT /cellar/accounts/:accountID")
+	service.LogInfo("mount", "ctrl", "Account", "action", "Update", "route", "PUT /cellar/accounts/:accountID")
 }
 
 // handleAccountOrigin applies the CORS response headers corresponding to the origin.
@@ -178,6 +176,10 @@ type BottleController interface {
 func MountBottleController(service *goa.Service, ctrl BottleController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", cors.HandlePreflight(service.Context, handleBottleOrigin))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", cors.HandlePreflight(service.Context, handleBottleOrigin))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", cors.HandlePreflight(service.Context, handleBottleOrigin))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", cors.HandlePreflight(service.Context, handleBottleOrigin))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateBottleContext(ctx)
@@ -190,9 +192,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.Create(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("POST", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("Create", h, unmarshalCreateBottlePayload))
-	service.Info("mount", "ctrl", "Bottle", "action", "Create", "route", "POST /cellar/accounts/:accountID/bottles")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "Create", "route", "POST /cellar/accounts/:accountID/bottles")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewDeleteBottleContext(ctx)
@@ -202,9 +203,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.Delete(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("DELETE", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Delete", h, nil))
-	service.Info("mount", "ctrl", "Bottle", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID/bottles/:bottleID")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewListBottleContext(ctx)
@@ -214,9 +214,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.List(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("GET", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("List", h, nil))
-	service.Info("mount", "ctrl", "Bottle", "action", "List", "route", "GET /cellar/accounts/:accountID/bottles")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "List", "route", "GET /cellar/accounts/:accountID/bottles")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewRateBottleContext(ctx)
@@ -229,9 +228,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.Rate(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("PUT", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", ctrl.MuxHandler("Rate", h, unmarshalRateBottlePayload))
-	service.Info("mount", "ctrl", "Bottle", "action", "Rate", "route", "PUT /cellar/accounts/:accountID/bottles/:bottleID/actions/rate")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "Rate", "route", "PUT /cellar/accounts/:accountID/bottles/:bottleID/actions/rate")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewShowBottleContext(ctx)
@@ -241,9 +239,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.Show(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("GET", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Show", h, nil))
-	service.Info("mount", "ctrl", "Bottle", "action", "Show", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "Show", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewUpdateBottleContext(ctx)
@@ -256,9 +253,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.Update(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("PATCH", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("Update", h, unmarshalUpdateBottlePayload))
-	service.Info("mount", "ctrl", "Bottle", "action", "Update", "route", "PATCH /cellar/accounts/:accountID/bottles/:bottleID")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "Update", "route", "PATCH /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewWatchBottleContext(ctx)
@@ -268,9 +264,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		return ctrl.Watch(rctx)
 	}
 	h = handleBottleOrigin(h)
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", cors.HandlePreflight(service.Context, handleBottleOrigin))
 	service.Mux.Handle("GET", "/cellar/accounts/:accountID/bottles/:bottleID/watch", ctrl.MuxHandler("Watch", h, nil))
-	service.Info("mount", "ctrl", "Bottle", "action", "Watch", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID/watch")
+	service.LogInfo("mount", "ctrl", "Bottle", "action", "Watch", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID/watch")
 }
 
 // handleBottleOrigin applies the CORS response headers corresponding to the origin.

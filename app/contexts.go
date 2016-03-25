@@ -30,7 +30,7 @@ type CreateAccountContext struct {
 // NewCreateAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller create action.
 func NewCreateAccountContext(ctx context.Context) (*CreateAccountContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := CreateAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	return &rctx, err
@@ -43,12 +43,13 @@ type CreateAccountPayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *CreateAccountPayload) Validate() (err error) {
+func (payload *CreateAccountPayload) Validate() error {
+	var err *goa.Error
 	if payload.Name == "" {
-		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "name"))
+		err = err.Merge(goa.MissingAttributeError(`raw`, "name"))
 	}
 
-	return
+	return err
 }
 
 // Created sends a HTTP response with status code 201.
@@ -68,7 +69,7 @@ type DeleteAccountContext struct {
 // NewDeleteAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller delete action.
 func NewDeleteAccountContext(ctx context.Context) (*DeleteAccountContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := DeleteAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -76,7 +77,7 @@ func NewDeleteAccountContext(ctx context.Context) (*DeleteAccountContext, error)
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -105,7 +106,7 @@ type ShowAccountContext struct {
 // NewShowAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller show action.
 func NewShowAccountContext(ctx context.Context) (*ShowAccountContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := ShowAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -113,7 +114,7 @@ func NewShowAccountContext(ctx context.Context) (*ShowAccountContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -149,7 +150,7 @@ type UpdateAccountContext struct {
 // NewUpdateAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller update action.
 func NewUpdateAccountContext(ctx context.Context) (*UpdateAccountContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := UpdateAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -157,7 +158,7 @@ func NewUpdateAccountContext(ctx context.Context) (*UpdateAccountContext, error)
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -170,12 +171,13 @@ type UpdateAccountPayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *UpdateAccountPayload) Validate() (err error) {
+func (payload *UpdateAccountPayload) Validate() error {
+	var err *goa.Error
 	if payload.Name == "" {
-		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "name"))
+		err = err.Merge(goa.MissingAttributeError(`raw`, "name"))
 	}
 
-	return
+	return err
 }
 
 // NoContent sends a HTTP response with status code 204.
@@ -202,7 +204,7 @@ type CreateBottleContext struct {
 // NewCreateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller create action.
 func NewCreateBottleContext(ctx context.Context) (*CreateBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := CreateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -210,7 +212,7 @@ func NewCreateBottleContext(ctx context.Context) (*CreateBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -230,64 +232,65 @@ type CreateBottlePayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *CreateBottlePayload) Validate() (err error) {
+func (payload *CreateBottlePayload) Validate() error {
+	var err *goa.Error
 	if payload.Name == "" {
-		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "name"))
+		err = err.Merge(goa.MissingAttributeError(`raw`, "name"))
 	}
 	if payload.Vineyard == "" {
-		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "vineyard"))
+		err = err.Merge(goa.MissingAttributeError(`raw`, "vineyard"))
 	}
 	if payload.Varietal == "" {
-		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "varietal"))
+		err = err.Merge(goa.MissingAttributeError(`raw`, "varietal"))
 	}
 	if payload.Color == "" {
-		err = goa.StackErrors(err, goa.MissingAttributeError(`raw`, "color"))
+		err = err.Merge(goa.MissingAttributeError(`raw`, "color"))
 	}
 
 	if !(payload.Color == "red" || payload.Color == "white" || payload.Color == "rose" || payload.Color == "yellow" || payload.Color == "sparkling") {
-		err = goa.StackErrors(err, goa.InvalidEnumValueError(`raw.color`, payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
+		err = err.Merge(goa.InvalidEnumValueError(`raw.color`, payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
 	}
 	if payload.Country != nil {
 		if len(*payload.Country) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
 		}
 	}
 	if len(payload.Name) < 2 {
-		err = goa.StackErrors(err, goa.InvalidLengthError(`raw.name`, payload.Name, len(payload.Name), 2, true))
+		err = err.Merge(goa.InvalidLengthError(`raw.name`, payload.Name, len(payload.Name), 2, true))
 	}
 	if payload.Review != nil {
 		if len(*payload.Review) < 3 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
 		}
 	}
 	if payload.Review != nil {
 		if len(*payload.Review) > 300 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
+			err = err.Merge(goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
 		}
 	}
 	if payload.Sweetness != nil {
 		if *payload.Sweetness < 1 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 1, true))
+			err = err.Merge(goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 1, true))
 		}
 	}
 	if payload.Sweetness != nil {
 		if *payload.Sweetness > 5 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
+			err = err.Merge(goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
 		}
 	}
 	if len(payload.Varietal) < 4 {
-		err = goa.StackErrors(err, goa.InvalidLengthError(`raw.varietal`, payload.Varietal, len(payload.Varietal), 4, true))
+		err = err.Merge(goa.InvalidLengthError(`raw.varietal`, payload.Varietal, len(payload.Varietal), 4, true))
 	}
 	if len(payload.Vineyard) < 2 {
-		err = goa.StackErrors(err, goa.InvalidLengthError(`raw.vineyard`, payload.Vineyard, len(payload.Vineyard), 2, true))
+		err = err.Merge(goa.InvalidLengthError(`raw.vineyard`, payload.Vineyard, len(payload.Vineyard), 2, true))
 	}
 	if payload.Vintage < 1900 {
-		err = goa.StackErrors(err, goa.InvalidRangeError(`raw.vintage`, payload.Vintage, 1900, true))
+		err = err.Merge(goa.InvalidRangeError(`raw.vintage`, payload.Vintage, 1900, true))
 	}
 	if payload.Vintage > 2020 {
-		err = goa.StackErrors(err, goa.InvalidRangeError(`raw.vintage`, payload.Vintage, 2020, false))
+		err = err.Merge(goa.InvalidRangeError(`raw.vintage`, payload.Vintage, 2020, false))
 	}
-	return
+	return err
 }
 
 // Created sends a HTTP response with status code 201.
@@ -308,7 +311,7 @@ type DeleteBottleContext struct {
 // NewDeleteBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller delete action.
 func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := DeleteBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -316,7 +319,7 @@ func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	rawBottleID := req.Params.Get("bottleID")
@@ -324,7 +327,7 @@ func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
 			rctx.BottleID = bottleID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -354,7 +357,7 @@ type ListBottleContext struct {
 // NewListBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller list action.
 func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := ListBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -362,7 +365,7 @@ func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	rawYears := req.Params.Get("years")
@@ -373,7 +376,7 @@ func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
 			if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
 				elemsYears2[i] = elem
 			} else {
-				err = goa.StackErrors(err, goa.InvalidParamTypeError("elem", rawElem, "integer"))
+				err = err.Merge(goa.InvalidParamTypeError("elem", rawElem, "integer"))
 			}
 		}
 		rctx.Years = elemsYears2
@@ -412,7 +415,7 @@ type RateBottleContext struct {
 // NewRateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller rate action.
 func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := RateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -420,7 +423,7 @@ func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	rawBottleID := req.Params.Get("bottleID")
@@ -428,7 +431,7 @@ func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
 			rctx.BottleID = bottleID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -441,14 +444,15 @@ type RateBottlePayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *RateBottlePayload) Validate() (err error) {
+func (payload *RateBottlePayload) Validate() error {
+	var err *goa.Error
 	if payload.Rating < 1 {
-		err = goa.StackErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 1, true))
+		err = err.Merge(goa.InvalidRangeError(`raw.rating`, payload.Rating, 1, true))
 	}
 	if payload.Rating > 5 {
-		err = goa.StackErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 5, false))
+		err = err.Merge(goa.InvalidRangeError(`raw.rating`, payload.Rating, 5, false))
 	}
-	return
+	return err
 }
 
 // NoContent sends a HTTP response with status code 204.
@@ -475,7 +479,7 @@ type ShowBottleContext struct {
 // NewShowBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller show action.
 func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := ShowBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -483,7 +487,7 @@ func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	rawBottleID := req.Params.Get("bottleID")
@@ -491,7 +495,7 @@ func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
 			rctx.BottleID = bottleID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -534,7 +538,7 @@ type UpdateBottleContext struct {
 // NewUpdateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller update action.
 func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := UpdateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -542,7 +546,7 @@ func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	rawBottleID := req.Params.Get("bottleID")
@@ -550,7 +554,7 @@ func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
 			rctx.BottleID = bottleID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
 		}
 	}
 	return &rctx, err
@@ -570,63 +574,64 @@ type UpdateBottlePayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *UpdateBottlePayload) Validate() (err error) {
+func (payload *UpdateBottlePayload) Validate() error {
+	var err *goa.Error
 	if payload.Color != nil {
 		if !(*payload.Color == "red" || *payload.Color == "white" || *payload.Color == "rose" || *payload.Color == "yellow" || *payload.Color == "sparkling") {
-			err = goa.StackErrors(err, goa.InvalidEnumValueError(`raw.color`, *payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
+			err = err.Merge(goa.InvalidEnumValueError(`raw.color`, *payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
 		}
 	}
 	if payload.Country != nil {
 		if len(*payload.Country) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
 		}
 	}
 	if payload.Name != nil {
 		if len(*payload.Name) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.name`, *payload.Name, len(*payload.Name), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.name`, *payload.Name, len(*payload.Name), 2, true))
 		}
 	}
 	if payload.Review != nil {
 		if len(*payload.Review) < 3 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
 		}
 	}
 	if payload.Review != nil {
 		if len(*payload.Review) > 300 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
+			err = err.Merge(goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
 		}
 	}
 	if payload.Sweetness != nil {
 		if *payload.Sweetness < 1 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 1, true))
+			err = err.Merge(goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 1, true))
 		}
 	}
 	if payload.Sweetness != nil {
 		if *payload.Sweetness > 5 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
+			err = err.Merge(goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
 		}
 	}
 	if payload.Varietal != nil {
 		if len(*payload.Varietal) < 4 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.varietal`, *payload.Varietal, len(*payload.Varietal), 4, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.varietal`, *payload.Varietal, len(*payload.Varietal), 4, true))
 		}
 	}
 	if payload.Vineyard != nil {
 		if len(*payload.Vineyard) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`raw.vineyard`, *payload.Vineyard, len(*payload.Vineyard), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`raw.vineyard`, *payload.Vineyard, len(*payload.Vineyard), 2, true))
 		}
 	}
 	if payload.Vintage != nil {
 		if *payload.Vintage < 1900 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 1900, true))
+			err = err.Merge(goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 1900, true))
 		}
 	}
 	if payload.Vintage != nil {
 		if *payload.Vintage > 2020 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
+			err = err.Merge(goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
 		}
 	}
-	return
+	return err
 }
 
 // NoContent sends a HTTP response with status code 204.
@@ -653,7 +658,7 @@ type WatchBottleContext struct {
 // NewWatchBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller watch action.
 func NewWatchBottleContext(ctx context.Context) (*WatchBottleContext, error) {
-	var err error
+	var err *goa.Error
 	req := goa.Request(ctx)
 	rctx := WatchBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
@@ -661,7 +666,7 @@ func NewWatchBottleContext(ctx context.Context) (*WatchBottleContext, error) {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
 			rctx.AccountID = accountID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
 	}
 	rawBottleID := req.Params.Get("bottleID")
@@ -669,7 +674,7 @@ func NewWatchBottleContext(ctx context.Context) (*WatchBottleContext, error) {
 		if bottleID, err2 := strconv.Atoi(rawBottleID); err2 == nil {
 			rctx.BottleID = bottleID
 		} else {
-			err = goa.StackErrors(err, goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
+			err = err.Merge(goa.InvalidParamTypeError("bottleID", rawBottleID, "integer"))
 		}
 	}
 	return &rctx, err

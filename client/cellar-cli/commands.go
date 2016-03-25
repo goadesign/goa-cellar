@@ -75,7 +75,7 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.CreateAccount(ctx, path, &payload)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -100,7 +100,7 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.DeleteAccount(ctx, path)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -124,7 +124,7 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.ShowAccount(ctx, path)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -155,7 +155,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.UpdateAccount(ctx, path, &payload)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -187,7 +187,7 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.CreateBottle(ctx, path, &payload)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -212,7 +212,7 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.DeleteBottle(ctx, path)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -236,7 +236,7 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.ListBottle(ctx, path, cmd.Years)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -269,7 +269,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.RateBottle(ctx, path, &payload)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -294,7 +294,7 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.ShowBottle(ctx, path)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -325,7 +325,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	resp, err := c.UpdateBottle(ctx, path, &payload)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
@@ -350,7 +350,7 @@ func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 	ctx := goa.UseLogger(context.Background(), logger)
 	ws, err := c.WatchBottle(ctx, path)
 	if err != nil {
-		goa.Error(ctx, "failed", "err", err)
+		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 	go goaclient.WSWrite(ws)

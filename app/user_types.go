@@ -28,61 +28,62 @@ type BottlePayload struct {
 }
 
 // Validate validates the BottlePayload type instance.
-func (ut *BottlePayload) Validate() (err error) {
+func (ut *BottlePayload) Validate() error {
+	var err *goa.Error
 	if ut.Color != nil {
 		if !(*ut.Color == "red" || *ut.Color == "white" || *ut.Color == "rose" || *ut.Color == "yellow" || *ut.Color == "sparkling") {
-			err = goa.StackErrors(err, goa.InvalidEnumValueError(`response.color`, *ut.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
+			err = err.Merge(goa.InvalidEnumValueError(`response.color`, *ut.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
 		}
 	}
 	if ut.Country != nil {
 		if len(*ut.Country) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`response.country`, *ut.Country, len(*ut.Country), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`response.country`, *ut.Country, len(*ut.Country), 2, true))
 		}
 	}
 	if ut.Name != nil {
 		if len(*ut.Name) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`response.name`, *ut.Name, len(*ut.Name), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`response.name`, *ut.Name, len(*ut.Name), 2, true))
 		}
 	}
 	if ut.Review != nil {
 		if len(*ut.Review) < 3 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 3, true))
+			err = err.Merge(goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 3, true))
 		}
 	}
 	if ut.Review != nil {
 		if len(*ut.Review) > 300 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 300, false))
+			err = err.Merge(goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 300, false))
 		}
 	}
 	if ut.Sweetness != nil {
 		if *ut.Sweetness < 1 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`response.sweetness`, *ut.Sweetness, 1, true))
+			err = err.Merge(goa.InvalidRangeError(`response.sweetness`, *ut.Sweetness, 1, true))
 		}
 	}
 	if ut.Sweetness != nil {
 		if *ut.Sweetness > 5 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`response.sweetness`, *ut.Sweetness, 5, false))
+			err = err.Merge(goa.InvalidRangeError(`response.sweetness`, *ut.Sweetness, 5, false))
 		}
 	}
 	if ut.Varietal != nil {
 		if len(*ut.Varietal) < 4 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`response.varietal`, *ut.Varietal, len(*ut.Varietal), 4, true))
+			err = err.Merge(goa.InvalidLengthError(`response.varietal`, *ut.Varietal, len(*ut.Varietal), 4, true))
 		}
 	}
 	if ut.Vineyard != nil {
 		if len(*ut.Vineyard) < 2 {
-			err = goa.StackErrors(err, goa.InvalidLengthError(`response.vineyard`, *ut.Vineyard, len(*ut.Vineyard), 2, true))
+			err = err.Merge(goa.InvalidLengthError(`response.vineyard`, *ut.Vineyard, len(*ut.Vineyard), 2, true))
 		}
 	}
 	if ut.Vintage != nil {
 		if *ut.Vintage < 1900 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`response.vintage`, *ut.Vintage, 1900, true))
+			err = err.Merge(goa.InvalidRangeError(`response.vintage`, *ut.Vintage, 1900, true))
 		}
 	}
 	if ut.Vintage != nil {
 		if *ut.Vintage > 2020 {
-			err = goa.StackErrors(err, goa.InvalidRangeError(`response.vintage`, *ut.Vintage, 2020, false))
+			err = err.Merge(goa.InvalidRangeError(`response.vintage`, *ut.Vintage, 2020, false))
 		}
 	}
-	return
+	return err
 }
