@@ -48,6 +48,6 @@ func main() {
 
 	// Run service
 	if err := service.ListenAndServe(":8080"); err != nil {
-		service.Error(err.Error())
+		service.LogError(err.Error())
 	}
 }
