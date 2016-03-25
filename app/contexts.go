@@ -31,8 +31,8 @@ type CreateAccountContext struct {
 // context used by the account controller create action.
 func NewCreateAccountContext(ctx context.Context) (*CreateAccountContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := CreateAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := CreateAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	return &rctx, err
 }
 
@@ -70,8 +70,8 @@ type DeleteAccountContext struct {
 // context used by the account controller delete action.
 func NewDeleteAccountContext(ctx context.Context) (*DeleteAccountContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := DeleteAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := DeleteAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -107,8 +107,8 @@ type ShowAccountContext struct {
 // context used by the account controller show action.
 func NewShowAccountContext(ctx context.Context) (*ShowAccountContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := ShowAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := ShowAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -151,8 +151,8 @@ type UpdateAccountContext struct {
 // context used by the account controller update action.
 func NewUpdateAccountContext(ctx context.Context) (*UpdateAccountContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := UpdateAccountContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := UpdateAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -205,8 +205,8 @@ type CreateBottleContext struct {
 // context used by the bottle controller create action.
 func NewCreateBottleContext(ctx context.Context) (*CreateBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := CreateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := CreateBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -312,8 +312,8 @@ type DeleteBottleContext struct {
 // context used by the bottle controller delete action.
 func NewDeleteBottleContext(ctx context.Context) (*DeleteBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := DeleteBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := DeleteBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -358,8 +358,8 @@ type ListBottleContext struct {
 // context used by the bottle controller list action.
 func NewListBottleContext(ctx context.Context) (*ListBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := ListBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := ListBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -416,8 +416,8 @@ type RateBottleContext struct {
 // context used by the bottle controller rate action.
 func NewRateBottleContext(ctx context.Context) (*RateBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := RateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := RateBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -480,8 +480,8 @@ type ShowBottleContext struct {
 // context used by the bottle controller show action.
 func NewShowBottleContext(ctx context.Context) (*ShowBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := ShowBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := ShowBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -539,8 +539,8 @@ type UpdateBottleContext struct {
 // context used by the bottle controller update action.
 func NewUpdateBottleContext(ctx context.Context) (*UpdateBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := UpdateBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := UpdateBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {
@@ -659,8 +659,8 @@ type WatchBottleContext struct {
 // context used by the bottle controller watch action.
 func NewWatchBottleContext(ctx context.Context) (*WatchBottleContext, error) {
 	var err *goa.Error
-	req := goa.Request(ctx)
-	rctx := WatchBottleContext{Context: ctx, ResponseData: goa.Response(ctx), RequestData: req}
+	req := goa.ContextRequest(ctx)
+	rctx := WatchBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req}
 	rawAccountID := req.Params.Get("accountID")
 	if rawAccountID != "" {
 		if accountID, err2 := strconv.Atoi(rawAccountID); err2 == nil {

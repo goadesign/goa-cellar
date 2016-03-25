@@ -63,7 +63,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		if err != nil {
 			return err
 		}
-		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateAccountPayload)
 		}
 		return ctrl.Create(rctx)
@@ -100,7 +100,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		if err != nil {
 			return err
 		}
-		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateAccountPayload)
 		}
 		return ctrl.Update(rctx)
@@ -137,26 +137,26 @@ func handleAccountOrigin(h goa.Handler) goa.Handler {
 // unmarshalCreateAccountPayload unmarshals the request body into the context request data Payload field.
 func unmarshalCreateAccountPayload(ctx context.Context, req *http.Request) error {
 	var payload CreateAccountPayload
-	if err := goa.RequestService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.Request(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = &payload
 	return nil
 }
 
 // unmarshalUpdateAccountPayload unmarshals the request body into the context request data Payload field.
 func unmarshalUpdateAccountPayload(ctx context.Context, req *http.Request) error {
 	var payload UpdateAccountPayload
-	if err := goa.RequestService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.Request(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = &payload
 	return nil
 }
 
@@ -186,7 +186,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		if err != nil {
 			return err
 		}
-		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateBottlePayload)
 		}
 		return ctrl.Create(rctx)
@@ -222,7 +222,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		if err != nil {
 			return err
 		}
-		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*RateBottlePayload)
 		}
 		return ctrl.Rate(rctx)
@@ -247,7 +247,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		if err != nil {
 			return err
 		}
-		if rawPayload := goa.Request(ctx).Payload; rawPayload != nil {
+		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateBottlePayload)
 		}
 		return ctrl.Update(rctx)
@@ -295,38 +295,38 @@ func handleBottleOrigin(h goa.Handler) goa.Handler {
 // unmarshalCreateBottlePayload unmarshals the request body into the context request data Payload field.
 func unmarshalCreateBottlePayload(ctx context.Context, req *http.Request) error {
 	var payload CreateBottlePayload
-	if err := goa.RequestService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.Request(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = &payload
 	return nil
 }
 
 // unmarshalRateBottlePayload unmarshals the request body into the context request data Payload field.
 func unmarshalRateBottlePayload(ctx context.Context, req *http.Request) error {
 	var payload RateBottlePayload
-	if err := goa.RequestService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.Request(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = &payload
 	return nil
 }
 
 // unmarshalUpdateBottlePayload unmarshals the request body into the context request data Payload field.
 func unmarshalUpdateBottlePayload(ctx context.Context, req *http.Request) error {
 	var payload UpdateBottlePayload
-	if err := goa.RequestService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.Request(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = &payload
 	return nil
 }
