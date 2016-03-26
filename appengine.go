@@ -10,9 +10,9 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/swagger"
-	"github.com/goadesign/middleware"
-	"github.com/goadesign/middleware/cors"
-	"github.com/goadesign/middleware/security/basicauth"
+	"github.com/goadesign/goa/middleware"
+	"github.com/goadesign/goa/middleware/cors"
+	"github.com/goadesign/goa/middleware/security/basicauth"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
