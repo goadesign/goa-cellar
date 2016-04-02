@@ -26,7 +26,7 @@ func main() {
 	// Setup basic middleware
 	service.Use(middleware.RequestID())
 	service.Use(middleware.LogRequest(true))
-	service.Use(middleware.ErrorHandler(true))
+	service.Use(middleware.ErrorHandler(service, true))
 	service.Use(middleware.Recover())
 	app.ConfigureAdminPassSecurity(service, basicauth.New("wine", "lover"))
 

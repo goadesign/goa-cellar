@@ -59,7 +59,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", cors.HandlePreflight(service.Context, handleAccountOrigin))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewCreateAccountContext(ctx)
+		rctx, err := NewCreateAccountContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -74,7 +74,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.LogInfo("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts", "security", "admin_pass")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewDeleteAccountContext(ctx)
+		rctx, err := NewDeleteAccountContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -85,7 +85,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.LogInfo("mount", "ctrl", "Account", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewShowAccountContext(ctx)
+		rctx, err := NewShowAccountContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -96,7 +96,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.LogInfo("mount", "ctrl", "Account", "action", "Show", "route", "GET /cellar/accounts/:accountID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewUpdateAccountContext(ctx)
+		rctx, err := NewUpdateAccountContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -135,9 +135,9 @@ func handleAccountOrigin(h goa.Handler) goa.Handler {
 }
 
 // unmarshalCreateAccountPayload unmarshals the request body into the context request data Payload field.
-func unmarshalCreateAccountPayload(ctx context.Context, req *http.Request) error {
+func unmarshalCreateAccountPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
 	var payload CreateAccountPayload
-	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := service.DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -148,9 +148,9 @@ func unmarshalCreateAccountPayload(ctx context.Context, req *http.Request) error
 }
 
 // unmarshalUpdateAccountPayload unmarshals the request body into the context request data Payload field.
-func unmarshalUpdateAccountPayload(ctx context.Context, req *http.Request) error {
+func unmarshalUpdateAccountPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
 	var payload UpdateAccountPayload
-	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := service.DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -182,7 +182,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", cors.HandlePreflight(service.Context, handleBottleOrigin))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewCreateBottleContext(ctx)
+		rctx, err := NewCreateBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -196,7 +196,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Create", "route", "POST /cellar/accounts/:accountID/bottles")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewDeleteBottleContext(ctx)
+		rctx, err := NewDeleteBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -207,7 +207,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewListBottleContext(ctx)
+		rctx, err := NewListBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -218,7 +218,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "List", "route", "GET /cellar/accounts/:accountID/bottles")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewRateBottleContext(ctx)
+		rctx, err := NewRateBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -232,7 +232,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Rate", "route", "PUT /cellar/accounts/:accountID/bottles/:bottleID/actions/rate")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewShowBottleContext(ctx)
+		rctx, err := NewShowBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -243,7 +243,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Show", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewUpdateBottleContext(ctx)
+		rctx, err := NewUpdateBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -257,7 +257,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Update", "route", "PATCH /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		rctx, err := NewWatchBottleContext(ctx)
+		rctx, err := NewWatchBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
@@ -293,9 +293,9 @@ func handleBottleOrigin(h goa.Handler) goa.Handler {
 }
 
 // unmarshalCreateBottlePayload unmarshals the request body into the context request data Payload field.
-func unmarshalCreateBottlePayload(ctx context.Context, req *http.Request) error {
+func unmarshalCreateBottlePayload(ctx context.Context, service *goa.Service, req *http.Request) error {
 	var payload CreateBottlePayload
-	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := service.DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -306,9 +306,9 @@ func unmarshalCreateBottlePayload(ctx context.Context, req *http.Request) error 
 }
 
 // unmarshalRateBottlePayload unmarshals the request body into the context request data Payload field.
-func unmarshalRateBottlePayload(ctx context.Context, req *http.Request) error {
+func unmarshalRateBottlePayload(ctx context.Context, service *goa.Service, req *http.Request) error {
 	var payload RateBottlePayload
-	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := service.DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
@@ -319,9 +319,9 @@ func unmarshalRateBottlePayload(ctx context.Context, req *http.Request) error {
 }
 
 // unmarshalUpdateBottlePayload unmarshals the request body into the context request data Payload field.
-func unmarshalUpdateBottlePayload(ctx context.Context, req *http.Request) error {
+func unmarshalUpdateBottlePayload(ctx context.Context, service *goa.Service, req *http.Request) error {
 	var payload UpdateBottlePayload
-	if err := goa.ContextService(ctx).DecodeRequest(req, &payload); err != nil {
+	if err := service.DecodeRequest(req, &payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
