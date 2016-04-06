@@ -37,6 +37,30 @@ func NewCreateAccountContext(ctx context.Context, service *goa.Service) (*Create
 	return &rctx, err
 }
 
+// createAccountPayload is the account create action payload.
+type createAccountPayload struct {
+	// Name of account
+	Name *string `json:"name,omitempty" xml:"name,omitempty"`
+}
+
+// Validate runs the validation rules defined in the design.
+func (payload *createAccountPayload) Validate() (err error) {
+	if payload.Name == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
+	}
+
+	return err
+}
+
+// Publicize creates CreateAccountPayload from createAccountPayload
+func (payload *createAccountPayload) Publicize() *CreateAccountPayload {
+	var pub CreateAccountPayload
+	if payload.Name != nil {
+		pub.Name = *payload.Name
+	}
+	return &pub
+}
+
 // CreateAccountPayload is the account create action payload.
 type CreateAccountPayload struct {
 	// Name of account
@@ -44,8 +68,7 @@ type CreateAccountPayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *CreateAccountPayload) Validate() error {
-	var err error
+func (payload *CreateAccountPayload) Validate() (err error) {
 	if payload.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
@@ -171,6 +194,30 @@ func NewUpdateAccountContext(ctx context.Context, service *goa.Service) (*Update
 	return &rctx, err
 }
 
+// updateAccountPayload is the account update action payload.
+type updateAccountPayload struct {
+	// Name of account
+	Name *string `json:"name,omitempty" xml:"name,omitempty"`
+}
+
+// Validate runs the validation rules defined in the design.
+func (payload *updateAccountPayload) Validate() (err error) {
+	if payload.Name == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
+	}
+
+	return err
+}
+
+// Publicize creates UpdateAccountPayload from updateAccountPayload
+func (payload *updateAccountPayload) Publicize() *UpdateAccountPayload {
+	var pub UpdateAccountPayload
+	if payload.Name != nil {
+		pub.Name = *payload.Name
+	}
+	return &pub
+}
+
 // UpdateAccountPayload is the account update action payload.
 type UpdateAccountPayload struct {
 	// Name of account
@@ -178,8 +225,7 @@ type UpdateAccountPayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *UpdateAccountPayload) Validate() error {
-	var err error
+func (payload *UpdateAccountPayload) Validate() (err error) {
 	if payload.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
@@ -227,6 +273,128 @@ func NewCreateBottleContext(ctx context.Context, service *goa.Service) (*CreateB
 	return &rctx, err
 }
 
+// createBottlePayload is the bottle create action payload.
+type createBottlePayload struct {
+	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+}
+
+// Validate runs the validation rules defined in the design.
+func (payload *createBottlePayload) Validate() (err error) {
+	if payload.Name == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
+	}
+	if payload.Vineyard == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "vineyard"))
+	}
+	if payload.Varietal == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "varietal"))
+	}
+	if payload.Vintage == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "vintage"))
+	}
+	if payload.Color == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "color"))
+	}
+
+	if payload.Color != nil {
+		if !(*payload.Color == "red" || *payload.Color == "white" || *payload.Color == "rose" || *payload.Color == "yellow" || *payload.Color == "sparkling") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`raw.color`, *payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
+		}
+	}
+	if payload.Country != nil {
+		if len(*payload.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
+		}
+	}
+	if payload.Name != nil {
+		if len(*payload.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.name`, *payload.Name, len(*payload.Name), 2, true))
+		}
+	}
+	if payload.Review != nil {
+		if len(*payload.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
+		}
+	}
+	if payload.Review != nil {
+		if len(*payload.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
+		}
+	}
+	if payload.Sweetness != nil {
+		if *payload.Sweetness < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 1, true))
+		}
+	}
+	if payload.Sweetness != nil {
+		if *payload.Sweetness > 5 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
+		}
+	}
+	if payload.Varietal != nil {
+		if len(*payload.Varietal) < 4 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.varietal`, *payload.Varietal, len(*payload.Varietal), 4, true))
+		}
+	}
+	if payload.Vineyard != nil {
+		if len(*payload.Vineyard) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.vineyard`, *payload.Vineyard, len(*payload.Vineyard), 2, true))
+		}
+	}
+	if payload.Vintage != nil {
+		if *payload.Vintage < 1900 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 1900, true))
+		}
+	}
+	if payload.Vintage != nil {
+		if *payload.Vintage > 2020 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
+		}
+	}
+	return err
+}
+
+// Publicize creates CreateBottlePayload from createBottlePayload
+func (payload *createBottlePayload) Publicize() *CreateBottlePayload {
+	var pub CreateBottlePayload
+	if payload.Color != nil {
+		pub.Color = *payload.Color
+	}
+	if payload.Country != nil {
+		pub.Country = payload.Country
+	}
+	if payload.Name != nil {
+		pub.Name = *payload.Name
+	}
+	if payload.Region != nil {
+		pub.Region = payload.Region
+	}
+	if payload.Review != nil {
+		pub.Review = payload.Review
+	}
+	if payload.Sweetness != nil {
+		pub.Sweetness = payload.Sweetness
+	}
+	if payload.Varietal != nil {
+		pub.Varietal = *payload.Varietal
+	}
+	if payload.Vineyard != nil {
+		pub.Vineyard = *payload.Vineyard
+	}
+	if payload.Vintage != nil {
+		pub.Vintage = *payload.Vintage
+	}
+	return &pub
+}
+
 // CreateBottlePayload is the bottle create action payload.
 type CreateBottlePayload struct {
 	Color     string  `json:"color" xml:"color"`
@@ -241,8 +409,7 @@ type CreateBottlePayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *CreateBottlePayload) Validate() error {
-	var err error
+func (payload *CreateBottlePayload) Validate() (err error) {
 	if payload.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
@@ -458,6 +625,40 @@ func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottl
 	return &rctx, err
 }
 
+// rateBottlePayload is the bottle rate action payload.
+type rateBottlePayload struct {
+	// Rating of bottle between 1 and 5
+	Rating *int `json:"rating,omitempty" xml:"rating,omitempty"`
+}
+
+// Validate runs the validation rules defined in the design.
+func (payload *rateBottlePayload) Validate() (err error) {
+	if payload.Rating == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "rating"))
+	}
+
+	if payload.Rating != nil {
+		if *payload.Rating < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, *payload.Rating, 1, true))
+		}
+	}
+	if payload.Rating != nil {
+		if *payload.Rating > 5 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, *payload.Rating, 5, false))
+		}
+	}
+	return err
+}
+
+// Publicize creates RateBottlePayload from rateBottlePayload
+func (payload *rateBottlePayload) Publicize() *RateBottlePayload {
+	var pub RateBottlePayload
+	if payload.Rating != nil {
+		pub.Rating = *payload.Rating
+	}
+	return &pub
+}
+
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
@@ -465,8 +666,7 @@ type RateBottlePayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *RateBottlePayload) Validate() error {
-	var err error
+func (payload *RateBottlePayload) Validate() (err error) {
 	if payload.Rating < 1 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 1, true))
 	}
@@ -587,6 +787,112 @@ func NewUpdateBottleContext(ctx context.Context, service *goa.Service) (*UpdateB
 	return &rctx, err
 }
 
+// updateBottlePayload is the bottle update action payload.
+type updateBottlePayload struct {
+	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+}
+
+// Validate runs the validation rules defined in the design.
+func (payload *updateBottlePayload) Validate() (err error) {
+	if payload.Color != nil {
+		if !(*payload.Color == "red" || *payload.Color == "white" || *payload.Color == "rose" || *payload.Color == "yellow" || *payload.Color == "sparkling") {
+			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`raw.color`, *payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
+		}
+	}
+	if payload.Country != nil {
+		if len(*payload.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
+		}
+	}
+	if payload.Name != nil {
+		if len(*payload.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.name`, *payload.Name, len(*payload.Name), 2, true))
+		}
+	}
+	if payload.Review != nil {
+		if len(*payload.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
+		}
+	}
+	if payload.Review != nil {
+		if len(*payload.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
+		}
+	}
+	if payload.Sweetness != nil {
+		if *payload.Sweetness < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 1, true))
+		}
+	}
+	if payload.Sweetness != nil {
+		if *payload.Sweetness > 5 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
+		}
+	}
+	if payload.Varietal != nil {
+		if len(*payload.Varietal) < 4 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.varietal`, *payload.Varietal, len(*payload.Varietal), 4, true))
+		}
+	}
+	if payload.Vineyard != nil {
+		if len(*payload.Vineyard) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.vineyard`, *payload.Vineyard, len(*payload.Vineyard), 2, true))
+		}
+	}
+	if payload.Vintage != nil {
+		if *payload.Vintage < 1900 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 1900, true))
+		}
+	}
+	if payload.Vintage != nil {
+		if *payload.Vintage > 2020 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
+		}
+	}
+	return err
+}
+
+// Publicize creates UpdateBottlePayload from updateBottlePayload
+func (payload *updateBottlePayload) Publicize() *UpdateBottlePayload {
+	var pub UpdateBottlePayload
+	if payload.Color != nil {
+		pub.Color = payload.Color
+	}
+	if payload.Country != nil {
+		pub.Country = payload.Country
+	}
+	if payload.Name != nil {
+		pub.Name = payload.Name
+	}
+	if payload.Region != nil {
+		pub.Region = payload.Region
+	}
+	if payload.Review != nil {
+		pub.Review = payload.Review
+	}
+	if payload.Sweetness != nil {
+		pub.Sweetness = payload.Sweetness
+	}
+	if payload.Varietal != nil {
+		pub.Varietal = payload.Varietal
+	}
+	if payload.Vineyard != nil {
+		pub.Vineyard = payload.Vineyard
+	}
+	if payload.Vintage != nil {
+		pub.Vintage = payload.Vintage
+	}
+	return &pub
+}
+
 // UpdateBottlePayload is the bottle update action payload.
 type UpdateBottlePayload struct {
 	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
@@ -601,8 +907,7 @@ type UpdateBottlePayload struct {
 }
 
 // Validate runs the validation rules defined in the design.
-func (payload *UpdateBottlePayload) Validate() error {
-	var err error
+func (payload *UpdateBottlePayload) Validate() (err error) {
 	if payload.Color != nil {
 		if !(*payload.Color == "red" || *payload.Color == "white" || *payload.Color == "rose" || *payload.Color == "yellow" || *payload.Color == "sparkling") {
 			err = goa.MergeErrors(err, goa.InvalidEnumValueError(`raw.color`, *payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))

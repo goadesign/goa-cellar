@@ -136,27 +136,27 @@ func handleAccountOrigin(h goa.Handler) goa.Handler {
 
 // unmarshalCreateAccountPayload unmarshals the request body into the context request data Payload field.
 func unmarshalCreateAccountPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
-	var payload CreateAccountPayload
-	if err := service.DecodeRequest(req, &payload); err != nil {
+	payload := &createAccountPayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.ContextRequest(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
 
 // unmarshalUpdateAccountPayload unmarshals the request body into the context request data Payload field.
 func unmarshalUpdateAccountPayload(ctx context.Context, service *goa.Service, req *http.Request) error {
-	var payload UpdateAccountPayload
-	if err := service.DecodeRequest(req, &payload); err != nil {
+	payload := &updateAccountPayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.ContextRequest(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
 
@@ -294,39 +294,39 @@ func handleBottleOrigin(h goa.Handler) goa.Handler {
 
 // unmarshalCreateBottlePayload unmarshals the request body into the context request data Payload field.
 func unmarshalCreateBottlePayload(ctx context.Context, service *goa.Service, req *http.Request) error {
-	var payload CreateBottlePayload
-	if err := service.DecodeRequest(req, &payload); err != nil {
+	payload := &createBottlePayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.ContextRequest(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
 
 // unmarshalRateBottlePayload unmarshals the request body into the context request data Payload field.
 func unmarshalRateBottlePayload(ctx context.Context, service *goa.Service, req *http.Request) error {
-	var payload RateBottlePayload
-	if err := service.DecodeRequest(req, &payload); err != nil {
+	payload := &rateBottlePayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.ContextRequest(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
 
 // unmarshalUpdateBottlePayload unmarshals the request body into the context request data Payload field.
 func unmarshalUpdateBottlePayload(ctx context.Context, service *goa.Service, req *http.Request) error {
-	var payload UpdateBottlePayload
-	if err := service.DecodeRequest(req, &payload); err != nil {
+	payload := &updateBottlePayload{}
+	if err := service.DecodeRequest(req, payload); err != nil {
 		return err
 	}
 	if err := payload.Validate(); err != nil {
 		return err
 	}
-	goa.ContextRequest(ctx).Payload = &payload
+	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
