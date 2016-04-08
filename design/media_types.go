@@ -39,6 +39,18 @@ var Account = MediaType("application/vnd.account+json", func() {
 	})
 })
 
+var Profile = MediaType("application/vnd.profile+json", func() {
+	Description("A tenant account")
+	Attributes(func() {
+		Attribute("first_name", String)
+		Attribute("last_name", String)
+	})
+	View("default", func() {
+		Attribute("first_name")
+		Attribute("last_name")
+	})
+})
+
 // Bottle is the bottle resource media type.
 var Bottle = MediaType("application/vnd.bottle+json", func() {
 	Description("A bottle of wine")

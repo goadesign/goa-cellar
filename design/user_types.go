@@ -11,6 +11,7 @@ var BottlePayload = Type("BottlePayload", func() {
 	Attribute("name", func() {
 		MinLength(2)
 	})
+	Attribute("profile", Profile)
 	Attribute("vineyard", func() {
 		MinLength(2)
 	})
