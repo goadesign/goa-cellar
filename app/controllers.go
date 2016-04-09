@@ -19,16 +19,8 @@ import (
 	"net/http"
 )
 
-// inited is true if initService has been called
-var inited = false
-
 // initService sets up the service encoders, decoders and mux.
 func initService(service *goa.Service) {
-	if inited {
-		return
-	}
-	inited = true
-
 	// Setup encoders and decoders
 	service.Encoder(goa.NewJSONEncoder, "application/json")
 	service.Encoder(goa.NewGobEncoder, "application/gob", "application/x-gob")
