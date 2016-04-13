@@ -21,7 +21,7 @@ func main() {
 
 	// Setup logger
 	logger := log15.New()
-	service.UseLogger(goalog15.New(logger))
+	service.WithLogger(goalog15.New(logger))
 
 	// Setup basic middleware
 	service.Use(middleware.RequestID())
