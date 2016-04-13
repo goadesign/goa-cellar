@@ -72,7 +72,7 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 		}
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.CreateAccount(ctx, path, &payload)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -97,7 +97,7 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 		return fmt.Errorf("missing path argument")
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.DeleteAccount(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -121,7 +121,7 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 		return fmt.Errorf("missing path argument")
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.ShowAccount(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -152,7 +152,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 		}
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.UpdateAccount(ctx, path, &payload)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -184,7 +184,7 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 		}
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.CreateBottle(ctx, path, &payload)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -209,7 +209,7 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 		return fmt.Errorf("missing path argument")
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.DeleteBottle(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -233,7 +233,7 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 		return fmt.Errorf("missing path argument")
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.ListBottle(ctx, path, cmd.Years)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -266,7 +266,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 		}
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.RateBottle(ctx, path, &payload)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -291,7 +291,7 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 		return fmt.Errorf("missing path argument")
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.ShowBottle(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -322,7 +322,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 		}
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.UpdateBottle(ctx, path, &payload)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
@@ -347,7 +347,7 @@ func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 		return fmt.Errorf("missing path argument")
 	}
 	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
-	ctx := goa.UseLogger(context.Background(), logger)
+	ctx := goa.WithLogger(context.Background(), logger)
 	ws, err := c.WatchBottle(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
