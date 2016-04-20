@@ -111,7 +111,7 @@ func handleAccountOrigin(h goa.Handler) goa.Handler {
 			return h(ctx, rw, req)
 		}
 		if cors.MatchOrigin(origin, "http://swagger.goa.design") {
-			ctx = goa.WithLog(ctx, "origin", origin)
+			ctx = goa.WithLogContext(ctx, "origin", origin)
 			rw.Header().Set("Access-Control-Allow-Origin", "http://swagger.goa.design")
 			rw.Header().Set("Vary", "Origin")
 			rw.Header().Set("Access-Control-Max-Age", "600")
@@ -269,7 +269,7 @@ func handleBottleOrigin(h goa.Handler) goa.Handler {
 			return h(ctx, rw, req)
 		}
 		if cors.MatchOrigin(origin, "http://swagger.goa.design") {
-			ctx = goa.WithLog(ctx, "origin", origin)
+			ctx = goa.WithLogContext(ctx, "origin", origin)
 			rw.Header().Set("Access-Control-Allow-Origin", "http://swagger.goa.design")
 			rw.Header().Set("Vary", "Origin")
 			rw.Header().Set("Access-Control-Max-Age", "600")

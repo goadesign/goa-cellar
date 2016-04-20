@@ -44,7 +44,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
-	tmp1.RegisterFlags(sub)
+	tmp1.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	tmp2 := new(CreateBottleCommand)
 	sub = &cobra.Command{
@@ -52,7 +52,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
-	tmp2.RegisterFlags(sub)
+	tmp2.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
@@ -65,7 +65,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
-	tmp3.RegisterFlags(sub)
+	tmp3.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	tmp4 := new(DeleteBottleCommand)
 	sub = &cobra.Command{
@@ -73,7 +73,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
-	tmp4.RegisterFlags(sub)
+	tmp4.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
@@ -86,7 +86,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
-	tmp5.RegisterFlags(sub)
+	tmp5.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
@@ -99,7 +99,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
-	tmp6.RegisterFlags(sub)
+	tmp6.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
@@ -112,7 +112,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
-	tmp7.RegisterFlags(sub)
+	tmp7.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	tmp8 := new(ShowBottleCommand)
 	sub = &cobra.Command{
@@ -120,7 +120,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
-	tmp8.RegisterFlags(sub)
+	tmp8.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
@@ -133,7 +133,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
-	tmp9.RegisterFlags(sub)
+	tmp9.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	tmp10 := new(UpdateBottleCommand)
 	sub = &cobra.Command{
@@ -141,7 +141,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
-	tmp10.RegisterFlags(sub)
+	tmp10.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
@@ -154,7 +154,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
 	}
-	tmp11.RegisterFlags(sub)
+	tmp11.RegisterFlags(sub, c)
 	command.AddCommand(sub)
 	app.AddCommand(command)
 

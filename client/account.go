@@ -30,6 +30,7 @@ func (c *Client) CreateAccount(ctx context.Context, path string, payload *app.Cr
 	}
 	header := req.Header
 	header.Set("Content-Type", "application/json")
+	c.SignerAdminPass.Sign(ctx, req)
 	return c.Client.Do(ctx, req)
 }
 

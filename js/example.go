@@ -16,6 +16,6 @@ import "github.com/goadesign/goa"
 // MountController mounts the JavaScript example controller under "/js".
 func MountController(service *goa.Service) {
 	// Serve static files under js
-	service.ServeFiles("/js/*filepath", "/home/abourget/go/src/github.com/goadesign/goa-cellar/js")
+	service.ServeFiles("/js/*filepath", "/home/raphael/go/src/github.com/goadesign/goa-cellar/js")
 	service.LogInfo("mount", "ctrl", "JS", "action", "ServeFiles", "route", "GET /js/*")
 }

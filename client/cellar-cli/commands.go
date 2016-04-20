@@ -84,8 +84,9 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *CreateAccountCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *CreateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+	c.SignerAdminPass.RegisterFlags(cc)
 }
 
 // Run makes the HTTP request corresponding to the DeleteAccountCommand command.
@@ -109,7 +110,7 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *DeleteAccountCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *DeleteAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
 
 // Run makes the HTTP request corresponding to the ShowAccountCommand command.
@@ -133,7 +134,7 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *ShowAccountCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *ShowAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
 
 // Run makes the HTTP request corresponding to the UpdateAccountCommand command.
@@ -164,7 +165,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *UpdateAccountCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *UpdateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
 }
 
@@ -196,7 +197,7 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *CreateBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *CreateBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
 }
 
@@ -221,7 +222,7 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *DeleteBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *DeleteBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
 
 // Run makes the HTTP request corresponding to the ListBottleCommand command.
@@ -245,7 +246,7 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *ListBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *ListBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	var tmp12 []int
 	cc.Flags().IntSliceVar(&cmd.Years, "years", tmp12, `Filter by years`)
 }
@@ -278,7 +279,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *RateBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *RateBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
 }
 
@@ -303,7 +304,7 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *ShowBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *ShowBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
 
 // Run makes the HTTP request corresponding to the UpdateBottleCommand command.
@@ -334,7 +335,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *UpdateBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *UpdateBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
 }
 
@@ -360,5 +361,5 @@ func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *WatchBottleCommand) RegisterFlags(cc *cobra.Command) {
+func (cmd *WatchBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }
