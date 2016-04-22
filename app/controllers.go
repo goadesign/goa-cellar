@@ -122,6 +122,7 @@ func handleAccountOrigin(h goa.Handler) goa.Handler {
 			}
 			return h(ctx, rw, req)
 		}
+
 		return h(ctx, rw, req)
 	}
 }
@@ -280,6 +281,7 @@ func handleBottleOrigin(h goa.Handler) goa.Handler {
 			}
 			return h(ctx, rw, req)
 		}
+
 		return h(ctx, rw, req)
 	}
 }

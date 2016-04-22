@@ -4,15 +4,20 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/goadesign/goa-cellar/app"
 	"golang.org/x/net/context"
 	"io"
 	"net/http"
 	"net/url"
 )
 
+// CreateAccountPayload is the account create action payload.
+type CreateAccountPayload struct {
+	// Name of account
+	Name string `json:"name" xml:"name"`
+}
+
 // Create new account
-func (c *Client) CreateAccount(ctx context.Context, path string, payload *app.CreateAccountPayload) (*http.Response, error) {
+func (c *Client) CreateAccount(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -68,8 +73,14 @@ func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, 
 	return c.Client.Do(ctx, req)
 }
 
+// UpdateAccountPayload is the account update action payload.
+type UpdateAccountPayload struct {
+	// Name of account
+	Name string `json:"name" xml:"name"`
+}
+
 // Change account name
-func (c *Client) UpdateAccount(ctx context.Context, path string, payload *app.UpdateAccountPayload) (*http.Response, error) {
+func (c *Client) UpdateAccount(ctx context.Context, path string, payload *UpdateAccountPayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {

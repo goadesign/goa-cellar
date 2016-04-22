@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/client"
 	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"
@@ -64,14 +63,14 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		path = "/cellar/accounts"
 	}
-	var payload app.CreateAccountPayload
+	var payload client.CreateAccountPayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.CreateAccount(ctx, path, &payload)
 	if err != nil {
@@ -97,7 +96,7 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.DeleteAccount(ctx, path)
 	if err != nil {
@@ -121,7 +120,7 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.ShowAccount(ctx, path)
 	if err != nil {
@@ -145,14 +144,14 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload app.UpdateAccountPayload
+	var payload client.UpdateAccountPayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.UpdateAccount(ctx, path, &payload)
 	if err != nil {
@@ -177,14 +176,14 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload app.CreateBottlePayload
+	var payload client.CreateBottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.CreateBottle(ctx, path, &payload)
 	if err != nil {
@@ -209,7 +208,7 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.DeleteBottle(ctx, path)
 	if err != nil {
@@ -233,7 +232,7 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.ListBottle(ctx, path, cmd.Years)
 	if err != nil {
@@ -259,14 +258,14 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload app.RateBottlePayload
+	var payload client.RateBottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.RateBottle(ctx, path, &payload)
 	if err != nil {
@@ -291,7 +290,7 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.ShowBottle(ctx, path)
 	if err != nil {
@@ -315,14 +314,14 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	var payload app.UpdateBottlePayload
+	var payload client.UpdateBottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
 			return fmt.Errorf("failed to deserialize payload: %s", err)
 		}
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	resp, err := c.UpdateBottle(ctx, path, &payload)
 	if err != nil {
@@ -347,7 +346,7 @@ func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		return fmt.Errorf("missing path argument")
 	}
-	logger := goa.NewStdLogger(log.New(os.Stderr, "", log.LstdFlags))
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
 	ws, err := c.WatchBottle(ctx, path)
 	if err != nil {

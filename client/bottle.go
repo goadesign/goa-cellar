@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/goadesign/goa-cellar/app"
 	"golang.org/x/net/context"
 	"golang.org/x/net/websocket"
 	"io"
@@ -14,8 +13,21 @@ import (
 	"strings"
 )
 
+// CreateBottlePayload is the bottle create action payload.
+type CreateBottlePayload struct {
+	Color     string  `json:"color" xml:"color"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+	Name      string  `json:"name" xml:"name"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  string  `json:"varietal" xml:"varietal"`
+	Vineyard  string  `json:"vineyard" xml:"vineyard"`
+	Vintage   int     `json:"vintage" xml:"vintage"`
+}
+
 // Record new bottle
-func (c *Client) CreateBottle(ctx context.Context, path string, payload *app.CreateBottlePayload) (*http.Response, error) {
+func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -79,8 +91,14 @@ func (c *Client) ListBottle(ctx context.Context, path string, years []int) (*htt
 	return c.Client.Do(ctx, req)
 }
 
+// RateBottlePayload is the bottle rate action payload.
+type RateBottlePayload struct {
+	// Rating of bottle between 1 and 5
+	Rating int `json:"rating" xml:"rating"`
+}
+
 // RateBottle makes a request to the rate action endpoint of the bottle resource
-func (c *Client) RateBottle(ctx context.Context, path string, payload *app.RateBottlePayload) (*http.Response, error) {
+func (c *Client) RateBottle(ctx context.Context, path string, payload *RateBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -118,8 +136,21 @@ func (c *Client) ShowBottle(ctx context.Context, path string) (*http.Response, e
 	return c.Client.Do(ctx, req)
 }
 
+// UpdateBottlePayload is the bottle update action payload.
+type UpdateBottlePayload struct {
+	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+}
+
 // UpdateBottle makes a request to the update action endpoint of the bottle resource
-func (c *Client) UpdateBottle(ctx context.Context, path string, payload *app.UpdateBottlePayload) (*http.Response, error) {
+func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateBottlePayload) (*http.Response, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
