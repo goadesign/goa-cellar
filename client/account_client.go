@@ -16,6 +16,11 @@ type CreateAccountPayload struct {
 	Name string `json:"name" xml:"name"`
 }
 
+// CreateAccountPath computes a request path to the create action of account.
+func CreateAccountPath() string {
+	return fmt.Sprintf("/cellar/accounts")
+}
+
 // Create new account
 func (c *Client) CreateAccount(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Response, error) {
 	var body io.Reader
@@ -39,6 +44,11 @@ func (c *Client) CreateAccount(ctx context.Context, path string, payload *Create
 	return c.Client.Do(ctx, req)
 }
 
+// DeleteAccountPath computes a request path to the delete action of account.
+func DeleteAccountPath(accountID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v", accountID)
+}
+
 // DeleteAccount makes a request to the delete action endpoint of the account resource
 func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response, error) {
 	var body io.Reader
@@ -54,6 +64,11 @@ func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response
 	header := req.Header
 	header.Set("Content-Type", "application/json")
 	return c.Client.Do(ctx, req)
+}
+
+// ShowAccountPath computes a request path to the show action of account.
+func ShowAccountPath(accountID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v", accountID)
 }
 
 // Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
@@ -77,6 +92,11 @@ func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, 
 type UpdateAccountPayload struct {
 	// Name of account
 	Name string `json:"name" xml:"name"`
+}
+
+// UpdateAccountPath computes a request path to the update action of account.
+func UpdateAccountPath(accountID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v", accountID)
 }
 
 // Change account name

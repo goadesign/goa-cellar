@@ -729,11 +729,13 @@ schemes:
 - http
 securityDefinitions:
   admin_pass:
+    authorizationUrl: http://cellar.goa.design
     description: |
       Basic authentication method, for global admin authentication.
 
       Here are very secret credentials:
       * username: wine
       * password: lover
+    tokenUrl: http://cellar.goa.design
     type: basic
 swagger: "2.0"

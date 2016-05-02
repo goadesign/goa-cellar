@@ -26,6 +26,11 @@ type CreateBottlePayload struct {
 	Vintage   int     `json:"vintage" xml:"vintage"`
 }
 
+// CreateBottlePath computes a request path to the create action of bottle.
+func CreateBottlePath(accountID string) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles", accountID)
+}
+
 // Record new bottle
 func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateBottlePayload) (*http.Response, error) {
 	var body io.Reader
@@ -48,6 +53,11 @@ func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateB
 	return c.Client.Do(ctx, req)
 }
 
+// DeleteBottlePath computes a request path to the delete action of bottle.
+func DeleteBottlePath(accountID string, bottleID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
+}
+
 // DeleteBottle makes a request to the delete action endpoint of the bottle resource
 func (c *Client) DeleteBottle(ctx context.Context, path string) (*http.Response, error) {
 	var body io.Reader
@@ -65,6 +75,11 @@ func (c *Client) DeleteBottle(ctx context.Context, path string) (*http.Response,
 	return c.Client.Do(ctx, req)
 }
 
+// ListBottlePath computes a request path to the list action of bottle.
+func ListBottlePath(accountID string) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles", accountID)
+}
+
 // List all bottles in account optionally filtering by year
 func (c *Client) ListBottle(ctx context.Context, path string, years []int) (*http.Response, error) {
 	var body io.Reader
@@ -74,13 +89,15 @@ func (c *Client) ListBottle(ctx context.Context, path string, years []int) (*htt
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
-	tmp14 := make([]string, len(years))
-	for i, e := range years {
-		tmp15 := strconv.Itoa(e)
-		tmp14[i] = tmp15
+	if years != nil {
+		tmp13 := make([]string, len(years))
+		for i, e := range years {
+			tmp14 := strconv.Itoa(e)
+			tmp13[i] = tmp14
+		}
+		tmp12 := strings.Join(tmp13, ",")
+		values.Set("years", tmp12)
 	}
-	tmp13 := strings.Join(tmp14, ",")
-	values.Set("years", tmp13)
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), body)
 	if err != nil {
@@ -95,6 +112,11 @@ func (c *Client) ListBottle(ctx context.Context, path string, years []int) (*htt
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
 	Rating int `json:"rating" xml:"rating"`
+}
+
+// RateBottlePath computes a request path to the rate action of bottle.
+func RateBottlePath(accountID string, bottleID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", accountID, bottleID)
 }
 
 // RateBottle makes a request to the rate action endpoint of the bottle resource
@@ -117,6 +139,11 @@ func (c *Client) RateBottle(ctx context.Context, path string, payload *RateBottl
 	header := req.Header
 	header.Set("Content-Type", "application/json")
 	return c.Client.Do(ctx, req)
+}
+
+// ShowBottlePath computes a request path to the show action of bottle.
+func ShowBottlePath(accountID string, bottleID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
 // Retrieve bottle with given id
@@ -147,6 +174,11 @@ type UpdateBottlePayload struct {
 	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
 	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
 	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+}
+
+// UpdateBottlePath computes a request path to the update action of bottle.
+func UpdateBottlePath(accountID string, bottleID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
 // UpdateBottle makes a request to the update action endpoint of the bottle resource
