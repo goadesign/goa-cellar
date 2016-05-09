@@ -8,13 +8,13 @@ import (
 // Client is the cellar service client.
 type Client struct {
 	*goaclient.Client
-	SignerAdminPass goaclient.Signer
+	AdminPassSigner *goaclient.BasicSigner
 }
 
 // New instantiates the client.
 func New(c *http.Client) *Client {
 	return &Client{
 		Client:          goaclient.New(c),
-		SignerAdminPass: &goaclient.BasicSigner{},
+		AdminPassSigner: &goaclient.BasicSigner{},
 	}
 }

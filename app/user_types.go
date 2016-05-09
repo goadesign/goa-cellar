@@ -14,7 +14,7 @@ package app
 
 import "github.com/goadesign/goa"
 
-// BottlePayload user type.
+// bottlePayload user type.
 type bottlePayload struct {
 	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
 	Country   *string `json:"country,omitempty" xml:"country,omitempty"`

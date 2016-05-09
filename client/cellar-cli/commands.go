@@ -110,7 +110,7 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 // RegisterFlags registers the command flags with the command line.
 func (cmd *CreateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
-	c.SignerAdminPass.RegisterFlags(cc)
+	c.AdminPassSigner.RegisterFlags(cc)
 }
 
 // Run makes the HTTP request corresponding to the DeleteAccountCommand command.

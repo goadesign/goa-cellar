@@ -23,6 +23,15 @@ func CreateAccountPath() string {
 
 // Create new account
 func (c *Client) CreateAccount(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Response, error) {
+	req, err := c.NewCreateAccountRequest(ctx, path, payload)
+	if err != nil {
+		return nil, err
+	}
+	return c.Client.Do(ctx, req)
+}
+
+// NewCreateAccountRequest create the request corresponding to the create action endpoint of the account resource
+func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Request, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -40,8 +49,8 @@ func (c *Client) CreateAccount(ctx context.Context, path string, payload *Create
 	}
 	header := req.Header
 	header.Set("Content-Type", "application/json")
-	c.SignerAdminPass.Sign(ctx, req)
-	return c.Client.Do(ctx, req)
+	c.AdminPassSigner.Sign(ctx, req)
+	return req, nil
 }
 
 // DeleteAccountPath computes a request path to the delete action of account.
@@ -51,6 +60,15 @@ func DeleteAccountPath(accountID int) string {
 
 // DeleteAccount makes a request to the delete action endpoint of the account resource
 func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response, error) {
+	req, err := c.NewDeleteAccountRequest(ctx, path)
+	if err != nil {
+		return nil, err
+	}
+	return c.Client.Do(ctx, req)
+}
+
+// NewDeleteAccountRequest create the request corresponding to the delete action endpoint of the account resource
+func (c *Client) NewDeleteAccountRequest(ctx context.Context, path string) (*http.Request, error) {
 	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
@@ -63,7 +81,7 @@ func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response
 	}
 	header := req.Header
 	header.Set("Content-Type", "application/json")
-	return c.Client.Do(ctx, req)
+	return req, nil
 }
 
 // ShowAccountPath computes a request path to the show action of account.
@@ -73,6 +91,15 @@ func ShowAccountPath(accountID int) string {
 
 // Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
 func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, error) {
+	req, err := c.NewShowAccountRequest(ctx, path)
+	if err != nil {
+		return nil, err
+	}
+	return c.Client.Do(ctx, req)
+}
+
+// NewShowAccountRequest create the request corresponding to the show action endpoint of the account resource
+func (c *Client) NewShowAccountRequest(ctx context.Context, path string) (*http.Request, error) {
 	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
@@ -85,7 +112,7 @@ func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, 
 	}
 	header := req.Header
 	header.Set("Content-Type", "application/json")
-	return c.Client.Do(ctx, req)
+	return req, nil
 }
 
 // UpdateAccountPayload is the account update action payload.
@@ -101,6 +128,15 @@ func UpdateAccountPath(accountID int) string {
 
 // Change account name
 func (c *Client) UpdateAccount(ctx context.Context, path string, payload *UpdateAccountPayload) (*http.Response, error) {
+	req, err := c.NewUpdateAccountRequest(ctx, path, payload)
+	if err != nil {
+		return nil, err
+	}
+	return c.Client.Do(ctx, req)
+}
+
+// NewUpdateAccountRequest create the request corresponding to the update action endpoint of the account resource
+func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, payload *UpdateAccountPayload) (*http.Request, error) {
 	var body io.Reader
 	b, err := json.Marshal(payload)
 	if err != nil {
@@ -118,5 +154,5 @@ func (c *Client) UpdateAccount(ctx context.Context, path string, payload *Update
 	}
 	header := req.Header
 	header.Set("Content-Type", "application/json")
-	return c.Client.Do(ctx, req)
+	return req, nil
 }

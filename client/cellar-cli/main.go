@@ -40,7 +40,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp1 := new(CreateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts"]`,
+		Use:   `account [/cellar/accounts] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -48,7 +48,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp2 := new(CreateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
@@ -61,7 +61,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp3 := new(DeleteAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/:accountID"]`,
+		Use:   `account [/cellar/accounts/ACCOUNTID] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
@@ -69,7 +69,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp4 := new(DeleteBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles/:bottleID"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
@@ -82,7 +82,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp5 := new(ListBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
@@ -95,7 +95,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp6 := new(RateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles/:bottleID/actions/rate"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
@@ -108,7 +108,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp7 := new(ShowAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/:accountID"]`,
+		Use:   `account [/cellar/accounts/ACCOUNTID] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
@@ -116,7 +116,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp8 := new(ShowBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles/:bottleID"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
@@ -129,7 +129,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp9 := new(UpdateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/:accountID"]`,
+		Use:   `account [/cellar/accounts/ACCOUNTID] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
@@ -137,7 +137,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp10 := new(UpdateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles/:bottleID"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
@@ -150,7 +150,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp11 := new(WatchBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/:accountID/bottles/:bottleID/watch"]`,
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch] or`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
 	}
