@@ -560,9 +560,7 @@ paths:
       - description: Filter by years
         in: query
         items:
-          items:
-            type: integer
-          type: array
+          type: integer
         name: years
         required: false
         type: array

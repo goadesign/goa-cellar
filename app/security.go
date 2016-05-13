@@ -3,9 +3,8 @@
 //
 // Generated with goagen v0.0.1, command line:
 // $ goagen
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
 // --design=github.com/goadesign/goa-cellar/design
-// --pkg=app
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
 //
 // The content of this file is auto-generated, DO NOT MODIFY
 //************************************************************************//

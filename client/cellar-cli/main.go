@@ -18,7 +18,7 @@ func main() {
 		Short: `CLI client for the cellar service (http://goa.design/getting-started.html)`,
 	}
 	c := client.New(nil)
-	c.UserAgent = "cellar-cli/1.0"
+	c.UserAgent = "cellar-cli/0"
 	app.PersistentFlags().StringVarP(&c.Scheme, "scheme", "s", "", "Set the requests scheme")
 	app.PersistentFlags().StringVarP(&c.Host, "host", "H", "cellar.goa.design", "API hostname")
 	app.PersistentFlags().DurationVarP(&c.Timeout, "timeout", "t", time.Duration(20)*time.Second, "Set the request timeout")

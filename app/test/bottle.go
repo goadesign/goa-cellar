@@ -9,6 +9,7 @@ import (
 	"golang.org/x/net/context"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 )
 
@@ -32,7 +33,10 @@ func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	createCtx, err := app.NewCreateBottleContext(goaCtx, service)
 	createCtx.Payload = payload
 
@@ -66,7 +70,11 @@ func DeleteBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	deleteCtx, err := app.NewDeleteBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -98,7 +106,11 @@ func DeleteBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	deleteCtx, err := app.NewDeleteBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -130,7 +142,10 @@ func ListBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, err := app.NewListBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -162,7 +177,10 @@ func ListBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleControlle
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, err := app.NewListBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -205,7 +223,10 @@ func ListBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, err := app.NewListBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -252,7 +273,11 @@ func RateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
 	rateCtx.Payload = payload
 
@@ -290,7 +315,11 @@ func RateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
 	rateCtx.Payload = payload
 
@@ -324,7 +353,11 @@ func ShowBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, err := app.NewShowBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -356,7 +389,11 @@ func ShowBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleControlle
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, err := app.NewShowBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -399,7 +436,11 @@ func ShowBottleOKFullCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, err := app.NewShowBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -442,7 +483,11 @@ func ShowBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, err := app.NewShowBottleContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -489,7 +534,11 @@ func UpdateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
 	updateCtx.Payload = payload
 
@@ -527,7 +576,11 @@ func UpdateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+	prms["bottleID"] = []string{fmt.Sprintf("%v", bottleID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
 	updateCtx.Payload = payload
 

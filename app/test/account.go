@@ -9,6 +9,7 @@ import (
 	"golang.org/x/net/context"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 )
 
@@ -32,7 +33,9 @@ func CreateAccountCreatedCtx(t *testing.T, ctx context.Context, ctrl app.Account
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	createCtx, err := app.NewCreateAccountContext(goaCtx, service)
 	createCtx.Payload = payload
 
@@ -66,7 +69,10 @@ func DeleteAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	deleteCtx, err := app.NewDeleteAccountContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -98,7 +104,10 @@ func DeleteAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	deleteCtx, err := app.NewDeleteAccountContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -130,7 +139,10 @@ func ShowAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountC
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	showCtx, err := app.NewShowAccountContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -162,7 +174,10 @@ func ShowAccountOKCtx(t *testing.T, ctx context.Context, ctrl app.AccountControl
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	showCtx, err := app.NewShowAccountContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -205,7 +220,10 @@ func ShowAccountOKLinkCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	showCtx, err := app.NewShowAccountContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -248,7 +266,10 @@ func ShowAccountOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	showCtx, err := app.NewShowAccountContext(goaCtx, service)
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
@@ -295,7 +316,10 @@ func UpdateAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
 	updateCtx.Payload = payload
 
@@ -333,7 +357,10 @@ func UpdateAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 	if err != nil {
 		panic("invalid test " + err.Error()) // bug
 	}
-	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, nil)
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
 	updateCtx.Payload = payload
 
