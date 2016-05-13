@@ -18,6 +18,7 @@ DEPEND=	bitbucket.org/pkg/inflect \
 	github.com/goadesign/goa/goagen \
 	github.com/goadesign/goa/logging/logrus \
 	github.com/Sirupsen/logrus \
+	gopkg.in/yaml.v2 \
 	golang.org/x/tools/cmd/goimports
 
 CURRENT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
