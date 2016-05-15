@@ -6,9 +6,6 @@ import (
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
-	"github.com/goadesign/goa-cellar/js"
-	"github.com/goadesign/goa-cellar/schema"
-	"github.com/goadesign/goa-cellar/swagger"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/goadesign/goa/middleware/security/basicauth"
@@ -38,14 +35,9 @@ func main() {
 	bc := controllers.NewBottle(service)
 	app.MountBottleController(service, bc)
 
-	// Mount Swagger Spec controller onto service
-	swagger.MountController(service)
-
-	// Mount JSON Schema controller onto service
-	schema.MountController(service)
-
-	// Mount JavaScript example
-	js.MountController(service)
+	// Mount public/static files
+	sc := controllers.NewPublic(service)
+	app.MountPublicController(service, sc)
 
 	// Run service
 	if err := service.ListenAndServe(":8080"); err != nil {

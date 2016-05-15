@@ -31,17 +31,17 @@ depend:
 clean:
 	@rm -rf app
 	@rm -rf client
-	@rm -rf swagger
-	@rm -rf schema
-	@rm -rf js
+	@rm -rf public/swagger
+	@rm -rf public/schema
+	@rm -rf public/js
 	@rm -f cellar
 
 generate:
 	@goagen app     -d github.com/goadesign/goa-cellar/design
-	@goagen swagger -d github.com/goadesign/goa-cellar/design
-	@goagen schema  -d github.com/goadesign/goa-cellar/design
+	@goagen swagger -d github.com/goadesign/goa-cellar/design -o public
+	@goagen schema  -d github.com/goadesign/goa-cellar/design -o public
 	@goagen client  -d github.com/goadesign/goa-cellar/design
-	@goagen js      -d github.com/goadesign/goa-cellar/design
+	@goagen js      -d github.com/goadesign/goa-cellar/design -o public --noexample
 
 build:
 	@go build -o cellar

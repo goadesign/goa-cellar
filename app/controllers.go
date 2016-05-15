@@ -323,3 +323,70 @@ func unmarshalUpdateBottlePayload(ctx context.Context, service *goa.Service, req
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
+
+// PublicController is the controller interface for the Public actions.
+type PublicController interface {
+	goa.Muxer
+	goa.FileServer
+}
+
+// MountPublicController "mounts" a Public resource controller on the given service.
+func MountPublicController(service *goa.Service, ctrl PublicController) {
+	initService(service)
+	var h goa.Handler
+
+	h = ctrl.FileHandler("/ui", "public/html/index.html")
+	h = handlePublicOrigin(h)
+	service.Mux.Handle("GET", "/ui", ctrl.MuxHandler("serve", h, nil))
+	service.LogInfo("mount", "ctrl", "Public", "files", "public/html/index.html", "route", "GET /ui")
+
+	h = ctrl.FileHandler("/js/*filepath", "public/js/")
+	h = handlePublicOrigin(h)
+	service.Mux.Handle("GET", "/js/*filepath", ctrl.MuxHandler("serve", h, nil))
+	service.LogInfo("mount", "ctrl", "Public", "files", "public/js/", "route", "GET /js/*filepath")
+
+	h = ctrl.FileHandler("/schema.json", "public/schema/schema.json")
+	h = handlePublicOrigin(h)
+	service.Mux.Handle("GET", "/schema.json", ctrl.MuxHandler("serve", h, nil))
+	service.LogInfo("mount", "ctrl", "Public", "files", "public/schema/schema.json", "route", "GET /schema.json")
+
+	h = ctrl.FileHandler("/swagger.json", "public/swagger/swagger.json")
+	h = handlePublicOrigin(h)
+	service.Mux.Handle("GET", "/swagger.json", ctrl.MuxHandler("serve", h, nil))
+	service.LogInfo("mount", "ctrl", "Public", "files", "public/swagger/swagger.json", "route", "GET /swagger.json")
+}
+
+// handlePublicOrigin applies the CORS response headers corresponding to the origin.
+func handlePublicOrigin(h goa.Handler) goa.Handler {
+	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		origin := req.Header.Get("Origin")
+		if origin == "" {
+			// Not a CORS request
+			return h(ctx, rw, req)
+		}
+		if cors.MatchOrigin(origin, "*") {
+			ctx = goa.WithLogContext(ctx, "origin", origin)
+			rw.Header().Set("Access-Control-Allow-Origin", "*")
+			rw.Header().Set("Access-Control-Allow-Credentials", "false")
+			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
+				// We are handling a preflight request
+				rw.Header().Set("Access-Control-Allow-Methods", "GET")
+			}
+			return h(ctx, rw, req)
+		}
+		if cors.MatchOrigin(origin, "http://swagger.goa.design") {
+			ctx = goa.WithLogContext(ctx, "origin", origin)
+			rw.Header().Set("Access-Control-Allow-Origin", "http://swagger.goa.design")
+			rw.Header().Set("Vary", "Origin")
+			rw.Header().Set("Access-Control-Max-Age", "600")
+			rw.Header().Set("Access-Control-Allow-Credentials", "true")
+			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
+				// We are handling a preflight request
+				rw.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE")
+			}
+			return h(ctx, rw, req)
+		}
+
+		return h(ctx, rw, req)
+	}
+}
