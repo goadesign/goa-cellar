@@ -2,11 +2,9 @@ package client
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"golang.org/x/net/context"
 	"golang.org/x/net/websocket"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -40,25 +38,22 @@ func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateB
 	return c.Client.Do(ctx, req)
 }
 
-// NewCreateBottleRequest create the request corresponding to the create action endpoint of the bottle resource
+// NewCreateBottleRequest create the request corresponding to the create action endpoint of the bottle resource.
 func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payload *CreateBottlePayload) (*http.Request, error) {
-	var body io.Reader
-	b, err := json.Marshal(payload)
+	var body bytes.Buffer
+	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize body: %s", err)
+		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
-	body = bytes.NewBuffer(b)
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("POST", u.String(), body)
+	req, err := http.NewRequest("POST", u.String(), &body)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -76,20 +71,17 @@ func (c *Client) DeleteBottle(ctx context.Context, path string) (*http.Response,
 	return c.Client.Do(ctx, req)
 }
 
-// NewDeleteBottleRequest create the request corresponding to the delete action endpoint of the bottle resource
+// NewDeleteBottleRequest create the request corresponding to the delete action endpoint of the bottle resource.
 func (c *Client) NewDeleteBottleRequest(ctx context.Context, path string) (*http.Request, error) {
-	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("DELETE", u.String(), body)
+	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -107,9 +99,8 @@ func (c *Client) ListBottle(ctx context.Context, path string, years []int) (*htt
 	return c.Client.Do(ctx, req)
 }
 
-// NewListBottleRequest create the request corresponding to the list action endpoint of the bottle resource
+// NewListBottleRequest create the request corresponding to the list action endpoint of the bottle resource.
 func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []int) (*http.Request, error) {
-	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
@@ -126,12 +117,10 @@ func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []
 		values.Set("years", tmp12)
 	}
 	u.RawQuery = values.Encode()
-	req, err := http.NewRequest("GET", u.String(), body)
+	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -155,25 +144,22 @@ func (c *Client) RateBottle(ctx context.Context, path string, payload *RateBottl
 	return c.Client.Do(ctx, req)
 }
 
-// NewRateBottleRequest create the request corresponding to the rate action endpoint of the bottle resource
+// NewRateBottleRequest create the request corresponding to the rate action endpoint of the bottle resource.
 func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload *RateBottlePayload) (*http.Request, error) {
-	var body io.Reader
-	b, err := json.Marshal(payload)
+	var body bytes.Buffer
+	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize body: %s", err)
+		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
-	body = bytes.NewBuffer(b)
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("PUT", u.String(), body)
+	req, err := http.NewRequest("PUT", u.String(), &body)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -191,20 +177,17 @@ func (c *Client) ShowBottle(ctx context.Context, path string) (*http.Response, e
 	return c.Client.Do(ctx, req)
 }
 
-// NewShowBottleRequest create the request corresponding to the show action endpoint of the bottle resource
+// NewShowBottleRequest create the request corresponding to the show action endpoint of the bottle resource.
 func (c *Client) NewShowBottleRequest(ctx context.Context, path string) (*http.Request, error) {
-	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("GET", u.String(), body)
+	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -235,26 +218,28 @@ func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateB
 	return c.Client.Do(ctx, req)
 }
 
-// NewUpdateBottleRequest create the request corresponding to the update action endpoint of the bottle resource
+// NewUpdateBottleRequest create the request corresponding to the update action endpoint of the bottle resource.
 func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payload *UpdateBottlePayload) (*http.Request, error) {
-	var body io.Reader
-	b, err := json.Marshal(payload)
+	var body bytes.Buffer
+	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize body: %s", err)
+		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
-	body = bytes.NewBuffer(b)
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("PATCH", u.String(), body)
+	req, err := http.NewRequest("PATCH", u.String(), &body)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
+}
+
+// WatchBottlePath computes a request path to the watch action of bottle.
+func WatchBottlePath(accountID string, bottleID int) string {
+	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v/watch", accountID, bottleID)
 }
 
 // Retrieve bottle with given id

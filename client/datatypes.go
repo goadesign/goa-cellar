@@ -12,8 +12,7 @@
 package client
 
 import (
-	"github.com/goadesign/goa"
-	"io"
+	"net/http"
 	"time"
 )
 
@@ -31,20 +30,20 @@ type Account struct {
 	Name string `json:"name" xml:"name"`
 }
 
-// DecodeAccount decodes the Account instance encoded in r.
-func DecodeAccount(r io.Reader, decoderFn goa.DecoderFunc) (*Account, error) {
+// DecodeAccount decodes the Account instance encoded in resp body.
+func (c *Client) DecodeAccount(resp *http.Response) (*Account, error) {
 	var decoded Account
-	err := decoderFn(r).Decode(&decoded)
+	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }
 
 // BottleCollection media type is a collection of Bottle.
 type BottleCollection []*Bottle
 
-// DecodeBottleCollection decodes the BottleCollection instance encoded in r.
-func DecodeBottleCollection(r io.Reader, decoderFn goa.DecoderFunc) (BottleCollection, error) {
+// DecodeBottleCollection decodes the BottleCollection instance encoded in resp body.
+func (c *Client) DecodeBottleCollection(resp *http.Response) (BottleCollection, error) {
 	var decoded BottleCollection
-	err := decoderFn(r).Decode(&decoded)
+	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return decoded, err
 }
 
@@ -73,9 +72,9 @@ type Bottle struct {
 	Vintage   int        `json:"vintage" xml:"vintage"`
 }
 
-// DecodeBottle decodes the Bottle instance encoded in r.
-func DecodeBottle(r io.Reader, decoderFn goa.DecoderFunc) (*Bottle, error) {
+// DecodeBottle decodes the Bottle instance encoded in resp body.
+func (c *Client) DecodeBottle(resp *http.Response) (*Bottle, error) {
 	var decoded Bottle
-	err := decoderFn(r).Decode(&decoded)
+	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }

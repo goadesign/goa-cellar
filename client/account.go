@@ -2,10 +2,8 @@ package client
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"golang.org/x/net/context"
-	"io"
 	"net/http"
 	"net/url"
 )
@@ -30,25 +28,22 @@ func (c *Client) CreateAccount(ctx context.Context, path string, payload *Create
 	return c.Client.Do(ctx, req)
 }
 
-// NewCreateAccountRequest create the request corresponding to the create action endpoint of the account resource
+// NewCreateAccountRequest create the request corresponding to the create action endpoint of the account resource.
 func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Request, error) {
-	var body io.Reader
-	b, err := json.Marshal(payload)
+	var body bytes.Buffer
+	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize body: %s", err)
+		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
-	body = bytes.NewBuffer(b)
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("POST", u.String(), body)
+	req, err := http.NewRequest("POST", u.String(), &body)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	c.AdminPassSigner.Sign(ctx, req)
 	return req, nil
 }
@@ -67,20 +62,17 @@ func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response
 	return c.Client.Do(ctx, req)
 }
 
-// NewDeleteAccountRequest create the request corresponding to the delete action endpoint of the account resource
+// NewDeleteAccountRequest create the request corresponding to the delete action endpoint of the account resource.
 func (c *Client) NewDeleteAccountRequest(ctx context.Context, path string) (*http.Request, error) {
-	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("DELETE", u.String(), body)
+	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -98,20 +90,17 @@ func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, 
 	return c.Client.Do(ctx, req)
 }
 
-// NewShowAccountRequest create the request corresponding to the show action endpoint of the account resource
+// NewShowAccountRequest create the request corresponding to the show action endpoint of the account resource.
 func (c *Client) NewShowAccountRequest(ctx context.Context, path string) (*http.Request, error) {
-	var body io.Reader
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("GET", u.String(), body)
+	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
 
@@ -135,24 +124,21 @@ func (c *Client) UpdateAccount(ctx context.Context, path string, payload *Update
 	return c.Client.Do(ctx, req)
 }
 
-// NewUpdateAccountRequest create the request corresponding to the update action endpoint of the account resource
+// NewUpdateAccountRequest create the request corresponding to the update action endpoint of the account resource.
 func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, payload *UpdateAccountPayload) (*http.Request, error) {
-	var body io.Reader
-	b, err := json.Marshal(payload)
+	var body bytes.Buffer
+	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize body: %s", err)
+		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
-	body = bytes.NewBuffer(b)
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	req, err := http.NewRequest("PUT", u.String(), body)
+	req, err := http.NewRequest("PUT", u.String(), &body)
 	if err != nil {
 		return nil, err
 	}
-	header := req.Header
-	header.Set("Content-Type", "application/json")
 	return req, nil
 }
