@@ -48,7 +48,7 @@ func (payload *createAccountPayload) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
 
-	return err
+	return
 }
 
 // Publicize creates CreateAccountPayload from createAccountPayload
@@ -72,7 +72,7 @@ func (payload *CreateAccountPayload) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
 
-	return err
+	return
 }
 
 // Created sends a HTTP response with status code 201.
@@ -205,7 +205,7 @@ func (payload *updateAccountPayload) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
 
-	return err
+	return
 }
 
 // Publicize creates UpdateAccountPayload from updateAccountPayload
@@ -229,7 +229,7 @@ func (payload *UpdateAccountPayload) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "name"))
 	}
 
-	return err
+	return
 }
 
 // NoContent sends a HTTP response with status code 204.
@@ -358,7 +358,7 @@ func (payload *createBottlePayload) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
 		}
 	}
-	return err
+	return
 }
 
 // Publicize creates CreateBottlePayload from createBottlePayload
@@ -465,7 +465,7 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 	if payload.Vintage > 2020 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, payload.Vintage, 2020, false))
 	}
-	return err
+	return
 }
 
 // Created sends a HTTP response with status code 201.
@@ -646,7 +646,7 @@ func (payload *rateBottlePayload) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, *payload.Rating, 5, false))
 		}
 	}
-	return err
+	return
 }
 
 // Publicize creates RateBottlePayload from rateBottlePayload
@@ -672,7 +672,7 @@ func (payload *RateBottlePayload) Validate() (err error) {
 	if payload.Rating > 5 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 5, false))
 	}
-	return err
+	return
 }
 
 // NoContent sends a HTTP response with status code 204.
@@ -856,7 +856,7 @@ func (payload *updateBottlePayload) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
 		}
 	}
-	return err
+	return
 }
 
 // Publicize creates UpdateBottlePayload from updateBottlePayload
@@ -962,7 +962,7 @@ func (payload *UpdateBottlePayload) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, *payload.Vintage, 2020, false))
 		}
 	}
-	return err
+	return
 }
 
 // NoContent sends a HTTP response with status code 204.

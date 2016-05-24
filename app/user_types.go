@@ -189,5 +189,5 @@ func (ut *BottlePayload) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`response.vintage`, *ut.Vintage, 2020, false))
 		}
 	}
-	return err
+	return
 }

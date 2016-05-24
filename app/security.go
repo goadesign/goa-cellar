@@ -18,41 +18,31 @@ import (
 )
 
 type (
-	// Private type used to store scheme info in request context
-	securitySchemeKey string
-	// Private type used to store scopes in request context
-	key int
+	// Private type used to store auth handler info in request context
+	authMiddlewareKey string
 )
 
-// Scopes context key
-const securityScopesKey key = 1
-
-// ConfigureAdminPassSecurity configures the admin_pass security scheme.
-// It accepts a BasicAuthSecurityConfigFunc and calls it giving it the scheme definition as defined in
-// the DSL as well as a fetchScopes function object that allows retrieving the request scopes. The
-// function should return a middleware that the generated code invokes on every request.
-func ConfigureAdminPassSecurity(service *goa.Service, f goa.BasicAuthSecurityConfigFunc) {
-	def := &goa.BasicAuthSecurity{}
-	def.Description = "Basic authentication method, for global admin authentication.\n\nHere are very secret credentials:\n* username: wine\n* password: lover\n"
-
-	middleware := f(def)
-	service.Context = context.WithValue(service.Context, securitySchemeKey("admin_pass"), middleware)
+// UseAdminPass mounts the admin_pass auth middleware onto the service.
+func UseAdminPass(service *goa.Service, middleware goa.Middleware) {
+	service.Context = context.WithValue(service.Context, authMiddlewareKey("admin_pass"), middleware)
 }
 
-// handleSecurity creates a goa request handler that takes care of executing the security middleware
-// registered via the ConfigureXXXSecurity functions.
+// NewAdminPassSecurity creates a admin_pass security definition.
+func NewAdminPassSecurity() *goa.BasicAuthSecurity {
+	def := goa.BasicAuthSecurity{}
+	def.Description = "Basic authentication method, for global admin authentication.\n\nHere are very secret credentials:\n* username: wine\n* password: lover\n"
+	return &def
+}
+
+// handleSecurity creates a handler that runs the auth middleware for the security scheme.
 func handleSecurity(schemeName string, h goa.Handler, scopes ...string) goa.Handler {
 	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
-		scheme := ctx.Value(securitySchemeKey(schemeName))
-		middleware, ok := scheme.(goa.Middleware)
+		scheme := ctx.Value(authMiddlewareKey(schemeName))
+		am, ok := scheme.(goa.Middleware)
 		if !ok {
-			return goa.NoSecurityScheme(schemeName)
+			return goa.NoAuthMiddleware(schemeName)
 		}
-
-		if len(scopes) != 0 {
-			ctx = context.WithValue(ctx, securityScopesKey, scopes)
-		}
-
-		return middleware(h)(ctx, rw, req)
+		ctx = goa.WithRequiredScopes(ctx, scopes)
+		return am(h)(ctx, rw, req)
 	}
 }

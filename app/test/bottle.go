@@ -22,7 +22,14 @@ func CreateBottleCreated(t *testing.T, ctrl app.BottleController, accountID stri
 func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 201 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -38,11 +45,11 @@ func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	createCtx, err := app.NewCreateBottleContext(goaCtx, service)
-	createCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	createCtx.Payload = payload
+
 	err = ctrl.Create(createCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -79,6 +86,7 @@ func DeleteBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Delete(deleteCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -115,6 +123,7 @@ func DeleteBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Delete(deleteCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -150,6 +159,7 @@ func ListBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.List(listCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -185,6 +195,7 @@ func ListBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleControlle
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.List(listCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -231,6 +242,7 @@ func ListBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.List(listCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -262,7 +274,14 @@ func RateBottleNoContent(t *testing.T, ctrl app.BottleController, accountID stri
 func RateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 204 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -279,11 +298,11 @@ func RateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
-	rateCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	rateCtx.Payload = payload
+
 	err = ctrl.Rate(rateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -304,7 +323,14 @@ func RateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID strin
 func RateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 404 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -321,11 +347,11 @@ func RateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
-	rateCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	rateCtx.Payload = payload
+
 	err = ctrl.Rate(rateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -362,6 +388,7 @@ func ShowBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -398,6 +425,7 @@ func ShowBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleControlle
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -445,6 +473,7 @@ func ShowBottleOKFullCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -492,6 +521,7 @@ func ShowBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -523,7 +553,14 @@ func UpdateBottleNoContent(t *testing.T, ctrl app.BottleController, accountID st
 func UpdateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 204 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -540,11 +577,11 @@ func UpdateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
-	updateCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	updateCtx.Payload = payload
+
 	err = ctrl.Update(updateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -565,7 +602,14 @@ func UpdateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID str
 func UpdateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 404 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -582,11 +626,11 @@ func UpdateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
-	updateCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	updateCtx.Payload = payload
+
 	err = ctrl.Update(updateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())

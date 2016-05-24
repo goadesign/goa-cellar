@@ -492,6 +492,7 @@ paths:
       - http
       security:
       - admin_pass: []
+      summary: create
   /accounts/{accountID}:
     delete:
       operationId: account#delete
@@ -508,6 +509,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: delete
     get:
       description: Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
       operationId: account#show
@@ -526,6 +528,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: show
     put:
       description: Change account name
       operationId: account#update
@@ -547,6 +550,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: update
   /accounts/{accountID}/bottles:
     get:
       description: List all bottles in account optionally filtering by year
@@ -573,6 +577,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: list
     post:
       description: Record new bottle
       operationId: bottle#create
@@ -597,6 +602,7 @@ paths:
               type: string
       schemes:
       - http
+      summary: create
   /accounts/{accountID}/bottles/{bottleID}:
     delete:
       operationId: bottle#delete
@@ -617,6 +623,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: delete
     get:
       description: Retrieve bottle with given id
       operationId: bottle#show
@@ -639,6 +646,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: show
     patch:
       operationId: bottle#update
       parameters:
@@ -663,6 +671,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: update
   /accounts/{accountID}/bottles/{bottleID}/actions/rate:
     put:
       operationId: bottle#rate
@@ -688,6 +697,7 @@ paths:
           description: Not Found
       schemes:
       - http
+      summary: rate
   /accounts/{accountID}/bottles/{bottleID}/watch:
     get:
       description: Retrieve bottle with given id
@@ -707,6 +717,7 @@ paths:
           description: Switching Protocols
       schemes:
       - ws
+      summary: watch
 produces:
 - application/json
 - application/xml

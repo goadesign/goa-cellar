@@ -22,7 +22,14 @@ func CreateAccountCreated(t *testing.T, ctrl app.AccountController, payload *app
 func CreateAccountCreatedCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, payload *app.CreateAccountPayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 201 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -37,11 +44,11 @@ func CreateAccountCreatedCtx(t *testing.T, ctx context.Context, ctrl app.Account
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	createCtx, err := app.NewCreateAccountContext(goaCtx, service)
-	createCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	createCtx.Payload = payload
+
 	err = ctrl.Create(createCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -77,6 +84,7 @@ func DeleteAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Delete(deleteCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -112,6 +120,7 @@ func DeleteAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Delete(deleteCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -147,6 +156,7 @@ func ShowAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountC
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -182,6 +192,7 @@ func ShowAccountOKCtx(t *testing.T, ctx context.Context, ctrl app.AccountControl
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -228,6 +239,7 @@ func ShowAccountOKLinkCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -274,6 +286,7 @@ func ShowAccountOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -305,7 +318,14 @@ func UpdateAccountNoContent(t *testing.T, ctrl app.AccountController, accountID 
 func UpdateAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 204 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -321,11 +341,11 @@ func UpdateAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
-	updateCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	updateCtx.Payload = payload
+
 	err = ctrl.Update(updateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
@@ -346,7 +366,14 @@ func UpdateAccountNotFound(t *testing.T, ctrl app.AccountController, accountID i
 func UpdateAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) {
 	err := payload.Validate()
 	if err != nil {
-		panic(err)
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 404 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -362,11 +389,11 @@ func UpdateAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
 	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
-	updateCtx.Payload = payload
-
 	if err != nil {
 		panic("invalid test data " + err.Error()) // bug
 	}
+	updateCtx.Payload = payload
+
 	err = ctrl.Update(updateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())

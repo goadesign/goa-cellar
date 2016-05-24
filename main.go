@@ -25,7 +25,9 @@ func main() {
 	service.Use(middleware.LogRequest(true))
 	service.Use(middleware.ErrorHandler(service, true))
 	service.Use(middleware.Recover())
-	app.ConfigureAdminPassSecurity(service, basicauth.New("wine", "lover"))
+
+	// Setup security middleware
+	app.UseAdminPass(service, basicauth.New("wine", "lover"))
 
 	// Mount account controller onto service
 	ac := controllers.NewAccount(service)

@@ -46,7 +46,7 @@ func (mt *Account) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.created_by`, *mt.CreatedBy, goa.FormatEmail, err2))
 		}
 	}
-	return err
+	return
 }
 
 // AccountLink media type.
@@ -65,7 +65,7 @@ func (mt *AccountLink) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "href"))
 	}
 
-	return err
+	return
 }
 
 // AccountTiny media type.
@@ -89,7 +89,7 @@ func (mt *AccountTiny) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
 
-	return err
+	return
 }
 
 // Bottle media type.
@@ -174,7 +174,7 @@ func (mt *Bottle) Validate() (err error) {
 	if mt.Vintage > 2020 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`response.vintage`, mt.Vintage, 2020, false))
 	}
-	return err
+	return
 }
 
 // BottleFull media type.
@@ -299,7 +299,7 @@ func (mt *BottleFull) Validate() (err error) {
 	if mt.Vintage > 2020 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`response.vintage`, mt.Vintage, 2020, false))
 	}
-	return err
+	return
 }
 
 // BottleTiny media type.
@@ -347,7 +347,7 @@ func (mt *BottleTiny) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`response.rating`, *mt.Rating, 5, false))
 		}
 	}
-	return err
+	return
 }
 
 // BottleLinks contains links to related resources of Bottle.
@@ -363,7 +363,7 @@ func (ut *BottleLinks) Validate() (err error) {
 		}
 
 	}
-	return err
+	return
 }
 
 // BottleCollection media type is a collection of Bottle.
@@ -435,7 +435,7 @@ func (mt BottleCollection) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`response[*].vintage`, e.Vintage, 2020, false))
 		}
 	}
-	return err
+	return
 }
 
 // BottleTinyCollection media type is a collection of BottleTiny.
@@ -475,7 +475,7 @@ func (mt BottleTinyCollection) Validate() (err error) {
 			}
 		}
 	}
-	return err
+	return
 }
 
 // BottleLinksArray contains links to related resources of BottleCollection.
@@ -491,5 +491,5 @@ func (ut BottleLinksArray) Validate() (err error) {
 
 		}
 	}
-	return err
+	return
 }
