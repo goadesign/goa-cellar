@@ -128,25 +128,13 @@ func (mt *Bottle) Validate() (err error) {
 	}
 
 	if mt.Account != nil {
-		if mt.Account.Href == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.account`, "href"))
-		}
-		if mt.Account.Name == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.account`, "name"))
-		}
-
-		if mt.Account.CreatedBy != nil {
-			if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.Account.CreatedBy); err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFormatError(`response.account.created_by`, *mt.Account.CreatedBy, goa.FormatEmail, err2))
-			}
+		if err2 := mt.Account.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
 	}
 	if mt.Links != nil {
-		if mt.Links.Account != nil {
-			if mt.Links.Account.Href == "" {
-				err = goa.MergeErrors(err, goa.MissingAttributeError(`response.links.account`, "href"))
-			}
-
+		if err2 := mt.Links.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
 	}
 	if len(mt.Name) < 2 {
@@ -225,17 +213,8 @@ func (mt *BottleFull) Validate() (err error) {
 	}
 
 	if mt.Account != nil {
-		if mt.Account.Href == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.account`, "href"))
-		}
-		if mt.Account.Name == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.account`, "name"))
-		}
-
-		if mt.Account.CreatedBy != nil {
-			if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.Account.CreatedBy); err2 != nil {
-				err = goa.MergeErrors(err, goa.InvalidFormatError(`response.account.created_by`, *mt.Account.CreatedBy, goa.FormatEmail, err2))
-			}
+		if err2 := mt.Account.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
 	}
 	if !(mt.Color == "red" || mt.Color == "white" || mt.Color == "rose" || mt.Color == "yellow" || mt.Color == "sparkling") {
@@ -247,11 +226,8 @@ func (mt *BottleFull) Validate() (err error) {
 		}
 	}
 	if mt.Links != nil {
-		if mt.Links.Account != nil {
-			if mt.Links.Account.Href == "" {
-				err = goa.MergeErrors(err, goa.MissingAttributeError(`response.links.account`, "href"))
-			}
-
+		if err2 := mt.Links.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
 	}
 	if len(mt.Name) < 2 {
@@ -327,11 +303,8 @@ func (mt *BottleTiny) Validate() (err error) {
 	}
 
 	if mt.Links != nil {
-		if mt.Links.Account != nil {
-			if mt.Links.Account.Href == "" {
-				err = goa.MergeErrors(err, goa.MissingAttributeError(`response.links.account`, "href"))
-			}
-
+		if err2 := mt.Links.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
 	}
 	if len(mt.Name) < 2 {
@@ -358,10 +331,9 @@ type BottleLinks struct {
 // Validate validates the BottleLinks type instance.
 func (ut *BottleLinks) Validate() (err error) {
 	if ut.Account != nil {
-		if ut.Account.Href == "" {
-			err = goa.MergeErrors(err, goa.MissingAttributeError(`response.account`, "href"))
+		if err2 := ut.Account.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
-
 	}
 	return
 }
@@ -388,25 +360,13 @@ func (mt BottleCollection) Validate() (err error) {
 		}
 
 		if e.Account != nil {
-			if e.Account.Href == "" {
-				err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*].account`, "href"))
-			}
-			if e.Account.Name == "" {
-				err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*].account`, "name"))
-			}
-
-			if e.Account.CreatedBy != nil {
-				if err2 := goa.ValidateFormat(goa.FormatEmail, *e.Account.CreatedBy); err2 != nil {
-					err = goa.MergeErrors(err, goa.InvalidFormatError(`response[*].account.created_by`, *e.Account.CreatedBy, goa.FormatEmail, err2))
-				}
+			if err2 := e.Account.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
 			}
 		}
 		if e.Links != nil {
-			if e.Links.Account != nil {
-				if e.Links.Account.Href == "" {
-					err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*].links.account`, "href"))
-				}
-
+			if err2 := e.Links.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
 			}
 		}
 		if len(e.Name) < 2 {
@@ -454,11 +414,8 @@ func (mt BottleTinyCollection) Validate() (err error) {
 		}
 
 		if e.Links != nil {
-			if e.Links.Account != nil {
-				if e.Links.Account.Href == "" {
-					err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*].links.account`, "href"))
-				}
-
+			if err2 := e.Links.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
 			}
 		}
 		if len(e.Name) < 2 {
@@ -485,10 +442,9 @@ type BottleLinksArray []*BottleLinks
 func (ut BottleLinksArray) Validate() (err error) {
 	for _, e := range ut {
 		if e.Account != nil {
-			if e.Account.Href == "" {
-				err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*].account`, "href"))
+			if err2 := e.Account.Validate(); err2 != nil {
+				err = goa.MergeErrors(err, err2)
 			}
-
 		}
 	}
 	return
