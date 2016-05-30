@@ -10,6 +10,8 @@ import (
 	"golang.org/x/net/context"
 	"log"
 	"os"
+	"path"
+	"strings"
 )
 
 type (
@@ -17,34 +19,40 @@ type (
 	CreateAccountCommand struct {
 		Payload string
 	}
+
 	// DeleteAccountCommand is the command line data structure for the delete action of account
 	DeleteAccountCommand struct {
 		// Account ID
 		AccountID int
 	}
+
 	// ShowAccountCommand is the command line data structure for the show action of account
 	ShowAccountCommand struct {
 		// Account ID
 		AccountID int
 	}
+
 	// UpdateAccountCommand is the command line data structure for the update action of account
 	UpdateAccountCommand struct {
 		Payload string
 		// Account ID
 		AccountID int
 	}
+
 	// CreateBottleCommand is the command line data structure for the create action of bottle
 	CreateBottleCommand struct {
 		Payload string
 		// Account ID
 		AccountID int
 	}
+
 	// DeleteBottleCommand is the command line data structure for the delete action of bottle
 	DeleteBottleCommand struct {
 		// Account ID
 		AccountID int
 		BottleID  int
 	}
+
 	// ListBottleCommand is the command line data structure for the list action of bottle
 	ListBottleCommand struct {
 		// Account ID
@@ -52,6 +60,7 @@ type (
 		// Filter by years
 		Years []int
 	}
+
 	// RateBottleCommand is the command line data structure for the rate action of bottle
 	RateBottleCommand struct {
 		Payload string
@@ -59,12 +68,14 @@ type (
 		AccountID int
 		BottleID  int
 	}
+
 	// ShowBottleCommand is the command line data structure for the show action of bottle
 	ShowBottleCommand struct {
 		// Account ID
 		AccountID int
 		BottleID  int
 	}
+
 	// UpdateBottleCommand is the command line data structure for the update action of bottle
 	UpdateBottleCommand struct {
 		Payload string
@@ -72,11 +83,18 @@ type (
 		AccountID int
 		BottleID  int
 	}
+
 	// WatchBottleCommand is the command line data structure for the watch action of bottle
 	WatchBottleCommand struct {
 		// Account ID
 		AccountID int
 		BottleID  int
+	}
+
+	// DownloadCommand is the command line data structure for the download command.
+	DownloadCommand struct {
+		// OutFile is the path to the download output file.
+		OutFile string
 	}
 )
 
@@ -416,4 +434,65 @@ func (cmd *WatchBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client
 	cc.Flags().IntVar(&cmd.AccountID, "accountID", accountID, `Account ID`)
 	var bottleID int
 	cc.Flags().IntVar(&cmd.BottleID, "bottleID", bottleID, ``)
+}
+
+// Run downloads files with given paths.
+func (cmd *DownloadCommand) Run(c *client.Client, args []string) error {
+	var (
+		fnf func(context.Context, string) (int64, error)
+		fnd func(context.Context, string, string) (int64, error)
+
+		rpath   = args[0]
+		outfile = cmd.OutFile
+		logger  = goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+		ctx     = goa.WithLogger(context.Background(), logger)
+		err     error
+	)
+
+	if rpath[0] != '/' {
+		rpath = "/" + rpath
+	}
+	if rpath == "/ui" {
+		fnf = c.DownloadUI
+		if outfile == "" {
+			outfile = "index.html"
+		}
+		goto found
+	}
+	if rpath == "/schema.json" {
+		fnf = c.DownloadSchema
+		if outfile == "" {
+			outfile = "schema.json"
+		}
+		goto found
+	}
+	if rpath == "/swagger.json" {
+		fnf = c.DownloadSwagger
+		if outfile == "" {
+			outfile = "swagger.json"
+		}
+		goto found
+	}
+	if strings.HasPrefix(rpath, "/js/") {
+		fnd = c.DownloadJs
+		rpath = rpath[4:]
+		if outfile == "" {
+			_, outfile = path.Split(rpath)
+		}
+		goto found
+	}
+	return fmt.Errorf("don't know how to download %s", rpath)
+found:
+	ctx = goa.WithLogContext(ctx, "file", outfile)
+	if fnf != nil {
+		_, err = fnf(ctx, outfile)
+	} else {
+		_, err = fnd(ctx, rpath, outfile)
+	}
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	return nil
 }
