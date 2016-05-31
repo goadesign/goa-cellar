@@ -226,6 +226,43 @@ definitions:
     - color
     title: CreateBottlePayload
     type: object
+  Error:
+    description: Error response media type
+    example:
+      code: invalid_value
+      detail: Value of ID must be an integer
+      id: 3F1FKVRR
+      meta:
+        timestamp: 1.458609e+09
+      status: "400"
+    properties:
+      code:
+        description: an application-specific error code, expressed as a string value.
+        example: invalid_value
+        type: string
+      detail:
+        description: a human-readable explanation specific to this occurrence of the
+          problem.
+        example: Value of ID must be an integer
+        type: string
+      id:
+        description: a unique identifier for this particular occurrence of the problem.
+        example: 3F1FKVRR
+        type: string
+      meta:
+        additionalProperties: true
+        description: a meta object containing non-standard meta-information about
+          the error.
+        example:
+          timestamp: 1.458609e+09
+        type: object
+      status:
+        description: the HTTP status code applicable to this problem, expressed as
+          a string value.
+        example: "400"
+        type: string
+    title: 'Mediatype identifier: application/vnd.api.error+json'
+    type: object
   RateBottlePayload:
     properties:
       rating:
@@ -548,6 +585,60 @@ paths:
       schemes:
       - ws
       summary: watch
+  /js/{filepath}:
+    get:
+      operationId: public#/js/*filepath
+      parameters:
+      - description: Relative file path
+        in: path
+        name: filepath
+        required: true
+        type: string
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+        "404":
+          description: File not found
+          schema:
+            $ref: '#/definitions/Error'
+      schemes:
+      - http
+      summary: Download public/js/
+  /schema.json:
+    get:
+      operationId: public#/schema.json
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
+      summary: Download public/schema/schema.json
+  /swagger.json:
+    get:
+      operationId: public#/swagger.json
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
+      summary: Download public/swagger/swagger.json
+  /ui:
+    get:
+      operationId: public#/ui
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
+      summary: Download public/html/index.html
 produces:
 - application/json
 - application/xml
