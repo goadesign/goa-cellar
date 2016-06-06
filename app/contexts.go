@@ -149,13 +149,13 @@ func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAcco
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OK(r *Account) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
 	return ctx.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OKTiny(r *AccountTiny) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
 	return ctx.Service.Send(ctx.Context, 200, r)
 }
 
@@ -726,19 +726,19 @@ func NewShowBottleContext(ctx context.Context, service *goa.Service) (*ShowBottl
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OK(r *Bottle) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
 	return ctx.Service.Send(ctx.Context, 200, r)
 }
 
 // OKFull sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKFull(r *BottleFull) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
 	return ctx.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKTiny(r *BottleTiny) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
 	return ctx.Service.Send(ctx.Context, 200, r)
 }
 

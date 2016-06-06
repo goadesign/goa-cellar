@@ -1,4 +1,3 @@
-basePath: /cellar
 consumes:
 - application/json
 - application/xml
@@ -41,6 +40,8 @@ definitions:
     - id
     - href
     - name
+    - created_at
+    - created_by
     title: 'Mediatype identifier: application/vnd.account+json'
     type: object
   Bottle:
@@ -145,6 +146,7 @@ definitions:
     - varietal
     - vintage
     - color
+    - created_at
     title: 'Mediatype identifier: application/vnd.bottle+json'
     type: object
   BottleCollection:
@@ -337,7 +339,7 @@ info:
   title: The virtual wine cellar
   version: ""
 paths:
-  /accounts:
+  /cellar/accounts:
     post:
       description: Create new account
       operationId: account#create
@@ -360,7 +362,7 @@ paths:
       security:
       - admin_pass: []
       summary: create
-  /accounts/{accountID}:
+  /cellar/accounts/{accountID}:
     delete:
       operationId: account#delete
       parameters:
@@ -418,7 +420,7 @@ paths:
       schemes:
       - http
       summary: update
-  /accounts/{accountID}/bottles:
+  /cellar/accounts/{accountID}/bottles:
     get:
       description: List all bottles in account optionally filtering by year
       operationId: bottle#list
@@ -470,7 +472,7 @@ paths:
       schemes:
       - http
       summary: create
-  /accounts/{accountID}/bottles/{bottleID}:
+  /cellar/accounts/{accountID}/bottles/{bottleID}:
     delete:
       operationId: bottle#delete
       parameters:
@@ -539,7 +541,7 @@ paths:
       schemes:
       - http
       summary: update
-  /accounts/{accountID}/bottles/{bottleID}/actions/rate:
+  /cellar/accounts/{accountID}/bottles/{bottleID}/actions/rate:
     put:
       operationId: bottle#rate
       parameters:
@@ -565,7 +567,7 @@ paths:
       schemes:
       - http
       summary: rate
-  /accounts/{accountID}/bottles/{bottleID}/watch:
+  /cellar/accounts/{accountID}/bottles/{bottleID}/watch:
     get:
       description: Retrieve bottle with given id
       operationId: bottle#watch

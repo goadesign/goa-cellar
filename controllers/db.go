@@ -39,7 +39,7 @@ type BottleModel struct {
 	Kind      string
 	Color     string
 	Country   *string
-	CreatedAt *time.Time
+	CreatedAt time.Time
 	Rating    *int
 	Region    *string
 	Review    *string
@@ -55,8 +55,8 @@ type AccountModel struct {
 	ID        int
 	Href      string
 	Name      string
-	CreatedAt *time.Time
-	CreatedBy *string
+	CreatedAt time.Time
+	CreatedBy string
 }
 
 // NewDB initializes a new "DB" with dummy data.

@@ -21,9 +21,9 @@ import (
 // Identifier: application/vnd.account+json
 type Account struct {
 	// Date of creation
-	CreatedAt *time.Time `json:"created_at,omitempty" xml:"created_at,omitempty"`
+	CreatedAt time.Time `json:"created_at" xml:"created_at"`
 	// Email of account owner
-	CreatedBy *string `json:"created_by,omitempty" xml:"created_by,omitempty"`
+	CreatedBy string `json:"created_by" xml:"created_by"`
 	// API href of account
 	Href string `json:"href" xml:"href"`
 	// ID of account
@@ -40,11 +40,12 @@ func (mt *Account) Validate() (err error) {
 	if mt.Name == "" {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "name"))
 	}
+	if mt.CreatedBy == "" {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "created_by"))
+	}
 
-	if mt.CreatedBy != nil {
-		if err2 := goa.ValidateFormat(goa.FormatEmail, *mt.CreatedBy); err2 != nil {
-			err = goa.MergeErrors(err, goa.InvalidFormatError(`response.created_by`, *mt.CreatedBy, goa.FormatEmail, err2))
-		}
+	if err2 := goa.ValidateFormat(goa.FormatEmail, mt.CreatedBy); err2 != nil {
+		err = goa.MergeErrors(err, goa.InvalidFormatError(`response.created_by`, mt.CreatedBy, goa.FormatEmail, err2))
 	}
 	return
 }
@@ -174,7 +175,7 @@ type BottleFull struct {
 	Color   string   `json:"color" xml:"color"`
 	Country *string  `json:"country,omitempty" xml:"country,omitempty"`
 	// Date of creation
-	CreatedAt *time.Time `json:"created_at,omitempty" xml:"created_at,omitempty"`
+	CreatedAt time.Time `json:"created_at" xml:"created_at"`
 	// API href of bottle
 	Href string `json:"href" xml:"href"`
 	// ID of bottle

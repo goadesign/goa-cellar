@@ -22,8 +22,8 @@ type (
 	authMiddlewareKey string
 )
 
-// UseAdminPass mounts the admin_pass auth middleware onto the service.
-func UseAdminPass(service *goa.Service, middleware goa.Middleware) {
+// UseAdminPassMiddleware mounts the admin_pass auth middleware onto the service.
+func UseAdminPassMiddleware(service *goa.Service, middleware goa.Middleware) {
 	service.Context = context.WithValue(service.Context, authMiddlewareKey("admin_pass"), middleware)
 }
 

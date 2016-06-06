@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"encoding/json"
@@ -17,40 +17,46 @@ import (
 type (
 	// CreateAccountCommand is the command line data structure for the create action of account
 	CreateAccountCommand struct {
-		Payload string
+		Payload     string
+		PrettyPrint bool
 	}
 
 	// DeleteAccountCommand is the command line data structure for the delete action of account
 	DeleteAccountCommand struct {
 		// Account ID
-		AccountID int
+		AccountID   int
+		PrettyPrint bool
 	}
 
 	// ShowAccountCommand is the command line data structure for the show action of account
 	ShowAccountCommand struct {
 		// Account ID
-		AccountID int
+		AccountID   int
+		PrettyPrint bool
 	}
 
 	// UpdateAccountCommand is the command line data structure for the update action of account
 	UpdateAccountCommand struct {
 		Payload string
 		// Account ID
-		AccountID int
+		AccountID   int
+		PrettyPrint bool
 	}
 
 	// CreateBottleCommand is the command line data structure for the create action of bottle
 	CreateBottleCommand struct {
 		Payload string
 		// Account ID
-		AccountID int
+		AccountID   int
+		PrettyPrint bool
 	}
 
 	// DeleteBottleCommand is the command line data structure for the delete action of bottle
 	DeleteBottleCommand struct {
 		// Account ID
-		AccountID int
-		BottleID  int
+		AccountID   int
+		BottleID    int
+		PrettyPrint bool
 	}
 
 	// ListBottleCommand is the command line data structure for the list action of bottle
@@ -58,37 +64,42 @@ type (
 		// Account ID
 		AccountID int
 		// Filter by years
-		Years []int
+		Years       []int
+		PrettyPrint bool
 	}
 
 	// RateBottleCommand is the command line data structure for the rate action of bottle
 	RateBottleCommand struct {
 		Payload string
 		// Account ID
-		AccountID int
-		BottleID  int
+		AccountID   int
+		BottleID    int
+		PrettyPrint bool
 	}
 
 	// ShowBottleCommand is the command line data structure for the show action of bottle
 	ShowBottleCommand struct {
 		// Account ID
-		AccountID int
-		BottleID  int
+		AccountID   int
+		BottleID    int
+		PrettyPrint bool
 	}
 
 	// UpdateBottleCommand is the command line data structure for the update action of bottle
 	UpdateBottleCommand struct {
 		Payload string
 		// Account ID
-		AccountID int
-		BottleID  int
+		AccountID   int
+		BottleID    int
+		PrettyPrint bool
 	}
 
 	// WatchBottleCommand is the command line data structure for the watch action of bottle
 	WatchBottleCommand struct {
 		// Account ID
-		AccountID int
-		BottleID  int
+		AccountID   int
+		BottleID    int
+		PrettyPrint bool
 	}
 
 	// DownloadCommand is the command line data structure for the download command.
@@ -97,6 +108,156 @@ type (
 		OutFile string
 	}
 )
+
+// RegisterCommands registers the resource action CLI commands.
+func RegisterCommands(app *cobra.Command, c *client.Client) {
+	var command, sub *cobra.Command
+	command = &cobra.Command{
+		Use:   "create",
+		Short: `create action`,
+	}
+	tmp1 := new(CreateAccountCommand)
+	sub = &cobra.Command{
+		Use:   `account [/cellar/accounts]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
+	}
+	tmp1.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp1.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	tmp2 := new(CreateBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
+	}
+	tmp2.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp2.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "delete",
+		Short: `delete action`,
+	}
+	tmp3 := new(DeleteAccountCommand)
+	sub = &cobra.Command{
+		Use:   `account [/cellar/accounts/ACCOUNTID]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
+	}
+	tmp3.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp3.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	tmp4 := new(DeleteBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
+	}
+	tmp4.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp4.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "list",
+		Short: `List all bottles in account optionally filtering by year`,
+	}
+	tmp5 := new(ListBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
+	}
+	tmp5.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp5.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "rate",
+		Short: ``,
+	}
+	tmp6 := new(RateBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
+	}
+	tmp6.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp6.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "show",
+		Short: `show action`,
+	}
+	tmp7 := new(ShowAccountCommand)
+	sub = &cobra.Command{
+		Use:   `account [/cellar/accounts/ACCOUNTID]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
+	}
+	tmp7.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp7.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	tmp8 := new(ShowBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
+	}
+	tmp8.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp8.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "update",
+		Short: `update action`,
+	}
+	tmp9 := new(UpdateAccountCommand)
+	sub = &cobra.Command{
+		Use:   `account [/cellar/accounts/ACCOUNTID]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
+	}
+	tmp9.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp9.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	tmp10 := new(UpdateBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
+	}
+	tmp10.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp10.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "watch",
+		Short: `Retrieve bottle with given id`,
+	}
+	tmp11 := new(WatchBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+	}
+	tmp11.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp11.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+
+	dl := new(DownloadCommand)
+	dlc := &cobra.Command{
+		Use:   "download [PATH]",
+		Short: "Download file with given path",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return dl.Run(c, args)
+		},
+	}
+	dlc.Flags().StringVar(&dl.OutFile, "out", "", "Output file")
+	app.AddCommand(dlc)
+}
 
 // Run makes the HTTP request corresponding to the CreateAccountCommand command.
 func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
@@ -121,14 +282,13 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *CreateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
-	c.AdminPassSigner.RegisterFlags(cc)
 }
 
 // Run makes the HTTP request corresponding to the DeleteAccountCommand command.
@@ -147,7 +307,7 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -173,7 +333,7 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -206,7 +366,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -240,7 +400,7 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -267,7 +427,7 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -295,7 +455,7 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -330,7 +490,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -359,7 +519,7 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 
@@ -394,7 +554,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 		return err
 	}
 
-	goaclient.HandleResponse(c.Client, resp, PrettyPrint)
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
 }
 

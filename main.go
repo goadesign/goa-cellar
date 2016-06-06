@@ -27,7 +27,7 @@ func main() {
 	service.Use(middleware.Recover())
 
 	// Setup security middleware
-	app.UseAdminPass(service, basicauth.New("wine", "lover"))
+	app.UseAdminPassMiddleware(service, basicauth.New("wine", "lover"))
 
 	// Mount account controller onto service
 	ac := controllers.NewAccount(service)
@@ -42,7 +42,7 @@ func main() {
 	app.MountPublicController(service, sc)
 
 	// Run service
-	if err := service.ListenAndServe(":8080"); err != nil {
+	if err := service.ListenAndServe(":8081"); err != nil {
 		service.LogError(err.Error())
 	}
 }

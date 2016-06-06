@@ -56,6 +56,8 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		}
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateAccountPayload)
+		} else {
+			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
 		}
 		return ctrl.Create(rctx)
 	}
@@ -93,6 +95,8 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		}
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateAccountPayload)
+		} else {
+			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
 		}
 		return ctrl.Update(rctx)
 	}
@@ -180,6 +184,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		}
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateBottlePayload)
+		} else {
+			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
 		}
 		return ctrl.Create(rctx)
 	}
@@ -216,6 +222,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		}
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*RateBottlePayload)
+		} else {
+			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
 		}
 		return ctrl.Rate(rctx)
 	}
@@ -241,6 +249,8 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 		}
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateBottlePayload)
+		} else {
+			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
 		}
 		return ctrl.Update(rctx)
 	}

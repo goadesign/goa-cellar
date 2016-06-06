@@ -44,7 +44,9 @@ func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, paylo
 	if err != nil {
 		return nil, err
 	}
-	c.AdminPassSigner.Sign(ctx, req)
+	if c.AdminPassSigner != nil {
+		c.AdminPassSigner.Sign(req)
+	}
 	return req, nil
 }
 

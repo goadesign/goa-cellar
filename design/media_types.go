@@ -17,7 +17,7 @@ var Account = MediaType("application/vnd.account+json", func() {
 			Format("email")
 		})
 
-		Required("id", "href", "name")
+		Required("id", "href", "name", "created_at", "created_by")
 	})
 
 	View("default", func() {
@@ -65,6 +65,7 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 		Attribute("review")
 
 		Required("id", "href", "name", "vineyard", "varietal", "vintage", "color")
+		Required("created_at")
 	})
 
 	Links(func() {

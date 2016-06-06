@@ -31,6 +31,7 @@ depend:
 clean:
 	@rm -rf app
 	@rm -rf client
+	@rm -rf tool
 	@rm -rf public/swagger
 	@rm -rf public/schema
 	@rm -rf public/js
