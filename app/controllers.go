@@ -46,8 +46,8 @@ type AccountController interface {
 func MountAccountController(service *goa.Service, ctrl AccountController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/cellar/accounts", cors.HandlePreflight(service.Context, handleAccountOrigin))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", cors.HandlePreflight(service.Context, handleAccountOrigin))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateAccountContext(ctx, service)
@@ -172,10 +172,10 @@ type BottleController interface {
 func MountBottleController(service *goa.Service, ctrl BottleController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", cors.HandlePreflight(service.Context, handleBottleOrigin))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", cors.HandlePreflight(service.Context, handleBottleOrigin))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", cors.HandlePreflight(service.Context, handleBottleOrigin))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", cors.HandlePreflight(service.Context, handleBottleOrigin))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		rctx, err := NewCreateBottleContext(ctx, service)
