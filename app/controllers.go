@@ -50,14 +50,20 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewCreateAccountContext(ctx, service)
 		if err != nil {
 			return err
 		}
+		// Build the payload
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateAccountPayload)
 		} else {
-			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
+			return goa.MissingPayloadError()
 		}
 		return ctrl.Create(rctx)
 	}
@@ -67,6 +73,11 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.LogInfo("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts", "security", "admin_pass")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewDeleteAccountContext(ctx, service)
 		if err != nil {
 			return err
@@ -78,6 +89,11 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.LogInfo("mount", "ctrl", "Account", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewShowAccountContext(ctx, service)
 		if err != nil {
 			return err
@@ -89,14 +105,20 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	service.LogInfo("mount", "ctrl", "Account", "action", "Show", "route", "GET /cellar/accounts/:accountID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewUpdateAccountContext(ctx, service)
 		if err != nil {
 			return err
 		}
+		// Build the payload
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateAccountPayload)
 		} else {
-			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
+			return goa.MissingPayloadError()
 		}
 		return ctrl.Update(rctx)
 	}
@@ -172,20 +194,26 @@ type BottleController interface {
 func MountBottleController(service *goa.Service, ctrl BottleController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
-	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", ctrl.MuxHandler("preflight", handleAccountOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles", ctrl.MuxHandler("preflight", handleBottleOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID", ctrl.MuxHandler("preflight", handleBottleOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate", ctrl.MuxHandler("preflight", handleBottleOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/cellar/accounts/:accountID/bottles/:bottleID/watch", ctrl.MuxHandler("preflight", handleBottleOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewCreateBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
+		// Build the payload
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*CreateBottlePayload)
 		} else {
-			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
+			return goa.MissingPayloadError()
 		}
 		return ctrl.Create(rctx)
 	}
@@ -194,6 +222,11 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Create", "route", "POST /cellar/accounts/:accountID/bottles")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewDeleteBottleContext(ctx, service)
 		if err != nil {
 			return err
@@ -205,6 +238,11 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewListBottleContext(ctx, service)
 		if err != nil {
 			return err
@@ -216,14 +254,20 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "List", "route", "GET /cellar/accounts/:accountID/bottles")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewRateBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
+		// Build the payload
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*RateBottlePayload)
 		} else {
-			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
+			return goa.MissingPayloadError()
 		}
 		return ctrl.Rate(rctx)
 	}
@@ -232,6 +276,11 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Rate", "route", "PUT /cellar/accounts/:accountID/bottles/:bottleID/actions/rate")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewShowBottleContext(ctx, service)
 		if err != nil {
 			return err
@@ -243,14 +292,20 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Show", "route", "GET /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewUpdateBottleContext(ctx, service)
 		if err != nil {
 			return err
 		}
+		// Build the payload
 		if rawPayload := goa.ContextRequest(ctx).Payload; rawPayload != nil {
 			rctx.Payload = rawPayload.(*UpdateBottlePayload)
 		} else {
-			return goa.ErrInvalidEncoding(goa.MissingPayloadError())
+			return goa.MissingPayloadError()
 		}
 		return ctrl.Update(rctx)
 	}
@@ -259,6 +314,11 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 	service.LogInfo("mount", "ctrl", "Bottle", "action", "Update", "route", "PATCH /cellar/accounts/:accountID/bottles/:bottleID")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
 		rctx, err := NewWatchBottleContext(ctx, service)
 		if err != nil {
 			return err

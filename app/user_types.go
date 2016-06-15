@@ -15,15 +15,15 @@ import "github.com/goadesign/goa"
 
 // bottlePayload user type.
 type bottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
 }
 
 // Validate validates the bottlePayload type instance.
@@ -121,15 +121,15 @@ func (ut *bottlePayload) Publicize() *BottlePayload {
 
 // BottlePayload user type.
 type BottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
 }
 
 // Validate validates the BottlePayload type instance.

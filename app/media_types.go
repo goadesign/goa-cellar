@@ -21,15 +21,15 @@ import (
 // Identifier: application/vnd.account+json
 type Account struct {
 	// Date of creation
-	CreatedAt time.Time `json:"created_at" xml:"created_at"`
+	CreatedAt time.Time `json:"created_at" xml:"created_at" form:"created_at"`
 	// Email of account owner
-	CreatedBy string `json:"created_by" xml:"created_by"`
+	CreatedBy string `json:"created_by" xml:"created_by" form:"created_by"`
 	// API href of account
-	Href string `json:"href" xml:"href"`
+	Href string `json:"href" xml:"href" form:"href"`
 	// ID of account
-	ID int `json:"id" xml:"id"`
+	ID int `json:"id" xml:"id" form:"id"`
 	// Name of account
-	Name string `json:"name" xml:"name"`
+	Name string `json:"name" xml:"name" form:"name"`
 }
 
 // Validate validates the Account media type instance.
@@ -55,9 +55,9 @@ func (mt *Account) Validate() (err error) {
 // Identifier: application/vnd.account+json
 type AccountLink struct {
 	// API href of account
-	Href string `json:"href" xml:"href"`
+	Href string `json:"href" xml:"href" form:"href"`
 	// ID of account
-	ID int `json:"id" xml:"id"`
+	ID int `json:"id" xml:"id" form:"id"`
 }
 
 // Validate validates the AccountLink media type instance.
@@ -74,11 +74,11 @@ func (mt *AccountLink) Validate() (err error) {
 // Identifier: application/vnd.account+json
 type AccountTiny struct {
 	// API href of account
-	Href string `json:"href" xml:"href"`
+	Href string `json:"href" xml:"href" form:"href"`
 	// ID of account
-	ID int `json:"id" xml:"id"`
+	ID int `json:"id" xml:"id" form:"id"`
 	// Name of account
-	Name string `json:"name" xml:"name"`
+	Name string `json:"name" xml:"name" form:"name"`
 }
 
 // Validate validates the AccountTiny media type instance.
@@ -98,19 +98,19 @@ func (mt *AccountTiny) Validate() (err error) {
 // Identifier: application/vnd.bottle+json
 type Bottle struct {
 	// Account that owns bottle
-	Account *Account `json:"account,omitempty" xml:"account,omitempty"`
+	Account *Account `json:"account,omitempty" xml:"account,omitempty" form:"account,omitempty"`
 	// API href of bottle
-	Href string `json:"href" xml:"href"`
+	Href string `json:"href" xml:"href" form:"href"`
 	// ID of bottle
-	ID int `json:"id" xml:"id"`
+	ID int `json:"id" xml:"id" form:"id"`
 	// Links to related resources
-	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty"`
-	Name  string       `json:"name" xml:"name"`
+	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty" form:"links,omitempty"`
+	Name  string       `json:"name" xml:"name" form:"name"`
 	// Rating of bottle between 1 and 5
-	Rating   *int   `json:"rating,omitempty" xml:"rating,omitempty"`
-	Varietal string `json:"varietal" xml:"varietal"`
-	Vineyard string `json:"vineyard" xml:"vineyard"`
-	Vintage  int    `json:"vintage" xml:"vintage"`
+	Rating   *int   `json:"rating,omitempty" xml:"rating,omitempty" form:"rating,omitempty"`
+	Varietal string `json:"varietal" xml:"varietal" form:"varietal"`
+	Vineyard string `json:"vineyard" xml:"vineyard" form:"vineyard"`
+	Vintage  int    `json:"vintage" xml:"vintage" form:"vintage"`
 }
 
 // Validate validates the Bottle media type instance.
@@ -171,28 +171,28 @@ func (mt *Bottle) Validate() (err error) {
 // Identifier: application/vnd.bottle+json
 type BottleFull struct {
 	// Account that owns bottle
-	Account *Account `json:"account,omitempty" xml:"account,omitempty"`
-	Color   string   `json:"color" xml:"color"`
-	Country *string  `json:"country,omitempty" xml:"country,omitempty"`
+	Account *Account `json:"account,omitempty" xml:"account,omitempty" form:"account,omitempty"`
+	Color   string   `json:"color" xml:"color" form:"color"`
+	Country *string  `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
 	// Date of creation
-	CreatedAt time.Time `json:"created_at" xml:"created_at"`
+	CreatedAt time.Time `json:"created_at" xml:"created_at" form:"created_at"`
 	// API href of bottle
-	Href string `json:"href" xml:"href"`
+	Href string `json:"href" xml:"href" form:"href"`
 	// ID of bottle
-	ID int `json:"id" xml:"id"`
+	ID int `json:"id" xml:"id" form:"id"`
 	// Links to related resources
-	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty"`
-	Name  string       `json:"name" xml:"name"`
+	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty" form:"links,omitempty"`
+	Name  string       `json:"name" xml:"name" form:"name"`
 	// Rating of bottle between 1 and 5
-	Rating    *int    `json:"rating,omitempty" xml:"rating,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Rating    *int    `json:"rating,omitempty" xml:"rating,omitempty" form:"rating,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
 	// Date of last update
-	UpdatedAt *time.Time `json:"updated_at,omitempty" xml:"updated_at,omitempty"`
-	Varietal  string     `json:"varietal" xml:"varietal"`
-	Vineyard  string     `json:"vineyard" xml:"vineyard"`
-	Vintage   int        `json:"vintage" xml:"vintage"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty" xml:"updated_at,omitempty" form:"updated_at,omitempty"`
+	Varietal  string     `json:"varietal" xml:"varietal" form:"varietal"`
+	Vineyard  string     `json:"vineyard" xml:"vineyard" form:"vineyard"`
+	Vintage   int        `json:"vintage" xml:"vintage" form:"vintage"`
 }
 
 // Validate validates the BottleFull media type instance.
@@ -284,14 +284,14 @@ func (mt *BottleFull) Validate() (err error) {
 // Identifier: application/vnd.bottle+json
 type BottleTiny struct {
 	// API href of bottle
-	Href string `json:"href" xml:"href"`
+	Href string `json:"href" xml:"href" form:"href"`
 	// ID of bottle
-	ID int `json:"id" xml:"id"`
+	ID int `json:"id" xml:"id" form:"id"`
 	// Links to related resources
-	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty"`
-	Name  string       `json:"name" xml:"name"`
+	Links *BottleLinks `json:"links,omitempty" xml:"links,omitempty" form:"links,omitempty"`
+	Name  string       `json:"name" xml:"name" form:"name"`
 	// Rating of bottle between 1 and 5
-	Rating *int `json:"rating,omitempty" xml:"rating,omitempty"`
+	Rating *int `json:"rating,omitempty" xml:"rating,omitempty" form:"rating,omitempty"`
 }
 
 // Validate validates the BottleTiny media type instance.
@@ -326,7 +326,7 @@ func (mt *BottleTiny) Validate() (err error) {
 
 // BottleLinks contains links to related resources of Bottle.
 type BottleLinks struct {
-	Account *AccountLink `json:"account,omitempty" xml:"account,omitempty"`
+	Account *AccountLink `json:"account,omitempty" xml:"account,omitempty" form:"account,omitempty"`
 }
 
 // Validate validates the BottleLinks type instance.

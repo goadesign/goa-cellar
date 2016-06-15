@@ -39,7 +39,7 @@ func NewCreateAccountContext(ctx context.Context, service *goa.Service) (*Create
 // createAccountPayload is the account create action payload.
 type createAccountPayload struct {
 	// Name of account
-	Name *string `json:"name,omitempty" xml:"name,omitempty"`
+	Name *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -63,7 +63,7 @@ func (payload *createAccountPayload) Publicize() *CreateAccountPayload {
 // CreateAccountPayload is the account create action payload.
 type CreateAccountPayload struct {
 	// Name of account
-	Name string `json:"name" xml:"name"`
+	Name string `json:"name" xml:"name" form:"name"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -196,7 +196,7 @@ func NewUpdateAccountContext(ctx context.Context, service *goa.Service) (*Update
 // updateAccountPayload is the account update action payload.
 type updateAccountPayload struct {
 	// Name of account
-	Name *string `json:"name,omitempty" xml:"name,omitempty"`
+	Name *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -220,7 +220,7 @@ func (payload *updateAccountPayload) Publicize() *UpdateAccountPayload {
 // UpdateAccountPayload is the account update action payload.
 type UpdateAccountPayload struct {
 	// Name of account
-	Name string `json:"name" xml:"name"`
+	Name string `json:"name" xml:"name" form:"name"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -274,15 +274,15 @@ func NewCreateBottleContext(ctx context.Context, service *goa.Service) (*CreateB
 
 // createBottlePayload is the bottle create action payload.
 type createBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -396,15 +396,15 @@ func (payload *createBottlePayload) Publicize() *CreateBottlePayload {
 
 // CreateBottlePayload is the bottle create action payload.
 type CreateBottlePayload struct {
-	Color     string  `json:"color" xml:"color"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      string  `json:"name" xml:"name"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  string  `json:"varietal" xml:"varietal"`
-	Vineyard  string  `json:"vineyard" xml:"vineyard"`
-	Vintage   int     `json:"vintage" xml:"vintage"`
+	Color     string  `json:"color" xml:"color" form:"color"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
+	Name      string  `json:"name" xml:"name" form:"name"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
+	Varietal  string  `json:"varietal" xml:"varietal" form:"varietal"`
+	Vineyard  string  `json:"vineyard" xml:"vineyard" form:"vineyard"`
+	Vintage   int     `json:"vintage" xml:"vintage" form:"vintage"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -627,7 +627,7 @@ func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottl
 // rateBottlePayload is the bottle rate action payload.
 type rateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating *int `json:"rating,omitempty" xml:"rating,omitempty"`
+	Rating *int `json:"rating,omitempty" xml:"rating,omitempty" form:"rating,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -661,7 +661,7 @@ func (payload *rateBottlePayload) Publicize() *RateBottlePayload {
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating int `json:"rating" xml:"rating"`
+	Rating int `json:"rating" xml:"rating" form:"rating"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -788,15 +788,15 @@ func NewUpdateBottleContext(ctx context.Context, service *goa.Service) (*UpdateB
 
 // updateBottlePayload is the bottle update action payload.
 type updateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -894,15 +894,15 @@ func (payload *updateBottlePayload) Publicize() *UpdateBottlePayload {
 
 // UpdateBottlePayload is the bottle update action payload.
 type UpdateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty"`
+	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
+	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
+	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
+	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
+	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
+	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
+	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
+	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
