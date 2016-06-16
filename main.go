@@ -8,7 +8,7 @@ import (
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
-	"gopkg.in/inconshreveable/log15.v2"
+	"github.com/inconshreveable/log15"
 )
 
 func main() {
