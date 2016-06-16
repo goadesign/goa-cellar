@@ -8,7 +8,6 @@ import (
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
-	"github.com/goadesign/goa/middleware/security/basicauth"
 	"gopkg.in/inconshreveable/log15.v2"
 )
 
@@ -25,9 +24,6 @@ func main() {
 	service.Use(middleware.LogRequest(true))
 	service.Use(middleware.ErrorHandler(service, true))
 	service.Use(middleware.Recover())
-
-	// Setup security middleware
-	app.UseAdminPassMiddleware(service, basicauth.New("wine", "lover"))
 
 	// Mount account controller onto service
 	ac := controllers.NewAccount(service)

@@ -68,9 +68,8 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 		return ctrl.Create(rctx)
 	}
 	h = handleAccountOrigin(h)
-	h = handleSecurity("admin_pass", h)
 	service.Mux.Handle("POST", "/cellar/accounts", ctrl.MuxHandler("Create", h, unmarshalCreateAccountPayload))
-	service.LogInfo("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts", "security", "admin_pass")
+	service.LogInfo("mount", "ctrl", "Account", "action", "Create", "route", "POST /cellar/accounts")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request

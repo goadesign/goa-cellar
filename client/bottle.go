@@ -30,8 +30,8 @@ func CreateBottlePath(accountID string) string {
 }
 
 // Record new bottle
-func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateBottlePayload) (*http.Response, error) {
-	req, err := c.NewCreateBottleRequest(ctx, path, payload)
+func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateBottlePayload, contentType string) (*http.Response, error) {
+	req, err := c.NewCreateBottleRequest(ctx, path, payload, contentType)
 	if err != nil {
 		return nil, err
 	}
@@ -39,9 +39,12 @@ func (c *Client) CreateBottle(ctx context.Context, path string, payload *CreateB
 }
 
 // NewCreateBottleRequest create the request corresponding to the create action endpoint of the bottle resource.
-func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payload *CreateBottlePayload) (*http.Request, error) {
+func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payload *CreateBottlePayload, contentType string) (*http.Request, error) {
 	var body bytes.Buffer
-	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
+	if contentType == "" {
+		contentType = "*/*" // Use default encoder
+	}
+	err := c.Encoder.Encode(payload, &body, contentType)
 	if err != nil {
 		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
@@ -53,6 +56,10 @@ func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payloa
 	req, err := http.NewRequest("POST", u.String(), &body)
 	if err != nil {
 		return nil, err
+	}
+	header := req.Header
+	if contentType != "*/*" {
+		header.Set("Content-Type", contentType)
 	}
 	return req, nil
 }
@@ -136,8 +143,8 @@ func RateBottlePath(accountID string, bottleID int) string {
 }
 
 // RateBottle makes a request to the rate action endpoint of the bottle resource
-func (c *Client) RateBottle(ctx context.Context, path string, payload *RateBottlePayload) (*http.Response, error) {
-	req, err := c.NewRateBottleRequest(ctx, path, payload)
+func (c *Client) RateBottle(ctx context.Context, path string, payload *RateBottlePayload, contentType string) (*http.Response, error) {
+	req, err := c.NewRateBottleRequest(ctx, path, payload, contentType)
 	if err != nil {
 		return nil, err
 	}
@@ -145,9 +152,12 @@ func (c *Client) RateBottle(ctx context.Context, path string, payload *RateBottl
 }
 
 // NewRateBottleRequest create the request corresponding to the rate action endpoint of the bottle resource.
-func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload *RateBottlePayload) (*http.Request, error) {
+func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload *RateBottlePayload, contentType string) (*http.Request, error) {
 	var body bytes.Buffer
-	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
+	if contentType == "" {
+		contentType = "*/*" // Use default encoder
+	}
+	err := c.Encoder.Encode(payload, &body, contentType)
 	if err != nil {
 		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
@@ -159,6 +169,10 @@ func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload 
 	req, err := http.NewRequest("PUT", u.String(), &body)
 	if err != nil {
 		return nil, err
+	}
+	header := req.Header
+	if contentType != "*/*" {
+		header.Set("Content-Type", contentType)
 	}
 	return req, nil
 }
@@ -210,8 +224,8 @@ func UpdateBottlePath(accountID string, bottleID int) string {
 }
 
 // UpdateBottle makes a request to the update action endpoint of the bottle resource
-func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateBottlePayload) (*http.Response, error) {
-	req, err := c.NewUpdateBottleRequest(ctx, path, payload)
+func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateBottlePayload, contentType string) (*http.Response, error) {
+	req, err := c.NewUpdateBottleRequest(ctx, path, payload, contentType)
 	if err != nil {
 		return nil, err
 	}
@@ -219,9 +233,12 @@ func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateB
 }
 
 // NewUpdateBottleRequest create the request corresponding to the update action endpoint of the bottle resource.
-func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payload *UpdateBottlePayload) (*http.Request, error) {
+func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payload *UpdateBottlePayload, contentType string) (*http.Request, error) {
 	var body bytes.Buffer
-	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
+	if contentType == "" {
+		contentType = "*/*" // Use default encoder
+	}
+	err := c.Encoder.Encode(payload, &body, contentType)
 	if err != nil {
 		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
@@ -233,6 +250,10 @@ func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payloa
 	req, err := http.NewRequest("PATCH", u.String(), &body)
 	if err != nil {
 		return nil, err
+	}
+	header := req.Header
+	if contentType != "*/*" {
+		header.Set("Content-Type", contentType)
 	}
 	return req, nil
 }

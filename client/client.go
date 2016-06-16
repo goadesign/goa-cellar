@@ -9,9 +9,8 @@ import (
 // Client is the cellar service client.
 type Client struct {
 	*goaclient.Client
-	AdminPassSigner goaclient.Signer
-	Encoder         *goa.HTTPEncoder
-	Decoder         *goa.HTTPDecoder
+	Encoder *goa.HTTPEncoder
+	Decoder *goa.HTTPDecoder
 }
 
 // New instantiates the client.
@@ -35,9 +34,4 @@ func New(c *http.Client) *Client {
 	client.Decoder.Register(goa.NewJSONDecoder, "*/*")
 
 	return client
-}
-
-// SetAdminPassSigner sets the request signer for the admin_pass security scheme.
-func (c *Client) SetAdminPassSigner(signer goaclient.Signer) {
-	c.AdminPassSigner = signer
 }

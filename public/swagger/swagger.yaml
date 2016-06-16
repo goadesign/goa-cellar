@@ -359,8 +359,6 @@ paths:
               type: string
       schemes:
       - http
-      security:
-      - admin_pass: []
       summary: create
   /cellar/accounts/{accountID}:
     delete:
@@ -659,13 +657,4 @@ responses:
     description: Switching Protocols
 schemes:
 - http
-securityDefinitions:
-  admin_pass:
-    description: |
-      Basic authentication method, for global admin authentication.
-
-      Here are very secret credentials:
-      * username: wine
-      * password: lover
-    type: basic
 swagger: "2.0"

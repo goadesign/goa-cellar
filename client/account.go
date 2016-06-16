@@ -20,8 +20,8 @@ func CreateAccountPath() string {
 }
 
 // Create new account
-func (c *Client) CreateAccount(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Response, error) {
-	req, err := c.NewCreateAccountRequest(ctx, path, payload)
+func (c *Client) CreateAccount(ctx context.Context, path string, payload *CreateAccountPayload, contentType string) (*http.Response, error) {
+	req, err := c.NewCreateAccountRequest(ctx, path, payload, contentType)
 	if err != nil {
 		return nil, err
 	}
@@ -29,9 +29,12 @@ func (c *Client) CreateAccount(ctx context.Context, path string, payload *Create
 }
 
 // NewCreateAccountRequest create the request corresponding to the create action endpoint of the account resource.
-func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, payload *CreateAccountPayload) (*http.Request, error) {
+func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, payload *CreateAccountPayload, contentType string) (*http.Request, error) {
 	var body bytes.Buffer
-	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
+	if contentType == "" {
+		contentType = "*/*" // Use default encoder
+	}
+	err := c.Encoder.Encode(payload, &body, contentType)
 	if err != nil {
 		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
@@ -44,8 +47,9 @@ func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, paylo
 	if err != nil {
 		return nil, err
 	}
-	if c.AdminPassSigner != nil {
-		c.AdminPassSigner.Sign(req)
+	header := req.Header
+	if contentType != "*/*" {
+		header.Set("Content-Type", contentType)
 	}
 	return req, nil
 }
@@ -118,8 +122,8 @@ func UpdateAccountPath(accountID int) string {
 }
 
 // Change account name
-func (c *Client) UpdateAccount(ctx context.Context, path string, payload *UpdateAccountPayload) (*http.Response, error) {
-	req, err := c.NewUpdateAccountRequest(ctx, path, payload)
+func (c *Client) UpdateAccount(ctx context.Context, path string, payload *UpdateAccountPayload, contentType string) (*http.Response, error) {
+	req, err := c.NewUpdateAccountRequest(ctx, path, payload, contentType)
 	if err != nil {
 		return nil, err
 	}
@@ -127,9 +131,12 @@ func (c *Client) UpdateAccount(ctx context.Context, path string, payload *Update
 }
 
 // NewUpdateAccountRequest create the request corresponding to the update action endpoint of the account resource.
-func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, payload *UpdateAccountPayload) (*http.Request, error) {
+func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, payload *UpdateAccountPayload, contentType string) (*http.Request, error) {
 	var body bytes.Buffer
-	err := c.Encoder.Encode(payload, &body, "*/*") // Use default encoder
+	if contentType == "" {
+		contentType = "*/*" // Use default encoder
+	}
+	err := c.Encoder.Encode(payload, &body, contentType)
 	if err != nil {
 		return nil, fmt.Errorf("failed to encode body: %s", err)
 	}
@@ -141,6 +148,10 @@ func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, paylo
 	req, err := http.NewRequest("PUT", u.String(), &body)
 	if err != nil {
 		return nil, err
+	}
+	header := req.Header
+	if contentType != "*/*" {
+		header.Set("Content-Type", contentType)
 	}
 	return req, nil
 }

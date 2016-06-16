@@ -18,6 +18,7 @@ type (
 	// CreateAccountCommand is the command line data structure for the create action of account
 	CreateAccountCommand struct {
 		Payload     string
+		ContentType string
 		PrettyPrint bool
 	}
 
@@ -37,7 +38,8 @@ type (
 
 	// UpdateAccountCommand is the command line data structure for the update action of account
 	UpdateAccountCommand struct {
-		Payload string
+		Payload     string
+		ContentType string
 		// Account ID
 		AccountID   int
 		PrettyPrint bool
@@ -45,7 +47,8 @@ type (
 
 	// CreateBottleCommand is the command line data structure for the create action of bottle
 	CreateBottleCommand struct {
-		Payload string
+		Payload     string
+		ContentType string
 		// Account ID
 		AccountID   int
 		PrettyPrint bool
@@ -70,7 +73,8 @@ type (
 
 	// RateBottleCommand is the command line data structure for the rate action of bottle
 	RateBottleCommand struct {
-		Payload string
+		Payload     string
+		ContentType string
 		// Account ID
 		AccountID   int
 		BottleID    int
@@ -87,7 +91,8 @@ type (
 
 	// UpdateBottleCommand is the command line data structure for the update action of bottle
 	UpdateBottleCommand struct {
-		Payload string
+		Payload     string
+		ContentType string
 		// Account ID
 		AccountID   int
 		BottleID    int
@@ -276,7 +281,7 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.CreateAccount(ctx, path, &payload)
+	resp, err := c.CreateAccount(ctx, path, &payload, cmd.ContentType)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -288,7 +293,8 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *CreateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 }
 
 // Run makes the HTTP request corresponding to the DeleteAccountCommand command.
@@ -360,7 +366,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.UpdateAccount(ctx, path, &payload)
+	resp, err := c.UpdateAccount(ctx, path, &payload, cmd.ContentType)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -372,7 +378,8 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *UpdateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 	var accountID int
 	cc.Flags().IntVar(&cmd.AccountID, "accountID", accountID, `Account ID`)
 }
@@ -394,7 +401,7 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.CreateBottle(ctx, path, &payload)
+	resp, err := c.CreateBottle(ctx, path, &payload, cmd.ContentType)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -406,7 +413,8 @@ func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *CreateBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 	var accountID int
 	cc.Flags().IntVar(&cmd.AccountID, "accountID", accountID, `Account ID`)
 }
@@ -484,7 +492,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.RateBottle(ctx, path, &payload)
+	resp, err := c.RateBottle(ctx, path, &payload, cmd.ContentType)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -496,7 +504,8 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *RateBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 	var accountID int
 	cc.Flags().IntVar(&cmd.AccountID, "accountID", accountID, `Account ID`)
 	var bottleID int
@@ -548,7 +557,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.UpdateBottle(ctx, path, &payload)
+	resp, err := c.UpdateBottle(ctx, path, &payload, cmd.ContentType)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -560,7 +569,8 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *UpdateBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
-	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request JSON body")
+	cc.Flags().StringVar(&cmd.Payload, "payload", "", "Request body encoded in JSON")
+	cc.Flags().StringVar(&cmd.ContentType, "content", "", "Request content type override, e.g. 'application/x-www-form-urlencoded'")
 	var accountID int
 	cc.Flags().IntVar(&cmd.AccountID, "accountID", accountID, `Account ID`)
 	var bottleID int

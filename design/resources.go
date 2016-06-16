@@ -35,7 +35,6 @@ var _ = Resource("account", func() {
 	})
 
 	Action("create", func() {
-		Security("admin_pass")
 		Routing(
 			POST(""),
 		)

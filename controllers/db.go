@@ -8,6 +8,7 @@ import (
 	"github.com/goadesign/goa-cellar/app"
 )
 
+// Use variables for these so we can take their address
 var (
 	one   = 1
 	three = 3
