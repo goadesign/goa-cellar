@@ -10,12 +10,12 @@ import (
 )
 
 // ToBottleMedia converts a bottle model into a bottle media type
-func ToBottleMedia(b *BottleModel) *app.Bottle {
-	account := ToAccountMedia(b.Account)
-	link := ToAccountLink(b.Account)
+func ToBottleMedia(a *AccountModel, b *BottleModel) *app.Bottle {
+	account := ToAccountMedia(a)
+	link := ToAccountLink(a)
 	return &app.Bottle{
 		Account:  account,
-		Href:     b.Href,
+		Href:     app.BottleHref(b.AccountID, b.ID),
 		ID:       b.ID,
 		Links:    &app.BottleLinks{Account: link},
 		Name:     b.Name,
@@ -42,7 +42,7 @@ func NewBottle(service *goa.Service) *BottleController {
 
 // List lists all the bottles in the account optionally filtering by year.
 func (b *BottleController) List(ctx *app.ListBottleContext) error {
-	var bottles []*BottleModel
+	var bottles []BottleModel
 	var err error
 	if ctx.Years != nil {
 		bottles, err = b.db.GetBottlesByYears(ctx.AccountID, ctx.Years)
@@ -53,19 +53,27 @@ func (b *BottleController) List(ctx *app.ListBottleContext) error {
 		return ctx.NotFound()
 	}
 	bs := make([]*app.Bottle, len(bottles))
-	for i, b := range bottles {
-		bs[i] = ToBottleMedia(b)
+	for i, bt := range bottles {
+		a, ok := b.db.GetAccount(bt.AccountID)
+		if !ok {
+			return ctx.NotFound()
+		}
+		bs[i] = ToBottleMedia(&a, &bt)
 	}
 	return ctx.OK(bs)
 }
 
 // Show retrieves the bottle with the given id.
 func (b *BottleController) Show(ctx *app.ShowBottleContext) error {
-	bottle := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
-	if bottle == nil {
+	account, ok := b.db.GetAccount(ctx.AccountID)
+	if !ok {
 		return ctx.NotFound()
 	}
-	return ctx.OK(ToBottleMedia(bottle))
+	bottle, ok := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
+	if !ok {
+		return ctx.NotFound()
+	}
+	return ctx.OK(ToBottleMedia(&account, &bottle))
 }
 
 // Watch watches the bottle with the given id.
@@ -85,7 +93,10 @@ func Watcher(accountID, bottleID int) websocket.Handler {
 
 // Create records a new bottle.
 func (b *BottleController) Create(ctx *app.CreateBottleContext) error {
-	bottle := b.db.NewBottle(ctx.AccountID)
+	bottle, err := b.db.NewBottle(ctx.AccountID)
+	if err != nil {
+		return ctx.NotFound()
+	}
 	payload := ctx.Payload
 	bottle.Name = payload.Name
 	bottle.Vintage = payload.Vintage
@@ -108,14 +119,15 @@ func (b *BottleController) Create(ctx *app.CreateBottleContext) error {
 	if payload.Review != nil {
 		bottle.Review = payload.Review
 	}
+	b.db.SaveBottle(bottle)
 	ctx.ResponseData.Header().Set("Location", app.BottleHref(ctx.AccountID, bottle.ID))
 	return ctx.Created()
 }
 
 // Update updates a bottle field(s).
 func (b *BottleController) Update(ctx *app.UpdateBottleContext) error {
-	bottle := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
-	if bottle == nil {
+	bottle, ok := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
+	if !ok {
 		return ctx.NotFound()
 	}
 	payload := ctx.Payload
@@ -152,8 +164,8 @@ func (b *BottleController) Update(ctx *app.UpdateBottleContext) error {
 
 // Delete removes a bottle from the database.
 func (b *BottleController) Delete(ctx *app.DeleteBottleContext) error {
-	bottle := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
-	if bottle == nil {
+	bottle, ok := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
+	if !ok {
 		return ctx.NotFound()
 	}
 	b.db.DeleteBottle(bottle)
@@ -162,8 +174,8 @@ func (b *BottleController) Delete(ctx *app.DeleteBottleContext) error {
 
 // Rate rates a bottle.
 func (b *BottleController) Rate(ctx *app.RateBottleContext) error {
-	bottle := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
-	if bottle == nil {
+	bottle, ok := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
+	if !ok {
 		return ctx.NotFound()
 	}
 	bottle.Rating = &ctx.Payload.Rating

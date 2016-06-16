@@ -44,29 +44,50 @@ definitions:
     - created_by
     title: 'Mediatype identifier: application/vnd.account+json'
     type: object
+  AccountCollection:
+    example:
+    - created_at: 1978-02-18T21:20:57-08:00
+      created_by: Reiciendis ea architecto magni tempora.
+      href: Distinctio delectus vel earum doloribus.
+      id: 6.5796815e+18
+      name: Recusandae molestiae nemo omnis quae suscipit.
+    - created_at: 1972-08-12T17:28:45-07:00
+      created_by: Sapiente et sunt dolorem.
+      href: Ea est.
+      id: 3.228513e+17
+      name: Sequi blanditiis dolore laudantium repellat perspiciatis iure.
+    - created_at: 2006-10-10T05:51:30-07:00
+      created_by: Et ut repellat voluptatem voluptatem voluptas veritatis.
+      href: Dignissimos sunt ut accusamus soluta.
+      id: 1.3258674e+18
+      name: Dolore et.
+    items:
+      $ref: '#/definitions/Account'
+    title: 'Mediatype identifier: application/vnd.account+json; type=collection'
+    type: array
   Bottle:
     description: A bottle of wine
     example:
       account:
-        created_at: 1988-08-18T23:20:28-07:00
-        created_by: Iure tenetur sapiente et ut.
-        href: Voluptatem voluptatem voluptas veritatis.
-        id: 9.182515e+18
-        name: Sunt ut accusamus soluta.
-      color: Nostrum dolore et maiores quidem iusto.
-      country: Qui aut quaerat id unde sed.
-      created_at: 2001-07-20T06:36:36-07:00
-      href: Ut nisi est.
-      id: 4.0907748e+18
-      name: Quis ipsa occaecati dolorum.
-      rating: 4.824842e+18
-      region: Rem voluptatem.
-      review: Recusandae quam qui labore animi.
-      sweetness: 1.03773165e+18
-      updated_at: 1987-01-07T15:39:20-08:00
-      varietal: Pariatur quam quo laudantium qui ducimus.
-      vineyard: Eos a provident quia omnis iure atque.
-      vintage: 8.3677744e+18
+        created_at: 2012-05-30T13:43:59-07:00
+        created_by: Repellendus quidem modi iste incidunt.
+        href: Omnis eveniet voluptatem.
+        id: 5.3925295e+18
+        name: Et sunt sit dolor magnam dolores.
+      color: Quibusdam aut quibusdam.
+      country: Ex quis aut rem.
+      created_at: 2002-11-08T19:24:24-08:00
+      href: Aut animi nulla aut aut.
+      id: 5.128319e+18
+      name: Aliquid facere.
+      rating: 8.590149e+18
+      region: Ea vel.
+      review: Incidunt earum dolorem suscipit ut iusto.
+      sweetness: 6.5962424e+18
+      updated_at: 1995-11-13T20:26:35-08:00
+      varietal: Harum qui natus et aut.
+      vineyard: Minus rerum ut libero tempore optio.
+      vintage: 8.348819e+18
     properties:
       account:
         $ref: '#/definitions/Account'
@@ -77,28 +98,28 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: yellow
+        example: red
         type: string
       country:
-        example: q5
+        example: wjin
         minLength: 2
         type: string
       created_at:
         description: Date of creation
-        example: 2002-01-26T17:01:26-08:00
+        example: 2011-12-29T17:17:22-08:00
         format: date-time
         type: string
       href:
         description: API href of bottle
-        example: Magni tempora.
+        example: Rem voluptatem.
         type: string
       id:
         description: ID of bottle
-        example: 7.5550226e+18
+        example: 5.5720336e+18
         format: int64
         type: integer
       name:
-        example: 7hb
+        example: 0v
         minLength: 2
         type: string
       rating:
@@ -108,33 +129,33 @@ definitions:
         minimum: 1
         type: integer
       region:
-        example: Consequuntur recusandae.
+        example: Enim nam nemo pariatur quam quo laudantium.
         type: string
       review:
-        example: bzvfxy6
+        example: gx4
         maxLength: 300
         minLength: 3
         type: string
       sweetness:
-        example: 3
+        example: 2
         maximum: 5
         minimum: 1
         type: integer
       updated_at:
         description: Date of last update
-        example: 1994-04-05T12:08:05-07:00
+        example: 2011-07-06T02:59:22-07:00
         format: date-time
         type: string
       varietal:
-        example: jue8
+        example: ulxw
         minLength: 4
         type: string
       vineyard:
-        example: rba
+        example: w8
         minLength: 2
         type: string
       vintage:
-        example: 2010
+        example: 1958
         maximum: 2020
         minimum: 1900
         type: integer
@@ -152,25 +173,65 @@ definitions:
   BottleCollection:
     example:
     - account:
-        created_at: 1997-11-14T12:42:49-08:00
-        created_by: Optio corporis quam delectus.
-        href: Exercitationem alias est dolores.
-        id: 3.3478612e+18
-        name: Ducimus expedita in quam eos distinctio.
-      color: Ut molestiae possimus.
-      country: Aliquam itaque quam beatae veniam quaerat sint.
-      created_at: 2000-07-18T03:19:44-07:00
-      href: Sit qui ut delectus.
-      id: 7.6403293e+18
-      name: Nulla architecto magni eos tempora sapiente.
-      rating: 5.4533204e+18
-      region: Beatae eveniet et tempora nobis enim.
-      review: Dolorum libero qui.
-      sweetness: 2.5772294e+18
-      updated_at: 1980-11-29T23:07:41-08:00
-      varietal: Iste dolorem officiis aut magnam commodi.
-      vineyard: Voluptatem deserunt cupiditate eveniet repellat qui.
-      vintage: 2.0464565e+18
+        created_at: 1981-07-23T18:31:00-07:00
+        created_by: Odit aperiam voluptatem aut.
+        href: Vel molestiae culpa incidunt omnis nobis nobis.
+        id: 2.2154884e+18
+        name: Totam minus nihil iure.
+      color: Est fugiat.
+      country: Occaecati quas doloremque et laborum fugit eos.
+      created_at: 2013-12-12T09:48:24-08:00
+      href: Dolore iusto perspiciatis nobis assumenda voluptas voluptas.
+      id: 7.369533e+18
+      name: Aperiam quam.
+      rating: 4.0068974e+18
+      region: Sit et.
+      review: In est.
+      sweetness: 3.3761357e+17
+      updated_at: 2001-05-22T00:40:52-07:00
+      varietal: Et qui odio dolore atque.
+      vineyard: Ea praesentium repudiandae quia.
+      vintage: 9.943361e+17
+    - account:
+        created_at: 1980-03-06T03:07:52-08:00
+        created_by: Dicta impedit est quia corrupti.
+        href: Vero facere harum dolores adipisci.
+        id: 8.1852995e+18
+        name: Esse quia ratione.
+      color: Quae deleniti fugit.
+      country: Dolor est consequuntur sed.
+      created_at: 2006-10-04T13:31:05-07:00
+      href: Voluptatem omnis magni.
+      id: 2.5622392e+18
+      name: Praesentium cum quaerat accusamus voluptatem et fugit.
+      rating: 1.836711e+18
+      region: Consequatur ut explicabo libero qui aut.
+      review: Deleniti et beatae nisi soluta ex.
+      sweetness: 4.1388346e+17
+      updated_at: 2014-07-23T19:01:04-07:00
+      varietal: Rerum dicta quo.
+      vineyard: Optio aspernatur modi.
+      vintage: 4.5090477e+18
+    - account:
+        created_at: 1970-06-04T11:54:24-07:00
+        created_by: Et et iusto consequatur recusandae.
+        href: Vitae libero quis non soluta.
+        id: 5.6490115e+18
+        name: Nobis quia dolorum eius quo fugit ab.
+      color: Ad cumque.
+      country: Dolorum eos dolore ipsum eius voluptatem.
+      created_at: 1986-08-26T02:32:51-07:00
+      href: Laudantium corrupti et.
+      id: 6.012384e+18
+      name: Modi sed et nulla.
+      rating: 3.6717306e+18
+      region: Aperiam amet eum officiis eligendi.
+      review: Facere quaerat dicta corporis.
+      sweetness: 5.517688e+17
+      updated_at: 2008-04-22T03:12:28-07:00
+      varietal: Eaque repellat quidem laudantium eaque dignissimos qui.
+      vineyard: Sit aut officia pariatur.
+      vintage: 1.1044081e+18
     items:
       $ref: '#/definitions/Bottle'
     title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
@@ -326,7 +387,7 @@ definitions:
 externalDocs:
   description: goa guide
   url: http://goa.design/getting-started.html
-host: cellar.goa.design
+host: localhost:8081
 info:
   contact:
     email: admin@goa.design
@@ -340,6 +401,19 @@ info:
   version: ""
 paths:
   /cellar/accounts:
+    get:
+      description: Retrieve all accounts.
+      operationId: account#list
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AccountCollection'
+        "404":
+          description: Not Found
+      schemes:
+      - http
+      summary: list
     post:
       description: Create new account
       operationId: account#create
@@ -467,6 +541,8 @@ paths:
               description: href to created resource
               pattern: ^/accounts/[0-9]+/bottles/[0-9]+$
               type: string
+        "404":
+          description: Not Found
       schemes:
       - http
       summary: create

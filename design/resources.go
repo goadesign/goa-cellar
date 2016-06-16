@@ -22,6 +22,15 @@ var _ = Resource("account", func() {
 	DefaultMedia(Account)
 	BasePath("/accounts")
 
+	Action("list", func() {
+		Routing(
+			GET(""),
+		)
+		Description("Retrieve all accounts.")
+		Response(OK, CollectionOf(Account))
+		Response(NotFound)
+	})
+
 	Action("show", func() {
 		Routing(
 			GET("/:accountID"),
@@ -130,6 +139,7 @@ var _ = Resource("bottle", func() {
 			Required("name", "vineyard", "varietal", "vintage", "color")
 		})
 		Response(Created, "^/accounts/[0-9]+/bottles/[0-9]+$")
+		Response(NotFound)
 	})
 
 	Action("update", func() {

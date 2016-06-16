@@ -16,6 +16,16 @@ import (
 	"time"
 )
 
+// AccountCollection media type is a collection of Account.
+type AccountCollection []*Account
+
+// DecodeAccountCollection decodes the AccountCollection instance encoded in resp body.
+func (c *Client) DecodeAccountCollection(resp *http.Response) (AccountCollection, error) {
+	var decoded AccountCollection
+	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
+	return decoded, err
+}
+
 // A tenant account
 type Account struct {
 	// Date of creation

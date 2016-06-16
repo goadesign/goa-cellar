@@ -8,19 +8,19 @@ import (
 // ToAccountMedia builds an account media type from an account model.
 func ToAccountMedia(account *AccountModel) *app.Account {
 	return &app.Account{
+		ID:        account.ID,
+		Href:      app.AccountHref(account.ID),
+		Name:      account.Name,
 		CreatedAt: account.CreatedAt,
 		CreatedBy: account.CreatedBy,
-		Href:      account.Href,
-		ID:        account.ID,
-		Name:      account.Name,
 	}
 }
 
 // ToAccountLink builds an account link from an account model.
 func ToAccountLink(account *AccountModel) *app.AccountLink {
 	return &app.AccountLink{
-		Href: account.Href,
 		ID:   account.ID,
+		Href: app.AccountHref(account.ID),
 	}
 }
 
@@ -38,16 +38,33 @@ func NewAccount(service *goa.Service) *AccountController {
 	}
 }
 
+// List retrieves all the accounts.
+func (b *AccountController) List(c *app.ListAccountContext) error {
+	accounts := b.db.GetAccounts()
+	res := make(app.AccountCollection, len(accounts))
+	for i, account := range accounts {
+		a := &app.Account{
+			CreatedAt: account.CreatedAt,
+			CreatedBy: account.CreatedBy,
+			Href:      app.AccountHref(account.ID),
+			ID:        account.ID,
+			Name:      account.Name,
+		}
+		res[i] = a
+	}
+	return c.OK(res)
+}
+
 // Show retrieves the account with the given id.
 func (b *AccountController) Show(c *app.ShowAccountContext) error {
-	account := b.db.GetAccount(c.AccountID)
-	if account == nil {
+	account, ok := b.db.GetAccount(c.AccountID)
+	if !ok {
 		return c.NotFound()
 	}
 	a := &app.Account{
 		CreatedAt: account.CreatedAt,
 		CreatedBy: account.CreatedBy,
-		Href:      account.Href,
+		Href:      app.AccountHref(account.ID),
 		ID:        account.ID,
 		Name:      account.Name,
 	}
@@ -65,8 +82,8 @@ func (b *AccountController) Create(c *app.CreateAccountContext) error {
 
 // Update updates a account field(s).
 func (b *AccountController) Update(c *app.UpdateAccountContext) error {
-	account := b.db.GetAccount(c.AccountID)
-	if account == nil {
+	account, ok := b.db.GetAccount(c.AccountID)
+	if !ok {
 		return c.NotFound()
 	}
 	payload := c.Payload
@@ -79,8 +96,8 @@ func (b *AccountController) Update(c *app.UpdateAccountContext) error {
 
 // Delete removes a account from the database.
 func (b *AccountController) Delete(c *app.DeleteAccountContext) error {
-	account := b.db.GetAccount(c.AccountID)
-	if account == nil {
+	account, ok := b.db.GetAccount(c.AccountID)
+	if !ok {
 		return c.NotFound()
 	}
 	b.db.DeleteAccount(account)

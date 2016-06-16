@@ -38,6 +38,7 @@ type AccountController interface {
 	goa.Muxer
 	Create(*CreateAccountContext) error
 	Delete(*DeleteAccountContext) error
+	List(*ListAccountContext) error
 	Show(*ShowAccountContext) error
 	Update(*UpdateAccountContext) error
 }
@@ -86,6 +87,22 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 	h = handleAccountOrigin(h)
 	service.Mux.Handle("DELETE", "/cellar/accounts/:accountID", ctrl.MuxHandler("Delete", h, nil))
 	service.LogInfo("mount", "ctrl", "Account", "action", "Delete", "route", "DELETE /cellar/accounts/:accountID")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewListAccountContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.List(rctx)
+	}
+	h = handleAccountOrigin(h)
+	service.Mux.Handle("GET", "/cellar/accounts", ctrl.MuxHandler("List", h, nil))
+	service.LogInfo("mount", "ctrl", "Account", "action", "List", "route", "GET /cellar/accounts")
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request

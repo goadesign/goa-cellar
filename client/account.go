@@ -82,6 +82,34 @@ func (c *Client) NewDeleteAccountRequest(ctx context.Context, path string) (*htt
 	return req, nil
 }
 
+// ListAccountPath computes a request path to the list action of account.
+func ListAccountPath() string {
+	return fmt.Sprintf("/cellar/accounts")
+}
+
+// Retrieve all accounts.
+func (c *Client) ListAccount(ctx context.Context, path string) (*http.Response, error) {
+	req, err := c.NewListAccountRequest(ctx, path)
+	if err != nil {
+		return nil, err
+	}
+	return c.Client.Do(ctx, req)
+}
+
+// NewListAccountRequest create the request corresponding to the list action endpoint of the account resource.
+func (c *Client) NewListAccountRequest(ctx context.Context, path string) (*http.Request, error) {
+	scheme := c.Scheme
+	if scheme == "" {
+		scheme = "http"
+	}
+	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
+	req, err := http.NewRequest("GET", u.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+	return req, nil
+}
+
 // ShowAccountPath computes a request path to the show action of account.
 func ShowAccountPath(accountID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v", accountID)

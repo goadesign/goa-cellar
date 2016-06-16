@@ -93,6 +93,66 @@ func (mt *AccountTiny) Validate() (err error) {
 	return
 }
 
+// AccountCollection media type is a collection of Account.
+//
+// Identifier: application/vnd.account+json; type=collection
+type AccountCollection []*Account
+
+// Validate validates the AccountCollection media type instance.
+func (mt AccountCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e.Href == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "href"))
+		}
+		if e.Name == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "name"))
+		}
+		if e.CreatedBy == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "created_by"))
+		}
+
+		if err2 := goa.ValidateFormat(goa.FormatEmail, e.CreatedBy); err2 != nil {
+			err = goa.MergeErrors(err, goa.InvalidFormatError(`response[*].created_by`, e.CreatedBy, goa.FormatEmail, err2))
+		}
+	}
+	return
+}
+
+// AccountLinkCollection media type is a collection of AccountLink.
+//
+// Identifier: application/vnd.account+json; type=collection
+type AccountLinkCollection []*AccountLink
+
+// Validate validates the AccountLinkCollection media type instance.
+func (mt AccountLinkCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e.Href == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "href"))
+		}
+
+	}
+	return
+}
+
+// AccountTinyCollection media type is a collection of AccountTiny.
+//
+// Identifier: application/vnd.account+json; type=collection
+type AccountTinyCollection []*AccountTiny
+
+// Validate validates the AccountTinyCollection media type instance.
+func (mt AccountTinyCollection) Validate() (err error) {
+	for _, e := range mt {
+		if e.Href == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "href"))
+		}
+		if e.Name == "" {
+			err = goa.MergeErrors(err, goa.MissingAttributeError(`response[*]`, "name"))
+		}
+
+	}
+	return
+}
+
 // Bottle media type.
 //
 // Identifier: application/vnd.bottle+json

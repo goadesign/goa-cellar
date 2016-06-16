@@ -61,6 +61,54 @@ func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 
 }
 
+// CreateBottleNotFound test setup
+func CreateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
+	CreateBottleNotFoundCtx(t, context.Background(), ctrl, accountID, payload)
+}
+
+// CreateBottleNotFoundCtx test setup
+func CreateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
+	err := payload.Validate()
+	if err != nil {
+		e, ok := err.(*goa.Error)
+		if !ok {
+			panic(err) //bug
+		}
+		if e.Status != 404 {
+			t.Errorf("unexpected payload validation error: %+v", e)
+		}
+		return
+	}
+	var logBuf bytes.Buffer
+	var resp interface{}
+	respSetter := func(r interface{}) { resp = r }
+	service := goatest.Service(&logBuf, respSetter)
+	rw := httptest.NewRecorder()
+	req, err := http.NewRequest("POST", fmt.Sprintf("/cellar/accounts/%v/bottles", accountID), nil)
+	if err != nil {
+		panic("invalid test " + err.Error()) // bug
+	}
+	prms := url.Values{}
+	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
+
+	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
+	createCtx, err := app.NewCreateBottleContext(goaCtx, service)
+	if err != nil {
+		panic("invalid test data " + err.Error()) // bug
+	}
+	createCtx.Payload = payload
+
+	err = ctrl.Create(createCtx)
+	if err != nil {
+		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
+	}
+
+}
+
 // DeleteBottleNoContent test setup
 func DeleteBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) {
 	DeleteBottleNoContentCtx(t, context.Background(), ctrl, accountID, bottleID)

@@ -2,10 +2,9 @@ package controllers
 
 import (
 	"fmt"
+	"sort"
 	"sync"
 	"time"
-
-	"github.com/goadesign/goa-cellar/app"
 )
 
 // Use variables for these so we can take their address
@@ -34,8 +33,7 @@ type DB struct {
 // BottleModel is the database "model" for bottles
 type BottleModel struct {
 	ID        int
-	Href      string
-	Account   *AccountModel
+	AccountID int
 	Name      string
 	Kind      string
 	Color     string
@@ -54,7 +52,6 @@ type BottleModel struct {
 // AccountModel is the database "model" for accounts
 type AccountModel struct {
 	ID        int
-	Href      string
 	Name      string
 	CreatedAt time.Time
 	CreatedBy string
@@ -62,14 +59,13 @@ type AccountModel struct {
 
 // NewDB initializes a new "DB" with dummy data.
 func NewDB() *DB {
-	account := &AccountModel{ID: 1, Name: "account 1", Href: app.AccountHref(1)}
-	account2 := &AccountModel{ID: 2, Name: "account 2", Href: app.AccountHref(2)}
+	account := &AccountModel{ID: 1, Name: "account 1"}
+	account2 := &AccountModel{ID: 2, Name: "account 2"}
 	bottles := map[int][]*BottleModel{
 		1: []*BottleModel{
 			&BottleModel{
 				ID:        100,
-				Account:   account,
-				Href:      app.BottleHref(1, 100),
+				AccountID: 1,
 				Name:      "Number 8",
 				Kind:      "wine",
 				Vineyard:  "Asti Winery",
@@ -84,8 +80,7 @@ func NewDB() *DB {
 			},
 			&BottleModel{
 				ID:        101,
-				Account:   account,
-				Href:      app.BottleHref(1, 101),
+				AccountID: 1,
 				Name:      "Mourvedre",
 				Kind:      "wine",
 				Vineyard:  "Rideau",
@@ -100,8 +95,7 @@ func NewDB() *DB {
 			},
 			&BottleModel{
 				ID:        102,
-				Account:   account,
-				Href:      app.BottleHref(1, 102),
+				AccountID: 1,
 				Name:      "Blue's Cuvee",
 				Kind:      "wine",
 				Vineyard:  "Longoria",
@@ -118,8 +112,7 @@ func NewDB() *DB {
 		2: []*BottleModel{
 			&BottleModel{
 				ID:        200,
-				Account:   account2,
-				Href:      app.BottleHref(42, 200),
+				AccountID: 2,
 				Name:      "Blackstone Merlot",
 				Kind:      "wine",
 				Vineyard:  "Blackstone",
@@ -134,8 +127,7 @@ func NewDB() *DB {
 			},
 			&BottleModel{
 				ID:        201,
-				Account:   account2,
-				Href:      app.BottleHref(42, 201),
+				AccountID: 2,
 				Name:      "Wild Horse",
 				Kind:      "wine",
 				Vineyard:  "Wild Horse",
@@ -153,77 +145,103 @@ func NewDB() *DB {
 	return &DB{accounts: map[int]*AccountModel{1: account, 2: account2}, bottles: bottles, maxAccountModelID: 2}
 }
 
-// GetAccount returns the account with given id if any, nil otherwise.
-func (db *DB) GetAccount(id int) *AccountModel {
+// GetAccounts returns all the accounts.
+func (db *DB) GetAccounts() []AccountModel {
 	db.Lock()
 	defer db.Unlock()
-	return db.accounts[id]
+	ids := make([]int, len(db.accounts))
+	i := 0
+	for id := range db.accounts {
+		ids[i] = id
+		i++
+	}
+	sort.Ints(ids)
+	list := make([]AccountModel, len(ids))
+	for i, id := range ids {
+		list[i] = *db.accounts[id]
+	}
+	return list
+}
+
+// GetAccount returns the account with given id if any, nil otherwise.
+func (db *DB) GetAccount(id int) (model AccountModel, ok bool) {
+	db.Lock()
+	defer db.Unlock()
+	var p *AccountModel
+	if p, ok = db.accounts[id]; ok {
+		model = *p
+		ok = true
+	}
+	return
 }
 
 // NewAccount creates a new blank account resource.
-func (db *DB) NewAccount() *AccountModel {
+func (db *DB) NewAccount() (model AccountModel) {
 	db.Lock()
 	defer db.Unlock()
 	db.maxAccountModelID++
-	account := &AccountModel{ID: db.maxAccountModelID}
-	db.accounts[db.maxAccountModelID] = account
-	return account
+	model = AccountModel{ID: db.maxAccountModelID}
+	db.accounts[db.maxAccountModelID] = &model
+	return
 }
 
 // SaveAccount "persists" the account.
-func (db *DB) SaveAccount(a *AccountModel) {
+func (db *DB) SaveAccount(model AccountModel) {
 	db.Lock()
 	defer db.Unlock()
-	db.accounts[a.ID] = a
+	db.accounts[model.ID] = &model
 }
 
 // DeleteAccount deletes the account.
-func (db *DB) DeleteAccount(account *AccountModel) {
+func (db *DB) DeleteAccount(model AccountModel) {
 	db.Lock()
 	defer db.Unlock()
-	if account == nil {
-		return
-	}
-	delete(db.bottles, account.ID)
-	delete(db.accounts, account.ID)
+	delete(db.bottles, model.ID)
+	delete(db.accounts, model.ID)
 }
 
 // GetBottle returns the bottle with the given id from the given account or nil if not found.
-func (db *DB) GetBottle(account, id int) *BottleModel {
+func (db *DB) GetBottle(account, id int) (model BottleModel, ok bool) {
 	db.Lock()
 	defer db.Unlock()
-	bottles, ok := db.bottles[account]
-	if !ok {
-		return nil
+	bottles, found := db.bottles[account]
+	if !found {
+		return
 	}
 	for _, b := range bottles {
 		if b.ID == id {
-			return b
+			model = *b
+			ok = true
+			break
 		}
 	}
-	return nil
+	return
 }
 
 // GetBottles return the bottles from the given account.
-func (db *DB) GetBottles(account int) ([]*BottleModel, error) {
+func (db *DB) GetBottles(account int) ([]BottleModel, error) {
 	db.Lock()
 	defer db.Unlock()
 	bottles, ok := db.bottles[account]
 	if !ok {
 		return nil, fmt.Errorf("unknown account %d", account)
 	}
-	return bottles, nil
+	list := make([]BottleModel, len(bottles))
+	for i, b := range bottles {
+		list[i] = *b
+	}
+	return list, nil
 }
 
 // GetBottlesByYears returns the bottles with the vintage in the given array from the given account.
-func (db *DB) GetBottlesByYears(account int, years []int) ([]*BottleModel, error) {
+func (db *DB) GetBottlesByYears(account int, years []int) ([]BottleModel, error) {
 	db.Lock()
 	defer db.Unlock()
 	bottles, ok := db.bottles[account]
 	if !ok {
 		return nil, fmt.Errorf("unknown account %d", account)
 	}
-	var res []*BottleModel
+	var res []BottleModel
 	for _, b := range bottles {
 		selected := false
 		for _, y := range years {
@@ -233,18 +251,21 @@ func (db *DB) GetBottlesByYears(account int, years []int) ([]*BottleModel, error
 			}
 		}
 		if selected {
-			res = append(res, b)
+			res = append(res, *b)
 		}
 	}
 	return res, nil
 }
 
 // NewBottle creates a new bottle resource.
-func (db *DB) NewBottle(account int) *BottleModel {
+func (db *DB) NewBottle(account int) (model BottleModel, err error) {
 	db.Lock()
 	defer db.Unlock()
+	if _, ok := db.accounts[account]; !ok {
+		return model, fmt.Errorf("unknown account %d", account)
+	}
 	bottles, _ := db.bottles[account]
-	newID := 1
+	newID := 0
 	taken := true
 	for ; taken; newID++ {
 		taken = false
@@ -255,28 +276,24 @@ func (db *DB) NewBottle(account int) *BottleModel {
 			}
 		}
 	}
-	bottle := BottleModel{ID: newID}
-	db.bottles[newID] = append(db.bottles[newID], &bottle)
-	return &bottle
+	model = BottleModel{ID: newID, AccountID: account}
+	db.bottles[newID] = append(db.bottles[newID], &model)
+	return
 }
 
 // SaveBottle persists bottle to bottlesbase.
-func (db *DB) SaveBottle(b *BottleModel) {
+func (db *DB) SaveBottle(model BottleModel) {
 	db.Lock()
 	defer db.Unlock()
-	db.bottles[b.Account.ID] = append(db.bottles[b.Account.ID], b)
+	db.bottles[model.AccountID] = append(db.bottles[model.AccountID], &model)
 }
 
 // DeleteBottle deletes bottle from bottlesbase.
-func (db *DB) DeleteBottle(bottle *BottleModel) {
+func (db *DB) DeleteBottle(model BottleModel) {
 	db.Lock()
 	defer db.Unlock()
-	if bottle == nil {
-		return
-	}
-	account := bottle.Account
-	id := bottle.ID
-	if bs, ok := db.bottles[account.ID]; ok {
+	id, accountID := model.ID, model.AccountID
+	if bs, ok := db.bottles[accountID]; ok {
 		idx := -1
 		for i, b := range bs {
 			if b.ID == id {
@@ -286,7 +303,7 @@ func (db *DB) DeleteBottle(bottle *BottleModel) {
 		}
 		if idx > -1 {
 			bs = append(bs[:idx], bs[idx+1:]...)
-			db.bottles[account.ID] = bs
+			db.bottles[accountID] = bs
 		}
 	}
 }

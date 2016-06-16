@@ -120,6 +120,35 @@ func (ctx *DeleteAccountContext) NotFound() error {
 	return nil
 }
 
+// ListAccountContext provides the account list action context.
+type ListAccountContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+	Service *goa.Service
+}
+
+// NewListAccountContext parses the incoming request URL and body, performs validations and creates the
+// context used by the account controller list action.
+func NewListAccountContext(ctx context.Context, service *goa.Service) (*ListAccountContext, error) {
+	var err error
+	req := goa.ContextRequest(ctx)
+	rctx := ListAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *ListAccountContext) OK(r AccountCollection) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	return ctx.Service.Send(ctx.Context, 200, r)
+}
+
+// NotFound sends a HTTP response with status code 404.
+func (ctx *ListAccountContext) NotFound() error {
+	ctx.ResponseData.WriteHeader(404)
+	return nil
+}
+
 // ShowAccountContext provides the account show action context.
 type ShowAccountContext struct {
 	context.Context
@@ -471,6 +500,12 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 // Created sends a HTTP response with status code 201.
 func (ctx *CreateBottleContext) Created() error {
 	ctx.ResponseData.WriteHeader(201)
+	return nil
+}
+
+// NotFound sends a HTTP response with status code 404.
+func (ctx *CreateBottleContext) NotFound() error {
+	ctx.ResponseData.WriteHeader(404)
 	return nil
 }
 
