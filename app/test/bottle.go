@@ -13,13 +13,15 @@ import (
 	"testing"
 )
 
-// CreateBottleCreated test setup
-func CreateBottleCreated(t *testing.T, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
-	CreateBottleCreatedCtx(t, context.Background(), ctrl, accountID, payload)
+// CreateBottleCreated Create runs the method Create of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func CreateBottleCreated(t *testing.T, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) http.ResponseWriter {
+	return CreateBottleCreatedWithContext(t, context.Background(), ctrl, accountID, payload)
 }
 
-// CreateBottleCreatedCtx test setup
-func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
+// CreateBottleCreatedWithContext Create runs the method Create of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func CreateBottleCreatedWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -29,7 +31,7 @@ func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 		if e.Status != 201 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -55,19 +57,18 @@ func CreateBottleCreatedCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 201 {
-		t.Errorf("invalid response status code: got %+v, expected 201", rw.Code)
-	}
-
+	return rw
 }
 
-// CreateBottleNotFound test setup
-func CreateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
-	CreateBottleNotFoundCtx(t, context.Background(), ctrl, accountID, payload)
+// CreateBottleNotFound Create runs the method Create of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func CreateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) http.ResponseWriter {
+	return CreateBottleNotFoundWithContext(t, context.Background(), ctrl, accountID, payload)
 }
 
-// CreateBottleNotFoundCtx test setup
-func CreateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) {
+// CreateBottleNotFoundWithContext Create runs the method Create of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func CreateBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, payload *app.CreateBottlePayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -77,7 +78,7 @@ func CreateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 		if e.Status != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -103,19 +104,18 @@ func CreateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// DeleteBottleNoContent test setup
-func DeleteBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) {
-	DeleteBottleNoContentCtx(t, context.Background(), ctrl, accountID, bottleID)
+// DeleteBottleNoContent Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) http.ResponseWriter {
+	return DeleteBottleNoContentWithContext(t, context.Background(), ctrl, accountID, bottleID)
 }
 
-// DeleteBottleNoContentCtx test setup
-func DeleteBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) {
+// DeleteBottleNoContentWithContext Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteBottleNoContentWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -140,19 +140,18 @@ func DeleteBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 204 {
-		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
-	}
-
+	return rw
 }
 
-// DeleteBottleNotFound test setup
-func DeleteBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) {
-	DeleteBottleNotFoundCtx(t, context.Background(), ctrl, accountID, bottleID)
+// DeleteBottleNotFound Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) http.ResponseWriter {
+	return DeleteBottleNotFoundWithContext(t, context.Background(), ctrl, accountID, bottleID)
 }
 
-// DeleteBottleNotFoundCtx test setup
-func DeleteBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) {
+// DeleteBottleNotFoundWithContext Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -177,19 +176,18 @@ func DeleteBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ListBottleNotFound test setup
-func ListBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string) {
-	ListBottleNotFoundCtx(t, context.Background(), ctrl, accountID)
+// ListBottleNotFound List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ListBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string) http.ResponseWriter {
+	return ListBottleNotFoundWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ListBottleNotFoundCtx test setup
-func ListBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string) {
+// ListBottleNotFoundWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ListBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -213,19 +211,18 @@ func ListBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ListBottleOK test setup
-func ListBottleOK(t *testing.T, ctrl app.BottleController, accountID string) *app.BottleCollection {
-	return ListBottleOKCtx(t, context.Background(), ctrl, accountID)
+// ListBottleOK List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListBottleOK(t *testing.T, ctrl app.BottleController, accountID string) (http.ResponseWriter, *app.BottleCollection) {
+	return ListBottleOKWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ListBottleOKCtx test setup
-func ListBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string) *app.BottleCollection {
+// ListBottleOKWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListBottleOKWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string) (http.ResponseWriter, *app.BottleCollection) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -248,31 +245,27 @@ func ListBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleControlle
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.BottleCollection)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.BottleCollection", resp)
+	var mt *app.BottleCollection
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.BottleCollection)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.BottleCollection", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ListBottleOKTiny test setup
-func ListBottleOKTiny(t *testing.T, ctrl app.BottleController, accountID string) *app.BottleTinyCollection {
-	return ListBottleOKTinyCtx(t, context.Background(), ctrl, accountID)
+// ListBottleOKTiny List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListBottleOKTiny(t *testing.T, ctrl app.BottleController, accountID string) (http.ResponseWriter, *app.BottleTinyCollection) {
+	return ListBottleOKTinyWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ListBottleOKTinyCtx test setup
-func ListBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string) *app.BottleTinyCollection {
+// ListBottleOKTinyWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListBottleOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string) (http.ResponseWriter, *app.BottleTinyCollection) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -295,31 +288,27 @@ func ListBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.BottleTinyCollection)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.BottleTinyCollection", resp)
+	var mt *app.BottleTinyCollection
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.BottleTinyCollection)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.BottleTinyCollection", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// RateBottleNoContent test setup
-func RateBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) {
-	RateBottleNoContentCtx(t, context.Background(), ctrl, accountID, bottleID, payload)
+// RateBottleNoContent Rate runs the method Rate of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func RateBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) http.ResponseWriter {
+	return RateBottleNoContentWithContext(t, context.Background(), ctrl, accountID, bottleID, payload)
 }
 
-// RateBottleNoContentCtx test setup
-func RateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) {
+// RateBottleNoContentWithContext Rate runs the method Rate of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func RateBottleNoContentWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -329,7 +318,7 @@ func RateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 		if e.Status != 204 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -356,19 +345,18 @@ func RateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleCo
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 204 {
-		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
-	}
-
+	return rw
 }
 
-// RateBottleNotFound test setup
-func RateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) {
-	RateBottleNotFoundCtx(t, context.Background(), ctrl, accountID, bottleID, payload)
+// RateBottleNotFound Rate runs the method Rate of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func RateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) http.ResponseWriter {
+	return RateBottleNotFoundWithContext(t, context.Background(), ctrl, accountID, bottleID, payload)
 }
 
-// RateBottleNotFoundCtx test setup
-func RateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) {
+// RateBottleNotFoundWithContext Rate runs the method Rate of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func RateBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.RateBottlePayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -378,7 +366,7 @@ func RateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 		if e.Status != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -405,19 +393,18 @@ func RateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ShowBottleNotFound test setup
-func ShowBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) {
-	ShowBottleNotFoundCtx(t, context.Background(), ctrl, accountID, bottleID)
+// ShowBottleNotFound Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ShowBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) http.ResponseWriter {
+	return ShowBottleNotFoundWithContext(t, context.Background(), ctrl, accountID, bottleID)
 }
 
-// ShowBottleNotFoundCtx test setup
-func ShowBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) {
+// ShowBottleNotFoundWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ShowBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -442,19 +429,18 @@ func ShowBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleCon
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ShowBottleOK test setup
-func ShowBottleOK(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) *app.Bottle {
-	return ShowBottleOKCtx(t, context.Background(), ctrl, accountID, bottleID)
+// ShowBottleOK Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowBottleOK(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) (http.ResponseWriter, *app.Bottle) {
+	return ShowBottleOKWithContext(t, context.Background(), ctrl, accountID, bottleID)
 }
 
-// ShowBottleOKCtx test setup
-func ShowBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) *app.Bottle {
+// ShowBottleOKWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowBottleOKWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) (http.ResponseWriter, *app.Bottle) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -478,31 +464,27 @@ func ShowBottleOKCtx(t *testing.T, ctx context.Context, ctrl app.BottleControlle
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.Bottle)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.Bottle", resp)
+	var mt *app.Bottle
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.Bottle)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.Bottle", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ShowBottleOKFull test setup
-func ShowBottleOKFull(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) *app.BottleFull {
-	return ShowBottleOKFullCtx(t, context.Background(), ctrl, accountID, bottleID)
+// ShowBottleOKFull Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowBottleOKFull(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) (http.ResponseWriter, *app.BottleFull) {
+	return ShowBottleOKFullWithContext(t, context.Background(), ctrl, accountID, bottleID)
 }
 
-// ShowBottleOKFullCtx test setup
-func ShowBottleOKFullCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) *app.BottleFull {
+// ShowBottleOKFullWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowBottleOKFullWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) (http.ResponseWriter, *app.BottleFull) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -526,31 +508,27 @@ func ShowBottleOKFullCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.BottleFull)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.BottleFull", resp)
+	var mt *app.BottleFull
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.BottleFull)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.BottleFull", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ShowBottleOKTiny test setup
-func ShowBottleOKTiny(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) *app.BottleTiny {
-	return ShowBottleOKTinyCtx(t, context.Background(), ctrl, accountID, bottleID)
+// ShowBottleOKTiny Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowBottleOKTiny(t *testing.T, ctrl app.BottleController, accountID string, bottleID int) (http.ResponseWriter, *app.BottleTiny) {
+	return ShowBottleOKTinyWithContext(t, context.Background(), ctrl, accountID, bottleID)
 }
 
-// ShowBottleOKTinyCtx test setup
-func ShowBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) *app.BottleTiny {
+// ShowBottleOKTinyWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowBottleOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int) (http.ResponseWriter, *app.BottleTiny) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -574,31 +552,27 @@ func ShowBottleOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.BottleContr
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.BottleTiny)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.BottleTiny", resp)
+	var mt *app.BottleTiny
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.BottleTiny)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.BottleTiny", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// UpdateBottleNoContent test setup
-func UpdateBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) {
-	UpdateBottleNoContentCtx(t, context.Background(), ctrl, accountID, bottleID, payload)
+// UpdateBottleNoContent Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateBottleNoContent(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) http.ResponseWriter {
+	return UpdateBottleNoContentWithContext(t, context.Background(), ctrl, accountID, bottleID, payload)
 }
 
-// UpdateBottleNoContentCtx test setup
-func UpdateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) {
+// UpdateBottleNoContentWithContext Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateBottleNoContentWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -608,7 +582,7 @@ func UpdateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 		if e.Status != 204 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -635,19 +609,18 @@ func UpdateBottleNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Bottle
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 204 {
-		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
-	}
-
+	return rw
 }
 
-// UpdateBottleNotFound test setup
-func UpdateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) {
-	UpdateBottleNotFoundCtx(t, context.Background(), ctrl, accountID, bottleID, payload)
+// UpdateBottleNotFound Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateBottleNotFound(t *testing.T, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) http.ResponseWriter {
+	return UpdateBottleNotFoundWithContext(t, context.Background(), ctrl, accountID, bottleID, payload)
 }
 
-// UpdateBottleNotFoundCtx test setup
-func UpdateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) {
+// UpdateBottleNotFoundWithContext Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -657,7 +630,7 @@ func UpdateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 		if e.Status != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -684,8 +657,5 @@ func UpdateBottleNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.BottleC
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }

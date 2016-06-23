@@ -13,13 +13,15 @@ import (
 	"testing"
 )
 
-// CreateAccountCreated test setup
-func CreateAccountCreated(t *testing.T, ctrl app.AccountController, payload *app.CreateAccountPayload) {
-	CreateAccountCreatedCtx(t, context.Background(), ctrl, payload)
+// CreateAccountCreated Create runs the method Create of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func CreateAccountCreated(t *testing.T, ctrl app.AccountController, payload *app.CreateAccountPayload) http.ResponseWriter {
+	return CreateAccountCreatedWithContext(t, context.Background(), ctrl, payload)
 }
 
-// CreateAccountCreatedCtx test setup
-func CreateAccountCreatedCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, payload *app.CreateAccountPayload) {
+// CreateAccountCreatedWithContext Create runs the method Create of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func CreateAccountCreatedWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, payload *app.CreateAccountPayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -29,7 +31,7 @@ func CreateAccountCreatedCtx(t *testing.T, ctx context.Context, ctrl app.Account
 		if e.Status != 201 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -54,19 +56,18 @@ func CreateAccountCreatedCtx(t *testing.T, ctx context.Context, ctrl app.Account
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 201 {
-		t.Errorf("invalid response status code: got %+v, expected 201", rw.Code)
-	}
-
+	return rw
 }
 
-// DeleteAccountNoContent test setup
-func DeleteAccountNoContent(t *testing.T, ctrl app.AccountController, accountID int) {
-	DeleteAccountNoContentCtx(t, context.Background(), ctrl, accountID)
+// DeleteAccountNoContent Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteAccountNoContent(t *testing.T, ctrl app.AccountController, accountID int) http.ResponseWriter {
+	return DeleteAccountNoContentWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// DeleteAccountNoContentCtx test setup
-func DeleteAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) {
+// DeleteAccountNoContentWithContext Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteAccountNoContentWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -90,19 +91,18 @@ func DeleteAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 204 {
-		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
-	}
-
+	return rw
 }
 
-// DeleteAccountNotFound test setup
-func DeleteAccountNotFound(t *testing.T, ctrl app.AccountController, accountID int) {
-	DeleteAccountNotFoundCtx(t, context.Background(), ctrl, accountID)
+// DeleteAccountNotFound Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteAccountNotFound(t *testing.T, ctrl app.AccountController, accountID int) http.ResponseWriter {
+	return DeleteAccountNotFoundWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// DeleteAccountNotFoundCtx test setup
-func DeleteAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) {
+// DeleteAccountNotFoundWithContext Delete runs the method Delete of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func DeleteAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -126,19 +126,18 @@ func DeleteAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ListAccountNotFound test setup
-func ListAccountNotFound(t *testing.T, ctrl app.AccountController) {
-	ListAccountNotFoundCtx(t, context.Background(), ctrl)
+// ListAccountNotFound List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ListAccountNotFound(t *testing.T, ctrl app.AccountController) http.ResponseWriter {
+	return ListAccountNotFoundWithContext(t, context.Background(), ctrl)
 }
 
-// ListAccountNotFoundCtx test setup
-func ListAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountController) {
+// ListAccountNotFoundWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ListAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -161,19 +160,18 @@ func ListAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountC
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ListAccountOK test setup
-func ListAccountOK(t *testing.T, ctrl app.AccountController) *app.AccountCollection {
-	return ListAccountOKCtx(t, context.Background(), ctrl)
+// ListAccountOK List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListAccountOK(t *testing.T, ctrl app.AccountController) (http.ResponseWriter, *app.AccountCollection) {
+	return ListAccountOKWithContext(t, context.Background(), ctrl)
 }
 
-// ListAccountOKCtx test setup
-func ListAccountOKCtx(t *testing.T, ctx context.Context, ctrl app.AccountController) *app.AccountCollection {
+// ListAccountOKWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListAccountOKWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController) (http.ResponseWriter, *app.AccountCollection) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -195,31 +193,27 @@ func ListAccountOKCtx(t *testing.T, ctx context.Context, ctrl app.AccountControl
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.AccountCollection)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.AccountCollection", resp)
+	var mt *app.AccountCollection
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.AccountCollection)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.AccountCollection", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ListAccountOKLink test setup
-func ListAccountOKLink(t *testing.T, ctrl app.AccountController) *app.AccountLinkCollection {
-	return ListAccountOKLinkCtx(t, context.Background(), ctrl)
+// ListAccountOKLink List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListAccountOKLink(t *testing.T, ctrl app.AccountController) (http.ResponseWriter, *app.AccountLinkCollection) {
+	return ListAccountOKLinkWithContext(t, context.Background(), ctrl)
 }
 
-// ListAccountOKLinkCtx test setup
-func ListAccountOKLinkCtx(t *testing.T, ctx context.Context, ctrl app.AccountController) *app.AccountLinkCollection {
+// ListAccountOKLinkWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListAccountOKLinkWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController) (http.ResponseWriter, *app.AccountLinkCollection) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -241,31 +235,27 @@ func ListAccountOKLinkCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.AccountLinkCollection)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.AccountLinkCollection", resp)
+	var mt *app.AccountLinkCollection
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.AccountLinkCollection)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.AccountLinkCollection", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ListAccountOKTiny test setup
-func ListAccountOKTiny(t *testing.T, ctrl app.AccountController) *app.AccountTinyCollection {
-	return ListAccountOKTinyCtx(t, context.Background(), ctrl)
+// ListAccountOKTiny List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListAccountOKTiny(t *testing.T, ctrl app.AccountController) (http.ResponseWriter, *app.AccountTinyCollection) {
+	return ListAccountOKTinyWithContext(t, context.Background(), ctrl)
 }
 
-// ListAccountOKTinyCtx test setup
-func ListAccountOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.AccountController) *app.AccountTinyCollection {
+// ListAccountOKTinyWithContext List runs the method List of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ListAccountOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController) (http.ResponseWriter, *app.AccountTinyCollection) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -287,31 +277,27 @@ func ListAccountOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.AccountTinyCollection)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.AccountTinyCollection", resp)
+	var mt *app.AccountTinyCollection
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.AccountTinyCollection)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.AccountTinyCollection", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ShowAccountNotFound test setup
-func ShowAccountNotFound(t *testing.T, ctrl app.AccountController, accountID int) {
-	ShowAccountNotFoundCtx(t, context.Background(), ctrl, accountID)
+// ShowAccountNotFound Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ShowAccountNotFound(t *testing.T, ctrl app.AccountController, accountID int) http.ResponseWriter {
+	return ShowAccountNotFoundWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ShowAccountNotFoundCtx test setup
-func ShowAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) {
+// ShowAccountNotFoundWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers.
+func ShowAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) http.ResponseWriter {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -335,19 +321,18 @@ func ShowAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountC
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
 
-// ShowAccountOK test setup
-func ShowAccountOK(t *testing.T, ctrl app.AccountController, accountID int) *app.Account {
-	return ShowAccountOKCtx(t, context.Background(), ctrl, accountID)
+// ShowAccountOK Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowAccountOK(t *testing.T, ctrl app.AccountController, accountID int) (http.ResponseWriter, *app.Account) {
+	return ShowAccountOKWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ShowAccountOKCtx test setup
-func ShowAccountOKCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) *app.Account {
+// ShowAccountOKWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowAccountOKWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) (http.ResponseWriter, *app.Account) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -370,31 +355,27 @@ func ShowAccountOKCtx(t *testing.T, ctx context.Context, ctrl app.AccountControl
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.Account)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.Account", resp)
+	var mt *app.Account
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.Account)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.Account", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ShowAccountOKLink test setup
-func ShowAccountOKLink(t *testing.T, ctrl app.AccountController, accountID int) *app.AccountLink {
-	return ShowAccountOKLinkCtx(t, context.Background(), ctrl, accountID)
+// ShowAccountOKLink Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowAccountOKLink(t *testing.T, ctrl app.AccountController, accountID int) (http.ResponseWriter, *app.AccountLink) {
+	return ShowAccountOKLinkWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ShowAccountOKLinkCtx test setup
-func ShowAccountOKLinkCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) *app.AccountLink {
+// ShowAccountOKLinkWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowAccountOKLinkWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) (http.ResponseWriter, *app.AccountLink) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -417,31 +398,27 @@ func ShowAccountOKLinkCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.AccountLink)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.AccountLink", resp)
+	var mt *app.AccountLink
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.AccountLink)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.AccountLink", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// ShowAccountOKTiny test setup
-func ShowAccountOKTiny(t *testing.T, ctrl app.AccountController, accountID int) *app.AccountTiny {
-	return ShowAccountOKTinyCtx(t, context.Background(), ctrl, accountID)
+// ShowAccountOKTiny Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowAccountOKTiny(t *testing.T, ctrl app.AccountController, accountID int) (http.ResponseWriter, *app.AccountTiny) {
+	return ShowAccountOKTinyWithContext(t, context.Background(), ctrl, accountID)
 }
 
-// ShowAccountOKTinyCtx test setup
-func ShowAccountOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) *app.AccountTiny {
+// ShowAccountOKTinyWithContext Show runs the method Show of the given controller with the given parameters.
+// It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
+func ShowAccountOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int) (http.ResponseWriter, *app.AccountTiny) {
 	var logBuf bytes.Buffer
 	var resp interface{}
 	respSetter := func(r interface{}) { resp = r }
@@ -464,31 +441,27 @@ func ShowAccountOKTinyCtx(t *testing.T, ctx context.Context, ctrl app.AccountCon
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
-
-	a, ok := resp.(*app.AccountTiny)
-	if !ok {
-		t.Errorf("invalid response media: got %+v, expected instance of app.AccountTiny", resp)
+	var mt *app.AccountTiny
+	if resp != nil {
+		var ok bool
+		mt, ok = resp.(*app.AccountTiny)
+		if !ok {
+			t.Errorf("invalid response media: got %+v, expected instance of app.AccountTiny", resp)
+		}
 	}
 
-	if rw.Code != 200 {
-		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
-	}
-
-	err = a.Validate()
-	if err != nil {
-		t.Errorf("invalid response payload: got %v", err)
-	}
-	return a
-
+	return rw, mt
 }
 
-// UpdateAccountNoContent test setup
-func UpdateAccountNoContent(t *testing.T, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) {
-	UpdateAccountNoContentCtx(t, context.Background(), ctrl, accountID, payload)
+// UpdateAccountNoContent Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateAccountNoContent(t *testing.T, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) http.ResponseWriter {
+	return UpdateAccountNoContentWithContext(t, context.Background(), ctrl, accountID, payload)
 }
 
-// UpdateAccountNoContentCtx test setup
-func UpdateAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) {
+// UpdateAccountNoContentWithContext Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateAccountNoContentWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -498,7 +471,7 @@ func UpdateAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 		if e.Status != 204 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -524,19 +497,18 @@ func UpdateAccountNoContentCtx(t *testing.T, ctx context.Context, ctrl app.Accou
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 204 {
-		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
-	}
-
+	return rw
 }
 
-// UpdateAccountNotFound test setup
-func UpdateAccountNotFound(t *testing.T, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) {
-	UpdateAccountNotFoundCtx(t, context.Background(), ctrl, accountID, payload)
+// UpdateAccountNotFound Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateAccountNotFound(t *testing.T, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) http.ResponseWriter {
+	return UpdateAccountNotFoundWithContext(t, context.Background(), ctrl, accountID, payload)
 }
 
-// UpdateAccountNotFoundCtx test setup
-func UpdateAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) {
+// UpdateAccountNotFoundWithContext Update runs the method Update of the given controller with the given parameters and payload.
+// It returns the response writer so it's possible to inspect the response headers.
+func UpdateAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.AccountController, accountID int, payload *app.UpdateAccountPayload) http.ResponseWriter {
 	err := payload.Validate()
 	if err != nil {
 		e, ok := err.(*goa.Error)
@@ -546,7 +518,7 @@ func UpdateAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 		if e.Status != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
-		return
+		return nil
 	}
 	var logBuf bytes.Buffer
 	var resp interface{}
@@ -572,8 +544,5 @@ func UpdateAccountNotFoundCtx(t *testing.T, ctx context.Context, ctrl app.Accoun
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
 
-	if rw.Code != 404 {
-		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
-	}
-
+	return rw
 }
