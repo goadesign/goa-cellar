@@ -24,7 +24,6 @@ type CreateAccountContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service *goa.Service
 	Payload *CreateAccountPayload
 }
 
@@ -32,8 +31,10 @@ type CreateAccountContext struct {
 // context used by the account controller create action.
 func NewCreateAccountContext(ctx context.Context, service *goa.Service) (*CreateAccountContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := CreateAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := CreateAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
 
@@ -87,7 +88,6 @@ type DeleteAccountContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 }
 
@@ -95,8 +95,10 @@ type DeleteAccountContext struct {
 // context used by the account controller delete action.
 func NewDeleteAccountContext(ctx context.Context, service *goa.Service) (*DeleteAccountContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := DeleteAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := DeleteAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -126,22 +128,23 @@ type ListAccountContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service *goa.Service
 }
 
 // NewListAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller list action.
 func NewListAccountContext(ctx context.Context, service *goa.Service) (*ListAccountContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := ListAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := ListAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OK(r AccountCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -155,7 +158,6 @@ type ShowAccountContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 }
 
@@ -163,8 +165,10 @@ type ShowAccountContext struct {
 // context used by the account controller show action.
 func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAccountContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := ShowAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := ShowAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -180,13 +184,13 @@ func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAcco
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OK(r *Account) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OKTiny(r *AccountTiny) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -200,7 +204,6 @@ type UpdateAccountContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	Payload   *UpdateAccountPayload
 }
@@ -209,8 +212,10 @@ type UpdateAccountContext struct {
 // context used by the account controller update action.
 func NewUpdateAccountContext(ctx context.Context, service *goa.Service) (*UpdateAccountContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := UpdateAccountContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := UpdateAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -279,7 +284,6 @@ type CreateBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	Payload   *CreateBottlePayload
 }
@@ -288,8 +292,10 @@ type CreateBottleContext struct {
 // context used by the bottle controller create action.
 func NewCreateBottleContext(ctx context.Context, service *goa.Service) (*CreateBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := CreateBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := CreateBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -515,7 +521,6 @@ type DeleteBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	BottleID  int
 }
@@ -524,8 +529,10 @@ type DeleteBottleContext struct {
 // context used by the bottle controller delete action.
 func NewDeleteBottleContext(ctx context.Context, service *goa.Service) (*DeleteBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := DeleteBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := DeleteBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -564,7 +571,6 @@ type ListBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	Years     []int
 }
@@ -573,8 +579,10 @@ type ListBottleContext struct {
 // context used by the bottle controller list action.
 func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := ListBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := ListBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -607,13 +615,13 @@ func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottl
 // OK sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OK(r BottleCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -627,7 +635,6 @@ type RateBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	BottleID  int
 	Payload   *RateBottlePayload
@@ -637,8 +644,10 @@ type RateBottleContext struct {
 // context used by the bottle controller rate action.
 func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := RateBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := RateBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -728,7 +737,6 @@ type ShowBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	BottleID  int
 }
@@ -737,8 +745,10 @@ type ShowBottleContext struct {
 // context used by the bottle controller show action.
 func NewShowBottleContext(ctx context.Context, service *goa.Service) (*ShowBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := ShowBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := ShowBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -763,19 +773,19 @@ func NewShowBottleContext(ctx context.Context, service *goa.Service) (*ShowBottl
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OK(r *Bottle) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKFull sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKFull(r *BottleFull) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKTiny(r *BottleTiny) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
-	return ctx.Service.Send(ctx.Context, 200, r)
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -789,7 +799,6 @@ type UpdateBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	BottleID  int
 	Payload   *UpdateBottlePayload
@@ -799,8 +808,10 @@ type UpdateBottleContext struct {
 // context used by the bottle controller update action.
 func NewUpdateBottleContext(ctx context.Context, service *goa.Service) (*UpdateBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := UpdateBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := UpdateBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]
@@ -1018,7 +1029,6 @@ type WatchBottleContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
-	Service   *goa.Service
 	AccountID int
 	BottleID  int
 }
@@ -1027,8 +1037,10 @@ type WatchBottleContext struct {
 // context used by the bottle controller watch action.
 func NewWatchBottleContext(ctx context.Context, service *goa.Service) (*WatchBottleContext, error) {
 	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
 	req := goa.ContextRequest(ctx)
-	rctx := WatchBottleContext{Context: ctx, ResponseData: goa.ContextResponse(ctx), RequestData: req, Service: service}
+	rctx := WatchBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
 		rawAccountID := paramAccountID[0]

@@ -56,6 +56,9 @@ func CreateBottleCreatedWithContext(t *testing.T, ctx context.Context, ctrl app.
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 201 {
+		t.Errorf("invalid response status code: got %+v, expected 201", rw.Code)
+	}
 
 	return rw
 }
@@ -103,6 +106,9 @@ func CreateBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
+	}
 
 	return rw
 }
@@ -138,6 +144,9 @@ func DeleteBottleNoContentWithContext(t *testing.T, ctx context.Context, ctrl ap
 	err = ctrl.Delete(deleteCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 204 {
+		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
 	}
 
 	return rw
@@ -175,6 +184,9 @@ func DeleteBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
+	}
 
 	return rw
 }
@@ -209,6 +221,9 @@ func ListBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.B
 	err = ctrl.List(listCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
 	}
 
 	return rw
@@ -245,12 +260,19 @@ func ListBottleOKWithContext(t *testing.T, ctx context.Context, ctrl app.BottleC
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.BottleCollection
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.BottleCollection)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.BottleCollection", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -288,12 +310,19 @@ func ListBottleOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.Bot
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.BottleTinyCollection
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.BottleTinyCollection)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.BottleTinyCollection", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -344,6 +373,9 @@ func RateBottleNoContentWithContext(t *testing.T, ctx context.Context, ctrl app.
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 204 {
+		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
+	}
 
 	return rw
 }
@@ -392,6 +424,9 @@ func RateBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.B
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
+	}
 
 	return rw
 }
@@ -427,6 +462,9 @@ func ShowBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.B
 	err = ctrl.Show(showCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
 	}
 
 	return rw
@@ -464,12 +502,19 @@ func ShowBottleOKWithContext(t *testing.T, ctx context.Context, ctrl app.BottleC
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.Bottle
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.Bottle)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.Bottle", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -508,12 +553,19 @@ func ShowBottleOKFullWithContext(t *testing.T, ctx context.Context, ctrl app.Bot
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.BottleFull
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.BottleFull)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.BottleFull", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -552,12 +604,19 @@ func ShowBottleOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.Bot
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.BottleTiny
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.BottleTiny)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.BottleTiny", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -608,6 +667,9 @@ func UpdateBottleNoContentWithContext(t *testing.T, ctx context.Context, ctrl ap
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 204 {
+		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
+	}
 
 	return rw
 }
@@ -655,6 +717,9 @@ func UpdateBottleNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app
 	err = ctrl.Update(updateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
 	}
 
 	return rw

@@ -55,6 +55,9 @@ func CreateAccountCreatedWithContext(t *testing.T, ctx context.Context, ctrl app
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 201 {
+		t.Errorf("invalid response status code: got %+v, expected 201", rw.Code)
+	}
 
 	return rw
 }
@@ -89,6 +92,9 @@ func DeleteAccountNoContentWithContext(t *testing.T, ctx context.Context, ctrl a
 	err = ctrl.Delete(deleteCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 204 {
+		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
 	}
 
 	return rw
@@ -125,6 +131,9 @@ func DeleteAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl ap
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
+	}
 
 	return rw
 }
@@ -158,6 +167,9 @@ func ListAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.
 	err = ctrl.List(listCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
 	}
 
 	return rw
@@ -193,12 +205,19 @@ func ListAccountOKWithContext(t *testing.T, ctx context.Context, ctrl app.Accoun
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.AccountCollection
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.AccountCollection)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.AccountCollection", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -235,12 +254,19 @@ func ListAccountOKLinkWithContext(t *testing.T, ctx context.Context, ctrl app.Ac
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.AccountLinkCollection
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.AccountLinkCollection)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.AccountLinkCollection", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -277,12 +303,19 @@ func ListAccountOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.Ac
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.AccountTinyCollection
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.AccountTinyCollection)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.AccountTinyCollection", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -320,6 +353,9 @@ func ShowAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl app.
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
+	}
 
 	return rw
 }
@@ -355,12 +391,19 @@ func ShowAccountOKWithContext(t *testing.T, ctx context.Context, ctrl app.Accoun
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.Account
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.Account)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.Account", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -398,12 +441,19 @@ func ShowAccountOKLinkWithContext(t *testing.T, ctx context.Context, ctrl app.Ac
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.AccountLink
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.AccountLink)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.AccountLink", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -441,12 +491,19 @@ func ShowAccountOKTinyWithContext(t *testing.T, ctx context.Context, ctrl app.Ac
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 200 {
+		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
+	}
 	var mt *app.AccountTiny
 	if resp != nil {
 		var ok bool
 		mt, ok = resp.(*app.AccountTiny)
 		if !ok {
 			t.Errorf("invalid response media: got %+v, expected instance of app.AccountTiny", resp)
+		}
+		err = mt.Validate()
+		if err != nil {
+			t.Errorf("invalid response media type: %s", err)
 		}
 	}
 
@@ -496,6 +553,9 @@ func UpdateAccountNoContentWithContext(t *testing.T, ctx context.Context, ctrl a
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
 	}
+	if rw.Code != 204 {
+		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
+	}
 
 	return rw
 }
@@ -542,6 +602,9 @@ func UpdateAccountNotFoundWithContext(t *testing.T, ctx context.Context, ctrl ap
 	err = ctrl.Update(updateCtx)
 	if err != nil {
 		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	}
+	if rw.Code != 404 {
+		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
 	}
 
 	return rw
