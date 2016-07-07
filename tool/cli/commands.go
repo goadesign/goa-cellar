@@ -128,7 +128,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp1 := new(CreateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account [/cellar/accounts]`,
+		Use:   `account ["/cellar/accounts"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -137,7 +137,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp2 := new(CreateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
@@ -151,7 +151,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp3 := new(DeleteAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account [/cellar/accounts/ACCOUNTID]`,
+		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
@@ -160,7 +160,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp4 := new(DeleteBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
@@ -174,7 +174,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp5 := new(ListAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account [/cellar/accounts]`,
+		Use:   `account ["/cellar/accounts"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
@@ -183,7 +183,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp6 := new(ListBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
@@ -197,7 +197,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp7 := new(RateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
@@ -211,7 +211,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp8 := new(ShowAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account [/cellar/accounts/ACCOUNTID]`,
+		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
@@ -220,7 +220,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp9 := new(ShowBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
@@ -234,7 +234,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp10 := new(UpdateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account [/cellar/accounts/ACCOUNTID]`,
+		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
@@ -243,7 +243,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	tmp11 := new(UpdateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
 	}
@@ -257,7 +257,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	tmp12 := new(WatchBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle [/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
 	}
@@ -276,6 +276,43 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	}
 	dlc.Flags().StringVar(&dl.OutFile, "out", "", "Output file")
 	app.AddCommand(dlc)
+}
+
+func intFlagVal(name string, parsed int) *int {
+	if hasFlag(name) {
+		return &parsed
+	}
+	return nil
+}
+
+func float64FlagVal(name string, parsed float64) *float64 {
+	if hasFlag(name) {
+		return &parsed
+	}
+	return nil
+}
+
+func boolFlagVal(name string, parsed bool) *bool {
+	if hasFlag(name) {
+		return &parsed
+	}
+	return nil
+}
+
+func stringFlagVal(name string, parsed string) *string {
+	if hasFlag(name) {
+		return &parsed
+	}
+	return nil
+}
+
+func hasFlag(name string) bool {
+	for _, arg := range os.Args[1:] {
+		if strings.HasPrefix(arg, "--"+name) {
+			return true
+		}
+	}
+	return false
 }
 
 // Run makes the HTTP request corresponding to the CreateAccountCommand command.
@@ -668,14 +705,14 @@ func (cmd *DownloadCommand) Run(c *client.Client, args []string) error {
 		goto found
 	}
 	if rpath == "/schema.json" {
-		fnf = c.DownloadSchema
+		fnf = c.DownloadSchemaJSON
 		if outfile == "" {
 			outfile = "schema.json"
 		}
 		goto found
 	}
 	if rpath == "/swagger.json" {
-		fnf = c.DownloadSwagger
+		fnf = c.DownloadSwaggerJSON
 		if outfile == "" {
 			outfile = "swagger.json"
 		}

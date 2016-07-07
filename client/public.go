@@ -80,9 +80,9 @@ func (c *Client) DownloadJs(ctx context.Context, filename, dest string) (int64, 
 	return io.Copy(out, resp.Body)
 }
 
-// DownloadSchema downloads schema.json and writes it to the file dest.
+// DownloadSchemaJSON downloads schema.json and writes it to the file dest.
 // It returns the number of bytes downloaded in case of success.
-func (c *Client) DownloadSchema(ctx context.Context, dest string) (int64, error) {
+func (c *Client) DownloadSchemaJSON(ctx context.Context, dest string) (int64, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"
@@ -114,9 +114,9 @@ func (c *Client) DownloadSchema(ctx context.Context, dest string) (int64, error)
 	return io.Copy(out, resp.Body)
 }
 
-// DownloadSwagger downloads swagger.json and writes it to the file dest.
+// DownloadSwaggerJSON downloads swagger.json and writes it to the file dest.
 // It returns the number of bytes downloaded in case of success.
-func (c *Client) DownloadSwagger(ctx context.Context, dest string) (int64, error) {
+func (c *Client) DownloadSwaggerJSON(ctx context.Context, dest string) (int64, error) {
 	scheme := c.Scheme
 	if scheme == "" {
 		scheme = "http"

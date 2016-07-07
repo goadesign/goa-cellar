@@ -413,7 +413,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: list
+      summary: list account
+      tags:
+      - account
     post:
       description: Create new account
       operationId: account#create
@@ -433,7 +435,9 @@ paths:
               type: string
       schemes:
       - http
-      summary: create
+      summary: create account
+      tags:
+      - account
   /cellar/accounts/{accountID}:
     delete:
       operationId: account#delete
@@ -450,7 +454,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: delete
+      summary: delete account
+      tags:
+      - account
     get:
       description: Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
       operationId: account#show
@@ -469,7 +475,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: show
+      summary: show account
+      tags:
+      - account
     put:
       description: Change account name
       operationId: account#update
@@ -491,7 +499,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: update
+      summary: update account
+      tags:
+      - account
   /cellar/accounts/{accountID}/bottles:
     get:
       description: List all bottles in account optionally filtering by year
@@ -518,7 +528,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: list
+      summary: list bottle
+      tags:
+      - bottle
     post:
       description: Record new bottle
       operationId: bottle#create
@@ -545,7 +557,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: create
+      summary: create bottle
+      tags:
+      - bottle
   /cellar/accounts/{accountID}/bottles/{bottleID}:
     delete:
       operationId: bottle#delete
@@ -566,7 +580,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: delete
+      summary: delete bottle
+      tags:
+      - bottle
     get:
       description: Retrieve bottle with given id
       operationId: bottle#show
@@ -589,7 +605,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: show
+      summary: show bottle
+      tags:
+      - bottle
     patch:
       operationId: bottle#update
       parameters:
@@ -614,7 +632,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: update
+      summary: update bottle
+      tags:
+      - bottle
   /cellar/accounts/{accountID}/bottles/{bottleID}/actions/rate:
     put:
       operationId: bottle#rate
@@ -640,7 +660,9 @@ paths:
           description: Not Found
       schemes:
       - http
-      summary: rate
+      summary: rate bottle
+      tags:
+      - bottle
   /cellar/accounts/{accountID}/bottles/{bottleID}/watch:
     get:
       description: Retrieve bottle with given id
@@ -660,7 +682,9 @@ paths:
           description: Switching Protocols
       schemes:
       - ws
-      summary: watch
+      summary: watch bottle
+      tags:
+      - bottle
   /js/{filepath}:
     get:
       operationId: public#/js/*filepath

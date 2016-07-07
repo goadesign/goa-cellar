@@ -147,6 +147,12 @@ func (ctx *ListAccountContext) OK(r AccountCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// OKTiny sends a HTTP response with status code 200.
+func (ctx *ListAccountContext) OKTiny(r AccountTinyCollection) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ListAccountContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)

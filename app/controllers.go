@@ -441,6 +441,11 @@ func MountPublicController(service *goa.Service, ctrl PublicController) {
 	h = handlePublicOrigin(h)
 	service.Mux.Handle("GET", "/swagger.json", ctrl.MuxHandler("serve", h, nil))
 	service.LogInfo("mount", "ctrl", "Public", "files", "public/swagger/swagger.json", "route", "GET /swagger.json")
+
+	h = ctrl.FileHandler("/js/", "public/js/index.html")
+	h = handlePublicOrigin(h)
+	service.Mux.Handle("GET", "/js/", ctrl.MuxHandler("serve", h, nil))
+	service.LogInfo("mount", "ctrl", "Public", "files", "public/js/index.html", "route", "GET /js/")
 }
 
 // handlePublicOrigin applies the CORS response headers corresponding to the origin.
