@@ -298,11 +298,13 @@ func ListBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	// Setup request context
 	rw := httptest.NewRecorder()
 	query := url.Values{}
-	sliceVal := make([]string, len(years))
-	for i, v := range years {
-		sliceVal[i] = fmt.Sprintf("%v", v)
+	{
+		sliceVal := make([]string, len(years))
+		for i, v := range years {
+			sliceVal[i] = fmt.Sprintf("%v", v)
+		}
+		query["years"] = sliceVal
 	}
-	query["years"] = sliceVal
 	u := &url.URL{
 		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
@@ -313,11 +315,13 @@ func ListBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
-	sliceVal := make([]string, len(years))
-	for i, v := range years {
-		sliceVal[i] = fmt.Sprintf("%v", v)
+	{
+		sliceVal := make([]string, len(years))
+		for i, v := range years {
+			sliceVal[i] = fmt.Sprintf("%v", v)
+		}
+		prms["years"] = sliceVal
 	}
-	prms["years"] = sliceVal
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -367,11 +371,13 @@ func ListBottleOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl 
 	// Setup request context
 	rw := httptest.NewRecorder()
 	query := url.Values{}
-	sliceVal := make([]string, len(years))
-	for i, v := range years {
-		sliceVal[i] = fmt.Sprintf("%v", v)
+	{
+		sliceVal := make([]string, len(years))
+		for i, v := range years {
+			sliceVal[i] = fmt.Sprintf("%v", v)
+		}
+		query["years"] = sliceVal
 	}
-	query["years"] = sliceVal
 	u := &url.URL{
 		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
@@ -382,11 +388,13 @@ func ListBottleOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl 
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
-	sliceVal := make([]string, len(years))
-	for i, v := range years {
-		sliceVal[i] = fmt.Sprintf("%v", v)
+	{
+		sliceVal := make([]string, len(years))
+		for i, v := range years {
+			sliceVal[i] = fmt.Sprintf("%v", v)
+		}
+		prms["years"] = sliceVal
 	}
-	prms["years"] = sliceVal
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -448,11 +456,13 @@ func ListBottleOKTiny(t *testing.T, ctx context.Context, service *goa.Service, c
 	// Setup request context
 	rw := httptest.NewRecorder()
 	query := url.Values{}
-	sliceVal := make([]string, len(years))
-	for i, v := range years {
-		sliceVal[i] = fmt.Sprintf("%v", v)
+	{
+		sliceVal := make([]string, len(years))
+		for i, v := range years {
+			sliceVal[i] = fmt.Sprintf("%v", v)
+		}
+		query["years"] = sliceVal
 	}
-	query["years"] = sliceVal
 	u := &url.URL{
 		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
@@ -463,11 +473,13 @@ func ListBottleOKTiny(t *testing.T, ctx context.Context, service *goa.Service, c
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
-	sliceVal := make([]string, len(years))
-	for i, v := range years {
-		sliceVal[i] = fmt.Sprintf("%v", v)
+	{
+		sliceVal := make([]string, len(years))
+		for i, v := range years {
+			sliceVal[i] = fmt.Sprintf("%v", v)
+		}
+		prms["years"] = sliceVal
 	}
-	prms["years"] = sliceVal
 	if ctx == nil {
 		ctx = context.Background()
 	}
