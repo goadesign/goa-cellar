@@ -54,8 +54,6 @@ ae-build:
 		ln -s $(CURRENT_DIR)/app.yaml     $(HOME)/cellar/app.yaml; \
 	fi
 
-ae-dev: ae-build
-	@goapp serve $(HOME)/cellar
-
 ae-deploy: ae-build
-	@goapp deploy -application goa-cellar $(HOME)/cellar
+	cd $(HOME)/cellar
+	python2 appcfg.py update .

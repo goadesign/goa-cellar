@@ -9,10 +9,8 @@ import (
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
-	"github.com/goadesign/goa-cellar/swagger"
+	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
-	"github.com/goadesign/goa/middleware/cors"
-	"github.com/goadesign/goa/middleware/security/basicauth"
 	"github.com/inconshreveable/log15"
 )
 
@@ -23,29 +21,17 @@ const (
 
 func init() {
 	// Configure logging for appengine
-	goa.Log.SetHandler(log15.StreamHandler(os.Stderr, log15.LogfmtFormat()))
+	logger := log15.New()
+	logger.SetHandler(log15.StreamHandler(os.Stderr, log15.LogfmtFormat()))
 
 	// Create goa application
 	service := goa.New("cellar")
-
-	// Setup CORS to allow for swagger UI.
-	spec, err := cors.New(func() {
-		cors.Origin("*", func() {
-			cors.Resource("*", func() {
-				cors.Methods("GET", "POST", "PUT", "PATCH", "DELETE")
-				cors.Headers("*")
-			})
-		})
-	})
-	if err != nil {
-		panic(err)
-	}
+	service.WithLogger(goalog15.New(logger))
 
 	// Setup middleware
 	service.Use(middleware.RequestID())
-	service.Use(cors.Middleware(spec))
+	service.Use(middleware.ErrorHandler(service, true))
 	service.Use(middleware.Recover())
-	app.ConfigureAdminPassSecurity(service, basicauth.New("wine", "lover"))
 
 	// Mount account controller onto application
 	ac := controllers.NewAccount(service)
@@ -55,12 +41,6 @@ func init() {
 	bc := controllers.NewBottle(service)
 	app.MountBottleController(service, bc)
 
-	// Mount Swagger Spec controller onto application
-	swagger.MountController(service)
-
-	// Mount CORS preflight controllers
-	cors.MountPreflightController(service, spec)
-
 	// Setup HTTP handler
-	http.HandleFunc("/", service.HTTPHandler().ServeHTTP)
+	http.HandleFunc("/", service.Mux.ServeHTTP)
 }
