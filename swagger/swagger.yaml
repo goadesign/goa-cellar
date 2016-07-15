@@ -7,7 +7,7 @@ definitions:
   Account:
     description: A tenant account
     example:
-      created_at: 2008-01-22T01:07:16-07:00
+      created_at: 2008-01-22T00:07:16-08:00
       created_by: Vero est mollitia eos voluptas.
       href: Enim suscipit est explicabo eveniet dolore.
       id: 7.9748073e+18
@@ -15,7 +15,7 @@ definitions:
     properties:
       created_at:
         description: Date of creation
-        example: 2015-09-23T12:51:57-06:00
+        example: 2015-09-23T11:51:57-07:00
         format: date-time
         type: string
       created_by:
@@ -46,17 +46,17 @@ definitions:
     type: object
   AccountCollection:
     example:
-    - created_at: 1978-02-18T22:20:57-07:00
+    - created_at: 1978-02-18T21:20:57-08:00
       created_by: Reiciendis ea architecto magni tempora.
       href: Distinctio delectus vel earum doloribus.
       id: 6.5796815e+18
       name: Recusandae molestiae nemo omnis quae suscipit.
-    - created_at: 1972-08-12T18:28:45-06:00
+    - created_at: 1972-08-12T17:28:45-07:00
       created_by: Sapiente et sunt dolorem.
       href: Ea est.
       id: 3.228513e+17
       name: Sequi blanditiis dolore laudantium repellat perspiciatis iure.
-    - created_at: 2006-10-10T06:51:30-06:00
+    - created_at: 2006-10-10T05:51:30-07:00
       created_by: Et ut repellat voluptatem voluptatem voluptas veritatis.
       href: Dignissimos sunt ut accusamus soluta.
       id: 1.3258674e+18
@@ -69,14 +69,14 @@ definitions:
     description: A bottle of wine
     example:
       account:
-        created_at: 2012-05-30T14:43:59-06:00
+        created_at: 2012-05-30T13:43:59-07:00
         created_by: Repellendus quidem modi iste incidunt.
         href: Omnis eveniet voluptatem.
         id: 5.3925295e+18
         name: Et sunt sit dolor magnam dolores.
       color: Quibusdam aut quibusdam.
       country: Ex quis aut rem.
-      created_at: 2002-11-08T20:24:24-07:00
+      created_at: 2002-11-08T19:24:24-08:00
       href: Aut animi nulla aut aut.
       id: 5.128319e+18
       name: Aliquid facere.
@@ -84,7 +84,7 @@ definitions:
       region: Ea vel.
       review: Incidunt earum dolorem suscipit ut iusto.
       sweetness: 6.5962424e+18
-      updated_at: 1995-11-13T21:26:35-07:00
+      updated_at: 1995-11-13T20:26:35-08:00
       varietal: Harum qui natus et aut.
       vineyard: Minus rerum ut libero tempore optio.
       vintage: 8.348819e+18
@@ -106,7 +106,7 @@ definitions:
         type: string
       created_at:
         description: Date of creation
-        example: 2011-12-29T18:17:22-07:00
+        example: 2011-12-29T17:17:22-08:00
         format: date-time
         type: string
       href:
@@ -143,7 +143,7 @@ definitions:
         type: integer
       updated_at:
         description: Date of last update
-        example: 2011-07-06T03:59:22-06:00
+        example: 2011-07-06T02:59:22-07:00
         format: date-time
         type: string
       varietal:
@@ -173,14 +173,14 @@ definitions:
   BottleCollection:
     example:
     - account:
-        created_at: 1981-07-23T19:31:00-06:00
+        created_at: 1981-07-23T18:31:00-07:00
         created_by: Odit aperiam voluptatem aut.
         href: Vel molestiae culpa incidunt omnis nobis nobis.
         id: 2.2154884e+18
         name: Totam minus nihil iure.
       color: Est fugiat.
       country: Occaecati quas doloremque et laborum fugit eos.
-      created_at: 2013-12-12T10:48:24-07:00
+      created_at: 2013-12-12T09:48:24-08:00
       href: Dolore iusto perspiciatis nobis assumenda voluptas voluptas.
       id: 7.369533e+18
       name: Aperiam quam.
@@ -188,19 +188,19 @@ definitions:
       region: Sit et.
       review: In est.
       sweetness: 3.3761357e+17
-      updated_at: 2001-05-22T01:40:52-06:00
+      updated_at: 2001-05-22T00:40:52-07:00
       varietal: Et qui odio dolore atque.
       vineyard: Ea praesentium repudiandae quia.
       vintage: 9.943361e+17
     - account:
-        created_at: 1980-03-06T04:07:52-07:00
+        created_at: 1980-03-06T03:07:52-08:00
         created_by: Dicta impedit est quia corrupti.
         href: Vero facere harum dolores adipisci.
         id: 8.1852995e+18
         name: Esse quia ratione.
       color: Quae deleniti fugit.
       country: Dolor est consequuntur sed.
-      created_at: 2006-10-04T14:31:05-06:00
+      created_at: 2006-10-04T13:31:05-07:00
       href: Voluptatem omnis magni.
       id: 2.5622392e+18
       name: Praesentium cum quaerat accusamus voluptatem et fugit.
@@ -208,19 +208,19 @@ definitions:
       region: Consequatur ut explicabo libero qui aut.
       review: Deleniti et beatae nisi soluta ex.
       sweetness: 4.1388346e+17
-      updated_at: 2014-07-23T20:01:04-06:00
+      updated_at: 2014-07-23T19:01:04-07:00
       varietal: Rerum dicta quo.
       vineyard: Optio aspernatur modi.
       vintage: 4.5090477e+18
     - account:
-        created_at: 1970-06-04T12:54:24-06:00
+        created_at: 1970-06-04T11:54:24-07:00
         created_by: Et et iusto consequatur recusandae.
         href: Vitae libero quis non soluta.
         id: 5.6490115e+18
         name: Nobis quia dolorum eius quo fugit ab.
       color: Ad cumque.
       country: Dolorum eos dolore ipsum eius voluptatem.
-      created_at: 1986-08-26T03:32:51-06:00
+      created_at: 1986-08-26T02:32:51-07:00
       href: Laudantium corrupti et.
       id: 6.012384e+18
       name: Modi sed et nulla.
@@ -228,7 +228,7 @@ definitions:
       region: Aperiam amet eum officiis eligendi.
       review: Facere quaerat dicta corporis.
       sweetness: 5.517688e+17
-      updated_at: 2008-04-22T04:12:28-06:00
+      updated_at: 2008-04-22T03:12:28-07:00
       varietal: Eaque repellat quidem laudantium eaque dignissimos qui.
       vineyard: Sit aut officia pariatur.
       vintage: 1.1044081e+18
