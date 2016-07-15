@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-// Account media type.
+// A tenant account (default view)
 //
 // Identifier: application/vnd.account+json
 type Account struct {
@@ -51,7 +51,7 @@ func (mt *Account) Validate() (err error) {
 	return
 }
 
-// AccountLink media type.
+// A tenant account (link view)
 //
 // Identifier: application/vnd.account+json
 type AccountLink struct {
@@ -70,7 +70,7 @@ func (mt *AccountLink) Validate() (err error) {
 	return
 }
 
-// AccountTiny media type.
+// A tenant account (tiny view)
 //
 // Identifier: application/vnd.account+json
 type AccountTiny struct {
@@ -94,7 +94,7 @@ func (mt *AccountTiny) Validate() (err error) {
 	return
 }
 
-// AccountCollection media type is a collection of Account.
+// AccountCollection is the media type for an array of Account (default view)
 //
 // Identifier: application/vnd.account+json; type=collection
 type AccountCollection []*Account
@@ -119,7 +119,7 @@ func (mt AccountCollection) Validate() (err error) {
 	return
 }
 
-// AccountLinkCollection media type is a collection of AccountLink.
+// AccountCollection is the media type for an array of Account (link view)
 //
 // Identifier: application/vnd.account+json; type=collection
 type AccountLinkCollection []*AccountLink
@@ -135,7 +135,7 @@ func (mt AccountLinkCollection) Validate() (err error) {
 	return
 }
 
-// AccountTinyCollection media type is a collection of AccountTiny.
+// AccountCollection is the media type for an array of Account (tiny view)
 //
 // Identifier: application/vnd.account+json; type=collection
 type AccountTinyCollection []*AccountTiny
@@ -154,7 +154,7 @@ func (mt AccountTinyCollection) Validate() (err error) {
 	return
 }
 
-// Bottle media type.
+// A bottle of wine (default view)
 //
 // Identifier: application/vnd.bottle+json
 type Bottle struct {
@@ -227,7 +227,7 @@ func (mt *Bottle) Validate() (err error) {
 	return
 }
 
-// BottleFull media type.
+// A bottle of wine (full view)
 //
 // Identifier: application/vnd.bottle+json
 type BottleFull struct {
@@ -340,7 +340,7 @@ func (mt *BottleFull) Validate() (err error) {
 	return
 }
 
-// BottleTiny media type.
+// A bottle of wine (tiny view)
 //
 // Identifier: application/vnd.bottle+json
 type BottleTiny struct {
@@ -400,7 +400,7 @@ func (ut *BottleLinks) Validate() (err error) {
 	return
 }
 
-// BottleCollection media type is a collection of Bottle.
+// BottleCollection is the media type for an array of Bottle (default view)
 //
 // Identifier: application/vnd.bottle+json; type=collection
 type BottleCollection []*Bottle
@@ -460,7 +460,7 @@ func (mt BottleCollection) Validate() (err error) {
 	return
 }
 
-// BottleTinyCollection media type is a collection of BottleTiny.
+// BottleCollection is the media type for an array of Bottle (tiny view)
 //
 // Identifier: application/vnd.bottle+json; type=collection
 type BottleTinyCollection []*BottleTiny
