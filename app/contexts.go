@@ -600,19 +600,21 @@ func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottl
 	}
 	paramYears := req.Params["years"]
 	if len(paramYears) > 0 {
-		var params []int
-		for _, rawYears := range paramYears {
-			elemsYears := strings.Split(rawYears, ",")
-			elemsYears2 := make([]int, len(elemsYears))
-			for i, rawElem := range elemsYears {
-				if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
-					elemsYears2[i] = elem
-				} else {
-					err = goa.MergeErrors(err, goa.InvalidParamTypeError("elem", rawElem, "integer"))
+		if len(paramYears) > 1 || len(paramYears[0]) > 0 {
+			var params []int
+			for _, rawYears := range paramYears {
+				elemsYears := strings.Split(rawYears, ",")
+				elemsYears2 := make([]int, len(elemsYears))
+				for i, rawElem := range elemsYears {
+					if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
+						elemsYears2[i] = elem
+					} else {
+						err = goa.MergeErrors(err, goa.InvalidParamTypeError("elem", rawElem, "integer"))
+					}
 				}
+				params = elemsYears2
+				rctx.Years = append(rctx.Years, params...)
 			}
-			params = elemsYears2
-			rctx.Years = append(rctx.Years, params...)
 		}
 	}
 	return &rctx, err
