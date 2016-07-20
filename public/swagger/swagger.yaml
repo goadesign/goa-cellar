@@ -7,11 +7,11 @@ definitions:
   Account:
     description: A tenant account (default view)
     example:
-      created_at: 2008-01-22T00:07:16-08:00
-      created_by: Vero est mollitia eos voluptas.
-      href: Enim suscipit est explicabo eveniet dolore.
-      id: 7.9748073e+18
-      name: Saepe eum cumque sint veniam.
+      created_at: 2015-09-23T11:51:57-07:00
+      created_by: loyce.doyle@pollich.com
+      href: Et ut omnis praesentium non.
+      id: 6.955004e+18
+      name: Explicabo laboriosam consequatur.
     properties:
       created_at:
         description: Date of creation
@@ -48,21 +48,16 @@ definitions:
     description: AccountCollection is the media type for an array of Account (default
       view)
     example:
-    - created_at: 1978-02-18T21:20:57-08:00
-      created_by: Reiciendis ea architecto magni tempora.
-      href: Distinctio delectus vel earum doloribus.
-      id: 6.5796815e+18
-      name: Recusandae molestiae nemo omnis quae suscipit.
-    - created_at: 1972-08-12T17:28:45-07:00
-      created_by: Sapiente et sunt dolorem.
-      href: Ea est.
-      id: 3.228513e+17
-      name: Sequi blanditiis dolore laudantium repellat perspiciatis iure.
-    - created_at: 2006-10-10T05:51:30-07:00
-      created_by: Et ut repellat voluptatem voluptatem voluptas veritatis.
-      href: Dignissimos sunt ut accusamus soluta.
-      id: 1.3258674e+18
-      name: Dolore et.
+    - created_at: 2015-09-23T11:51:57-07:00
+      created_by: loyce.doyle@pollich.com
+      href: Et ut omnis praesentium non.
+      id: 6.955004e+18
+      name: Explicabo laboriosam consequatur.
+    - created_at: 2015-09-23T11:51:57-07:00
+      created_by: loyce.doyle@pollich.com
+      href: Et ut omnis praesentium non.
+      id: 6.955004e+18
+      name: Explicabo laboriosam consequatur.
     items:
       $ref: '#/definitions/Account'
     title: 'Mediatype identifier: application/vnd.account+json; type=collection'
@@ -70,11 +65,11 @@ definitions:
   AccountLink:
     description: A tenant account (link view)
     example:
-      created_at: 2008-01-22T00:07:16-08:00
-      created_by: Vero est mollitia eos voluptas.
-      href: Enim suscipit est explicabo eveniet dolore.
-      id: 7.9748073e+18
-      name: Saepe eum cumque sint veniam.
+      created_at: 2015-09-23T11:51:57-07:00
+      created_by: loyce.doyle@pollich.com
+      href: Et ut omnis praesentium non.
+      id: 6.955004e+18
+      name: Explicabo laboriosam consequatur.
     properties:
       href:
         description: API href of account
@@ -94,59 +89,59 @@ definitions:
     description: A bottle of wine (default view)
     example:
       account:
-        created_at: 2012-05-30T13:43:59-07:00
-        created_by: Repellendus quidem modi iste incidunt.
-        href: Omnis eveniet voluptatem.
-        id: 5.3925295e+18
-        name: Et sunt sit dolor magnam dolores.
-      color: Quibusdam aut quibusdam.
-      country: Ex quis aut rem.
-      created_at: 2002-11-08T19:24:24-08:00
-      href: Aut animi nulla aut aut.
-      id: 5.128319e+18
-      name: Aliquid facere.
-      rating: 8.590149e+18
-      region: Ea vel.
-      review: Incidunt earum dolorem suscipit ut iusto.
-      sweetness: 6.5962424e+18
-      updated_at: 1995-11-13T20:26:35-08:00
-      varietal: Harum qui natus et aut.
-      vineyard: Minus rerum ut libero tempore optio.
-      vintage: 8.348819e+18
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: loyce.doyle@pollich.com
+        href: Et ut omnis praesentium non.
+        id: 6.955004e+18
+        name: Explicabo laboriosam consequatur.
+      color: white
+      country: sok
+      created_at: 1997-07-28T18:41:27-07:00
+      href: Enim suscipit est explicabo eveniet dolore.
+      id: 7.9748073e+18
+      name: 6h
+      rating: 3
+      region: Veniam fugit.
+      review: qzxmvof
+      sweetness: 3
+      updated_at: 1999-05-09T06:21:29-07:00
+      varietal: d2xq5
+      vineyard: 6r6y
+      vintage: 1982
     properties:
       account:
         $ref: '#/definitions/Account'
       href:
         description: API href of bottle
-        example: Rem voluptatem.
+        example: Enim suscipit est explicabo eveniet dolore.
         type: string
       id:
         description: ID of bottle
-        example: 5.5720336e+18
+        example: 7.9748073e+18
         format: int64
         type: integer
       links:
         $ref: '#/definitions/BottleLinks'
       name:
-        example: 0v
+        example: 6h
         minLength: 2
         type: string
       rating:
         description: Rating of bottle between 1 and 5
-        example: 4
+        example: 3
         maximum: 5
         minimum: 1
         type: integer
       varietal:
-        example: ulxw
+        example: d2xq5
         minLength: 4
         type: string
       vineyard:
-        example: w8
+        example: 6r6y
         minLength: 2
         type: string
       vintage:
-        example: 1958
+        example: 1982
         maximum: 2020
         minimum: 1900
         type: integer
@@ -164,65 +159,39 @@ definitions:
       view)
     example:
     - account:
-        created_at: 1981-07-23T18:31:00-07:00
-        created_by: Odit aperiam voluptatem aut.
-        href: Vel molestiae culpa incidunt omnis nobis nobis.
-        id: 2.2154884e+18
-        name: Totam minus nihil iure.
-      color: Est fugiat.
-      country: Occaecati quas doloremque et laborum fugit eos.
-      created_at: 2013-12-12T09:48:24-08:00
-      href: Dolore iusto perspiciatis nobis assumenda voluptas voluptas.
-      id: 7.369533e+18
-      name: Aperiam quam.
-      rating: 4.0068974e+18
-      region: Sit et.
-      review: In est.
-      sweetness: 3.3761357e+17
-      updated_at: 2001-05-22T00:40:52-07:00
-      varietal: Et qui odio dolore atque.
-      vineyard: Ea praesentium repudiandae quia.
-      vintage: 9.943361e+17
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: loyce.doyle@pollich.com
+        href: Et ut omnis praesentium non.
+        id: 6.955004e+18
+        name: Explicabo laboriosam consequatur.
+      href: Enim suscipit est explicabo eveniet dolore.
+      id: 7.9748073e+18
+      links:
+        account:
+          href: Et ut omnis praesentium non.
+          id: 6.955004e+18
+      name: 6h
+      rating: 3
+      varietal: d2xq5
+      vineyard: 6r6y
+      vintage: 1982
     - account:
-        created_at: 1980-03-06T03:07:52-08:00
-        created_by: Dicta impedit est quia corrupti.
-        href: Vero facere harum dolores adipisci.
-        id: 8.1852995e+18
-        name: Esse quia ratione.
-      color: Quae deleniti fugit.
-      country: Dolor est consequuntur sed.
-      created_at: 2006-10-04T13:31:05-07:00
-      href: Voluptatem omnis magni.
-      id: 2.5622392e+18
-      name: Praesentium cum quaerat accusamus voluptatem et fugit.
-      rating: 1.836711e+18
-      region: Consequatur ut explicabo libero qui aut.
-      review: Deleniti et beatae nisi soluta ex.
-      sweetness: 4.1388346e+17
-      updated_at: 2014-07-23T19:01:04-07:00
-      varietal: Rerum dicta quo.
-      vineyard: Optio aspernatur modi.
-      vintage: 4.5090477e+18
-    - account:
-        created_at: 1970-06-04T11:54:24-07:00
-        created_by: Et et iusto consequatur recusandae.
-        href: Vitae libero quis non soluta.
-        id: 5.6490115e+18
-        name: Nobis quia dolorum eius quo fugit ab.
-      color: Ad cumque.
-      country: Dolorum eos dolore ipsum eius voluptatem.
-      created_at: 1986-08-26T02:32:51-07:00
-      href: Laudantium corrupti et.
-      id: 6.012384e+18
-      name: Modi sed et nulla.
-      rating: 3.6717306e+18
-      region: Aperiam amet eum officiis eligendi.
-      review: Facere quaerat dicta corporis.
-      sweetness: 5.517688e+17
-      updated_at: 2008-04-22T03:12:28-07:00
-      varietal: Eaque repellat quidem laudantium eaque dignissimos qui.
-      vineyard: Sit aut officia pariatur.
-      vintage: 1.1044081e+18
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: loyce.doyle@pollich.com
+        href: Et ut omnis praesentium non.
+        id: 6.955004e+18
+        name: Explicabo laboriosam consequatur.
+      href: Enim suscipit est explicabo eveniet dolore.
+      id: 7.9748073e+18
+      links:
+        account:
+          href: Et ut omnis praesentium non.
+          id: 6.955004e+18
+      name: 6h
+      rating: 3
+      varietal: d2xq5
+      vineyard: 6r6y
+      vintage: 1982
     items:
       $ref: '#/definitions/Bottle'
     title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
@@ -231,7 +200,7 @@ definitions:
     description: BottleLinks contains links to related resources of Bottle.
     properties:
       account:
-        $ref: '#/definitions/AccountLink'
+        $ref: '#/definitions/AccountLinkLink'
     title: BottleLinks
     type: object
   CreateAccountPayload:
@@ -286,43 +255,6 @@ definitions:
     - vintage
     - color
     title: CreateBottlePayload
-    type: object
-  Error:
-    description: Error response media type (default view)
-    example:
-      code: invalid_value
-      detail: Value of ID must be an integer
-      id: 3F1FKVRR
-      meta:
-        timestamp: 1.458609e+09
-      status: "400"
-    properties:
-      code:
-        description: an application-specific error code, expressed as a string value.
-        example: invalid_value
-        type: string
-      detail:
-        description: a human-readable explanation specific to this occurrence of the
-          problem.
-        example: Value of ID must be an integer
-        type: string
-      id:
-        description: a unique identifier for this particular occurrence of the problem.
-        example: 3F1FKVRR
-        type: string
-      meta:
-        additionalProperties: true
-        description: a meta object containing non-standard meta-information about
-          the error.
-        example:
-          timestamp: 1.458609e+09
-        type: object
-      status:
-        description: the HTTP status code applicable to this problem, expressed as
-          a string value.
-        example: "400"
-        type: string
-    title: 'Mediatype identifier: application/vnd.api.error+json'
     type: object
   RateBottlePayload:
     properties:
@@ -381,6 +313,43 @@ definitions:
         minimum: 1900
         type: integer
     title: UpdateBottlePayload
+    type: object
+  error:
+    description: Error response media type (default view)
+    example:
+      code: invalid_value
+      detail: Value of ID must be an integer
+      id: 3F1FKVRR
+      meta:
+        timestamp: 1.458609e+09
+      status: "400"
+    properties:
+      code:
+        description: an application-specific error code, expressed as a string value.
+        example: invalid_value
+        type: string
+      detail:
+        description: a human-readable explanation specific to this occurrence of the
+          problem.
+        example: Value of ID must be an integer
+        type: string
+      id:
+        description: a unique identifier for this particular occurrence of the problem.
+        example: 3F1FKVRR
+        type: string
+      meta:
+        additionalProperties: true
+        description: a meta object containing non-standard meta-information about
+          the error.
+        example:
+          timestamp: 1.458609e+09
+        type: object
+      status:
+        description: the HTTP status code applicable to this problem, expressed as
+          a string value.
+        example: "400"
+        type: string
+    title: 'Mediatype identifier: application/vnd.api.error+json'
     type: object
 externalDocs:
   description: goa guide
@@ -700,7 +669,7 @@ paths:
         "404":
           description: File not found
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/error'
       schemes:
       - http
       summary: Download public/js/
