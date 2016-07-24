@@ -9,12 +9,19 @@ import (
 var Account = MediaType("application/vnd.account+json", func() {
 	Description("A tenant account")
 	Attributes(func() {
-		Attribute("id", Integer, "ID of account")
-		Attribute("href", String, "API href of account")
-		Attribute("name", String, "Name of account")
+		Attribute("id", Integer, "ID of account", func() {
+			Example(1)
+		})
+		Attribute("href", String, "API href of account", func() {
+			Example("/accounts/1")
+		})
+		Attribute("name", String, "Name of account", func() {
+			Example("test")
+		})
 		Attribute("created_at", DateTime, "Date of creation")
 		Attribute("created_by", String, "Email of account owner", func() {
 			Format("email")
+			Example("me@goa.design")
 		})
 
 		Required("id", "href", "name", "created_at", "created_by")
@@ -44,8 +51,12 @@ var Bottle = MediaType("application/vnd.bottle+json", func() {
 	Description("A bottle of wine")
 	Reference(BottlePayload)
 	Attributes(func() {
-		Attribute("id", Integer, "ID of bottle")
-		Attribute("href", String, "API href of bottle")
+		Attribute("id", Integer, "ID of bottle", func() {
+			Example(1)
+		})
+		Attribute("href", String, "API href of bottle", func() {
+			Example("/accounts/1/bottles/1")
+		})
 		Attribute("rating", Integer, "Rating of bottle between 1 and 5", func() {
 			Minimum(1)
 			Maximum(5)

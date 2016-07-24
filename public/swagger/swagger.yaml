@@ -8,10 +8,10 @@ definitions:
     description: A tenant account (default view)
     example:
       created_at: 2015-09-23T11:51:57-07:00
-      created_by: loyce.doyle@pollich.com
-      href: Et ut omnis praesentium non.
-      id: 6.955004e+18
-      name: Explicabo laboriosam consequatur.
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
     properties:
       created_at:
         description: Date of creation
@@ -20,21 +20,21 @@ definitions:
         type: string
       created_by:
         description: Email of account owner
-        example: loyce.doyle@pollich.com
+        example: me@goa.design
         format: email
         type: string
       href:
         description: API href of account
-        example: Et ut omnis praesentium non.
+        example: /accounts/1
         type: string
       id:
         description: ID of account
-        example: 6.955004e+18
+        example: 1
         format: int64
         type: integer
       name:
         description: Name of account
-        example: Explicabo laboriosam consequatur.
+        example: test
         type: string
     required:
     - id
@@ -49,15 +49,10 @@ definitions:
       view)
     example:
     - created_at: 2015-09-23T11:51:57-07:00
-      created_by: loyce.doyle@pollich.com
-      href: Et ut omnis praesentium non.
-      id: 6.955004e+18
-      name: Explicabo laboriosam consequatur.
-    - created_at: 2015-09-23T11:51:57-07:00
-      created_by: loyce.doyle@pollich.com
-      href: Et ut omnis praesentium non.
-      id: 6.955004e+18
-      name: Explicabo laboriosam consequatur.
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
     items:
       $ref: '#/definitions/Account'
     title: 'Mediatype identifier: application/vnd.account+json; type=collection'
@@ -66,18 +61,18 @@ definitions:
     description: A tenant account (link view)
     example:
       created_at: 2015-09-23T11:51:57-07:00
-      created_by: loyce.doyle@pollich.com
-      href: Et ut omnis praesentium non.
-      id: 6.955004e+18
-      name: Explicabo laboriosam consequatur.
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
     properties:
       href:
         description: API href of account
-        example: Et ut omnis praesentium non.
+        example: /accounts/1
         type: string
       id:
         description: ID of account
-        example: 6.955004e+18
+        example: 1
         format: int64
         type: integer
     required:
@@ -90,40 +85,40 @@ definitions:
     example:
       account:
         created_at: 2015-09-23T11:51:57-07:00
-        created_by: loyce.doyle@pollich.com
-        href: Et ut omnis praesentium non.
-        id: 6.955004e+18
-        name: Explicabo laboriosam consequatur.
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
       color: white
-      country: sok
-      created_at: 1997-07-28T18:41:27-07:00
-      href: Enim suscipit est explicabo eveniet dolore.
-      id: 7.9748073e+18
-      name: 6h
+      country: USA
+      created_at: 1980-11-24T15:54:06-08:00
+      href: /accounts/1/bottles/1
+      id: 1
+      name: Number 8
       rating: 3
-      region: Veniam fugit.
-      review: qzxmvof
-      sweetness: 3
-      updated_at: 1999-05-09T06:21:29-07:00
-      varietal: d2xq5
-      vineyard: 6r6y
-      vintage: 1982
+      region: Napa Valley
+      review: Great and inexpensive
+      sweetness: 1
+      updated_at: 2003-07-25T04:17:15-07:00
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
     properties:
       account:
         $ref: '#/definitions/Account'
       href:
         description: API href of bottle
-        example: Enim suscipit est explicabo eveniet dolore.
+        example: /accounts/1/bottles/1
         type: string
       id:
         description: ID of bottle
-        example: 7.9748073e+18
+        example: 1
         format: int64
         type: integer
       links:
         $ref: '#/definitions/BottleLinks'
       name:
-        example: 6h
+        example: Number 8
         minLength: 2
         type: string
       rating:
@@ -133,15 +128,15 @@ definitions:
         minimum: 1
         type: integer
       varietal:
-        example: d2xq5
+        example: Merlot
         minLength: 4
         type: string
       vineyard:
-        example: 6r6y
+        example: Asti
         minLength: 2
         type: string
       vintage:
-        example: 1982
+        example: 2012
         maximum: 2020
         minimum: 1900
         type: integer
@@ -160,38 +155,55 @@ definitions:
     example:
     - account:
         created_at: 2015-09-23T11:51:57-07:00
-        created_by: loyce.doyle@pollich.com
-        href: Et ut omnis praesentium non.
-        id: 6.955004e+18
-        name: Explicabo laboriosam consequatur.
-      href: Enim suscipit est explicabo eveniet dolore.
-      id: 7.9748073e+18
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
       links:
         account:
-          href: Et ut omnis praesentium non.
-          id: 6.955004e+18
-      name: 6h
+          href: /accounts/1
+          id: 1
+      name: Number 8
       rating: 3
-      varietal: d2xq5
-      vineyard: 6r6y
-      vintage: 1982
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
     - account:
         created_at: 2015-09-23T11:51:57-07:00
-        created_by: loyce.doyle@pollich.com
-        href: Et ut omnis praesentium non.
-        id: 6.955004e+18
-        name: Explicabo laboriosam consequatur.
-      href: Enim suscipit est explicabo eveniet dolore.
-      id: 7.9748073e+18
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
       links:
         account:
-          href: Et ut omnis praesentium non.
-          id: 6.955004e+18
-      name: 6h
+          href: /accounts/1
+          id: 1
+      name: Number 8
       rating: 3
-      varietal: d2xq5
-      vineyard: 6r6y
-      vintage: 1982
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    - account:
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
+      name: Number 8
+      rating: 3
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
     items:
       $ref: '#/definitions/Bottle'
     title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
@@ -207,6 +219,7 @@ definitions:
     properties:
       name:
         description: Name of account
+        example: test
         type: string
     required:
     - name
@@ -223,14 +236,18 @@ definitions:
         - sparkling
         type: string
       country:
+        example: USA
         minLength: 2
         type: string
       name:
+        example: Number 8
         minLength: 2
         type: string
       region:
+        example: Napa Valley
         type: string
       review:
+        example: Great and inexpensive
         maxLength: 300
         minLength: 3
         type: string
@@ -239,12 +256,15 @@ definitions:
         minimum: 1
         type: integer
       varietal:
+        example: Merlot
         minLength: 4
         type: string
       vineyard:
+        example: Asti
         minLength: 2
         type: string
       vintage:
+        example: 2012
         maximum: 2020
         minimum: 1900
         type: integer
@@ -271,6 +291,7 @@ definitions:
     properties:
       name:
         description: Name of account
+        example: test
         type: string
     required:
     - name
@@ -287,14 +308,18 @@ definitions:
         - sparkling
         type: string
       country:
+        example: USA
         minLength: 2
         type: string
       name:
+        example: Number 8
         minLength: 2
         type: string
       region:
+        example: Napa Valley
         type: string
       review:
+        example: Great and inexpensive
         maxLength: 300
         minLength: 3
         type: string
@@ -303,12 +328,15 @@ definitions:
         minimum: 1
         type: integer
       varietal:
+        example: Merlot
         minLength: 4
         type: string
       vineyard:
+        example: Asti
         minLength: 2
         type: string
       vintage:
+        example: 2012
         maximum: 2020
         minimum: 1900
         type: integer

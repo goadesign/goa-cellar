@@ -10,16 +10,20 @@ import (
 var BottlePayload = Type("BottlePayload", func() {
 	Attribute("name", func() {
 		MinLength(2)
+		Example("Number 8")
 	})
 	Attribute("vineyard", func() {
 		MinLength(2)
+		Example("Asti")
 	})
 	Attribute("varietal", func() {
 		MinLength(4)
+		Example("Merlot")
 	})
 	Attribute("vintage", Integer, func() {
 		Minimum(1900)
 		Maximum(2020)
+		Example(2012)
 	})
 	Attribute("color", func() {
 		Enum("red", "white", "rose", "yellow", "sparkling")
@@ -30,10 +34,14 @@ var BottlePayload = Type("BottlePayload", func() {
 	})
 	Attribute("country", func() {
 		MinLength(2)
+		Example("USA")
 	})
-	Attribute("region")
+	Attribute("region", func() {
+		Example("Napa Valley")
+	})
 	Attribute("review", func() {
 		MinLength(3)
 		MaxLength(300)
+		Example("Great and inexpensive")
 	})
 })
