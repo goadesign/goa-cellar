@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// CreateBottleCreated Create runs the method Create of the given controller with the given parameters and payload.
+// CreateBottleCreated runs the method Create of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -40,11 +40,11 @@ func CreateBottleCreated(t *testing.T, ctx context.Context, service *goa.Service
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 201 {
+		if e.ResponseStatus() != 201 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -86,7 +86,7 @@ func CreateBottleCreated(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// CreateBottleNotFound Create runs the method Create of the given controller with the given parameters and payload.
+// CreateBottleNotFound runs the method Create of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -111,11 +111,11 @@ func CreateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Servic
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 404 {
+		if e.ResponseStatus() != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -157,7 +157,7 @@ func CreateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Servic
 	return rw
 }
 
-// DeleteBottleNoContent Delete runs the method Delete of the given controller with the given parameters.
+// DeleteBottleNoContent runs the method Delete of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -215,7 +215,7 @@ func DeleteBottleNoContent(t *testing.T, ctx context.Context, service *goa.Servi
 	return rw
 }
 
-// DeleteBottleNotFound Delete runs the method Delete of the given controller with the given parameters.
+// DeleteBottleNotFound runs the method Delete of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -273,7 +273,7 @@ func DeleteBottleNotFound(t *testing.T, ctx context.Context, service *goa.Servic
 	return rw
 }
 
-// ListBottleNotFound List runs the method List of the given controller with the given parameters.
+// ListBottleNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -346,7 +346,7 @@ func ListBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	return rw
 }
 
-// ListBottleOK List runs the method List of the given controller with the given parameters.
+// ListBottleOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -431,7 +431,7 @@ func ListBottleOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl 
 	return rw, mt
 }
 
-// ListBottleOKTiny List runs the method List of the given controller with the given parameters.
+// ListBottleOKTiny runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -516,7 +516,7 @@ func ListBottleOKTiny(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw, mt
 }
 
-// RateBottleNoContent Rate runs the method Rate of the given controller with the given parameters and payload.
+// RateBottleNoContent runs the method Rate of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -541,11 +541,11 @@ func RateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Service
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 204 {
+		if e.ResponseStatus() != 204 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -588,7 +588,7 @@ func RateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// RateBottleNotFound Rate runs the method Rate of the given controller with the given parameters and payload.
+// RateBottleNotFound runs the method Rate of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -613,11 +613,11 @@ func RateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 404 {
+		if e.ResponseStatus() != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -660,7 +660,7 @@ func RateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	return rw
 }
 
-// ShowBottleNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowBottleNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -718,7 +718,7 @@ func ShowBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service,
 	return rw
 }
 
-// ShowBottleOK Show runs the method Show of the given controller with the given parameters.
+// ShowBottleOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -788,7 +788,7 @@ func ShowBottleOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl 
 	return rw, mt
 }
 
-// ShowBottleOKFull Show runs the method Show of the given controller with the given parameters.
+// ShowBottleOKFull runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -858,7 +858,7 @@ func ShowBottleOKFull(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw, mt
 }
 
-// ShowBottleOKTiny Show runs the method Show of the given controller with the given parameters.
+// ShowBottleOKTiny runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -928,7 +928,7 @@ func ShowBottleOKTiny(t *testing.T, ctx context.Context, service *goa.Service, c
 	return rw, mt
 }
 
-// UpdateBottleNoContent Update runs the method Update of the given controller with the given parameters and payload.
+// UpdateBottleNoContent runs the method Update of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -953,11 +953,11 @@ func UpdateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Servi
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 204 {
+		if e.ResponseStatus() != 204 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -1000,7 +1000,7 @@ func UpdateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Servi
 	return rw
 }
 
-// UpdateBottleNotFound Update runs the method Update of the given controller with the given parameters and payload.
+// UpdateBottleNotFound runs the method Update of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -1025,11 +1025,11 @@ func UpdateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Servic
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 404 {
+		if e.ResponseStatus() != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil

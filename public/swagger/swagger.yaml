@@ -349,7 +349,7 @@ definitions:
           a string value.
         example: "400"
         type: string
-    title: 'Mediatype identifier: application/vnd.api.error+json'
+    title: 'Mediatype identifier: application/vnd.goa.error'
     type: object
 externalDocs:
   description: goa guide

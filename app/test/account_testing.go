@@ -15,7 +15,7 @@ import (
 	"testing"
 )
 
-// CreateAccountCreated Create runs the method Create of the given controller with the given parameters and payload.
+// CreateAccountCreated runs the method Create of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -40,11 +40,11 @@ func CreateAccountCreated(t *testing.T, ctx context.Context, service *goa.Servic
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 201 {
+		if e.ResponseStatus() != 201 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -85,7 +85,7 @@ func CreateAccountCreated(t *testing.T, ctx context.Context, service *goa.Servic
 	return rw
 }
 
-// DeleteAccountNoContent Delete runs the method Delete of the given controller with the given parameters.
+// DeleteAccountNoContent runs the method Delete of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -142,7 +142,7 @@ func DeleteAccountNoContent(t *testing.T, ctx context.Context, service *goa.Serv
 	return rw
 }
 
-// DeleteAccountNotFound Delete runs the method Delete of the given controller with the given parameters.
+// DeleteAccountNotFound runs the method Delete of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -199,7 +199,7 @@ func DeleteAccountNotFound(t *testing.T, ctx context.Context, service *goa.Servi
 	return rw
 }
 
-// ListAccountNotFound List runs the method List of the given controller with the given parameters.
+// ListAccountNotFound runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -255,7 +255,7 @@ func ListAccountNotFound(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// ListAccountOK List runs the method List of the given controller with the given parameters.
+// ListAccountOK runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -323,7 +323,7 @@ func ListAccountOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl
 	return rw, mt
 }
 
-// ListAccountOKLink List runs the method List of the given controller with the given parameters.
+// ListAccountOKLink runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -391,7 +391,7 @@ func ListAccountOKLink(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// ListAccountOKTiny List runs the method List of the given controller with the given parameters.
+// ListAccountOKTiny runs the method List of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -459,7 +459,7 @@ func ListAccountOKTiny(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// ShowAccountNotFound Show runs the method Show of the given controller with the given parameters.
+// ShowAccountNotFound runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -516,7 +516,7 @@ func ShowAccountNotFound(t *testing.T, ctx context.Context, service *goa.Service
 	return rw
 }
 
-// ShowAccountOK Show runs the method Show of the given controller with the given parameters.
+// ShowAccountOK runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -585,7 +585,7 @@ func ShowAccountOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl
 	return rw, mt
 }
 
-// ShowAccountOKLink Show runs the method Show of the given controller with the given parameters.
+// ShowAccountOKLink runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -654,7 +654,7 @@ func ShowAccountOKLink(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// ShowAccountOKTiny Show runs the method Show of the given controller with the given parameters.
+// ShowAccountOKTiny runs the method Show of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -723,7 +723,7 @@ func ShowAccountOKTiny(t *testing.T, ctx context.Context, service *goa.Service, 
 	return rw, mt
 }
 
-// UpdateAccountNoContent Update runs the method Update of the given controller with the given parameters and payload.
+// UpdateAccountNoContent runs the method Update of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -748,11 +748,11 @@ func UpdateAccountNoContent(t *testing.T, ctx context.Context, service *goa.Serv
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 204 {
+		if e.ResponseStatus() != 204 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
@@ -794,7 +794,7 @@ func UpdateAccountNoContent(t *testing.T, ctx context.Context, service *goa.Serv
 	return rw
 }
 
-// UpdateAccountNotFound Update runs the method Update of the given controller with the given parameters and payload.
+// UpdateAccountNotFound runs the method Update of the given controller with the given parameters and payload.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
@@ -819,11 +819,11 @@ func UpdateAccountNotFound(t *testing.T, ctx context.Context, service *goa.Servi
 	// Validate payload
 	err := payload.Validate()
 	if err != nil {
-		e, ok := err.(*goa.Error)
+		e, ok := err.(goa.ServiceError)
 		if !ok {
 			panic(err) // bug
 		}
-		if e.Status != 404 {
+		if e.ResponseStatus() != 404 {
 			t.Errorf("unexpected payload validation error: %+v", e)
 		}
 		return nil
