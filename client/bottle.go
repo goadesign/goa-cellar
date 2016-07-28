@@ -13,15 +13,15 @@ import (
 
 // CreateBottlePayload is the bottle create action payload.
 type CreateBottlePayload struct {
-	Color     string  `json:"color" xml:"color" form:"color"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
-	Name      string  `json:"name" xml:"name" form:"name"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
-	Varietal  string  `json:"varietal" xml:"varietal" form:"varietal"`
-	Vineyard  string  `json:"vineyard" xml:"vineyard" form:"vineyard"`
-	Vintage   int     `json:"vintage" xml:"vintage" form:"vintage"`
+	Color     string  `form:"color" json:"color" xml:"color"`
+	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
+	Name      string  `form:"name" json:"name" xml:"name"`
+	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  string  `form:"varietal" json:"varietal" xml:"varietal"`
+	Vineyard  string  `form:"vineyard" json:"vineyard" xml:"vineyard"`
+	Vintage   int     `form:"vintage" json:"vintage" xml:"vintage"`
 }
 
 // CreateBottlePath computes a request path to the create action of bottle.
@@ -134,7 +134,7 @@ func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating int `json:"rating" xml:"rating" form:"rating"`
+	Rating int `form:"rating" json:"rating" xml:"rating"`
 }
 
 // RateBottlePath computes a request path to the rate action of bottle.
@@ -207,15 +207,15 @@ func (c *Client) NewShowBottleRequest(ctx context.Context, path string) (*http.R
 
 // UpdateBottlePayload is the bottle update action payload.
 type UpdateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
+	Color     *string `form:"color,omitempty" json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `form:"varietal,omitempty" json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `form:"vineyard,omitempty" json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `form:"vintage,omitempty" json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
 // UpdateBottlePath computes a request path to the update action of bottle.

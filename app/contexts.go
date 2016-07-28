@@ -16,7 +16,6 @@ import (
 	"github.com/goadesign/goa"
 	"golang.org/x/net/context"
 	"strconv"
-	"strings"
 )
 
 // CreateAccountContext provides the account create action context.
@@ -41,7 +40,7 @@ func NewCreateAccountContext(ctx context.Context, service *goa.Service) (*Create
 // createAccountPayload is the account create action payload.
 type createAccountPayload struct {
 	// Name of account
-	Name *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Name *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -65,7 +64,7 @@ func (payload *createAccountPayload) Publicize() *CreateAccountPayload {
 // CreateAccountPayload is the account create action payload.
 type CreateAccountPayload struct {
 	// Name of account
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -81,6 +80,12 @@ func (payload *CreateAccountPayload) Validate() (err error) {
 func (ctx *CreateAccountContext) Created() error {
 	ctx.ResponseData.WriteHeader(201)
 	return nil
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *CreateAccountContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // DeleteAccountContext provides the account delete action context.
@@ -115,6 +120,12 @@ func NewDeleteAccountContext(ctx context.Context, service *goa.Service) (*Delete
 func (ctx *DeleteAccountContext) NoContent() error {
 	ctx.ResponseData.WriteHeader(204)
 	return nil
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *DeleteAccountContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -199,6 +210,12 @@ func (ctx *ShowAccountContext) OKTiny(r *AccountTiny) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *ShowAccountContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowAccountContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -237,7 +254,7 @@ func NewUpdateAccountContext(ctx context.Context, service *goa.Service) (*Update
 // updateAccountPayload is the account update action payload.
 type updateAccountPayload struct {
 	// Name of account
-	Name *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
+	Name *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -261,7 +278,7 @@ func (payload *updateAccountPayload) Publicize() *UpdateAccountPayload {
 // UpdateAccountPayload is the account update action payload.
 type UpdateAccountPayload struct {
 	// Name of account
-	Name string `json:"name" xml:"name" form:"name"`
+	Name string `form:"name" json:"name" xml:"name"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -277,6 +294,12 @@ func (payload *UpdateAccountPayload) Validate() (err error) {
 func (ctx *UpdateAccountContext) NoContent() error {
 	ctx.ResponseData.WriteHeader(204)
 	return nil
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *UpdateAccountContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -316,15 +339,15 @@ func NewCreateBottleContext(ctx context.Context, service *goa.Service) (*CreateB
 
 // createBottlePayload is the bottle create action payload.
 type createBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
+	Color     *string `form:"color,omitempty" json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `form:"varietal,omitempty" json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `form:"vineyard,omitempty" json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `form:"vintage,omitempty" json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -438,15 +461,15 @@ func (payload *createBottlePayload) Publicize() *CreateBottlePayload {
 
 // CreateBottlePayload is the bottle create action payload.
 type CreateBottlePayload struct {
-	Color     string  `json:"color" xml:"color" form:"color"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
-	Name      string  `json:"name" xml:"name" form:"name"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
-	Varietal  string  `json:"varietal" xml:"varietal" form:"varietal"`
-	Vineyard  string  `json:"vineyard" xml:"vineyard" form:"vineyard"`
-	Vintage   int     `json:"vintage" xml:"vintage" form:"vintage"`
+	Color     string  `form:"color" json:"color" xml:"color"`
+	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
+	Name      string  `form:"name" json:"name" xml:"name"`
+	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  string  `form:"varietal" json:"varietal" xml:"varietal"`
+	Vineyard  string  `form:"vineyard" json:"vineyard" xml:"vineyard"`
+	Vintage   int     `form:"vintage" json:"vintage" xml:"vintage"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -516,6 +539,12 @@ func (ctx *CreateBottleContext) Created() error {
 	return nil
 }
 
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *CreateBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *CreateBottleContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -566,6 +595,12 @@ func (ctx *DeleteBottleContext) NoContent() error {
 	return nil
 }
 
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *DeleteBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *DeleteBottleContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -600,22 +635,15 @@ func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottl
 	}
 	paramYears := req.Params["years"]
 	if len(paramYears) > 0 {
-		if len(paramYears) > 1 || len(paramYears[0]) > 0 {
-			var params []int
-			for _, rawYears := range paramYears {
-				elemsYears := strings.Split(rawYears, ",")
-				elemsYears2 := make([]int, len(elemsYears))
-				for i, rawElem := range elemsYears {
-					if elem, err2 := strconv.Atoi(rawElem); err2 == nil {
-						elemsYears2[i] = elem
-					} else {
-						err = goa.MergeErrors(err, goa.InvalidParamTypeError("elem", rawElem, "integer"))
-					}
-				}
-				params = elemsYears2
-				rctx.Years = append(rctx.Years, params...)
+		params := make([]int, len(paramYears))
+		for i, rawYears := range paramYears {
+			if years, err2 := strconv.Atoi(rawYears); err2 == nil {
+				params[i] = years
+			} else {
+				err = goa.MergeErrors(err, goa.InvalidParamTypeError("years", rawYears, "integer"))
 			}
 		}
+		rctx.Years = params
 	}
 	return &rctx, err
 }
@@ -630,6 +658,12 @@ func (ctx *ListBottleContext) OK(r BottleCollection) error {
 func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *ListBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -680,7 +714,7 @@ func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottl
 // rateBottlePayload is the bottle rate action payload.
 type rateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating *int `json:"rating,omitempty" xml:"rating,omitempty" form:"rating,omitempty"`
+	Rating *int `form:"rating,omitempty" json:"rating,omitempty" xml:"rating,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -714,7 +748,7 @@ func (payload *rateBottlePayload) Publicize() *RateBottlePayload {
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
 	// Rating of bottle between 1 and 5
-	Rating int `json:"rating" xml:"rating" form:"rating"`
+	Rating int `form:"rating" json:"rating" xml:"rating"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -732,6 +766,12 @@ func (payload *RateBottlePayload) Validate() (err error) {
 func (ctx *RateBottleContext) NoContent() error {
 	ctx.ResponseData.WriteHeader(204)
 	return nil
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *RateBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
 // NotFound sends a HTTP response with status code 404.
@@ -796,6 +836,12 @@ func (ctx *ShowBottleContext) OKTiny(r *BottleTiny) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *ShowBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *ShowBottleContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -843,15 +889,15 @@ func NewUpdateBottleContext(ctx context.Context, service *goa.Service) (*UpdateB
 
 // updateBottlePayload is the bottle update action payload.
 type updateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
+	Color     *string `form:"color,omitempty" json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `form:"varietal,omitempty" json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `form:"vineyard,omitempty" json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `form:"vintage,omitempty" json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -949,15 +995,15 @@ func (payload *updateBottlePayload) Publicize() *UpdateBottlePayload {
 
 // UpdateBottlePayload is the bottle update action payload.
 type UpdateBottlePayload struct {
-	Color     *string `json:"color,omitempty" xml:"color,omitempty" form:"color,omitempty"`
-	Country   *string `json:"country,omitempty" xml:"country,omitempty" form:"country,omitempty"`
-	Name      *string `json:"name,omitempty" xml:"name,omitempty" form:"name,omitempty"`
-	Region    *string `json:"region,omitempty" xml:"region,omitempty" form:"region,omitempty"`
-	Review    *string `json:"review,omitempty" xml:"review,omitempty" form:"review,omitempty"`
-	Sweetness *int    `json:"sweetness,omitempty" xml:"sweetness,omitempty" form:"sweetness,omitempty"`
-	Varietal  *string `json:"varietal,omitempty" xml:"varietal,omitempty" form:"varietal,omitempty"`
-	Vineyard  *string `json:"vineyard,omitempty" xml:"vineyard,omitempty" form:"vineyard,omitempty"`
-	Vintage   *int    `json:"vintage,omitempty" xml:"vintage,omitempty" form:"vintage,omitempty"`
+	Color     *string `form:"color,omitempty" json:"color,omitempty" xml:"color,omitempty"`
+	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
+	Name      *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
+	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
+	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
+	Varietal  *string `form:"varietal,omitempty" json:"varietal,omitempty" xml:"varietal,omitempty"`
+	Vineyard  *string `form:"vineyard,omitempty" json:"vineyard,omitempty" xml:"vineyard,omitempty"`
+	Vintage   *int    `form:"vintage,omitempty" json:"vintage,omitempty" xml:"vintage,omitempty"`
 }
 
 // Validate runs the validation rules defined in the design.
@@ -1026,6 +1072,12 @@ func (ctx *UpdateBottleContext) NoContent() error {
 	return nil
 }
 
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *UpdateBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
 // NotFound sends a HTTP response with status code 404.
 func (ctx *UpdateBottleContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
@@ -1068,4 +1120,10 @@ func NewWatchBottleContext(ctx context.Context, service *goa.Service) (*WatchBot
 		}
 	}
 	return &rctx, err
+}
+
+// BadRequest sends a HTTP response with status code 400.
+func (ctx *WatchBottleContext) BadRequest(r error) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }

@@ -41,6 +41,7 @@ var _ = Resource("account", func() {
 		})
 		Response(OK)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("create", func() {
@@ -53,6 +54,7 @@ var _ = Resource("account", func() {
 			Required("name")
 		})
 		Response(Created, "/accounts/[0-9]+")
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("update", func() {
@@ -69,6 +71,7 @@ var _ = Resource("account", func() {
 		})
 		Response(NoContent)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("delete", func() {
@@ -80,6 +83,7 @@ var _ = Resource("account", func() {
 		})
 		Response(NoContent)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 })
 
@@ -104,6 +108,7 @@ var _ = Resource("bottle", func() {
 			}))
 		})
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("show", func() {
@@ -116,6 +121,7 @@ var _ = Resource("bottle", func() {
 		})
 		Response(OK)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("watch", func() {
@@ -128,6 +134,7 @@ var _ = Resource("bottle", func() {
 			Param("bottleID", Integer)
 		})
 		Response(SwitchingProtocols)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("create", func() {
@@ -140,6 +147,7 @@ var _ = Resource("bottle", func() {
 		})
 		Response(Created, "^/accounts/[0-9]+/bottles/[0-9]+$")
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("update", func() {
@@ -152,6 +160,7 @@ var _ = Resource("bottle", func() {
 		Payload(BottlePayload)
 		Response(NoContent)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("rate", func() {
@@ -167,6 +176,7 @@ var _ = Resource("bottle", func() {
 		})
 		Response(NoContent)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 
 	Action("delete", func() {
@@ -178,5 +188,6 @@ var _ = Resource("bottle", func() {
 		})
 		Response(NoContent)
 		Response(NotFound)
+		Response(BadRequest, ErrorMedia)
 	})
 })

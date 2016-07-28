@@ -11,7 +11,7 @@ import (
 
 // ToBottleMedia converts a bottle model into a bottle media type
 func ToBottleMedia(a *AccountModel, b *BottleModel) *app.Bottle {
-	account := ToAccountMedia(a)
+	account := ToAccountMediaTiny(a)
 	link := ToAccountLink(a)
 	return &app.Bottle{
 		Account:  account,

@@ -16,6 +16,15 @@ func ToAccountMedia(account *AccountModel) *app.Account {
 	}
 }
 
+// ToAccountMediaTiny builds an account media type with tiny view from an account model.
+func ToAccountMediaTiny(account *AccountModel) *app.AccountTiny {
+	return &app.AccountTiny{
+		ID:   account.ID,
+		Href: app.AccountHref(account.ID),
+		Name: account.Name,
+	}
+}
+
 // ToAccountLink builds an account link from an account model.
 func ToAccountLink(account *AccountModel) *app.AccountLink {
 	return &app.AccountLink{

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/goadesign/goa-cellar/client"
 	"github.com/goadesign/goa-cellar/tool/cli"
+	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"
 	"net/http"
 	"os"
@@ -19,7 +20,7 @@ func main() {
 
 	// Create client struct
 	httpClient := newHTTPClient()
-	c := client.New(httpClient)
+	c := client.New(goaclient.HTTPClientDoer(httpClient))
 
 	// Register global flags
 	app.PersistentFlags().StringVarP(&c.Scheme, "scheme", "s", "", "Set the requests scheme")
