@@ -411,59 +411,41 @@ func unmarshalUpdateBottlePayload(ctx context.Context, service *goa.Service, req
 	return nil
 }
 
-// PublicController is the controller interface for the Public actions.
-type PublicController interface {
+// HealthController is the controller interface for the Health actions.
+type HealthController interface {
 	goa.Muxer
-	goa.FileServer
+	Health(*HealthHealthContext) error
 }
 
-// MountPublicController "mounts" a Public resource controller on the given service.
-func MountPublicController(service *goa.Service, ctrl PublicController) {
+// MountHealthController "mounts" a Health resource controller on the given service.
+func MountHealthController(service *goa.Service, ctrl HealthController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/cellar/_ah/health", ctrl.MuxHandler("preflight", handleHealthOrigin(cors.HandlePreflight()), nil))
 
-	h = ctrl.FileHandler("/ui", "public/html/index.html")
-	h = handlePublicOrigin(h)
-	service.Mux.Handle("GET", "/ui", ctrl.MuxHandler("serve", h, nil))
-	service.LogInfo("mount", "ctrl", "Public", "files", "public/html/index.html", "route", "GET /ui")
-
-	h = ctrl.FileHandler("/js/*filepath", "public/js/")
-	h = handlePublicOrigin(h)
-	service.Mux.Handle("GET", "/js/*filepath", ctrl.MuxHandler("serve", h, nil))
-	service.LogInfo("mount", "ctrl", "Public", "files", "public/js/", "route", "GET /js/*filepath")
-
-	h = ctrl.FileHandler("/schema.json", "public/schema/schema.json")
-	h = handlePublicOrigin(h)
-	service.Mux.Handle("GET", "/schema.json", ctrl.MuxHandler("serve", h, nil))
-	service.LogInfo("mount", "ctrl", "Public", "files", "public/schema/schema.json", "route", "GET /schema.json")
-
-	h = ctrl.FileHandler("/swagger.json", "public/swagger/swagger.json")
-	h = handlePublicOrigin(h)
-	service.Mux.Handle("GET", "/swagger.json", ctrl.MuxHandler("serve", h, nil))
-	service.LogInfo("mount", "ctrl", "Public", "files", "public/swagger/swagger.json", "route", "GET /swagger.json")
-
-	h = ctrl.FileHandler("/js/", "public/js/index.html")
-	h = handlePublicOrigin(h)
-	service.Mux.Handle("GET", "/js/", ctrl.MuxHandler("serve", h, nil))
-	service.LogInfo("mount", "ctrl", "Public", "files", "public/js/index.html", "route", "GET /js/")
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		// Check if there was an error loading the request
+		if err := goa.ContextError(ctx); err != nil {
+			return err
+		}
+		// Build the context
+		rctx, err := NewHealthHealthContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.Health(rctx)
+	}
+	h = handleHealthOrigin(h)
+	service.Mux.Handle("GET", "/cellar/_ah/health", ctrl.MuxHandler("Health", h, nil))
+	service.LogInfo("mount", "ctrl", "Health", "action", "Health", "route", "GET /cellar/_ah/health")
 }
 
-// handlePublicOrigin applies the CORS response headers corresponding to the origin.
-func handlePublicOrigin(h goa.Handler) goa.Handler {
+// handleHealthOrigin applies the CORS response headers corresponding to the origin.
+func handleHealthOrigin(h goa.Handler) goa.Handler {
 	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		origin := req.Header.Get("Origin")
 		if origin == "" {
 			// Not a CORS request
-			return h(ctx, rw, req)
-		}
-		if cors.MatchOrigin(origin, "*") {
-			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "*")
-			rw.Header().Set("Access-Control-Allow-Credentials", "false")
-			if acrm := req.Header.Get("Access-Control-Request-Method"); acrm != "" {
-				// We are handling a preflight request
-				rw.Header().Set("Access-Control-Allow-Methods", "GET")
-			}
 			return h(ctx, rw, req)
 		}
 		if cors.MatchOrigin(origin, "http://swagger.goa.design") {

@@ -10,7 +10,6 @@ import (
 	"golang.org/x/net/context"
 	"log"
 	"os"
-	"path"
 	"strings"
 )
 
@@ -112,10 +111,9 @@ type (
 		PrettyPrint bool
 	}
 
-	// DownloadCommand is the command line data structure for the download command.
-	DownloadCommand struct {
-		// OutFile is the path to the download output file.
-		OutFile string
+	// HealthHealthCommand is the command line data structure for the health action of health
+	HealthHealthCommand struct {
+		PrettyPrint bool
 	}
 )
 
@@ -169,35 +167,35 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "list",
-		Short: `list action`,
+		Use:   "health",
+		Short: `Perform health check.`,
 	}
-	tmp5 := new(ListAccountCommand)
+	tmp5 := new(HealthHealthCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts"]`,
+		Use:   `health ["/cellar/_ah/health"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
 	tmp5.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp5.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp6 := new(ListBottleCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "list",
+		Short: `list action`,
+	}
+	tmp6 := new(ListAccountCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
+		Use:   `account ["/cellar/accounts"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
 	tmp6.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp6.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "rate",
-		Short: ``,
-	}
-	tmp7 := new(RateBottleCommand)
+	tmp7 := new(ListBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate"]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
@@ -206,58 +204,58 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "show",
-		Short: `show action`,
+		Use:   "rate",
+		Short: ``,
 	}
-	tmp8 := new(ShowAccountCommand)
+	tmp8 := new(RateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
 	tmp8.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp8.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp9 := new(ShowBottleCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "show",
+		Short: `show action`,
+	}
+	tmp9 := new(ShowAccountCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
+		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
 	tmp9.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp9.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "update",
-		Short: `update action`,
-	}
-	tmp10 := new(UpdateAccountCommand)
+	tmp10 := new(ShowBottleCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
 	tmp10.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp10.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp11 := new(UpdateBottleCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "update",
+		Short: `update action`,
+	}
+	tmp11 := new(UpdateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
+		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
 	}
 	tmp11.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp11.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "watch",
-		Short: `Retrieve bottle with given id`,
-	}
-	tmp12 := new(WatchBottleCommand)
+	tmp12 := new(UpdateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch"]`,
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
 	}
@@ -265,17 +263,20 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	sub.PersistentFlags().BoolVar(&tmp12.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
-
-	dl := new(DownloadCommand)
-	dlc := &cobra.Command{
-		Use:   "download [PATH]",
-		Short: "Download file with given path",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return dl.Run(c, args)
-		},
+	command = &cobra.Command{
+		Use:   "watch",
+		Short: `Retrieve bottle with given id`,
 	}
-	dlc.Flags().StringVar(&dl.OutFile, "out", "", "Output file")
-	app.AddCommand(dlc)
+	tmp13 := new(WatchBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp13.Run(c, args) },
+	}
+	tmp13.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp13.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
 }
 
 func intFlagVal(name string, parsed int) *int {
@@ -681,63 +682,26 @@ func (cmd *WatchBottleCommand) RegisterFlags(cc *cobra.Command, c *client.Client
 	cc.Flags().IntVar(&cmd.BottleID, "bottleID", bottleID, ``)
 }
 
-// Run downloads files with given paths.
-func (cmd *DownloadCommand) Run(c *client.Client, args []string) error {
-	var (
-		fnf func(context.Context, string) (int64, error)
-		fnd func(context.Context, string, string) (int64, error)
-
-		rpath   = args[0]
-		outfile = cmd.OutFile
-		logger  = goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
-		ctx     = goa.WithLogger(context.Background(), logger)
-		err     error
-	)
-
-	if rpath[0] != '/' {
-		rpath = "/" + rpath
-	}
-	if rpath == "/ui" {
-		fnf = c.DownloadUI
-		if outfile == "" {
-			outfile = "index.html"
-		}
-		goto found
-	}
-	if rpath == "/schema.json" {
-		fnf = c.DownloadSchemaJSON
-		if outfile == "" {
-			outfile = "schema.json"
-		}
-		goto found
-	}
-	if rpath == "/swagger.json" {
-		fnf = c.DownloadSwaggerJSON
-		if outfile == "" {
-			outfile = "swagger.json"
-		}
-		goto found
-	}
-	if strings.HasPrefix(rpath, "/js/") {
-		fnd = c.DownloadJs
-		rpath = rpath[4:]
-		if outfile == "" {
-			_, outfile = path.Split(rpath)
-		}
-		goto found
-	}
-	return fmt.Errorf("don't know how to download %s", rpath)
-found:
-	ctx = goa.WithLogContext(ctx, "file", outfile)
-	if fnf != nil {
-		_, err = fnf(ctx, outfile)
+// Run makes the HTTP request corresponding to the HealthHealthCommand command.
+func (cmd *HealthHealthCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
 	} else {
-		_, err = fnd(ctx, rpath, outfile)
+		path = "/cellar/_ah/health"
 	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.HealthHealth(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
 	}
 
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
 	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *HealthHealthCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }

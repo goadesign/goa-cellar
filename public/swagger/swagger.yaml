@@ -1,3 +1,4 @@
+basePath: /cellar
 consumes:
 - application/json
 - application/xml
@@ -448,7 +449,7 @@ definitions:
 externalDocs:
   description: goa guide
   url: http://goa.design/getting-started.html
-host: localhost:8081
+host: goa-cellar.appspot.com
 info:
   contact:
     email: admin@goa.design
@@ -461,7 +462,19 @@ info:
   title: The virtual wine cellar
   version: ""
 paths:
-  /cellar/accounts:
+  /_ah/health:
+    get:
+      description: Perform health check.
+      operationId: health#health
+      responses:
+        "200":
+          description: OK
+      schemes:
+      - http
+      summary: health health
+      tags:
+      - health
+  /accounts:
     get:
       description: Retrieve all accounts.
       operationId: account#list
@@ -503,7 +516,7 @@ paths:
       summary: create account
       tags:
       - account
-  /cellar/accounts/{accountID}:
+  /accounts/{accountID}:
     delete:
       operationId: account#delete
       parameters:
@@ -579,7 +592,7 @@ paths:
       summary: update account
       tags:
       - account
-  /cellar/accounts/{accountID}/bottles:
+  /accounts/{accountID}/bottles:
     get:
       description: List all bottles in account optionally filtering by year
       operationId: bottle#list
@@ -645,7 +658,7 @@ paths:
       summary: create bottle
       tags:
       - bottle
-  /cellar/accounts/{accountID}/bottles/{bottleID}:
+  /accounts/{accountID}/bottles/{bottleID}:
     delete:
       operationId: bottle#delete
       parameters:
@@ -732,7 +745,7 @@ paths:
       summary: update bottle
       tags:
       - bottle
-  /cellar/accounts/{accountID}/bottles/{bottleID}/actions/rate:
+  /accounts/{accountID}/bottles/{bottleID}/actions/rate:
     put:
       operationId: bottle#rate
       parameters:
@@ -764,7 +777,7 @@ paths:
       summary: rate bottle
       tags:
       - bottle
-  /cellar/accounts/{accountID}/bottles/{bottleID}/watch:
+  /accounts/{accountID}/bottles/{bottleID}/watch:
     get:
       description: Retrieve bottle with given id
       operationId: bottle#watch
@@ -790,60 +803,6 @@ paths:
       summary: watch bottle
       tags:
       - bottle
-  /js/{filepath}:
-    get:
-      operationId: public#/js/*filepath
-      parameters:
-      - description: Relative file path
-        in: path
-        name: filepath
-        required: true
-        type: string
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-        "404":
-          description: File not found
-          schema:
-            $ref: '#/definitions/error'
-      schemes:
-      - http
-      summary: Download public/js/
-  /schema.json:
-    get:
-      operationId: public#/schema.json
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-      schemes:
-      - http
-      summary: Download public/schema/schema.json
-  /swagger.json:
-    get:
-      operationId: public#/swagger.json
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-      schemes:
-      - http
-      summary: Download public/swagger/swagger.json
-  /ui:
-    get:
-      operationId: public#/ui
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-      schemes:
-      - http
-      summary: Download public/html/index.html
 produces:
 - application/json
 - application/xml

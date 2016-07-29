@@ -158,6 +158,12 @@ func (ctx *ListAccountContext) OK(r AccountCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
+// OKLink sends a HTTP response with status code 200.
+func (ctx *ListAccountContext) OKLink(r AccountLinkCollection) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKTiny(r AccountTinyCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
@@ -200,6 +206,12 @@ func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAcco
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OK(r *Account) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// OKLink sends a HTTP response with status code 200.
+func (ctx *ShowAccountContext) OKLink(r *AccountLink) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
@@ -1126,4 +1138,30 @@ func NewWatchBottleContext(ctx context.Context, service *goa.Service) (*WatchBot
 func (ctx *WatchBottleContext) BadRequest(r error) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
+}
+
+// HealthHealthContext provides the health health action context.
+type HealthHealthContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+}
+
+// NewHealthHealthContext parses the incoming request URL and body, performs validations and creates the
+// context used by the health controller health action.
+func NewHealthHealthContext(ctx context.Context, service *goa.Service) (*HealthHealthContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	rctx := HealthHealthContext{Context: ctx, ResponseData: resp, RequestData: req}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *HealthHealthContext) OK(resp []byte) error {
+	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
+	ctx.ResponseData.WriteHeader(200)
+	_, err := ctx.ResponseData.Write(resp)
+	return err
 }

@@ -115,13 +115,13 @@ func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
 	if years != nil {
-		tmp14 := make([]string, len(years))
+		tmp15 := make([]string, len(years))
 		for i, e := range years {
-			tmp15 := strconv.Itoa(e)
-			tmp14[i] = tmp15
+			tmp16 := strconv.Itoa(e)
+			tmp15[i] = tmp16
 		}
-		tmp13 := strings.Join(tmp14, ",")
-		values.Set("years", tmp13)
+		tmp14 := strings.Join(tmp15, ",")
+		values.Set("years", tmp14)
 	}
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), nil)

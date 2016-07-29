@@ -23,7 +23,7 @@ var _ = API("cellar", func() {
 		Description("goa guide")
 		URL("http://goa.design/getting-started.html")
 	})
-	Host("localhost:8081")
+	Host("goa-cellar.appspot.com")
 	Scheme("http")
 	BasePath("/cellar")
 

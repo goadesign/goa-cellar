@@ -1,4 +1,4 @@
-// +build !appengine,!appenginevm
+// +build appenginevm
 
 package main
 
@@ -33,8 +33,12 @@ func main() {
 	bc := controllers.NewBottle(service)
 	app.MountBottleController(service, bc)
 
+	// Mount health-check controller onto service
+	hc := controllers.NewHealth(service)
+	app.MountHealthController(service, hc)
+
 	// Run service
-	if err := service.ListenAndServe(":8081"); err != nil {
+	if err := service.ListenAndServe(":8080"); err != nil {
 		service.LogError(err.Error())
 	}
 }

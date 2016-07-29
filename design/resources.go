@@ -5,18 +5,6 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
-var _ = Resource("public", func() {
-
-	Origin("*", func() {
-		Methods("GET")
-	})
-
-	Files("/swagger.json", "public/swagger/swagger.json")
-	Files("/schema.json", "public/schema/schema.json")
-	Files("/ui", "public/html/index.html")
-	Files("/js/*filepath", "public/js/")
-})
-
 var _ = Resource("account", func() {
 
 	DefaultMedia(Account)
