@@ -205,26 +205,13 @@ func (c *Client) NewShowBottleRequest(ctx context.Context, path string) (*http.R
 	return req, nil
 }
 
-// UpdateBottlePayload is the bottle update action payload.
-type UpdateBottlePayload struct {
-	Color     *string `form:"color,omitempty" json:"color,omitempty" xml:"color,omitempty"`
-	Country   *string `form:"country,omitempty" json:"country,omitempty" xml:"country,omitempty"`
-	Name      *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
-	Region    *string `form:"region,omitempty" json:"region,omitempty" xml:"region,omitempty"`
-	Review    *string `form:"review,omitempty" json:"review,omitempty" xml:"review,omitempty"`
-	Sweetness *int    `form:"sweetness,omitempty" json:"sweetness,omitempty" xml:"sweetness,omitempty"`
-	Varietal  *string `form:"varietal,omitempty" json:"varietal,omitempty" xml:"varietal,omitempty"`
-	Vineyard  *string `form:"vineyard,omitempty" json:"vineyard,omitempty" xml:"vineyard,omitempty"`
-	Vintage   *int    `form:"vintage,omitempty" json:"vintage,omitempty" xml:"vintage,omitempty"`
-}
-
 // UpdateBottlePath computes a request path to the update action of bottle.
 func UpdateBottlePath(accountID string, bottleID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
 // UpdateBottle makes a request to the update action endpoint of the bottle resource
-func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateBottlePayload, contentType string) (*http.Response, error) {
+func (c *Client) UpdateBottle(ctx context.Context, path string, payload *BottlePayload, contentType string) (*http.Response, error) {
 	req, err := c.NewUpdateBottleRequest(ctx, path, payload, contentType)
 	if err != nil {
 		return nil, err
@@ -233,7 +220,7 @@ func (c *Client) UpdateBottle(ctx context.Context, path string, payload *UpdateB
 }
 
 // NewUpdateBottleRequest create the request corresponding to the update action endpoint of the bottle resource.
-func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payload *UpdateBottlePayload, contentType string) (*http.Request, error) {
+func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payload *BottlePayload, contentType string) (*http.Request, error) {
 	var body bytes.Buffer
 	if contentType == "" {
 		contentType = "*/*" // Use default encoder

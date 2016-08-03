@@ -282,17 +282,17 @@ definitions:
         $ref: '#/definitions/AccountLink'
     title: BottleLinks
     type: object
-  CreateAccountPayload:
-    properties:
-      name:
-        description: Name of account
-        example: test
-        type: string
-    required:
-    - name
-    title: CreateAccountPayload
-    type: object
-  CreateBottlePayload:
+  BottlePayload:
+    example:
+      color: sparkling
+      country: USA
+      name: Number 8
+      region: Napa Valley
+      review: Great and inexpensive
+      sweetness: 1
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
     properties:
       color:
         enum:
@@ -301,6 +301,7 @@ definitions:
         - rose
         - yellow
         - sparkling
+        example: sparkling
         type: string
       country:
         example: USA
@@ -319,6 +320,76 @@ definitions:
         minLength: 3
         type: string
       sweetness:
+        example: 1
+        maximum: 5
+        minimum: 1
+        type: integer
+      varietal:
+        example: Merlot
+        minLength: 4
+        type: string
+      vineyard:
+        example: Asti
+        minLength: 2
+        type: string
+      vintage:
+        example: 2012
+        maximum: 2020
+        minimum: 1900
+        type: integer
+    title: BottlePayload
+    type: object
+  CreateAccountPayload:
+    example:
+      name: test
+    properties:
+      name:
+        description: Name of account
+        example: test
+        type: string
+    required:
+    - name
+    title: CreateAccountPayload
+    type: object
+  CreateBottlePayload:
+    example:
+      color: white
+      country: USA
+      name: Number 8
+      region: Napa Valley
+      review: Great and inexpensive
+      sweetness: 1
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    properties:
+      color:
+        enum:
+        - red
+        - white
+        - rose
+        - yellow
+        - sparkling
+        example: white
+        type: string
+      country:
+        example: USA
+        minLength: 2
+        type: string
+      name:
+        example: Number 8
+        minLength: 2
+        type: string
+      region:
+        example: Napa Valley
+        type: string
+      review:
+        example: Great and inexpensive
+        maxLength: 300
+        minLength: 3
+        type: string
+      sweetness:
+        example: 1
         maximum: 5
         minimum: 1
         type: integer
@@ -344,9 +415,12 @@ definitions:
     title: CreateBottlePayload
     type: object
   RateBottlePayload:
+    example:
+      rating: 3
     properties:
       rating:
         description: Rating of bottle between 1 and 5
+        example: 3
         maximum: 5
         minimum: 1
         type: integer
@@ -355,6 +429,8 @@ definitions:
     title: RateBottlePayload
     type: object
   UpdateAccountPayload:
+    example:
+      name: test
     properties:
       name:
         description: Name of account
@@ -363,51 +439,6 @@ definitions:
     required:
     - name
     title: UpdateAccountPayload
-    type: object
-  UpdateBottlePayload:
-    properties:
-      color:
-        enum:
-        - red
-        - white
-        - rose
-        - yellow
-        - sparkling
-        type: string
-      country:
-        example: USA
-        minLength: 2
-        type: string
-      name:
-        example: Number 8
-        minLength: 2
-        type: string
-      region:
-        example: Napa Valley
-        type: string
-      review:
-        example: Great and inexpensive
-        maxLength: 300
-        minLength: 3
-        type: string
-      sweetness:
-        maximum: 5
-        minimum: 1
-        type: integer
-      varietal:
-        example: Merlot
-        minLength: 4
-        type: string
-      vineyard:
-        example: Asti
-        minLength: 2
-        type: string
-      vintage:
-        example: 2012
-        maximum: 2020
-        minimum: 1900
-        type: integer
-    title: UpdateBottlePayload
     type: object
   error:
     description: Error response media type (default view)
@@ -730,7 +761,7 @@ paths:
         name: payload
         required: true
         schema:
-          $ref: '#/definitions/UpdateBottlePayload'
+          $ref: '#/definitions/BottlePayload'
       responses:
         "204":
           description: No Content

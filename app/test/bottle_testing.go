@@ -1304,7 +1304,7 @@ func ShowBottleOKTiny(t *testing.T, ctx context.Context, service *goa.Service, c
 // It returns the response writer so it's possible to inspect the response headers and the media type struct written to the response.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func UpdateBottleBadRequest(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) (http.ResponseWriter, error) {
+func UpdateBottleBadRequest(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.BottleController, accountID string, bottleID int, payload *app.BottlePayload) (http.ResponseWriter, error) {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1384,7 +1384,7 @@ func UpdateBottleBadRequest(t *testing.T, ctx context.Context, service *goa.Serv
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func UpdateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) http.ResponseWriter {
+func UpdateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.BottleController, accountID string, bottleID int, payload *app.BottlePayload) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer
@@ -1456,7 +1456,7 @@ func UpdateBottleNoContent(t *testing.T, ctx context.Context, service *goa.Servi
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func UpdateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.BottleController, accountID string, bottleID int, payload *app.UpdateBottlePayload) http.ResponseWriter {
+func UpdateBottleNotFound(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.BottleController, accountID string, bottleID int, payload *app.BottlePayload) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer

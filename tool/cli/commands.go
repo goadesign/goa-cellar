@@ -6,11 +6,14 @@ import (
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/client"
 	goaclient "github.com/goadesign/goa/client"
+	uuid "github.com/goadesign/goa/uuid"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 	"log"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type (
@@ -128,7 +131,14 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	sub = &cobra.Command{
 		Use:   `account ["/cellar/accounts"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
+		Long: `
+
+Payload example:
+
+{
+   "name": "test"
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
 	tmp1.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp1.PrettyPrint, "pp", false, "Pretty print response body")
@@ -137,7 +147,22 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	sub = &cobra.Command{
 		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
+		Long: `
+
+Payload example:
+
+{
+   "color": "white",
+   "country": "USA",
+   "name": "Number 8",
+   "region": "Napa Valley",
+   "review": "Great and inexpensive",
+   "sweetness": 1,
+   "varietal": "Merlot",
+   "vineyard": "Asti",
+   "vintage": 2012
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
 	tmp2.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp2.PrettyPrint, "pp", false, "Pretty print response body")
@@ -211,7 +236,14 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	sub = &cobra.Command{
 		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
+		Long: `
+
+Payload example:
+
+{
+   "rating": 3
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
 	tmp8.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp8.PrettyPrint, "pp", false, "Pretty print response body")
@@ -248,7 +280,14 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	sub = &cobra.Command{
 		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+		Long: `
+
+Payload example:
+
+{
+   "name": "test"
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
 	}
 	tmp11.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp11.PrettyPrint, "pp", false, "Pretty print response body")
@@ -257,7 +296,22 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	sub = &cobra.Command{
 		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
+		Long: `
+
+Payload example:
+
+{
+   "color": "sparkling",
+   "country": "USA",
+   "name": "Number 8",
+   "region": "Napa Valley",
+   "review": "Great and inexpensive",
+   "sweetness": 1,
+   "varietal": "Merlot",
+   "vineyard": "Asti",
+   "vintage": 2012
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
 	}
 	tmp12.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp12.PrettyPrint, "pp", false, "Pretty print response body")
@@ -314,6 +368,122 @@ func hasFlag(name string) bool {
 		}
 	}
 	return false
+}
+
+func jsonVal(val string) (*interface{}, error) {
+	var t interface{}
+	err := json.Unmarshal([]byte(val), &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+func jsonArray(ins []string) ([]interface{}, error) {
+	if ins == nil {
+		return nil, nil
+	}
+	var vals []interface{}
+	for _, id := range ins {
+		val, err := jsonVal(id)
+		if err != nil {
+			return nil, err
+		}
+		vals = append(vals, val)
+	}
+	return vals, nil
+}
+
+func timeVal(val string) (*time.Time, error) {
+	t, err := time.Parse("RFC3339", val)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+func timeArray(ins []string) ([]time.Time, error) {
+	if ins == nil {
+		return nil, nil
+	}
+	var vals []time.Time
+	for _, id := range ins {
+		val, err := timeVal(id)
+		if err != nil {
+			return nil, err
+		}
+		vals = append(vals, *val)
+	}
+	return vals, nil
+}
+
+func uuidVal(val string) (*uuid.UUID, error) {
+	t, err := uuid.FromString(val)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+func uuidArray(ins []string) ([]uuid.UUID, error) {
+	if ins == nil {
+		return nil, nil
+	}
+	var vals []uuid.UUID
+	for _, id := range ins {
+		val, err := uuidVal(id)
+		if err != nil {
+			return nil, err
+		}
+		vals = append(vals, *val)
+	}
+	return vals, nil
+}
+
+func float64Val(val string) (*float64, error) {
+	t, err := strconv.ParseFloat(val, 64)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+func float64Array(ins []string) ([]float64, error) {
+	if ins == nil {
+		return nil, nil
+	}
+	var vals []float64
+	for _, id := range ins {
+		val, err := float64Val(id)
+		if err != nil {
+			return nil, err
+		}
+		vals = append(vals, *val)
+	}
+	return vals, nil
+}
+
+func boolVal(val string) (*bool, error) {
+	t, err := strconv.ParseBool(val)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+}
+
+func boolArray(ins []string) ([]bool, error) {
+	if ins == nil {
+		return nil, nil
+	}
+	var vals []bool
+	for _, id := range ins {
+		val, err := boolVal(id)
+		if err != nil {
+			return nil, err
+		}
+		vals = append(vals, *val)
+	}
+	return vals, nil
 }
 
 // Run makes the HTTP request corresponding to the CreateAccountCommand command.
@@ -624,7 +794,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 	} else {
 		path = fmt.Sprintf("/cellar/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
 	}
-	var payload client.UpdateBottlePayload
+	var payload client.BottlePayload
 	if cmd.Payload != "" {
 		err := json.Unmarshal([]byte(cmd.Payload), &payload)
 		if err != nil {
