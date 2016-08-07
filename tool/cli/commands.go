@@ -301,7 +301,7 @@ Payload example:
 Payload example:
 
 {
-   "color": "sparkling",
+   "color": "white",
    "country": "USA",
    "name": "Number 8",
    "region": "Napa Valley",

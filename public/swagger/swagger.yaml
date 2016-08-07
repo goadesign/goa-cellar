@@ -43,7 +43,7 @@ definitions:
     - name
     - created_at
     - created_by
-    title: 'Mediatype identifier: application/vnd.account+json'
+    title: 'Mediatype identifier: application/vnd.account+json; view=default'
     type: object
   AccountCollection:
     description: AccountCollection is the media type for an array of Account (default
@@ -59,24 +59,11 @@ definitions:
     title: 'Mediatype identifier: application/vnd.account+json; type=collection'
     type: array
   AccountLink:
-    description: A tenant account (default view)
+    description: A tenant account (link view)
     example:
-      created_at: 2015-09-23T11:51:57-07:00
-      created_by: me@goa.design
       href: /accounts/1
       id: 1
-      name: test
     properties:
-      created_at:
-        description: Date of creation
-        example: 2015-09-23T11:51:57-07:00
-        format: date-time
-        type: string
-      created_by:
-        description: Email of account owner
-        example: me@goa.design
-        format: email
-        type: string
       href:
         description: API href of account
         example: /accounts/1
@@ -86,37 +73,18 @@ definitions:
         example: 1
         format: int64
         type: integer
-      name:
-        description: Name of account
-        example: test
-        type: string
     required:
     - id
     - href
-    - name
-    - created_at
-    - created_by
-    title: 'Mediatype identifier: application/vnd.account+json'
+    title: 'Mediatype identifier: application/vnd.account+json; view=link'
     type: object
   AccountTiny:
-    description: A tenant account (default view)
+    description: A tenant account (tiny view)
     example:
-      created_at: 2015-09-23T11:51:57-07:00
-      created_by: me@goa.design
       href: /accounts/1
       id: 1
       name: test
     properties:
-      created_at:
-        description: Date of creation
-        example: 2015-09-23T11:51:57-07:00
-        format: date-time
-        type: string
-      created_by:
-        description: Email of account owner
-        example: me@goa.design
-        format: email
-        type: string
       href:
         description: API href of account
         example: /accounts/1
@@ -134,9 +102,7 @@ definitions:
     - id
     - href
     - name
-    - created_at
-    - created_by
-    title: 'Mediatype identifier: application/vnd.account+json'
+    title: 'Mediatype identifier: application/vnd.account+json; view=tiny'
     type: object
   Bottle:
     description: A bottle of wine (default view)
@@ -147,17 +113,14 @@ definitions:
         href: /accounts/1
         id: 1
         name: test
-      color: white
-      country: USA
-      created_at: 1980-11-24T15:54:06-08:00
       href: /accounts/1/bottles/1
       id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
       name: Number 8
       rating: 3
-      region: Napa Valley
-      review: Great and inexpensive
-      sweetness: 1
-      updated_at: 2003-07-25T04:17:15-07:00
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -205,7 +168,7 @@ definitions:
     - vineyard
     - varietal
     - vintage
-    title: 'Mediatype identifier: application/vnd.bottle+json'
+    title: 'Mediatype identifier: application/vnd.bottle+json; view=default'
     type: object
   BottleCollection:
     description: BottleCollection is the media type for an array of Bottle (default
@@ -221,11 +184,8 @@ definitions:
       id: 1
       links:
         account:
-          created_at: 2015-09-23T11:51:57-07:00
-          created_by: me@goa.design
           href: /accounts/1
           id: 1
-          name: test
       name: Number 8
       rating: 3
       varietal: Merlot
@@ -241,11 +201,8 @@ definitions:
       id: 1
       links:
         account:
-          created_at: 2015-09-23T11:51:57-07:00
-          created_by: me@goa.design
           href: /accounts/1
           id: 1
-          name: test
       name: Number 8
       rating: 3
       varietal: Merlot
@@ -261,11 +218,8 @@ definitions:
       id: 1
       links:
         account:
-          created_at: 2015-09-23T11:51:57-07:00
-          created_by: me@goa.design
           href: /accounts/1
           id: 1
-          name: test
       name: Number 8
       rating: 3
       varietal: Merlot
@@ -277,6 +231,10 @@ definitions:
     type: array
   BottleLinks:
     description: BottleLinks contains links to related resources of Bottle.
+    example:
+      account:
+        href: /accounts/1
+        id: 1
     properties:
       account:
         $ref: '#/definitions/AccountLink'
@@ -284,7 +242,7 @@ definitions:
     type: object
   BottlePayload:
     example:
-      color: sparkling
+      color: white
       country: USA
       name: Number 8
       region: Napa Valley
@@ -301,7 +259,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: sparkling
+        example: white
         type: string
       country:
         example: USA

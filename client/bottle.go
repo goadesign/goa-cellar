@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
 )
 
 // CreateBottlePayload is the bottle create action payload.
@@ -25,7 +24,7 @@ type CreateBottlePayload struct {
 }
 
 // CreateBottlePath computes a request path to the create action of bottle.
-func CreateBottlePath(accountID string) string {
+func CreateBottlePath(accountID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles", accountID)
 }
 
@@ -65,7 +64,7 @@ func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payloa
 }
 
 // DeleteBottlePath computes a request path to the delete action of bottle.
-func DeleteBottlePath(accountID string, bottleID int) string {
+func DeleteBottlePath(accountID int, bottleID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
@@ -93,7 +92,7 @@ func (c *Client) NewDeleteBottleRequest(ctx context.Context, path string) (*http
 }
 
 // ListBottlePath computes a request path to the list action of bottle.
-func ListBottlePath(accountID string) string {
+func ListBottlePath(accountID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles", accountID)
 }
 
@@ -114,14 +113,9 @@ func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
-	if years != nil {
-		tmp15 := make([]string, len(years))
-		for i, e := range years {
-			tmp16 := strconv.Itoa(e)
-			tmp15[i] = tmp16
-		}
-		tmp14 := strings.Join(tmp15, ",")
-		values.Set("years", tmp14)
+	for _, p := range years {
+		tmp14 := strconv.Itoa(p)
+		values.Add("years", tmp14)
 	}
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -138,7 +132,7 @@ type RateBottlePayload struct {
 }
 
 // RateBottlePath computes a request path to the rate action of bottle.
-func RateBottlePath(accountID string, bottleID int) string {
+func RateBottlePath(accountID int, bottleID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", accountID, bottleID)
 }
 
@@ -178,7 +172,7 @@ func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload 
 }
 
 // ShowBottlePath computes a request path to the show action of bottle.
-func ShowBottlePath(accountID string, bottleID int) string {
+func ShowBottlePath(accountID int, bottleID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
@@ -206,7 +200,7 @@ func (c *Client) NewShowBottleRequest(ctx context.Context, path string) (*http.R
 }
 
 // UpdateBottlePath computes a request path to the update action of bottle.
-func UpdateBottlePath(accountID string, bottleID int) string {
+func UpdateBottlePath(accountID int, bottleID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
@@ -246,7 +240,7 @@ func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payloa
 }
 
 // WatchBottlePath computes a request path to the watch action of bottle.
-func WatchBottlePath(accountID string, bottleID int) string {
+func WatchBottlePath(accountID int, bottleID int) string {
 	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v/watch", accountID, bottleID)
 }
 
