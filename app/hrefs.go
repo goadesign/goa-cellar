@@ -12,14 +12,20 @@
 
 package app
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // AccountHref returns the resource href.
 func AccountHref(accountID interface{}) string {
-	return fmt.Sprintf("/cellar/accounts/%v", accountID)
+	paramaccountID := strings.TrimLeftFunc(fmt.Sprintf("%v", accountID), func(r rune) bool { return r == '/' })
+	return fmt.Sprintf("/cellar/accounts/%v", paramaccountID)
 }
 
 // BottleHref returns the resource href.
 func BottleHref(accountID, bottleID interface{}) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
+	paramaccountID := strings.TrimLeftFunc(fmt.Sprintf("%v", accountID), func(r rune) bool { return r == '/' })
+	parambottleID := strings.TrimLeftFunc(fmt.Sprintf("%v", bottleID), func(r rune) bool { return r == '/' })
+	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", paramaccountID, parambottleID)
 }

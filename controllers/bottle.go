@@ -6,11 +6,12 @@ import (
 
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/store"
 	"golang.org/x/net/websocket"
 )
 
 // ToBottleMedia converts a bottle model into a bottle media type
-func ToBottleMedia(a *AccountModel, b *BottleModel) *app.Bottle {
+func ToBottleMedia(a *store.AccountModel, b *store.BottleModel) *app.Bottle {
 	account := ToAccountMediaTiny(a)
 	link := ToAccountLink(a)
 	return &app.Bottle{
@@ -29,20 +30,20 @@ func ToBottleMedia(a *AccountModel, b *BottleModel) *app.Bottle {
 // BottleController implements the bottle resource.
 type BottleController struct {
 	*goa.Controller
-	db *DB
+	db *store.DB
 }
 
 // NewBottle creates a bottle controller.
-func NewBottle(service *goa.Service) *BottleController {
+func NewBottle(service *goa.Service, db *store.DB) *BottleController {
 	return &BottleController{
 		Controller: service.NewController("Bottle"),
-		db:         NewDB(),
+		db:         db,
 	}
 }
 
 // List lists all the bottles in the account optionally filtering by year.
 func (b *BottleController) List(ctx *app.ListBottleContext) error {
-	var bottles []BottleModel
+	var bottles []store.BottleModel
 	var err error
 	if ctx.Years != nil {
 		bottles, err = b.db.GetBottlesByYears(ctx.AccountID, ctx.Years)

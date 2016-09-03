@@ -12,14 +12,13 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
-	"testing"
 )
 
 // HealthHealthOK runs the method Health of the given controller with the given parameters.
 // It returns the response writer so it's possible to inspect the response headers.
 // If ctx is nil then context.Background() is used.
 // If service is nil then a default service is created.
-func HealthHealthOK(t *testing.T, ctx context.Context, service *goa.Service, ctrl app.HealthController) http.ResponseWriter {
+func HealthHealthOK(t goatest.TInterface, ctx context.Context, service *goa.Service, ctrl app.HealthController) http.ResponseWriter {
 	// Setup service
 	var (
 		logBuf bytes.Buffer

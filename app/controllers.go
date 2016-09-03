@@ -146,6 +146,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 
 // handleAccountOrigin applies the CORS response headers corresponding to the origin.
 func handleAccountOrigin(h goa.Handler) goa.Handler {
+
 	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		origin := req.Header.Get("Origin")
 		if origin == "" {
@@ -154,7 +155,7 @@ func handleAccountOrigin(h goa.Handler) goa.Handler {
 		}
 		if cors.MatchOrigin(origin, "http://swagger.goa.design") {
 			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "http://swagger.goa.design")
+			rw.Header().Set("Access-Control-Allow-Origin", origin)
 			rw.Header().Set("Vary", "Origin")
 			rw.Header().Set("Access-Control-Max-Age", "600")
 			rw.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -176,6 +177,8 @@ func unmarshalCreateAccountPayload(ctx context.Context, service *goa.Service, re
 		return err
 	}
 	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
 		return err
 	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
@@ -189,6 +192,8 @@ func unmarshalUpdateAccountPayload(ctx context.Context, service *goa.Service, re
 		return err
 	}
 	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
 		return err
 	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
@@ -349,6 +354,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 
 // handleBottleOrigin applies the CORS response headers corresponding to the origin.
 func handleBottleOrigin(h goa.Handler) goa.Handler {
+
 	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		origin := req.Header.Get("Origin")
 		if origin == "" {
@@ -357,7 +363,7 @@ func handleBottleOrigin(h goa.Handler) goa.Handler {
 		}
 		if cors.MatchOrigin(origin, "http://swagger.goa.design") {
 			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "http://swagger.goa.design")
+			rw.Header().Set("Access-Control-Allow-Origin", origin)
 			rw.Header().Set("Vary", "Origin")
 			rw.Header().Set("Access-Control-Max-Age", "600")
 			rw.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -379,6 +385,8 @@ func unmarshalCreateBottlePayload(ctx context.Context, service *goa.Service, req
 		return err
 	}
 	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
 		return err
 	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
@@ -392,6 +400,8 @@ func unmarshalRateBottlePayload(ctx context.Context, service *goa.Service, req *
 		return err
 	}
 	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
 		return err
 	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
@@ -405,6 +415,8 @@ func unmarshalUpdateBottlePayload(ctx context.Context, service *goa.Service, req
 		return err
 	}
 	if err := payload.Validate(); err != nil {
+		// Initialize payload with private data structure so it can be logged
+		goa.ContextRequest(ctx).Payload = payload
 		return err
 	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
@@ -442,6 +454,7 @@ func MountHealthController(service *goa.Service, ctrl HealthController) {
 
 // handleHealthOrigin applies the CORS response headers corresponding to the origin.
 func handleHealthOrigin(h goa.Handler) goa.Handler {
+
 	return func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		origin := req.Header.Get("Origin")
 		if origin == "" {
@@ -450,7 +463,7 @@ func handleHealthOrigin(h goa.Handler) goa.Handler {
 		}
 		if cors.MatchOrigin(origin, "http://swagger.goa.design") {
 			ctx = goa.WithLogContext(ctx, "origin", origin)
-			rw.Header().Set("Access-Control-Allow-Origin", "http://swagger.goa.design")
+			rw.Header().Set("Access-Control-Allow-Origin", origin)
 			rw.Header().Set("Vary", "Origin")
 			rw.Header().Set("Access-Control-Max-Age", "600")
 			rw.Header().Set("Access-Control-Allow-Credentials", "true")

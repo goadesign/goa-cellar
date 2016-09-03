@@ -36,10 +36,12 @@ var Account = MediaType("application/vnd.account+json", func() {
 	})
 
 	View("tiny", func() {
+		Description("tiny is the view used to list accounts")
 		Attribute("id")
 		Attribute("href")
 		Attribute("name")
 	})
+
 	View("link", func() {
 		Attribute("id")
 		Attribute("href")

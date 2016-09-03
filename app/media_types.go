@@ -15,6 +15,7 @@ package app
 import (
 	"github.com/goadesign/goa"
 	"time"
+	"unicode/utf8"
 )
 
 // A tenant account (default view)
@@ -199,8 +200,8 @@ func (mt *Bottle) Validate() (err error) {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
-	if len(mt.Name) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, mt.Name, len(mt.Name), 2, true))
+	if utf8.RuneCountInString(mt.Name) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, mt.Name, utf8.RuneCountInString(mt.Name), 2, true))
 	}
 	if mt.Rating != nil {
 		if *mt.Rating < 1 {
@@ -212,11 +213,11 @@ func (mt *Bottle) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`response.rating`, *mt.Rating, 5, false))
 		}
 	}
-	if len(mt.Varietal) < 4 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, mt.Varietal, len(mt.Varietal), 4, true))
+	if utf8.RuneCountInString(mt.Varietal) < 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, mt.Varietal, utf8.RuneCountInString(mt.Varietal), 4, true))
 	}
-	if len(mt.Vineyard) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, mt.Vineyard, len(mt.Vineyard), 2, true))
+	if utf8.RuneCountInString(mt.Vineyard) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, mt.Vineyard, utf8.RuneCountInString(mt.Vineyard), 2, true))
 	}
 	if mt.Vintage < 1900 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`response.vintage`, mt.Vintage, 1900, true))
@@ -283,8 +284,8 @@ func (mt *BottleFull) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.InvalidEnumValueError(`response.color`, mt.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
 	}
 	if mt.Country != nil {
-		if len(*mt.Country) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.country`, *mt.Country, len(*mt.Country), 2, true))
+		if utf8.RuneCountInString(*mt.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.country`, *mt.Country, utf8.RuneCountInString(*mt.Country), 2, true))
 		}
 	}
 	if mt.Links != nil {
@@ -292,8 +293,8 @@ func (mt *BottleFull) Validate() (err error) {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
-	if len(mt.Name) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, mt.Name, len(mt.Name), 2, true))
+	if utf8.RuneCountInString(mt.Name) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, mt.Name, utf8.RuneCountInString(mt.Name), 2, true))
 	}
 	if mt.Rating != nil {
 		if *mt.Rating < 1 {
@@ -306,13 +307,13 @@ func (mt *BottleFull) Validate() (err error) {
 		}
 	}
 	if mt.Review != nil {
-		if len(*mt.Review) < 3 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *mt.Review, len(*mt.Review), 3, true))
+		if utf8.RuneCountInString(*mt.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *mt.Review, utf8.RuneCountInString(*mt.Review), 3, true))
 		}
 	}
 	if mt.Review != nil {
-		if len(*mt.Review) > 300 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *mt.Review, len(*mt.Review), 300, false))
+		if utf8.RuneCountInString(*mt.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *mt.Review, utf8.RuneCountInString(*mt.Review), 300, false))
 		}
 	}
 	if mt.Sweetness != nil {
@@ -325,11 +326,11 @@ func (mt *BottleFull) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`response.sweetness`, *mt.Sweetness, 5, false))
 		}
 	}
-	if len(mt.Varietal) < 4 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, mt.Varietal, len(mt.Varietal), 4, true))
+	if utf8.RuneCountInString(mt.Varietal) < 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, mt.Varietal, utf8.RuneCountInString(mt.Varietal), 4, true))
 	}
-	if len(mt.Vineyard) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, mt.Vineyard, len(mt.Vineyard), 2, true))
+	if utf8.RuneCountInString(mt.Vineyard) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, mt.Vineyard, utf8.RuneCountInString(mt.Vineyard), 2, true))
 	}
 	if mt.Vintage < 1900 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`response.vintage`, mt.Vintage, 1900, true))
@@ -369,8 +370,8 @@ func (mt *BottleTiny) Validate() (err error) {
 			err = goa.MergeErrors(err, err2)
 		}
 	}
-	if len(mt.Name) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, mt.Name, len(mt.Name), 2, true))
+	if utf8.RuneCountInString(mt.Name) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, mt.Name, utf8.RuneCountInString(mt.Name), 2, true))
 	}
 	if mt.Rating != nil {
 		if *mt.Rating < 1 {
@@ -431,8 +432,8 @@ func (mt BottleCollection) Validate() (err error) {
 				err = goa.MergeErrors(err, err2)
 			}
 		}
-		if len(e.Name) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].name`, e.Name, len(e.Name), 2, true))
+		if utf8.RuneCountInString(e.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].name`, e.Name, utf8.RuneCountInString(e.Name), 2, true))
 		}
 		if e.Rating != nil {
 			if *e.Rating < 1 {
@@ -444,11 +445,11 @@ func (mt BottleCollection) Validate() (err error) {
 				err = goa.MergeErrors(err, goa.InvalidRangeError(`response[*].rating`, *e.Rating, 5, false))
 			}
 		}
-		if len(e.Varietal) < 4 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].varietal`, e.Varietal, len(e.Varietal), 4, true))
+		if utf8.RuneCountInString(e.Varietal) < 4 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].varietal`, e.Varietal, utf8.RuneCountInString(e.Varietal), 4, true))
 		}
-		if len(e.Vineyard) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].vineyard`, e.Vineyard, len(e.Vineyard), 2, true))
+		if utf8.RuneCountInString(e.Vineyard) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].vineyard`, e.Vineyard, utf8.RuneCountInString(e.Vineyard), 2, true))
 		}
 		if e.Vintage < 1900 {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`response[*].vintage`, e.Vintage, 1900, true))
@@ -480,8 +481,8 @@ func (mt BottleTinyCollection) Validate() (err error) {
 				err = goa.MergeErrors(err, err2)
 			}
 		}
-		if len(e.Name) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].name`, e.Name, len(e.Name), 2, true))
+		if utf8.RuneCountInString(e.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response[*].name`, e.Name, utf8.RuneCountInString(e.Name), 2, true))
 		}
 		if e.Rating != nil {
 			if *e.Rating < 1 {

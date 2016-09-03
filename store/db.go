@@ -1,4 +1,4 @@
-package controllers
+package store
 
 import (
 	"fmt"
@@ -143,6 +143,13 @@ func NewDB() *DB {
 		},
 	}
 	return &DB{accounts: map[int]*AccountModel{1: account, 2: account2}, bottles: bottles, maxAccountModelID: 2}
+}
+
+// Reset removes all entries from the database. Mainly intended for tests.
+func (db *DB) Reset() {
+	db.maxAccountModelID = 0
+	db.accounts = make(map[int]*AccountModel)
+	db.bottles = make(map[int][]*BottleModel)
 }
 
 // GetAccounts returns all the accounts.

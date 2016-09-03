@@ -5,19 +5,20 @@ import (
 
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/store"
 )
 
 // HealthController implements the account resource.
 type HealthController struct {
 	*goa.Controller
-	db *DB
+	db *store.DB
 }
 
 // NewHealth creates a account controller.
-func NewHealth(service *goa.Service) *HealthController {
+func NewHealth(service *goa.Service, db *store.DB) *HealthController {
 	return &HealthController{
 		Controller: service.NewController("Health"),
-		db:         NewDB(),
+		db:         db,
 	}
 }
 

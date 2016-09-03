@@ -12,7 +12,10 @@
 
 package app
 
-import "github.com/goadesign/goa"
+import (
+	"github.com/goadesign/goa"
+	"unicode/utf8"
+)
 
 // bottlePayload user type.
 type bottlePayload struct {
@@ -35,23 +38,23 @@ func (ut *bottlePayload) Validate() (err error) {
 		}
 	}
 	if ut.Country != nil {
-		if len(*ut.Country) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.country`, *ut.Country, len(*ut.Country), 2, true))
+		if utf8.RuneCountInString(*ut.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.country`, *ut.Country, utf8.RuneCountInString(*ut.Country), 2, true))
 		}
 	}
 	if ut.Name != nil {
-		if len(*ut.Name) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, *ut.Name, len(*ut.Name), 2, true))
+		if utf8.RuneCountInString(*ut.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, *ut.Name, utf8.RuneCountInString(*ut.Name), 2, true))
 		}
 	}
 	if ut.Review != nil {
-		if len(*ut.Review) < 3 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 3, true))
+		if utf8.RuneCountInString(*ut.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, utf8.RuneCountInString(*ut.Review), 3, true))
 		}
 	}
 	if ut.Review != nil {
-		if len(*ut.Review) > 300 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 300, false))
+		if utf8.RuneCountInString(*ut.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, utf8.RuneCountInString(*ut.Review), 300, false))
 		}
 	}
 	if ut.Sweetness != nil {
@@ -65,13 +68,13 @@ func (ut *bottlePayload) Validate() (err error) {
 		}
 	}
 	if ut.Varietal != nil {
-		if len(*ut.Varietal) < 4 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, *ut.Varietal, len(*ut.Varietal), 4, true))
+		if utf8.RuneCountInString(*ut.Varietal) < 4 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, *ut.Varietal, utf8.RuneCountInString(*ut.Varietal), 4, true))
 		}
 	}
 	if ut.Vineyard != nil {
-		if len(*ut.Vineyard) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, *ut.Vineyard, len(*ut.Vineyard), 2, true))
+		if utf8.RuneCountInString(*ut.Vineyard) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, *ut.Vineyard, utf8.RuneCountInString(*ut.Vineyard), 2, true))
 		}
 	}
 	if ut.Vintage != nil {
@@ -141,23 +144,23 @@ func (ut *BottlePayload) Validate() (err error) {
 		}
 	}
 	if ut.Country != nil {
-		if len(*ut.Country) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.country`, *ut.Country, len(*ut.Country), 2, true))
+		if utf8.RuneCountInString(*ut.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.country`, *ut.Country, utf8.RuneCountInString(*ut.Country), 2, true))
 		}
 	}
 	if ut.Name != nil {
-		if len(*ut.Name) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, *ut.Name, len(*ut.Name), 2, true))
+		if utf8.RuneCountInString(*ut.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.name`, *ut.Name, utf8.RuneCountInString(*ut.Name), 2, true))
 		}
 	}
 	if ut.Review != nil {
-		if len(*ut.Review) < 3 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 3, true))
+		if utf8.RuneCountInString(*ut.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, utf8.RuneCountInString(*ut.Review), 3, true))
 		}
 	}
 	if ut.Review != nil {
-		if len(*ut.Review) > 300 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, len(*ut.Review), 300, false))
+		if utf8.RuneCountInString(*ut.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.review`, *ut.Review, utf8.RuneCountInString(*ut.Review), 300, false))
 		}
 	}
 	if ut.Sweetness != nil {
@@ -171,13 +174,13 @@ func (ut *BottlePayload) Validate() (err error) {
 		}
 	}
 	if ut.Varietal != nil {
-		if len(*ut.Varietal) < 4 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, *ut.Varietal, len(*ut.Varietal), 4, true))
+		if utf8.RuneCountInString(*ut.Varietal) < 4 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.varietal`, *ut.Varietal, utf8.RuneCountInString(*ut.Varietal), 4, true))
 		}
 	}
 	if ut.Vineyard != nil {
-		if len(*ut.Vineyard) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, *ut.Vineyard, len(*ut.Vineyard), 2, true))
+		if utf8.RuneCountInString(*ut.Vineyard) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`response.vineyard`, *ut.Vineyard, utf8.RuneCountInString(*ut.Vineyard), 2, true))
 		}
 	}
 	if ut.Vintage != nil {

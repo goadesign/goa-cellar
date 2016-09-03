@@ -16,7 +16,6 @@ var _ = Resource("account", func() {
 		)
 		Description("Retrieve all accounts.")
 		Response(OK, CollectionOf(Account))
-		Response(NotFound)
 	})
 
 	Action("show", func() {
@@ -25,7 +24,9 @@ var _ = Resource("account", func() {
 		)
 		Description("Retrieve account with given id. IDs 1 and 2 pre-exist in the system.")
 		Params(func() {
-			Param("accountID", Integer, "Account ID")
+			Param("accountID", Integer, "Account ID", func() {
+				Minimum(1)
+			})
 		})
 		Response(OK)
 		Response(NotFound)

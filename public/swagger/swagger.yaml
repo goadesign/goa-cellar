@@ -472,8 +472,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/AccountCollection'
-        "404":
-          description: Not Found
       schemes:
       - http
       summary: list account
@@ -534,6 +532,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -588,6 +587,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -620,6 +620,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -653,6 +654,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -680,6 +682,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -708,6 +711,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -740,6 +744,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer
@@ -773,6 +778,7 @@ paths:
       parameters:
       - description: Account ID
         in: path
+        minimum: 1
         name: accountID
         required: true
         type: integer

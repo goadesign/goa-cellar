@@ -16,6 +16,7 @@ import (
 	"github.com/goadesign/goa"
 	"golang.org/x/net/context"
 	"strconv"
+	"unicode/utf8"
 )
 
 // CreateAccountContext provides the account create action context.
@@ -170,12 +171,6 @@ func (ctx *ListAccountContext) OKTiny(r AccountTinyCollection) error {
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
-// NotFound sends a HTTP response with status code 404.
-func (ctx *ListAccountContext) NotFound() error {
-	ctx.ResponseData.WriteHeader(404)
-	return nil
-}
-
 // ShowAccountContext provides the account show action context.
 type ShowAccountContext struct {
 	context.Context
@@ -199,6 +194,9 @@ func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAcco
 			rctx.AccountID = accountID
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
 		}
 	}
 	return &rctx, err
@@ -345,6 +343,9 @@ func NewCreateBottleContext(ctx context.Context, service *goa.Service) (*CreateB
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
+		}
 	}
 	return &rctx, err
 }
@@ -386,23 +387,23 @@ func (payload *createBottlePayload) Validate() (err error) {
 		}
 	}
 	if payload.Country != nil {
-		if len(*payload.Country) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
+		if utf8.RuneCountInString(*payload.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, utf8.RuneCountInString(*payload.Country), 2, true))
 		}
 	}
 	if payload.Name != nil {
-		if len(*payload.Name) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.name`, *payload.Name, len(*payload.Name), 2, true))
+		if utf8.RuneCountInString(*payload.Name) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.name`, *payload.Name, utf8.RuneCountInString(*payload.Name), 2, true))
 		}
 	}
 	if payload.Review != nil {
-		if len(*payload.Review) < 3 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
+		if utf8.RuneCountInString(*payload.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, utf8.RuneCountInString(*payload.Review), 3, true))
 		}
 	}
 	if payload.Review != nil {
-		if len(*payload.Review) > 300 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
+		if utf8.RuneCountInString(*payload.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, utf8.RuneCountInString(*payload.Review), 300, false))
 		}
 	}
 	if payload.Sweetness != nil {
@@ -416,13 +417,13 @@ func (payload *createBottlePayload) Validate() (err error) {
 		}
 	}
 	if payload.Varietal != nil {
-		if len(*payload.Varietal) < 4 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.varietal`, *payload.Varietal, len(*payload.Varietal), 4, true))
+		if utf8.RuneCountInString(*payload.Varietal) < 4 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.varietal`, *payload.Varietal, utf8.RuneCountInString(*payload.Varietal), 4, true))
 		}
 	}
 	if payload.Vineyard != nil {
-		if len(*payload.Vineyard) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.vineyard`, *payload.Vineyard, len(*payload.Vineyard), 2, true))
+		if utf8.RuneCountInString(*payload.Vineyard) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.vineyard`, *payload.Vineyard, utf8.RuneCountInString(*payload.Vineyard), 2, true))
 		}
 	}
 	if payload.Vintage != nil {
@@ -503,21 +504,21 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 		err = goa.MergeErrors(err, goa.InvalidEnumValueError(`raw.color`, payload.Color, []interface{}{"red", "white", "rose", "yellow", "sparkling"}))
 	}
 	if payload.Country != nil {
-		if len(*payload.Country) < 2 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, len(*payload.Country), 2, true))
+		if utf8.RuneCountInString(*payload.Country) < 2 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.country`, *payload.Country, utf8.RuneCountInString(*payload.Country), 2, true))
 		}
 	}
-	if len(payload.Name) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.name`, payload.Name, len(payload.Name), 2, true))
+	if utf8.RuneCountInString(payload.Name) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.name`, payload.Name, utf8.RuneCountInString(payload.Name), 2, true))
 	}
 	if payload.Review != nil {
-		if len(*payload.Review) < 3 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 3, true))
+		if utf8.RuneCountInString(*payload.Review) < 3 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, utf8.RuneCountInString(*payload.Review), 3, true))
 		}
 	}
 	if payload.Review != nil {
-		if len(*payload.Review) > 300 {
-			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, len(*payload.Review), 300, false))
+		if utf8.RuneCountInString(*payload.Review) > 300 {
+			err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.review`, *payload.Review, utf8.RuneCountInString(*payload.Review), 300, false))
 		}
 	}
 	if payload.Sweetness != nil {
@@ -530,11 +531,11 @@ func (payload *CreateBottlePayload) Validate() (err error) {
 			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.sweetness`, *payload.Sweetness, 5, false))
 		}
 	}
-	if len(payload.Varietal) < 4 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.varietal`, payload.Varietal, len(payload.Varietal), 4, true))
+	if utf8.RuneCountInString(payload.Varietal) < 4 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.varietal`, payload.Varietal, utf8.RuneCountInString(payload.Varietal), 4, true))
 	}
-	if len(payload.Vineyard) < 2 {
-		err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.vineyard`, payload.Vineyard, len(payload.Vineyard), 2, true))
+	if utf8.RuneCountInString(payload.Vineyard) < 2 {
+		err = goa.MergeErrors(err, goa.InvalidLengthError(`raw.vineyard`, payload.Vineyard, utf8.RuneCountInString(payload.Vineyard), 2, true))
 	}
 	if payload.Vintage < 1900 {
 		err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.vintage`, payload.Vintage, 1900, true))
@@ -587,6 +588,9 @@ func NewDeleteBottleContext(ctx context.Context, service *goa.Service) (*DeleteB
 			rctx.AccountID = accountID
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
 		}
 	}
 	paramBottleID := req.Params["bottleID"]
@@ -643,6 +647,9 @@ func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottl
 			rctx.AccountID = accountID
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
 		}
 	}
 	paramYears := req.Params["years"]
@@ -709,6 +716,9 @@ func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottl
 			rctx.AccountID = accountID
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
 		}
 	}
 	paramBottleID := req.Params["bottleID"]
@@ -817,6 +827,9 @@ func NewShowBottleContext(ctx context.Context, service *goa.Service) (*ShowBottl
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
+		}
 	}
 	paramBottleID := req.Params["bottleID"]
 	if len(paramBottleID) > 0 {
@@ -886,6 +899,9 @@ func NewUpdateBottleContext(ctx context.Context, service *goa.Service) (*UpdateB
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
 		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
+		}
 	}
 	paramBottleID := req.Params["bottleID"]
 	if len(paramBottleID) > 0 {
@@ -941,6 +957,9 @@ func NewWatchBottleContext(ctx context.Context, service *goa.Service) (*WatchBot
 			rctx.AccountID = accountID
 		} else {
 			err = goa.MergeErrors(err, goa.InvalidParamTypeError("accountID", rawAccountID, "integer"))
+		}
+		if rctx.AccountID < 1 {
+			err = goa.MergeErrors(err, goa.InvalidRangeError(`accountID`, rctx.AccountID, 1, true))
 		}
 	}
 	paramBottleID := req.Params["bottleID"]

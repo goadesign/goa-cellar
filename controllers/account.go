@@ -1,12 +1,15 @@
 package controllers
 
 import (
+	"time"
+
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar/store"
 )
 
 // ToAccountMedia builds an account media type from an account model.
-func ToAccountMedia(account *AccountModel) *app.Account {
+func ToAccountMedia(account *store.AccountModel) *app.Account {
 	return &app.Account{
 		ID:        account.ID,
 		Href:      app.AccountHref(account.ID),
@@ -17,7 +20,7 @@ func ToAccountMedia(account *AccountModel) *app.Account {
 }
 
 // ToAccountMediaTiny builds an account media type with tiny view from an account model.
-func ToAccountMediaTiny(account *AccountModel) *app.AccountTiny {
+func ToAccountMediaTiny(account *store.AccountModel) *app.AccountTiny {
 	return &app.AccountTiny{
 		ID:   account.ID,
 		Href: app.AccountHref(account.ID),
@@ -26,7 +29,7 @@ func ToAccountMediaTiny(account *AccountModel) *app.AccountTiny {
 }
 
 // ToAccountLink builds an account link from an account model.
-func ToAccountLink(account *AccountModel) *app.AccountLink {
+func ToAccountLink(account *store.AccountModel) *app.AccountLink {
 	return &app.AccountLink{
 		ID:   account.ID,
 		Href: app.AccountHref(account.ID),
@@ -36,32 +39,30 @@ func ToAccountLink(account *AccountModel) *app.AccountLink {
 // AccountController implements the account resource.
 type AccountController struct {
 	*goa.Controller
-	db *DB
+	db *store.DB
 }
 
 // NewAccount creates a account controller.
-func NewAccount(service *goa.Service) *AccountController {
+func NewAccount(service *goa.Service, db *store.DB) *AccountController {
 	return &AccountController{
 		Controller: service.NewController("Account"),
-		db:         NewDB(),
+		db:         db,
 	}
 }
 
 // List retrieves all the accounts.
 func (b *AccountController) List(c *app.ListAccountContext) error {
 	accounts := b.db.GetAccounts()
-	res := make(app.AccountCollection, len(accounts))
+	res := make(app.AccountTinyCollection, len(accounts))
 	for i, account := range accounts {
-		a := &app.Account{
-			CreatedAt: account.CreatedAt,
-			CreatedBy: account.CreatedBy,
-			Href:      app.AccountHref(account.ID),
-			ID:        account.ID,
-			Name:      account.Name,
+		a := &app.AccountTiny{
+			ID:   account.ID,
+			Href: app.AccountHref(account.ID),
+			Name: account.Name,
 		}
 		res[i] = a
 	}
-	return c.OK(res)
+	return c.OKTiny(res)
 }
 
 // Show retrieves the account with the given id.
@@ -70,14 +71,7 @@ func (b *AccountController) Show(c *app.ShowAccountContext) error {
 	if !ok {
 		return c.NotFound()
 	}
-	a := &app.Account{
-		CreatedAt: account.CreatedAt,
-		CreatedBy: account.CreatedBy,
-		Href:      app.AccountHref(account.ID),
-		ID:        account.ID,
-		Name:      account.Name,
-	}
-	return c.OK(a)
+	return c.OK(ToAccountMedia(&account))
 }
 
 // Create records a new account.
@@ -85,6 +79,8 @@ func (b *AccountController) Create(c *app.CreateAccountContext) error {
 	account := b.db.NewAccount()
 	payload := c.Payload
 	account.Name = payload.Name
+	account.CreatedAt = time.Now()
+	b.db.SaveAccount(account)
 	c.ResponseData.Header().Set("Location", app.AccountHref(account.ID))
 	return c.Created()
 }
