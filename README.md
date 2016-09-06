@@ -76,23 +76,11 @@ Vary: Origin
 
 ### Running Locally
 
-Assuming a working Go setup and that `goagen` is installed:
+Assuming a working Go setup:
 
 ```bash
-go get github.com/goadesign/goa-cellar
-cd $GOPATH/src/github.com/goadesign/goa-cellar
-make
-./goa-cellar
-```
-
-The `make` command can be replaced with:
-
-```bash
-goagen app     -d github.com/goadesign/goa-cellar/design
-goagen swagger -d github.com/goadesign/goa-cellar/design -o public
-goagen schema  -d github.com/goadesign/goa-cellar/design -o public
-goagen client  -d github.com/goadesign/goa-cellar/design
-goagen js      -d github.com/goadesign/goa-cellar/design -o public
+go install github.com/goadesign/goa-cellar
+goa-cellar
 ```
 
 Once running `goa-cellar` listens on port 8081. The service serves the generated JavaScript example
