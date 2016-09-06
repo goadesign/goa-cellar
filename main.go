@@ -37,6 +37,18 @@ func main() {
 	bc := controllers.NewBottle(service, db)
 	app.MountBottleController(service, bc)
 
+	// Mount public controller onto service
+	pc := controllers.NewPublic(service)
+	app.MountPublicController(service, pc)
+
+	// Mount js controller onto service
+	jc := controllers.NewJs(service)
+	app.MountJsController(service, jc)
+
+	// Mount swagger controller onto service
+	sc := controllers.NewSwagger(service)
+	app.MountSwaggerController(service, sc)
+
 	// Run service
 	if err := service.ListenAndServe(":8081"); err != nil {
 		service.LogError(err.Error())

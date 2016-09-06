@@ -2,12 +2,12 @@ package controllers
 
 import "github.com/goadesign/goa"
 
-// Swagger implements the swagger resource.
-type Swagger struct {
+// SwaggerController implements the swagger resource.
+type SwaggerController struct {
 	*goa.Controller
 }
 
-// NewSwagger creates a swagger controller.
-func NewSwagger(service *goa.Service) *Swagger {
-	return &Swagger{Controller: service.NewController("Swagger")}
+// NewSwaggerController creates a swagger controller.
+func NewSwagger(service *goa.Service) *SwaggerController {
+	return &SwaggerController{Controller: service.NewController("SwaggerController")}
 }

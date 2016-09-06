@@ -42,7 +42,7 @@ generate:
 	@goagen swagger -d github.com/goadesign/goa-cellar/design -o public
 	@goagen schema  -d github.com/goadesign/goa-cellar/design -o public
 	@goagen client  -d github.com/goadesign/goa-cellar/design
-	@goagen js      -d github.com/goadesign/goa-cellar/design -o public --noexample
+	@goagen js      -d github.com/goadesign/goa-cellar/design -o public
 
 build:
 	@go build -o cellar

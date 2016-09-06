@@ -2,12 +2,12 @@ package controllers
 
 import "github.com/goadesign/goa"
 
-// Public implements the public resource.
-type Public struct {
+// PublicController implements the public resource.
+type PublicController struct {
 	*goa.Controller
 }
 
-// NewPublic creates a public controller.
-func NewPublic(service *goa.Service) *Public {
-	return &Public{Controller: service.NewController("Public")}
+// NewPublicController creates a public controller.
+func NewPublic(service *goa.Service) *PublicController {
+	return &PublicController{Controller: service.NewController("PublicController")}
 }

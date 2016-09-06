@@ -7,6 +7,10 @@ The service implements an API for managing wine bottles. The service is multiten
 created in the context of an account. At this time the database is emulated with a in-memory hash.
 An instance of this example is hosted at http://cellar.goa.design.
 
+## Usage
+
+### Calling the Hosted Service
+
 Using the excellent [httpie client](https://github.com/jkbrzt/httpie):
 
 Listing bottles in account 1:
@@ -69,6 +73,33 @@ Vary: Origin
     "name": "sonoma"
 }
 ```
+
+### Running Locally
+
+Assuming a working Go setup and that `goagen` is installed:
+
+```bash
+go get github.com/goadesign/goa-cellar
+cd $GOPATH/src/github.com/goadesign/goa-cellar
+make
+./goa-cellar
+```
+
+The `make` command can be replaced with:
+
+```bash
+goagen app     -d github.com/goadesign/goa-cellar/design
+goagen swagger -d github.com/goadesign/goa-cellar/design -o public
+goagen schema  -d github.com/goadesign/goa-cellar/design -o public
+goagen client  -d github.com/goadesign/goa-cellar/design
+goagen js      -d github.com/goadesign/goa-cellar/design -o public
+```
+
+Once running `goa-cellar` listens on port 8081. The service serves the generated JavaScript example
+at `/ui`, open [http://localhost:8081/ui](http://localhost:8081/ui) in a browser to display it. This
+example loads the generated JavaScript client from the service. It then calls the JavaScript client
+`ListBottle` function which makes a request to list the bottles to the service and displayes the
+results.
 
 ## Generated vs. Non Generated Code
 

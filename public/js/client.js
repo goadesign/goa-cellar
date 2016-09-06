@@ -1,4 +1,4 @@
-// This module exports functions that give access to the cellar API hosted at goa-cellar.appspot.com.
+// This module exports functions that give access to the cellar API hosted at localhost:8081.
 // It uses the axios javascript library for making the actual HTTP requests.
 define(['axios'] , function (axios) {
   function merge(obj1, obj2) {
@@ -10,7 +10,7 @@ define(['axios'] , function (axios) {
 
   return function (scheme, host, timeout) {
     scheme = scheme || 'http';
-    host = host || 'goa-cellar.appspot.com';
+    host = host || 'localhost:8081';
     timeout = timeout || 20000;
 
     // Client is the object returned by this module.
