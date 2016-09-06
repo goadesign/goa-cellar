@@ -488,6 +488,7 @@ type JsController interface {
 func MountJsController(service *goa.Service, ctrl JsController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/js/*filepath", ctrl.MuxHandler("preflight", handleJsOrigin(cors.HandlePreflight()), nil))
 
 	h = ctrl.FileHandler("/js/*filepath", "public/js")
 	h = handleJsOrigin(h)
@@ -546,6 +547,7 @@ type PublicController interface {
 func MountPublicController(service *goa.Service, ctrl PublicController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/ui", ctrl.MuxHandler("preflight", handlePublicOrigin(cors.HandlePreflight()), nil))
 
 	h = ctrl.FileHandler("/ui", "public/html/index.html")
 	h = handlePublicOrigin(h)
@@ -599,6 +601,7 @@ type SwaggerController interface {
 func MountSwaggerController(service *goa.Service, ctrl SwaggerController) {
 	initService(service)
 	var h goa.Handler
+	service.Mux.Handle("OPTIONS", "/swagger.json", ctrl.MuxHandler("preflight", handleSwaggerOrigin(cors.HandlePreflight()), nil))
 
 	h = ctrl.FileHandler("/swagger.json", "public/swagger/swagger.json")
 	h = handleSwaggerOrigin(h)
