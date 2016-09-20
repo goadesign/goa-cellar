@@ -1,5 +1,3 @@
-// +build !appengine,!appenginevm
-
 package main
 
 import (
@@ -7,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"golang.org/x/net/context"
 
@@ -38,7 +37,7 @@ func main() {
 	app.UseAPIKeyMiddleware(service, epMiddleware)
 	app.UseJWTMiddleware(service, epMiddleware)
 
-	// Setup database connection
+	// Instantiate DB
 	db := store.NewDB()
 
 	// Mount account controller onto service
@@ -53,7 +52,7 @@ func main() {
 	uc := controllers.NewAuth(service)
 	app.MountAuthController(service, uc)
 
-	// Mount health controller onto service
+	// Mount health-check controller onto service
 	hc := controllers.NewHealth(service, db)
 	app.MountHealthController(service, hc)
 
@@ -70,9 +69,15 @@ func main() {
 	app.MountSwaggerController(service, sc)
 
 	// Run service
-	if err := service.ListenAndServe(":8081"); err != nil {
+	port := "8080"
+	if s := os.Getenv("PORT"); s != "" {
+		port = s
+	}
+	if err := service.ListenAndServe(":" + port); err != nil {
 		service.LogError(err.Error())
 	}
+
+	service.LogInfo("exiting")
 }
 
 // endpointsMiddleware extracts the user information initialized by Google Cloud Endpoints
