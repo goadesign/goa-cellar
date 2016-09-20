@@ -3,18 +3,18 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
-	"strconv"
-	"strings"
-	"time"
-
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/client"
 	goaclient "github.com/goadesign/goa/client"
 	uuid "github.com/goadesign/goa/uuid"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
+	"log"
+	"os"
+	"path"
+	"strconv"
+	"strings"
+	"time"
 )
 
 type (
@@ -504,6 +504,60 @@ func boolArray(ins []string) ([]bool, error) {
 	return vals, nil
 }
 
+// Run downloads files with given paths.
+func (cmd *DownloadCommand) Run(c *client.Client, args []string) error {
+	var (
+		fnf func(context.Context, string) (int64, error)
+		fnd func(context.Context, string, string) (int64, error)
+
+		rpath   = args[0]
+		outfile = cmd.OutFile
+		logger  = goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+		ctx     = goa.WithLogger(context.Background(), logger)
+		err     error
+	)
+
+	if rpath[0] != '/' {
+		rpath = "/" + rpath
+	}
+	if rpath == "/ui" {
+		fnf = c.DownloadUI
+		if outfile == "" {
+			outfile = "index.html"
+		}
+		goto found
+	}
+	if rpath == "/swagger.json" {
+		fnf = c.DownloadSwaggerJSON
+		if outfile == "" {
+			outfile = "swagger.json"
+		}
+		goto found
+	}
+	if strings.HasPrefix(rpath, "/js/") {
+		fnd = c.DownloadJs
+		rpath = rpath[4:]
+		if outfile == "" {
+			_, outfile = path.Split(rpath)
+		}
+		goto found
+	}
+	return fmt.Errorf("don't know how to download %s", rpath)
+found:
+	ctx = goa.WithLogContext(ctx, "file", outfile)
+	if fnf != nil {
+		_, err = fnf(ctx, outfile)
+	} else {
+		_, err = fnd(ctx, rpath, outfile)
+	}
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	return nil
+}
+
 // Run makes the HTTP request corresponding to the CreateAccountCommand command.
 func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 	var path string
@@ -892,43 +946,4 @@ func (cmd *HealthHealthCommand) Run(c *client.Client, args []string) error {
 
 // RegisterFlags registers the command flags with the command line.
 func (cmd *HealthHealthCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
-}
-
-// Run downloads files with given paths.
-func (cmd *DownloadCommand) Run(c *client.Client, args []string) error {
-	var (
-		fnf func(context.Context, string) (int64, error)
-		fnd func(context.Context, string, string) (int64, error)
-
-		rpath   = args[0]
-		outfile = cmd.OutFile
-		logger  = goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
-		ctx     = goa.WithLogger(context.Background(), logger)
-		err     error
-	)
-
-	if rpath[0] != '/' {
-		rpath = "/" + rpath
-	}
-	if rpath == "/ui" {
-		fnf = c.DownloadUI
-		if outfile == "" {
-			outfile = "index.html"
-		}
-		goto found
-	}
-	return fmt.Errorf("don't know how to download %s", rpath)
-found:
-	ctx = goa.WithLogContext(ctx, "file", outfile)
-	if fnf != nil {
-		_, err = fnf(ctx, outfile)
-	} else {
-		_, err = fnd(ctx, rpath, outfile)
-	}
-	if err != nil {
-		goa.LogError(ctx, "failed", "err", err)
-		return err
-	}
-
-	return nil
 }
