@@ -1,3 +1,4 @@
+basePath: /api
 consumes:
 - application/json
 - application/xml
@@ -478,7 +479,7 @@ paths:
       summary: health health
       tags:
       - health
-  /api/accounts:
+  /accounts:
     get:
       description: Retrieve all accounts.
       operationId: account#list
@@ -518,7 +519,7 @@ paths:
       summary: create account
       tags:
       - account
-  /api/accounts/{accountID}:
+  /accounts/{accountID}:
     delete:
       operationId: account#delete
       parameters:
@@ -595,7 +596,7 @@ paths:
       summary: update account
       tags:
       - account
-  /api/accounts/{accountID}/bottles:
+  /accounts/{accountID}/bottles:
     get:
       description: List all bottles in account optionally filtering by year
       operationId: bottle#list
@@ -663,7 +664,7 @@ paths:
       summary: create bottle
       tags:
       - bottle
-  /api/accounts/{accountID}/bottles/{bottleID}:
+  /accounts/{accountID}/bottles/{bottleID}:
     delete:
       operationId: bottle#delete
       parameters:
@@ -753,7 +754,7 @@ paths:
       summary: update bottle
       tags:
       - bottle
-  /api/accounts/{accountID}/bottles/{bottleID}/actions/rate:
+  /accounts/{accountID}/bottles/{bottleID}/actions/rate:
     put:
       operationId: bottle#rate
       parameters:
@@ -786,7 +787,7 @@ paths:
       summary: rate bottle
       tags:
       - bottle
-  /api/accounts/{accountID}/bottles/{bottleID}/watch:
+  /accounts/{accountID}/bottles/{bottleID}/watch:
     get:
       description: Retrieve bottle with given id
       operationId: bottle#watch
@@ -813,7 +814,7 @@ paths:
       summary: watch bottle
       tags:
       - bottle
-  /api/auth/info/basic:
+  /auth/info/basic:
     get:
       operationId: auth#basic
       responses:
@@ -828,7 +829,7 @@ paths:
       summary: basic auth
       tags:
       - auth
-  /api/auth/info/jwt:
+  /auth/info/jwt:
     get:
       operationId: auth#jwt
       responses:
@@ -863,13 +864,14 @@ schemes:
 - https
 securityDefinitions:
   api_key:
+    authorizationUrl: ""
     in: query
     name: key
     type: apiKey
   jwt:
+    authorizationUrl: ""
     flow: implicit
     type: oauth2
-    authorizationUrl: ''
     x-issuer: jwt-client.endpoints.sample.google.com
     x-jwks_uri: https://www.googleapis.com/service_accounts/v1/jwk/account-1@goa-swagger.iam.gserviceaccount.com
 swagger: "2.0"

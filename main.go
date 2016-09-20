@@ -20,7 +20,7 @@ import (
 
 func main() {
 	// Create goa service
-	service := goa.New("cellar")
+	service := goa.New("cellar-ep")
 
 	// Setup logger
 	logger := log15.New()
@@ -57,16 +57,16 @@ func main() {
 	app.MountHealthController(service, hc)
 
 	// Mount public controller onto service
-	pc := controllers.NewPublic(service)
-	app.MountPublicController(service, pc)
+	//pc := controllers.NewPublic(service)
+	//app.MountPublicController(service, pc)
 
 	// Mount js controller onto service
-	jc := controllers.NewJs(service)
-	app.MountJsController(service, jc)
+	//jc := controllers.NewJs(service)
+	//app.MountJsController(service, jc)
 
 	// Mount swagger controller onto service
-	sc := controllers.NewSwagger(service)
-	app.MountSwaggerController(service, sc)
+	//sc := controllers.NewSwagger(service)
+	//app.MountSwaggerController(service, sc)
 
 	// Run service
 	port := "8080"
