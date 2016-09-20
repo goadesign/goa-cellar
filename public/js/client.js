@@ -114,7 +114,7 @@ define(['axios'] , function (axios) {
   }
 
   // Perform health check.
-  // path is the request path, the format is "/api/_ah/health"
+  // path is the request path, the format is "/_ah/health"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.

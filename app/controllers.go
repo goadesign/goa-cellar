@@ -508,7 +508,7 @@ type HealthController interface {
 func MountHealthController(service *goa.Service, ctrl HealthController) {
 	initService(service)
 	var h goa.Handler
-	service.Mux.Handle("OPTIONS", "/api/_ah/health", ctrl.MuxHandler("preflight", handleHealthOrigin(cors.HandlePreflight()), nil))
+	service.Mux.Handle("OPTIONS", "/_ah/health", ctrl.MuxHandler("preflight", handleHealthOrigin(cors.HandlePreflight()), nil))
 
 	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
 		// Check if there was an error loading the request
@@ -523,8 +523,8 @@ func MountHealthController(service *goa.Service, ctrl HealthController) {
 		return ctrl.Health(rctx)
 	}
 	h = handleHealthOrigin(h)
-	service.Mux.Handle("GET", "/api/_ah/health", ctrl.MuxHandler("Health", h, nil))
-	service.LogInfo("mount", "ctrl", "Health", "action", "Health", "route", "GET /api/_ah/health")
+	service.Mux.Handle("GET", "/_ah/health", ctrl.MuxHandler("Health", h, nil))
+	service.LogInfo("mount", "ctrl", "Health", "action", "Health", "route", "GET /_ah/health")
 }
 
 // handleHealthOrigin applies the CORS response headers corresponding to the origin.

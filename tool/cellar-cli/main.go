@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/goadesign/goa-cellar-ep-ep/client"
-	"github.com/goadesign/goa-cellar-ep-ep/tool/cli"
+	"github.com/goadesign/goa-cellar-ep/client"
+	"github.com/goadesign/goa-cellar-ep/tool/cli"
 	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"
 	"net/http"

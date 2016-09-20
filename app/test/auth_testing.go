@@ -16,7 +16,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar-ep-ep/app"
+	"github.com/goadesign/goa-cellar-ep/app"
 	"github.com/goadesign/goa/goatest"
 	"golang.org/x/net/context"
 	"io"

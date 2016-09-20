@@ -1,8 +1,6 @@
 package controllers
 
 import (
-	"fmt"
-
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar-ep/app"
 	"github.com/goadesign/goa-cellar-ep/store"
@@ -24,8 +22,5 @@ func NewHealth(service *goa.Service, db *store.DB) *HealthController {
 
 // Health performs the health-check.
 func (b *HealthController) Health(c *app.HealthHealthContext) error {
-	if _, ok := b.db.GetAccount(1); !ok {
-		return fmt.Errorf("failed to connect to DB")
-	}
 	return c.OK([]byte("ok"))
 }

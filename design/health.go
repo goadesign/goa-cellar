@@ -7,7 +7,7 @@ import (
 
 var _ = Resource("health", func() {
 
-	BasePath("/_ah")
+	BasePath("//_ah")
 
 	Action("health", func() {
 		Routing(

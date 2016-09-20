@@ -16,7 +16,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar-ep-ep/app"
+	"github.com/goadesign/goa-cellar-ep/app"
 	"github.com/goadesign/goa/goatest"
 	"golang.org/x/net/context"
 	"io"
@@ -51,7 +51,7 @@ func HealthHealthOK(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/api/_ah/health"),
+		Path: fmt.Sprintf("/_ah/health"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {

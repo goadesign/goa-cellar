@@ -4,3 +4,4 @@ goa-cellar
 goa-cellar.json
 .vscode/
 tool/cellar-cli/cellar-cli
+./goa-cellar-ep

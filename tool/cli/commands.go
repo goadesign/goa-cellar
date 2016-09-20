@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar-ep-ep/client"
+	"github.com/goadesign/goa-cellar-ep/client"
 	goaclient "github.com/goadesign/goa/client"
 	uuid "github.com/goadesign/goa/uuid"
 	"github.com/spf13/cobra"
@@ -228,7 +228,7 @@ Payload example:
 	}
 	tmp6 := new(HealthHealthCommand)
 	sub = &cobra.Command{
-		Use:   `health ["/api/_ah/health"]`,
+		Use:   `health ["/_ah/health"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
@@ -1016,7 +1016,7 @@ func (cmd *HealthHealthCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/api/_ah/health"
+		path = "/_ah/health"
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)

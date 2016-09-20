@@ -466,7 +466,7 @@ info:
   title: The virtual wine cellar
   version: ""
 paths:
-  /api/_ah/health:
+  /_ah/health:
     get:
       description: Perform health check.
       operationId: health#health
@@ -843,49 +843,6 @@ paths:
       summary: jwt auth
       tags:
       - auth
-  /js/{filepath}:
-    get:
-      operationId: js#/js/*filepath
-      parameters:
-      - description: Relative file path
-        in: path
-        name: filepath
-        required: true
-        type: string
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-        "404":
-          description: File not found
-          schema:
-            $ref: '#/definitions/error'
-      schemes:
-      - https
-      summary: Download public/js
-  /swagger.json:
-    get:
-      operationId: swagger#/swagger.json
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-      schemes:
-      - https
-      summary: Download public/swagger/swagger.json
-  /ui:
-    get:
-      operationId: public#/ui
-      responses:
-        "200":
-          description: File downloaded
-          schema:
-            type: file
-      schemes:
-      - https
-      summary: Download public/html/index.html
 produces:
 - application/json
 - application/xml
@@ -912,6 +869,7 @@ securityDefinitions:
   jwt:
     flow: implicit
     type: oauth2
+    authorizationUrl: ''
     x-issuer: jwt-client.endpoints.sample.google.com
     x-jwks_uri: https://www.googleapis.com/service_accounts/v1/jwk/account-1@goa-swagger.iam.gserviceaccount.com
 swagger: "2.0"
