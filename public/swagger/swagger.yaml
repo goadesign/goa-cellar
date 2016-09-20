@@ -864,12 +864,11 @@ schemes:
 - https
 securityDefinitions:
   api_key:
-    authorizationUrl: ""
     in: query
     name: key
     type: apiKey
   jwt:
-    authorizationUrl: ""
+    authorizationUrl: https://goa-cellar.appspot.com/auth
     flow: implicit
     type: oauth2
     x-issuer: jwt-client.endpoints.sample.google.com

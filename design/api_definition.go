@@ -51,5 +51,5 @@ var APIKey = APIKeySecurity("api_key", func() {
 
 // JWT defines a security scheme using Google JWT.
 var JWT = OAuth2Security("jwt", func() {
-	ImplicitFlow("")
+	ImplicitFlow("/auth")
 })
