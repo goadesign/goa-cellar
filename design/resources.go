@@ -5,6 +5,27 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
+var _ = Resource("auth", func() {
+
+	DefaultMedia(Auth)
+	BasePath("/auth")
+
+	Action("basic", func() {
+		Security("api_key")
+		Routing(GET("info/basic"))
+		Response(OK)
+	})
+
+	Action("jwt", func() {
+		Security("jwt", func() {
+			Metadata("swagger:extension:x-issuer", "jwt-client.endpoints.sample.google.com")
+			Metadata("swagger:extension:x-jwks_uri", "https://www.googleapis.com/service_accounts/v1/jwk/account-1@goa-swagger.iam.gserviceaccount.com")
+		})
+		Routing(GET("info/jwt"))
+		Response(OK)
+	})
+})
+
 var _ = Resource("account", func() {
 
 	DefaultMedia(Account)

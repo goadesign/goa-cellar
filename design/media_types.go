@@ -5,9 +5,25 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
+// Auth is the auth info media type.
+var Auth = MediaType("application/vnd.goa-cellar.auth+json", func() {
+	Description("User info extracted from security token")
+	TypeName("Auth")
+
+	Attributes(func() {
+		Attribute("info", HashOf(String, Any), "User info")
+		Required("info")
+	})
+
+	View("default", func() {
+		Attribute("info")
+	})
+})
+
 // Account is the account resource media type.
-var Account = MediaType("application/vnd.account+json", func() {
+var Account = MediaType("application/vnd.goa-cellar.account+json", func() {
 	Description("A tenant account")
+	TypeName("Account")
 	Attributes(func() {
 		Attribute("id", Integer, "ID of account", func() {
 			Example(1)
@@ -49,8 +65,9 @@ var Account = MediaType("application/vnd.account+json", func() {
 })
 
 // Bottle is the bottle resource media type.
-var Bottle = MediaType("application/vnd.bottle+json", func() {
+var Bottle = MediaType("application/vnd.goa-cellar.bottle+json", func() {
 	Description("A bottle of wine")
+	TypeName("Bottle")
 	Reference(BottlePayload)
 	Attributes(func() {
 		Attribute("id", Integer, "ID of bottle", func() {

@@ -3,8 +3,8 @@
 //
 // Generated with goagen v1.0.0, command line:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// --design=github.com/goadesign/goa-cellar-ep/design
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar-ep
 // --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
@@ -16,7 +16,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar-ep-ep/app"
 	"github.com/goadesign/goa/goatest"
 	"golang.org/x/net/context"
 	"io"
@@ -51,7 +51,7 @@ func HealthHealthOK(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/_ah/health"),
+		Path: fmt.Sprintf("/api/_ah/health"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {

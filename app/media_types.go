@@ -3,8 +3,8 @@
 //
 // Generated with goagen v1.0.0, command line:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// --design=github.com/goadesign/goa-cellar-ep/design
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar-ep
 // --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
@@ -20,7 +20,7 @@ import (
 
 // A tenant account (default view)
 //
-// Identifier: application/vnd.account+json; view=default
+// Identifier: application/vnd.goa-cellar.account+json; view=default
 type Account struct {
 	// Date of creation
 	CreatedAt time.Time `form:"created_at" json:"created_at" xml:"created_at"`
@@ -54,7 +54,7 @@ func (mt *Account) Validate() (err error) {
 
 // A tenant account (link view)
 //
-// Identifier: application/vnd.account+json; view=link
+// Identifier: application/vnd.goa-cellar.account+json; view=link
 type AccountLink struct {
 	// API href of account
 	Href string `form:"href" json:"href" xml:"href"`
@@ -73,7 +73,7 @@ func (mt *AccountLink) Validate() (err error) {
 
 // A tenant account (tiny view)
 //
-// Identifier: application/vnd.account+json; view=tiny
+// Identifier: application/vnd.goa-cellar.account+json; view=tiny
 type AccountTiny struct {
 	// API href of account
 	Href string `form:"href" json:"href" xml:"href"`
@@ -97,7 +97,7 @@ func (mt *AccountTiny) Validate() (err error) {
 
 // AccountCollection is the media type for an array of Account (default view)
 //
-// Identifier: application/vnd.account+json; type=collection; view=default
+// Identifier: application/vnd.goa-cellar.account+json; type=collection; view=default
 type AccountCollection []*Account
 
 // Validate validates the AccountCollection media type instance.
@@ -122,7 +122,7 @@ func (mt AccountCollection) Validate() (err error) {
 
 // AccountCollection is the media type for an array of Account (link view)
 //
-// Identifier: application/vnd.account+json; type=collection; view=link
+// Identifier: application/vnd.goa-cellar.account+json; type=collection; view=link
 type AccountLinkCollection []*AccountLink
 
 // Validate validates the AccountLinkCollection media type instance.
@@ -138,7 +138,7 @@ func (mt AccountLinkCollection) Validate() (err error) {
 
 // AccountCollection is the media type for an array of Account (tiny view)
 //
-// Identifier: application/vnd.account+json; type=collection; view=tiny
+// Identifier: application/vnd.goa-cellar.account+json; type=collection; view=tiny
 type AccountTinyCollection []*AccountTiny
 
 // Validate validates the AccountTinyCollection media type instance.
@@ -155,9 +155,26 @@ func (mt AccountTinyCollection) Validate() (err error) {
 	return
 }
 
+// User info extracted from security token (default view)
+//
+// Identifier: application/vnd.goa-cellar.auth+json; view=default
+type Auth struct {
+	// User info
+	Info map[string]interface{} `form:"info" json:"info" xml:"info"`
+}
+
+// Validate validates the Auth media type instance.
+func (mt *Auth) Validate() (err error) {
+	if mt.Info == nil {
+		err = goa.MergeErrors(err, goa.MissingAttributeError(`response`, "info"))
+	}
+
+	return
+}
+
 // A bottle of wine (default view)
 //
-// Identifier: application/vnd.bottle+json; view=default
+// Identifier: application/vnd.goa-cellar.bottle+json; view=default
 type Bottle struct {
 	// Account that owns bottle
 	Account *AccountTiny `form:"account,omitempty" json:"account,omitempty" xml:"account,omitempty"`
@@ -230,7 +247,7 @@ func (mt *Bottle) Validate() (err error) {
 
 // A bottle of wine (full view)
 //
-// Identifier: application/vnd.bottle+json; view=full
+// Identifier: application/vnd.goa-cellar.bottle+json; view=full
 type BottleFull struct {
 	// Account that owns bottle
 	Account *Account `form:"account,omitempty" json:"account,omitempty" xml:"account,omitempty"`
@@ -343,7 +360,7 @@ func (mt *BottleFull) Validate() (err error) {
 
 // A bottle of wine (tiny view)
 //
-// Identifier: application/vnd.bottle+json; view=tiny
+// Identifier: application/vnd.goa-cellar.bottle+json; view=tiny
 type BottleTiny struct {
 	// API href of bottle
 	Href string `form:"href" json:"href" xml:"href"`
@@ -403,7 +420,7 @@ func (ut *BottleLinks) Validate() (err error) {
 
 // BottleCollection is the media type for an array of Bottle (default view)
 //
-// Identifier: application/vnd.bottle+json; type=collection; view=default
+// Identifier: application/vnd.goa-cellar.bottle+json; type=collection; view=default
 type BottleCollection []*Bottle
 
 // Validate validates the BottleCollection media type instance.
@@ -463,7 +480,7 @@ func (mt BottleCollection) Validate() (err error) {
 
 // BottleCollection is the media type for an array of Bottle (tiny view)
 //
-// Identifier: application/vnd.bottle+json; type=collection; view=tiny
+// Identifier: application/vnd.goa-cellar.bottle+json; type=collection; view=tiny
 type BottleTinyCollection []*BottleTiny
 
 // Validate validates the BottleTinyCollection media type instance.

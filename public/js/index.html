@@ -15,7 +15,7 @@
         }
       });
       requirejs(['client'], function (client) {
-        client().healthHealth ("/cellar/_ah/health")
+        client().basicAuth ("/api/auth/info/basic")
           .then(function (resp) {
             document.getElementById('response').innerHTML = resp.statusText;
           })

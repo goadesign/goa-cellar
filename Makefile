@@ -38,11 +38,11 @@ clean:
 	@rm -f cellar
 
 generate:
-	@goagen app     -d github.com/goadesign/goa-cellar/design
-	@goagen swagger -d github.com/goadesign/goa-cellar/design -o public
-	@goagen schema  -d github.com/goadesign/goa-cellar/design -o public
-	@goagen client  -d github.com/goadesign/goa-cellar/design
-	@goagen js      -d github.com/goadesign/goa-cellar/design -o public
+	@goagen app     -d github.com/goadesign/goa-cellar-ep/design
+	@goagen swagger -d github.com/goadesign/goa-cellar-ep/design -o public
+	@goagen schema  -d github.com/goadesign/goa-cellar-ep/design -o public
+	@goagen client  -d github.com/goadesign/goa-cellar-ep/design
+	@goagen js      -d github.com/goadesign/goa-cellar-ep/design -o public
 
 build:
 	@go build -o cellar

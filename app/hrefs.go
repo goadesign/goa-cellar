@@ -3,8 +3,8 @@
 //
 // Generated with goagen v1.0.0, command line:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// --design=github.com/goadesign/goa-cellar-ep/design
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar-ep
 // --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
@@ -20,12 +20,12 @@ import (
 // AccountHref returns the resource href.
 func AccountHref(accountID interface{}) string {
 	paramaccountID := strings.TrimLeftFunc(fmt.Sprintf("%v", accountID), func(r rune) bool { return r == '/' })
-	return fmt.Sprintf("/cellar/accounts/%v", paramaccountID)
+	return fmt.Sprintf("/api/accounts/%v", paramaccountID)
 }
 
 // BottleHref returns the resource href.
 func BottleHref(accountID, bottleID interface{}) string {
 	paramaccountID := strings.TrimLeftFunc(fmt.Sprintf("%v", accountID), func(r rune) bool { return r == '/' })
 	parambottleID := strings.TrimLeftFunc(fmt.Sprintf("%v", bottleID), func(r rune) bool { return r == '/' })
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", paramaccountID, parambottleID)
+	return fmt.Sprintf("/api/accounts/%v/bottles/%v", paramaccountID, parambottleID)
 }

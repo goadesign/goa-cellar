@@ -4,9 +4,9 @@ package main
 
 import (
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
-	"github.com/goadesign/goa-cellar/controllers"
-	"github.com/goadesign/goa-cellar/store"
+	"github.com/goadesign/goa-cellar-ep/app"
+	"github.com/goadesign/goa-cellar-ep/controllers"
+	"github.com/goadesign/goa-cellar-ep/store"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/inconshreveable/log15"
@@ -36,6 +36,10 @@ func main() {
 	// Mount bottle controller onto service
 	bc := controllers.NewBottle(service, db)
 	app.MountBottleController(service, bc)
+
+	// Mount auth controller onto service
+	uc := controllers.NewAuth(service)
+	app.MountAuthController(service, uc)
 
 	// Mount public controller onto service
 	pc := controllers.NewPublic(service)

@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
-	"github.com/goadesign/goa-cellar/app/test"
-	"github.com/goadesign/goa-cellar/store"
+	"github.com/goadesign/goa-cellar-ep/app"
+	"github.com/goadesign/goa-cellar-ep/app/test"
+	"github.com/goadesign/goa-cellar-ep/store"
 )
 
 func TestListAccount(t *testing.T) {

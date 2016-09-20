@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/goadesign/goa-cellar/client"
-	"github.com/goadesign/goa-cellar/tool/cli"
+	"github.com/goadesign/goa-cellar-ep-ep/client"
+	"github.com/goadesign/goa-cellar-ep-ep/tool/cli"
 	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"
 	"net/http"
@@ -24,11 +24,29 @@ func main() {
 
 	// Register global flags
 	app.PersistentFlags().StringVarP(&c.Scheme, "scheme", "s", "", "Set the requests scheme")
-	app.PersistentFlags().StringVarP(&c.Host, "host", "H", "localhost:8081", "API hostname")
+	app.PersistentFlags().StringVarP(&c.Host, "host", "H", "goa-cellar.appspot.com", "API hostname")
 	app.PersistentFlags().DurationVarP(&httpClient.Timeout, "timeout", "t", time.Duration(20)*time.Second, "Set the request timeout")
 	app.PersistentFlags().BoolVar(&c.Dump, "dump", false, "Dump HTTP request and response.")
 
+	// Register signer flags
+	var key, format string
+	app.PersistentFlags().StringVar(&key, "key", "", "API key used for authentication")
+	app.PersistentFlags().StringVar(&format, "format", "Bearer %s", "Format used to create auth header or query from key")
+	var token, typ string
+	app.PersistentFlags().StringVar(&token, "token", "", "Token used for authentication")
+	app.PersistentFlags().StringVar(&typ, "token-type", "Bearer", "Token type used for authentication")
+
+	// Parse flags and setup signers
+	app.ParseFlags(os.Args)
+	source := &goaclient.StaticTokenSource{
+		StaticToken: &goaclient.StaticToken{Type: typ, Value: token},
+	}
+	apiKeySigner := newAPIKeySigner(key, format)
+	jwtSigner := newJWTSigner(source)
+
 	// Initialize API client
+	c.SetAPIKeySigner(apiKeySigner)
+	c.SetJWTSigner(jwtSigner)
 	c.UserAgent = "cellar-cli/0"
 
 	// Register API commands
@@ -46,4 +64,25 @@ func newHTTPClient() *http.Client {
 	// TBD: Change as needed (e.g. to use a different transport to control redirection policy or
 	// disable cert validation or...)
 	return http.DefaultClient
+}
+
+// newAPIKeySigner returns the request signer used for authenticating
+// against the api_key security scheme.
+func newAPIKeySigner(key, format string) goaclient.Signer {
+	return &goaclient.APIKeySigner{
+		SignQuery: true,
+		KeyName:   "key",
+		KeyValue:  key,
+		Format:    format,
+	}
+
+}
+
+// newJWTSigner returns the request signer used for authenticating
+// against the jwt security scheme.
+func newJWTSigner(source goaclient.TokenSource) goaclient.Signer {
+	return &goaclient.OAuth2Signer{
+		TokenSource: source,
+	}
+
 }

@@ -3,8 +3,8 @@
 //
 // Generated with goagen v1.0.0, command line:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// --design=github.com/goadesign/goa-cellar-ep/design
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar-ep
 // --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
@@ -16,7 +16,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar-ep-ep/app"
 	"github.com/goadesign/goa/goatest"
 	"golang.org/x/net/context"
 	"io"
@@ -64,7 +64,7 @@ func CreateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
@@ -143,7 +143,7 @@ func CreateBottleCreated(t goatest.TInterface, ctx context.Context, service *goa
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
@@ -214,7 +214,7 @@ func CreateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
@@ -272,7 +272,7 @@ func DeleteBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
@@ -338,7 +338,7 @@ func DeleteBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
@@ -396,7 +396,7 @@ func DeleteBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
@@ -462,7 +462,7 @@ func ListBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		query["years"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path:     fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -543,7 +543,7 @@ func ListBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		query["years"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path:     fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -616,7 +616,7 @@ func ListBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		query["years"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path:     fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -701,7 +701,7 @@ func ListBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 		query["years"] = sliceVal
 	}
 	u := &url.URL{
-		Path:     fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
+		Path:     fmt.Sprintf("/api/accounts/%v/bottles", accountID),
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -791,7 +791,7 @@ func RateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v/actions/rate", accountID, bottleID),
 	}
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
@@ -871,7 +871,7 @@ func RateBottleNoContent(t goatest.TInterface, ctx context.Context, service *goa
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v/actions/rate", accountID, bottleID),
 	}
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
@@ -943,7 +943,7 @@ func RateBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v/actions/rate", accountID, bottleID),
 	}
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
@@ -1002,7 +1002,7 @@ func ShowBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1068,7 +1068,7 @@ func ShowBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1126,7 +1126,7 @@ func ShowBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1196,7 +1196,7 @@ func ShowBottleOKFull(t goatest.TInterface, ctx context.Context, service *goa.Se
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1266,7 +1266,7 @@ func ShowBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -1349,7 +1349,7 @@ func UpdateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("PATCH", u.String(), nil)
 	if err != nil {
@@ -1429,7 +1429,7 @@ func UpdateBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("PATCH", u.String(), nil)
 	if err != nil {
@@ -1501,7 +1501,7 @@ func UpdateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID),
 	}
 	req, err := http.NewRequest("PATCH", u.String(), nil)
 	if err != nil {
@@ -1560,7 +1560,7 @@ func WatchBottleBadRequest(t goatest.TInterface, ctx context.Context, service *g
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v/watch", accountID, bottleID),
+		Path: fmt.Sprintf("/api/accounts/%v/bottles/%v/watch", accountID, bottleID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {

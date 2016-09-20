@@ -16,7 +16,7 @@ type CreateAccountPayload struct {
 
 // CreateAccountPath computes a request path to the create action of account.
 func CreateAccountPath() string {
-	return fmt.Sprintf("/cellar/accounts")
+	return fmt.Sprintf("/api/accounts")
 }
 
 // Create new account
@@ -40,7 +40,7 @@ func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, paylo
 	}
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("POST", u.String(), &body)
@@ -56,7 +56,7 @@ func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, paylo
 
 // DeleteAccountPath computes a request path to the delete action of account.
 func DeleteAccountPath(accountID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v", accountID)
+	return fmt.Sprintf("/api/accounts/%v", accountID)
 }
 
 // DeleteAccount makes a request to the delete action endpoint of the account resource
@@ -72,7 +72,7 @@ func (c *Client) DeleteAccount(ctx context.Context, path string) (*http.Response
 func (c *Client) NewDeleteAccountRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
@@ -84,7 +84,7 @@ func (c *Client) NewDeleteAccountRequest(ctx context.Context, path string) (*htt
 
 // ListAccountPath computes a request path to the list action of account.
 func ListAccountPath() string {
-	return fmt.Sprintf("/cellar/accounts")
+	return fmt.Sprintf("/api/accounts")
 }
 
 // Retrieve all accounts.
@@ -100,7 +100,7 @@ func (c *Client) ListAccount(ctx context.Context, path string) (*http.Response, 
 func (c *Client) NewListAccountRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -112,7 +112,7 @@ func (c *Client) NewListAccountRequest(ctx context.Context, path string) (*http.
 
 // ShowAccountPath computes a request path to the show action of account.
 func ShowAccountPath(accountID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v", accountID)
+	return fmt.Sprintf("/api/accounts/%v", accountID)
 }
 
 // Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
@@ -128,7 +128,7 @@ func (c *Client) ShowAccount(ctx context.Context, path string) (*http.Response, 
 func (c *Client) NewShowAccountRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -146,7 +146,7 @@ type UpdateAccountPayload struct {
 
 // UpdateAccountPath computes a request path to the update action of account.
 func UpdateAccountPath(accountID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v", accountID)
+	return fmt.Sprintf("/api/accounts/%v", accountID)
 }
 
 // Change account name
@@ -170,7 +170,7 @@ func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, paylo
 	}
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("PUT", u.String(), &body)

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/client"
+	"github.com/goadesign/goa-cellar-ep-ep/client"
 	goaclient "github.com/goadesign/goa/client"
 	uuid "github.com/goadesign/goa/uuid"
 	"github.com/spf13/cobra"
@@ -50,6 +50,16 @@ type (
 		ContentType string
 		// Account ID
 		AccountID   int
+		PrettyPrint bool
+	}
+
+	// BasicAuthCommand is the command line data structure for the basic action of auth
+	BasicAuthCommand struct {
+		PrettyPrint bool
+	}
+
+	// JWTAuthCommand is the command line data structure for the jwt action of auth
+	JWTAuthCommand struct {
 		PrettyPrint bool
 	}
 
@@ -131,12 +141,26 @@ type (
 func RegisterCommands(app *cobra.Command, c *client.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
+		Use:   "basic",
+		Short: ``,
+	}
+	tmp1 := new(BasicAuthCommand)
+	sub = &cobra.Command{
+		Use:   `auth ["/api/auth/info/basic"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
+	}
+	tmp1.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp1.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
 		Use:   "create",
 		Short: `create action`,
 	}
-	tmp1 := new(CreateAccountCommand)
+	tmp2 := new(CreateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts"]`,
+		Use:   `account ["/api/accounts"]`,
 		Short: ``,
 		Long: `
 
@@ -145,66 +169,52 @@ Payload example:
 {
    "name": "test"
 }`,
-		RunE: func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
 	}
-	tmp1.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp1.PrettyPrint, "pp", false, "Pretty print response body")
+	tmp2.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp2.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp2 := new(CreateBottleCommand)
+	tmp3 := new(CreateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles"]`,
 		Short: ``,
 		Long: `
 
 Payload example:
 
 {
-   "color": "white",
+   "color": "yellow",
    "country": "USA",
    "name": "Number 8",
    "region": "Napa Valley",
    "review": "Great and inexpensive",
-   "sweetness": 1,
+   "sweetness": 4,
    "varietal": "Merlot",
    "vineyard": "Asti",
    "vintage": 2012
 }`,
-		RunE: func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
 	}
-	tmp2.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp2.PrettyPrint, "pp", false, "Pretty print response body")
+	tmp3.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp3.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
 		Use:   "delete",
 		Short: `delete action`,
 	}
-	tmp3 := new(DeleteAccountCommand)
+	tmp4 := new(DeleteAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
-		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp3.Run(c, args) },
-	}
-	tmp3.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp3.PrettyPrint, "pp", false, "Pretty print response body")
-	command.AddCommand(sub)
-	tmp4 := new(DeleteBottleCommand)
-	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
+		Use:   `account ["/api/accounts/ACCOUNTID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp4.Run(c, args) },
 	}
 	tmp4.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp4.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "health",
-		Short: `Perform health check.`,
-	}
-	tmp5 := new(HealthHealthCommand)
+	tmp5 := new(DeleteBottleCommand)
 	sub = &cobra.Command{
-		Use:   `health ["/cellar/_ah/health"]`,
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp5.Run(c, args) },
 	}
@@ -213,21 +223,26 @@ Payload example:
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "list",
-		Short: `list action`,
+		Use:   "health",
+		Short: `Perform health check.`,
 	}
-	tmp6 := new(ListAccountCommand)
+	tmp6 := new(HealthHealthCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts"]`,
+		Use:   `health ["/api/_ah/health"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp6.Run(c, args) },
 	}
 	tmp6.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp6.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp7 := new(ListBottleCommand)
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "jwt",
+		Short: ``,
+	}
+	tmp7 := new(JWTAuthCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles"]`,
+		Use:   `auth ["/api/auth/info/jwt"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp7.Run(c, args) },
 	}
@@ -236,56 +251,79 @@ Payload example:
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
-		Use:   "rate",
-		Short: ``,
+		Use:   "list",
+		Short: `list action`,
 	}
-	tmp8 := new(RateBottleCommand)
+	tmp8 := new(ListAccountCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate"]`,
+		Use:   `account ["/api/accounts"]`,
 		Short: ``,
-		Long: `
-
-Payload example:
-
-{
-   "rating": 3
-}`,
-		RunE: func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
 	tmp8.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp8.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	app.AddCommand(command)
-	command = &cobra.Command{
-		Use:   "show",
-		Short: `show action`,
-	}
-	tmp9 := new(ShowAccountCommand)
+	tmp9 := new(ListBottleCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles"]`,
 		Short: ``,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp9.Run(c, args) },
 	}
 	tmp9.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp9.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp10 := new(ShowBottleCommand)
-	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
+	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "rate",
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
+	}
+	tmp10 := new(RateBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles/BOTTLEID/actions/rate"]`,
+		Short: ``,
+		Long: `
+
+Payload example:
+
+{
+   "rating": 4
+}`,
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp10.Run(c, args) },
 	}
 	tmp10.RegisterFlags(sub, c)
 	sub.PersistentFlags().BoolVar(&tmp10.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
+		Use:   "show",
+		Short: `show action`,
+	}
+	tmp11 := new(ShowAccountCommand)
+	sub = &cobra.Command{
+		Use:   `account ["/api/accounts/ACCOUNTID"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+	}
+	tmp11.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp11.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	tmp12 := new(ShowBottleCommand)
+	sub = &cobra.Command{
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
+	}
+	tmp12.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp12.PrettyPrint, "pp", false, "Pretty print response body")
+	command.AddCommand(sub)
+	app.AddCommand(command)
+	command = &cobra.Command{
 		Use:   "update",
 		Short: `update action`,
 	}
-	tmp11 := new(UpdateAccountCommand)
+	tmp13 := new(UpdateAccountCommand)
 	sub = &cobra.Command{
-		Use:   `account ["/cellar/accounts/ACCOUNTID"]`,
+		Use:   `account ["/api/accounts/ACCOUNTID"]`,
 		Short: ``,
 		Long: `
 
@@ -294,48 +332,48 @@ Payload example:
 {
    "name": "test"
 }`,
-		RunE: func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp13.Run(c, args) },
 	}
-	tmp11.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp11.PrettyPrint, "pp", false, "Pretty print response body")
+	tmp13.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp13.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
-	tmp12 := new(UpdateBottleCommand)
+	tmp14 := new(UpdateBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles/BOTTLEID"]`,
 		Short: ``,
 		Long: `
 
 Payload example:
 
 {
-   "color": "white",
+   "color": "yellow",
    "country": "USA",
    "name": "Number 8",
    "region": "Napa Valley",
    "review": "Great and inexpensive",
-   "sweetness": 1,
+   "sweetness": 4,
    "varietal": "Merlot",
    "vineyard": "Asti",
    "vintage": 2012
 }`,
-		RunE: func(cmd *cobra.Command, args []string) error { return tmp12.Run(c, args) },
+		RunE: func(cmd *cobra.Command, args []string) error { return tmp14.Run(c, args) },
 	}
-	tmp12.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp12.PrettyPrint, "pp", false, "Pretty print response body")
+	tmp14.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp14.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 	command = &cobra.Command{
 		Use:   "watch",
 		Short: `Retrieve bottle with given id`,
 	}
-	tmp13 := new(WatchBottleCommand)
+	tmp15 := new(WatchBottleCommand)
 	sub = &cobra.Command{
-		Use:   `bottle ["/cellar/accounts/ACCOUNTID/bottles/BOTTLEID/watch"]`,
+		Use:   `bottle ["/api/accounts/ACCOUNTID/bottles/BOTTLEID/watch"]`,
 		Short: ``,
-		RunE:  func(cmd *cobra.Command, args []string) error { return tmp13.Run(c, args) },
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp15.Run(c, args) },
 	}
-	tmp13.RegisterFlags(sub, c)
-	sub.PersistentFlags().BoolVar(&tmp13.PrettyPrint, "pp", false, "Pretty print response body")
+	tmp15.RegisterFlags(sub, c)
+	sub.PersistentFlags().BoolVar(&tmp15.PrettyPrint, "pp", false, "Pretty print response body")
 	command.AddCommand(sub)
 	app.AddCommand(command)
 
@@ -564,7 +602,7 @@ func (cmd *CreateAccountCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/cellar/accounts"
+		path = "/api/accounts"
 	}
 	var payload client.CreateAccountPayload
 	if cmd.Payload != "" {
@@ -597,7 +635,7 @@ func (cmd *DeleteAccountCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v", cmd.AccountID)
+		path = fmt.Sprintf("/api/accounts/%v", cmd.AccountID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -623,7 +661,7 @@ func (cmd *ListAccountCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/cellar/accounts"
+		path = "/api/accounts"
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -647,7 +685,7 @@ func (cmd *ShowAccountCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v", cmd.AccountID)
+		path = fmt.Sprintf("/api/accounts/%v", cmd.AccountID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -673,7 +711,7 @@ func (cmd *UpdateAccountCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v", cmd.AccountID)
+		path = fmt.Sprintf("/api/accounts/%v", cmd.AccountID)
 	}
 	var payload client.UpdateAccountPayload
 	if cmd.Payload != "" {
@@ -702,13 +740,61 @@ func (cmd *UpdateAccountCommand) RegisterFlags(cc *cobra.Command, c *client.Clie
 	cc.Flags().IntVar(&cmd.AccountID, "accountID", accountID, `Account ID`)
 }
 
+// Run makes the HTTP request corresponding to the BasicAuthCommand command.
+func (cmd *BasicAuthCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/api/auth/info/basic"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.BasicAuth(ctx, path)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *BasicAuthCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+}
+
+// Run makes the HTTP request corresponding to the JWTAuthCommand command.
+func (cmd *JWTAuthCommand) Run(c *client.Client, args []string) error {
+	var path string
+	if len(args) > 0 {
+		path = args[0]
+	} else {
+		path = "/api/auth/info/jwt"
+	}
+	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
+	ctx := goa.WithLogger(context.Background(), logger)
+	resp, err := c.JWTAuth(ctx, path)
+	if err != nil {
+		goa.LogError(ctx, "failed", "err", err)
+		return err
+	}
+
+	goaclient.HandleResponse(c.Client, resp, cmd.PrettyPrint)
+	return nil
+}
+
+// RegisterFlags registers the command flags with the command line.
+func (cmd *JWTAuthCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+}
+
 // Run makes the HTTP request corresponding to the CreateBottleCommand command.
 func (cmd *CreateBottleCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles", cmd.AccountID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles", cmd.AccountID)
 	}
 	var payload client.CreateBottlePayload
 	if cmd.Payload != "" {
@@ -743,7 +829,7 @@ func (cmd *DeleteBottleCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -771,7 +857,7 @@ func (cmd *ListBottleCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles", cmd.AccountID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles", cmd.AccountID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -799,7 +885,7 @@ func (cmd *RateBottleCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", cmd.AccountID, cmd.BottleID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles/%v/actions/rate", cmd.AccountID, cmd.BottleID)
 	}
 	var payload client.RateBottlePayload
 	if cmd.Payload != "" {
@@ -836,7 +922,7 @@ func (cmd *ShowBottleCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -864,7 +950,7 @@ func (cmd *UpdateBottleCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles/%v", cmd.AccountID, cmd.BottleID)
 	}
 	var payload client.BottlePayload
 	if cmd.Payload != "" {
@@ -901,7 +987,7 @@ func (cmd *WatchBottleCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = fmt.Sprintf("/cellar/accounts/%v/bottles/%v/watch", cmd.AccountID, cmd.BottleID)
+		path = fmt.Sprintf("/api/accounts/%v/bottles/%v/watch", cmd.AccountID, cmd.BottleID)
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
@@ -930,7 +1016,7 @@ func (cmd *HealthHealthCommand) Run(c *client.Client, args []string) error {
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/cellar/_ah/health"
+		path = "/api/_ah/health"
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)

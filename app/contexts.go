@@ -3,8 +3,8 @@
 //
 // Generated with goagen v1.0.0, command line:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// --design=github.com/goadesign/goa-cellar-ep/design
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar-ep
 // --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
@@ -155,19 +155,19 @@ func NewListAccountContext(ctx context.Context, service *goa.Service) (*ListAcco
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OK(r AccountCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.account+json; type=collection")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKLink(r AccountLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.account+json; type=collection")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKTiny(r AccountTinyCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.account+json; type=collection")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -204,19 +204,19 @@ func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAcco
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OK(r *Account) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.account+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OKLink(r *AccountLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.account+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OKTiny(r *AccountTiny) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.account+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -316,6 +316,54 @@ func (ctx *UpdateAccountContext) BadRequest(r error) error {
 func (ctx *UpdateAccountContext) NotFound() error {
 	ctx.ResponseData.WriteHeader(404)
 	return nil
+}
+
+// BasicAuthContext provides the auth basic action context.
+type BasicAuthContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+}
+
+// NewBasicAuthContext parses the incoming request URL and body, performs validations and creates the
+// context used by the auth controller basic action.
+func NewBasicAuthContext(ctx context.Context, service *goa.Service) (*BasicAuthContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	rctx := BasicAuthContext{Context: ctx, ResponseData: resp, RequestData: req}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *BasicAuthContext) OK(r *Auth) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.auth+json")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
+}
+
+// JWTAuthContext provides the auth jwt action context.
+type JWTAuthContext struct {
+	context.Context
+	*goa.ResponseData
+	*goa.RequestData
+}
+
+// NewJWTAuthContext parses the incoming request URL and body, performs validations and creates the
+// context used by the auth controller jwt action.
+func NewJWTAuthContext(ctx context.Context, service *goa.Service) (*JWTAuthContext, error) {
+	var err error
+	resp := goa.ContextResponse(ctx)
+	resp.Service = service
+	req := goa.ContextRequest(ctx)
+	rctx := JWTAuthContext{Context: ctx, ResponseData: resp, RequestData: req}
+	return &rctx, err
+}
+
+// OK sends a HTTP response with status code 200.
+func (ctx *JWTAuthContext) OK(r *Auth) error {
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.auth+json")
+	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // CreateBottleContext provides the bottle create action context.
@@ -669,13 +717,13 @@ func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottl
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OK(r BottleCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.bottle+json; type=collection")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.bottle+json; type=collection")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -845,19 +893,19 @@ func NewShowBottleContext(ctx context.Context, service *goa.Service) (*ShowBottl
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OK(r *Bottle) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.bottle+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKFull sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKFull(r *BottleFull) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.bottle+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKTiny(r *BottleTiny) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa-cellar.bottle+json")
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 

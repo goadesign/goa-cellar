@@ -7,8 +7,8 @@ import (
 	"os"
 
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
-	"github.com/goadesign/goa-cellar/controllers"
+	"github.com/goadesign/goa-cellar-ep/app"
+	"github.com/goadesign/goa-cellar-ep/controllers"
 	"github.com/goadesign/goa/logging/log15"
 	"github.com/goadesign/goa/middleware"
 	"github.com/inconshreveable/log15"

@@ -3,8 +3,8 @@
 //
 // Generated with goagen v1.0.0, command line:
 // $ goagen
-// --design=github.com/goadesign/goa-cellar/design
-// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar
+// --design=github.com/goadesign/goa-cellar-ep/design
+// --out=$(GOPATH)/src/github.com/goadesign/goa-cellar-ep
 // --version=v1.0.0
 //
 // The content of this file is auto-generated, DO NOT MODIFY
@@ -16,7 +16,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
+	"github.com/goadesign/goa-cellar-ep-ep/app"
 	"github.com/goadesign/goa/goatest"
 	"golang.org/x/net/context"
 	"io"
@@ -64,7 +64,7 @@ func CreateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts"),
+		Path: fmt.Sprintf("/api/accounts"),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
@@ -142,7 +142,7 @@ func CreateAccountCreated(t goatest.TInterface, ctx context.Context, service *go
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts"),
+		Path: fmt.Sprintf("/api/accounts"),
 	}
 	req, err := http.NewRequest("POST", u.String(), nil)
 	if err != nil {
@@ -199,7 +199,7 @@ func DeleteAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
@@ -264,7 +264,7 @@ func DeleteAccountNoContent(t goatest.TInterface, ctx context.Context, service *
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
@@ -321,7 +321,7 @@ func DeleteAccountNotFound(t goatest.TInterface, ctx context.Context, service *g
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
 	if err != nil {
@@ -378,7 +378,7 @@ func ListAccountOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts"),
+		Path: fmt.Sprintf("/api/accounts"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -446,7 +446,7 @@ func ListAccountOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts"),
+		Path: fmt.Sprintf("/api/accounts"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -514,7 +514,7 @@ func ListAccountOKTiny(t goatest.TInterface, ctx context.Context, service *goa.S
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts"),
+		Path: fmt.Sprintf("/api/accounts"),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -582,7 +582,7 @@ func ShowAccountBadRequest(t goatest.TInterface, ctx context.Context, service *g
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -647,7 +647,7 @@ func ShowAccountNotFound(t goatest.TInterface, ctx context.Context, service *goa
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -704,7 +704,7 @@ func ShowAccountOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -773,7 +773,7 @@ func ShowAccountOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -842,7 +842,7 @@ func ShowAccountOKTiny(t goatest.TInterface, ctx context.Context, service *goa.S
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {
@@ -924,7 +924,7 @@ func UpdateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
@@ -1003,7 +1003,7 @@ func UpdateAccountNoContent(t goatest.TInterface, ctx context.Context, service *
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {
@@ -1074,7 +1074,7 @@ func UpdateAccountNotFound(t goatest.TInterface, ctx context.Context, service *g
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
-		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
+		Path: fmt.Sprintf("/api/accounts/%v", accountID),
 	}
 	req, err := http.NewRequest("PUT", u.String(), nil)
 	if err != nil {

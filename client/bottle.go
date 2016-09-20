@@ -25,7 +25,7 @@ type CreateBottlePayload struct {
 
 // CreateBottlePath computes a request path to the create action of bottle.
 func CreateBottlePath(accountID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles", accountID)
+	return fmt.Sprintf("/api/accounts/%v/bottles", accountID)
 }
 
 // Record new bottle
@@ -49,7 +49,7 @@ func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payloa
 	}
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("POST", u.String(), &body)
@@ -65,7 +65,7 @@ func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payloa
 
 // DeleteBottlePath computes a request path to the delete action of bottle.
 func DeleteBottlePath(accountID int, bottleID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
+	return fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
 // DeleteBottle makes a request to the delete action endpoint of the bottle resource
@@ -81,7 +81,7 @@ func (c *Client) DeleteBottle(ctx context.Context, path string) (*http.Response,
 func (c *Client) NewDeleteBottleRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("DELETE", u.String(), nil)
@@ -93,7 +93,7 @@ func (c *Client) NewDeleteBottleRequest(ctx context.Context, path string) (*http
 
 // ListBottlePath computes a request path to the list action of bottle.
 func ListBottlePath(accountID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles", accountID)
+	return fmt.Sprintf("/api/accounts/%v/bottles", accountID)
 }
 
 // List all bottles in account optionally filtering by year
@@ -109,13 +109,13 @@ func (c *Client) ListBottle(ctx context.Context, path string, years []int) (*htt
 func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []int) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	values := u.Query()
 	for _, p := range years {
-		tmp14 := strconv.Itoa(p)
-		values.Add("years", tmp14)
+		tmp16 := strconv.Itoa(p)
+		values.Add("years", tmp16)
 	}
 	u.RawQuery = values.Encode()
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -133,7 +133,7 @@ type RateBottlePayload struct {
 
 // RateBottlePath computes a request path to the rate action of bottle.
 func RateBottlePath(accountID int, bottleID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v/actions/rate", accountID, bottleID)
+	return fmt.Sprintf("/api/accounts/%v/bottles/%v/actions/rate", accountID, bottleID)
 }
 
 // RateBottle makes a request to the rate action endpoint of the bottle resource
@@ -157,7 +157,7 @@ func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload 
 	}
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("PUT", u.String(), &body)
@@ -173,7 +173,7 @@ func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload 
 
 // ShowBottlePath computes a request path to the show action of bottle.
 func ShowBottlePath(accountID int, bottleID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
+	return fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
 // Retrieve bottle with given id
@@ -189,7 +189,7 @@ func (c *Client) ShowBottle(ctx context.Context, path string) (*http.Response, e
 func (c *Client) NewShowBottleRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)
@@ -201,7 +201,7 @@ func (c *Client) NewShowBottleRequest(ctx context.Context, path string) (*http.R
 
 // UpdateBottlePath computes a request path to the update action of bottle.
 func UpdateBottlePath(accountID int, bottleID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID)
+	return fmt.Sprintf("/api/accounts/%v/bottles/%v", accountID, bottleID)
 }
 
 // UpdateBottle makes a request to the update action endpoint of the bottle resource
@@ -225,7 +225,7 @@ func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payloa
 	}
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("PATCH", u.String(), &body)
@@ -241,7 +241,7 @@ func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payloa
 
 // WatchBottlePath computes a request path to the watch action of bottle.
 func WatchBottlePath(accountID int, bottleID int) string {
-	return fmt.Sprintf("/cellar/accounts/%v/bottles/%v/watch", accountID, bottleID)
+	return fmt.Sprintf("/api/accounts/%v/bottles/%v/watch", accountID, bottleID)
 }
 
 // Retrieve bottle with given id

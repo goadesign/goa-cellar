@@ -5,8 +5,8 @@ import (
 	"io"
 
 	"github.com/goadesign/goa"
-	"github.com/goadesign/goa-cellar/app"
-	"github.com/goadesign/goa-cellar/store"
+	"github.com/goadesign/goa-cellar-ep/app"
+	"github.com/goadesign/goa-cellar-ep/store"
 	"golang.org/x/net/websocket"
 )
 

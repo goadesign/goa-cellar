@@ -16,7 +16,7 @@ import (
 func (c *Client) DownloadJs(ctx context.Context, filename, dest string) (int64, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	p := path.Join("/js/", filename)
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: p}

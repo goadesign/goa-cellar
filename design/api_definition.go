@@ -23,9 +23,9 @@ var _ = API("cellar", func() {
 		Description("goa guide")
 		URL("http://goa.design/getting-started.html")
 	})
-	Host("localhost:8081")
-	Scheme("http")
-	BasePath("/cellar")
+	Host("goa-cellar.appspot.com")
+	Scheme("https")
+	BasePath("/api")
 
 	Origin("http://swagger.goa.design", func() {
 		Methods("GET", "POST", "PUT", "PATCH", "DELETE")
@@ -42,4 +42,14 @@ var _ = API("cellar", func() {
 			})
 		})
 	})
+})
+
+// APIKey defines a security scheme using an API key (shared secret).
+var APIKey = APIKeySecurity("api_key", func() {
+	Query("key")
+})
+
+// JWT defines a security scheme using Google JWT.
+var JWT = OAuth2Security("jwt", func() {
+	ImplicitFlow("")
 })

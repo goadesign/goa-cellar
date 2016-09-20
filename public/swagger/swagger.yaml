@@ -42,7 +42,7 @@ definitions:
     - name
     - created_at
     - created_by
-    title: 'Mediatype identifier: application/vnd.account+json; view=default'
+    title: 'Mediatype identifier: application/vnd.goa-cellar.account+json; view=default'
     type: object
   AccountCollection:
     description: AccountCollection is the media type for an array of Account (default
@@ -55,7 +55,7 @@ definitions:
       name: test
     items:
       $ref: '#/definitions/Account'
-    title: 'Mediatype identifier: application/vnd.account+json; type=collection'
+    title: 'Mediatype identifier: application/vnd.goa-cellar.account+json; type=collection'
     type: array
   AccountLink:
     description: A tenant account (link view)
@@ -75,7 +75,7 @@ definitions:
     required:
     - id
     - href
-    title: 'Mediatype identifier: application/vnd.account+json; view=link'
+    title: 'Mediatype identifier: application/vnd.goa-cellar.account+json; view=link'
     type: object
   AccountTiny:
     description: A tenant account (tiny view)
@@ -101,7 +101,23 @@ definitions:
     - id
     - href
     - name
-    title: 'Mediatype identifier: application/vnd.account+json; view=tiny'
+    title: 'Mediatype identifier: application/vnd.goa-cellar.account+json; view=tiny'
+    type: object
+  Auth:
+    description: User info extracted from security token (default view)
+    example:
+      info:
+        Tenetur officia tenetur et saepe ratione.: 1970-02-20T18:43:19-08:00
+    properties:
+      info:
+        additionalProperties: true
+        description: User info
+        example:
+          Tenetur officia tenetur et saepe ratione.: 1970-02-20T18:43:19-08:00
+        type: object
+    required:
+    - info
+    title: 'Mediatype identifier: application/vnd.goa-cellar.auth+json'
     type: object
   Bottle:
     description: A bottle of wine (default view)
@@ -167,7 +183,7 @@ definitions:
     - vineyard
     - varietal
     - vintage
-    title: 'Mediatype identifier: application/vnd.bottle+json; view=default'
+    title: 'Mediatype identifier: application/vnd.goa-cellar.bottle+json; view=default'
     type: object
   BottleCollection:
     description: BottleCollection is the media type for an array of Bottle (default
@@ -226,7 +242,7 @@ definitions:
       vintage: 2012
     items:
       $ref: '#/definitions/Bottle'
-    title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
+    title: 'Mediatype identifier: application/vnd.goa-cellar.bottle+json; type=collection'
     type: array
   BottleLinks:
     description: BottleLinks contains links to related resources of Bottle.
@@ -241,12 +257,12 @@ definitions:
     type: object
   BottlePayload:
     example:
-      color: white
+      color: yellow
       country: USA
       name: Number 8
       region: Napa Valley
       review: Great and inexpensive
-      sweetness: 1
+      sweetness: 4
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -258,7 +274,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: white
+        example: yellow
         type: string
       country:
         example: USA
@@ -277,7 +293,7 @@ definitions:
         minLength: 3
         type: string
       sweetness:
-        example: 1
+        example: 4
         maximum: 5
         minimum: 1
         type: integer
@@ -310,12 +326,12 @@ definitions:
     type: object
   CreateBottlePayload:
     example:
-      color: white
+      color: yellow
       country: USA
       name: Number 8
       region: Napa Valley
       review: Great and inexpensive
-      sweetness: 1
+      sweetness: 4
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -327,7 +343,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: white
+        example: yellow
         type: string
       country:
         example: USA
@@ -346,7 +362,7 @@ definitions:
         minLength: 3
         type: string
       sweetness:
-        example: 1
+        example: 4
         maximum: 5
         minimum: 1
         type: integer
@@ -373,11 +389,11 @@ definitions:
     type: object
   RateBottlePayload:
     example:
-      rating: 3
+      rating: 4
     properties:
       rating:
         description: Rating of bottle between 1 and 5
-        example: 3
+        example: 4
         maximum: 5
         minimum: 1
         type: integer
@@ -437,7 +453,7 @@ definitions:
 externalDocs:
   description: goa guide
   url: http://goa.design/getting-started.html
-host: localhost:8081
+host: goa-cellar.appspot.com
 info:
   contact:
     email: admin@goa.design
@@ -450,7 +466,7 @@ info:
   title: The virtual wine cellar
   version: ""
 paths:
-  /cellar/_ah/health:
+  /api/_ah/health:
     get:
       description: Perform health check.
       operationId: health#health
@@ -458,11 +474,11 @@ paths:
         "200":
           description: OK
       schemes:
-      - http
+      - https
       summary: health health
       tags:
       - health
-  /cellar/accounts:
+  /api/accounts:
     get:
       description: Retrieve all accounts.
       operationId: account#list
@@ -472,7 +488,7 @@ paths:
           schema:
             $ref: '#/definitions/AccountCollection'
       schemes:
-      - http
+      - https
       summary: list account
       tags:
       - account
@@ -498,11 +514,11 @@ paths:
           schema:
             $ref: '#/definitions/error'
       schemes:
-      - http
+      - https
       summary: create account
       tags:
       - account
-  /cellar/accounts/{accountID}:
+  /api/accounts/{accountID}:
     delete:
       operationId: account#delete
       parameters:
@@ -521,7 +537,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: delete account
       tags:
       - account
@@ -547,7 +563,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: show account
       tags:
       - account
@@ -575,11 +591,11 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: update account
       tags:
       - account
-  /cellar/accounts/{accountID}/bottles:
+  /api/accounts/{accountID}/bottles:
     get:
       description: List all bottles in account optionally filtering by year
       operationId: bottle#list
@@ -609,7 +625,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: list bottle
       tags:
       - bottle
@@ -643,11 +659,11 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: create bottle
       tags:
       - bottle
-  /cellar/accounts/{accountID}/bottles/{bottleID}:
+  /api/accounts/{accountID}/bottles/{bottleID}:
     delete:
       operationId: bottle#delete
       parameters:
@@ -671,7 +687,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: delete bottle
       tags:
       - bottle
@@ -701,7 +717,7 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: show bottle
       tags:
       - bottle
@@ -733,11 +749,11 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: update bottle
       tags:
       - bottle
-  /cellar/accounts/{accountID}/bottles/{bottleID}/actions/rate:
+  /api/accounts/{accountID}/bottles/{bottleID}/actions/rate:
     put:
       operationId: bottle#rate
       parameters:
@@ -766,11 +782,11 @@ paths:
         "404":
           description: Not Found
       schemes:
-      - http
+      - https
       summary: rate bottle
       tags:
       - bottle
-  /cellar/accounts/{accountID}/bottles/{bottleID}/watch:
+  /api/accounts/{accountID}/bottles/{bottleID}/watch:
     get:
       description: Retrieve bottle with given id
       operationId: bottle#watch
@@ -797,6 +813,36 @@ paths:
       summary: watch bottle
       tags:
       - bottle
+  /api/auth/info/basic:
+    get:
+      operationId: auth#basic
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Auth'
+      schemes:
+      - https
+      security:
+      - api_key: []
+      summary: basic auth
+      tags:
+      - auth
+  /api/auth/info/jwt:
+    get:
+      operationId: auth#jwt
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Auth'
+      schemes:
+      - https
+      security:
+      - jwt: []
+      summary: jwt auth
+      tags:
+      - auth
   /js/{filepath}:
     get:
       operationId: js#/js/*filepath
@@ -816,7 +862,7 @@ paths:
           schema:
             $ref: '#/definitions/error'
       schemes:
-      - http
+      - https
       summary: Download public/js
   /swagger.json:
     get:
@@ -827,7 +873,7 @@ paths:
           schema:
             type: file
       schemes:
-      - http
+      - https
       summary: Download public/swagger/swagger.json
   /ui:
     get:
@@ -838,7 +884,7 @@ paths:
           schema:
             type: file
       schemes:
-      - http
+      - https
       summary: Download public/html/index.html
 produces:
 - application/json
@@ -857,5 +903,15 @@ responses:
   SwitchingProtocols:
     description: Switching Protocols
 schemes:
-- http
+- https
+securityDefinitions:
+  api_key:
+    in: query
+    name: key
+    type: apiKey
+  jwt:
+    flow: implicit
+    type: oauth2
+    x-issuer: jwt-client.endpoints.sample.google.com
+    x-jwks_uri: https://www.googleapis.com/service_accounts/v1/jwk/account-1@goa-swagger.iam.gserviceaccount.com
 swagger: "2.0"

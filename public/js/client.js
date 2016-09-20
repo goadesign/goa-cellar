@@ -1,4 +1,4 @@
-// This module exports functions that give access to the cellar API hosted at localhost:8081.
+// This module exports functions that give access to the cellar API hosted at goa-cellar.appspot.com.
 // It uses the axios javascript library for making the actual HTTP requests.
 define(['axios'] , function (axios) {
   function merge(obj1, obj2) {
@@ -9,8 +9,8 @@ define(['axios'] , function (axios) {
   }
 
   return function (scheme, host, timeout) {
-    scheme = scheme || 'http';
-    host = host || 'localhost:8081';
+    scheme = scheme || 'https';
+    host = host || 'goa-cellar.appspot.com';
     timeout = timeout || 20000;
 
     // Client is the object returned by this module.
@@ -19,8 +19,26 @@ define(['axios'] , function (axios) {
     // URL prefix for all API requests.
     var urlPrefix = scheme + '://' + host;
 
+  // basicAuth calls the basic action of the auth resource.
+  // path is the request path, the format is "/api/auth/info/basic"
+  // config is an optional object to be merged into the config built by the function prior to making the request.
+  // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
+  // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
+  client.basicAuth = function (path, config) {
+    cfg = {
+      timeout: timeout,
+      url: urlPrefix + path,
+      method: 'get',
+      responseType: 'json'
+    };
+    if (config) {
+      cfg = merge(cfg, config);
+    }
+    return client(cfg);
+  }
+
   // Create new account
-  // path is the request path, the format is "/cellar/accounts"
+  // path is the request path, the format is "/api/accounts"
   // data contains the action payload (request body)
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
@@ -40,7 +58,7 @@ define(['axios'] , function (axios) {
   }
 
   // Record new bottle
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles"
   // data contains the action payload (request body)
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
@@ -60,7 +78,7 @@ define(['axios'] , function (axios) {
   }
 
   // deleteAccount calls the delete action of the account resource.
-  // path is the request path, the format is "/cellar/accounts/:accountID"
+  // path is the request path, the format is "/api/accounts/:accountID"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
@@ -78,7 +96,7 @@ define(['axios'] , function (axios) {
   }
 
   // deleteBottle calls the delete action of the bottle resource.
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles/:bottleID"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles/:bottleID"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
@@ -96,7 +114,7 @@ define(['axios'] , function (axios) {
   }
 
   // Perform health check.
-  // path is the request path, the format is "/cellar/_ah/health"
+  // path is the request path, the format is "/api/_ah/health"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
@@ -113,8 +131,26 @@ define(['axios'] , function (axios) {
     return client(cfg);
   }
 
+  // jwtAuth calls the jwt action of the auth resource.
+  // path is the request path, the format is "/api/auth/info/jwt"
+  // config is an optional object to be merged into the config built by the function prior to making the request.
+  // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
+  // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
+  client.jwtAuth = function (path, config) {
+    cfg = {
+      timeout: timeout,
+      url: urlPrefix + path,
+      method: 'get',
+      responseType: 'json'
+    };
+    if (config) {
+      cfg = merge(cfg, config);
+    }
+    return client(cfg);
+  }
+
   // Retrieve all accounts.
-  // path is the request path, the format is "/cellar/accounts"
+  // path is the request path, the format is "/api/accounts"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
@@ -132,7 +168,7 @@ define(['axios'] , function (axios) {
   }
 
   // List all bottles in account optionally filtering by year
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles"
   // years is used to build the request query string.
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
@@ -154,7 +190,7 @@ define(['axios'] , function (axios) {
   }
 
   // rateBottle calls the rate action of the bottle resource.
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles/:bottleID/actions/rate"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles/:bottleID/actions/rate"
   // data contains the action payload (request body)
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
@@ -174,7 +210,7 @@ define(['axios'] , function (axios) {
   }
 
   // Retrieve account with given id. IDs 1 and 2 pre-exist in the system.
-  // path is the request path, the format is "/cellar/accounts/:accountID"
+  // path is the request path, the format is "/api/accounts/:accountID"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
@@ -192,7 +228,7 @@ define(['axios'] , function (axios) {
   }
 
   // Retrieve bottle with given id
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles/:bottleID"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles/:bottleID"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
@@ -210,7 +246,7 @@ define(['axios'] , function (axios) {
   }
 
   // Change account name
-  // path is the request path, the format is "/cellar/accounts/:accountID"
+  // path is the request path, the format is "/api/accounts/:accountID"
   // data contains the action payload (request body)
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
@@ -230,7 +266,7 @@ define(['axios'] , function (axios) {
   }
 
   // updateBottle calls the update action of the bottle resource.
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles/:bottleID"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles/:bottleID"
   // data contains the action payload (request body)
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
@@ -250,7 +286,7 @@ define(['axios'] , function (axios) {
   }
 
   // Retrieve bottle with given id
-  // path is the request path, the format is "/cellar/accounts/:accountID/bottles/:bottleID/watch"
+  // path is the request path, the format is "/api/accounts/:accountID/bottles/:bottleID/watch"
   // config is an optional object to be merged into the config built by the function prior to making the request.
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.

@@ -9,7 +9,7 @@ import (
 
 // HealthHealthPath computes a request path to the health action of health.
 func HealthHealthPath() string {
-	return fmt.Sprintf("/cellar/_ah/health")
+	return fmt.Sprintf("/api/_ah/health")
 }
 
 // Perform health check.
@@ -25,7 +25,7 @@ func (c *Client) HealthHealth(ctx context.Context, path string) (*http.Response,
 func (c *Client) NewHealthHealthRequest(ctx context.Context, path string) (*http.Request, error) {
 	scheme := c.Scheme
 	if scheme == "" {
-		scheme = "http"
+		scheme = "https"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
 	req, err := http.NewRequest("GET", u.String(), nil)
