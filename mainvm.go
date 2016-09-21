@@ -3,13 +3,15 @@
 package main
 
 import (
+	"os"
+
+	"github.com/go-kit/kit/log"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
 	"github.com/goadesign/goa-cellar/store"
-	"github.com/goadesign/goa/logging/log15"
+	"github.com/goadesign/goa/logging/kit"
 	"github.com/goadesign/goa/middleware"
-	"github.com/inconshreveable/log15"
 )
 
 func main() {
@@ -17,8 +19,9 @@ func main() {
 	service := goa.New("cellar")
 
 	// Setup logger
-	logger := log15.New()
-	service.WithLogger(goalog15.New(logger))
+	w := log.NewSyncWriter(os.Stderr)
+	logger := log.NewLogfmtLogger(w)
+	service.WithLogger(goakit.New(logger))
 
 	// Setup basic middleware
 	service.Use(middleware.RequestID())

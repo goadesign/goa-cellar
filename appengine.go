@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-kit/kit/log"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa-cellar/controllers"
-	"github.com/goadesign/goa/logging/log15"
+	"github.com/goadesign/goa/logging/kit"
 	"github.com/goadesign/goa/middleware"
-	"github.com/inconshreveable/log15"
 )
 
 const (
@@ -21,12 +21,12 @@ const (
 
 func init() {
 	// Configure logging for appengine
-	logger := log15.New()
-	logger.SetHandler(log15.StreamHandler(os.Stderr, log15.LogfmtFormat()))
+	w := log.NewSyncWriter(os.Stderr)
+	logger := log.NewLogfmtLogger(w)
 
 	// Create goa application
 	service := goa.New("cellar")
-	service.WithLogger(goalog15.New(logger))
+	service.WithLogger(goakit.New(logger))
 
 	// Setup middleware
 	service.Use(middleware.RequestID())
