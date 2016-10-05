@@ -1,3 +1,5 @@
+application: goa-cellar
+version: 8
 runtime: go
 api_version: go1
 
