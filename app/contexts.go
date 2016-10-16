@@ -156,18 +156,27 @@ func NewListAccountContext(ctx context.Context, service *goa.Service) (*ListAcco
 // OK sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OK(r AccountCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	if r == nil {
+		r = AccountCollection{}
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKLink(r AccountLinkCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	if r == nil {
+		r = AccountLinkCollection{}
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKTiny(r AccountTinyCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	if r == nil {
+		r = AccountTinyCollection{}
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
@@ -670,12 +679,18 @@ func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottl
 // OK sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OK(r BottleCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	if r == nil {
+		r = BottleCollection{}
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
 	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	if r == nil {
+		r = BottleTinyCollection{}
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
