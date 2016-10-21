@@ -5,15 +5,20 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
-var _ = Resource("health", func() {
+var _ = Service("health", func() {
+	Description("Health check endpoint")
 
-	BasePath("/_ah")
-
-	Action("health", func() {
-		Routing(
-			GET("/health"),
-		)
+	Endpoint("health", func() {
 		Description("Perform health check.")
-		Response(OK, "text/plain")
+		Response(String)
+		Error("unhealthy", String)
+
+		HTTP(func() {
+			GET("/health")
+			GET("/_ah/health") // App Engine path
+			Error("unhealthy", func() {
+				Status(InternalServerError)
+			})
+		})
 	})
 })

@@ -24,22 +24,4 @@ var _ = API("cellar", func() {
 		URL("http://goa.design/getting-started.html")
 	})
 	Host("localhost:8081")
-	Scheme("http")
-	BasePath("/cellar")
-
-	Origin("http://swagger.goa.design", func() {
-		Methods("GET", "POST", "PUT", "PATCH", "DELETE")
-		MaxAge(600)
-		Credentials()
-	})
-
-	ResponseTemplate(Created, func(pattern string) {
-		Description("Resource created")
-		Status(201)
-		Headers(func() {
-			Header("Location", String, "href to created resource", func() {
-				Pattern(pattern)
-			})
-		})
-	})
 })

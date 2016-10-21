@@ -5,24 +5,25 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
-var _ = Resource("account", func() {
+var _ = Service("account", func() {
 
-	DefaultMedia(Account)
-	BasePath("/accounts")
-
-	Action("list", func() {
-		Routing(
-			GET(""),
-		)
-		Description("Retrieve all accounts.")
-		Response(OK, CollectionOf(Account))
+	HTTP(func() {
+		DefaultMedia(Account)
+		BasePath("/accounts")
 	})
 
-	Action("show", func() {
+	Endpoint("list", func() {
+		Description("Retrieve all accounts.")
+		Response(CollectionOf(Account))
+
+		HTTP(func() { GET("") })
+	})
+
+	Endpoint("show", func() {
+		Description("Retrieve account with given id. IDs 1 and 2 pre-exist in the system.")
 		Routing(
 			GET("/:accountID"),
 		)
-		Description("Retrieve account with given id. IDs 1 and 2 pre-exist in the system.")
 		Params(func() {
 			Param("accountID", Integer, "Account ID", func() {
 				Minimum(1)
@@ -33,7 +34,7 @@ var _ = Resource("account", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("create", func() {
+	Endpoint("create", func() {
 		Routing(
 			POST(""),
 		)
@@ -46,7 +47,7 @@ var _ = Resource("account", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("update", func() {
+	Endpoint("update", func() {
 		Routing(
 			PUT("/:accountID"),
 		)
@@ -63,7 +64,7 @@ var _ = Resource("account", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("delete", func() {
+	Endpoint("delete", func() {
 		Routing(
 			DELETE("/:accountID"),
 		)
@@ -76,13 +77,13 @@ var _ = Resource("account", func() {
 	})
 })
 
-var _ = Resource("bottle", func() {
+var _ = Service("bottle", func() {
 
 	DefaultMedia(Bottle)
 	BasePath("bottles")
 	Parent("account")
 
-	Action("list", func() {
+	Endpoint("list", func() {
 		Routing(
 			GET(""),
 		)
@@ -100,7 +101,7 @@ var _ = Resource("bottle", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("show", func() {
+	Endpoint("show", func() {
 		Routing(
 			GET("/:bottleID"),
 		)
@@ -113,7 +114,7 @@ var _ = Resource("bottle", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("watch", func() {
+	Endpoint("watch", func() {
 		Routing(
 			GET("/:bottleID/watch"),
 		)
@@ -126,7 +127,7 @@ var _ = Resource("bottle", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("create", func() {
+	Endpoint("create", func() {
 		Routing(
 			POST(""),
 		)
@@ -139,7 +140,7 @@ var _ = Resource("bottle", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("update", func() {
+	Endpoint("update", func() {
 		Routing(
 			PATCH("/:bottleID"),
 		)
@@ -152,7 +153,7 @@ var _ = Resource("bottle", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("rate", func() {
+	Endpoint("rate", func() {
 		Routing(
 			PUT("/:bottleID/actions/rate"),
 		)
@@ -168,7 +169,7 @@ var _ = Resource("bottle", func() {
 		Response(BadRequest, ErrorMedia)
 	})
 
-	Action("delete", func() {
+	Endpoint("delete", func() {
 		Routing(
 			DELETE("/:bottleID"),
 		)
@@ -181,21 +182,21 @@ var _ = Resource("bottle", func() {
 	})
 })
 
-var _ = Resource("public", func() {
+var _ = Service("public", func() {
 	Origin("*", func() {
 		Methods("GET", "OPTIONS")
 	})
 	Files("/ui", "public/html/index.html")
 })
 
-var _ = Resource("js", func() {
+var _ = Service("js", func() {
 	Origin("*", func() {
 		Methods("GET", "OPTIONS")
 	})
 	Files("/js/*filepath", "public/js")
 })
 
-var _ = Resource("swagger", func() {
+var _ = Service("swagger", func() {
 	Origin("*", func() {
 		Methods("GET", "OPTIONS")
 	})
