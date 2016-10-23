@@ -5,6 +5,16 @@ import (
 	. "github.com/goadesign/goa/design/apidsl"
 )
 
+// ShowAccount is the type used to define the shape of messages sent to retrieve an account.
+var ShowAccount = Type("ShowAccount", func() {
+	Attribute("ID", Integer, "Account ID", func() {
+		Minimum(1) // ID parameter must be an integer greater than 1
+	})
+	Attribute("View", String, "The account view to retrieve", func() {
+		Enum("default", "extended") // View parameter must be "default" or "extended"
+	})
+})
+
 // BottlePayload defines the data structure used in the create bottle request body.
 // It is also the base type for the bottle media type used to render bottles.
 var BottlePayload = Type("BottlePayload", func() {

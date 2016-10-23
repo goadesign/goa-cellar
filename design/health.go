@@ -8,7 +8,7 @@ import (
 var _ = Service("health", func() {
 	Description("Health check endpoint")
 
-	Endpoint("health", func() {
+	Endpoint("do", func() {
 		Description("Perform health check.")
 		Response(String)
 		Error("unhealthy", String)
