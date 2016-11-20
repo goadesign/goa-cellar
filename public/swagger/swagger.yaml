@@ -4,230 +4,6 @@ consumes:
 - application/gob
 - application/x-gob
 definitions:
-  Account:
-    description: A tenant account (default view)
-    example:
-      created_at: 2015-09-23T11:51:57-07:00
-      created_by: me@goa.design
-      href: /accounts/1
-      id: 1
-      name: test
-    properties:
-      created_at:
-        description: Date of creation
-        example: 2015-09-23T11:51:57-07:00
-        format: date-time
-        type: string
-      created_by:
-        description: Email of account owner
-        example: me@goa.design
-        format: email
-        type: string
-      href:
-        description: API href of account
-        example: /accounts/1
-        type: string
-      id:
-        description: ID of account
-        example: 1
-        format: int64
-        type: integer
-      name:
-        description: Name of account
-        example: test
-        type: string
-    required:
-    - id
-    - href
-    - name
-    - created_at
-    - created_by
-    title: 'Mediatype identifier: application/vnd.account+json; view=default'
-    type: object
-  AccountCollection:
-    description: AccountCollection is the media type for an array of Account (default
-      view)
-    example:
-    - created_at: 2015-09-23T11:51:57-07:00
-      created_by: me@goa.design
-      href: /accounts/1
-      id: 1
-      name: test
-    items:
-      $ref: '#/definitions/Account'
-    title: 'Mediatype identifier: application/vnd.account+json; type=collection'
-    type: array
-  AccountLink:
-    description: A tenant account (link view)
-    example:
-      href: /accounts/1
-      id: 1
-    properties:
-      href:
-        description: API href of account
-        example: /accounts/1
-        type: string
-      id:
-        description: ID of account
-        example: 1
-        format: int64
-        type: integer
-    required:
-    - id
-    - href
-    title: 'Mediatype identifier: application/vnd.account+json; view=link'
-    type: object
-  AccountTiny:
-    description: A tenant account (tiny view)
-    example:
-      href: /accounts/1
-      id: 1
-      name: test
-    properties:
-      href:
-        description: API href of account
-        example: /accounts/1
-        type: string
-      id:
-        description: ID of account
-        example: 1
-        format: int64
-        type: integer
-      name:
-        description: Name of account
-        example: test
-        type: string
-    required:
-    - id
-    - href
-    - name
-    title: 'Mediatype identifier: application/vnd.account+json; view=tiny'
-    type: object
-  Bottle:
-    description: A bottle of wine (default view)
-    example:
-      account:
-        created_at: 2015-09-23T11:51:57-07:00
-        created_by: me@goa.design
-        href: /accounts/1
-        id: 1
-        name: test
-      href: /accounts/1/bottles/1
-      id: 1
-      links:
-        account:
-          href: /accounts/1
-          id: 1
-      name: Number 8
-      rating: 3
-      varietal: Merlot
-      vineyard: Asti
-      vintage: 2012
-    properties:
-      account:
-        $ref: '#/definitions/AccountTiny'
-      href:
-        description: API href of bottle
-        example: /accounts/1/bottles/1
-        type: string
-      id:
-        description: ID of bottle
-        example: 1
-        format: int64
-        type: integer
-      links:
-        $ref: '#/definitions/BottleLinks'
-      name:
-        example: Number 8
-        minLength: 2
-        type: string
-      rating:
-        description: Rating of bottle between 1 and 5
-        example: 3
-        maximum: 5
-        minimum: 1
-        type: integer
-      varietal:
-        example: Merlot
-        minLength: 4
-        type: string
-      vineyard:
-        example: Asti
-        minLength: 2
-        type: string
-      vintage:
-        example: 2012
-        maximum: 2020
-        minimum: 1900
-        type: integer
-    required:
-    - id
-    - href
-    - name
-    - vineyard
-    - varietal
-    - vintage
-    title: 'Mediatype identifier: application/vnd.bottle+json; view=default'
-    type: object
-  BottleCollection:
-    description: BottleCollection is the media type for an array of Bottle (default
-      view)
-    example:
-    - account:
-        created_at: 2015-09-23T11:51:57-07:00
-        created_by: me@goa.design
-        href: /accounts/1
-        id: 1
-        name: test
-      href: /accounts/1/bottles/1
-      id: 1
-      links:
-        account:
-          href: /accounts/1
-          id: 1
-      name: Number 8
-      rating: 3
-      varietal: Merlot
-      vineyard: Asti
-      vintage: 2012
-    - account:
-        created_at: 2015-09-23T11:51:57-07:00
-        created_by: me@goa.design
-        href: /accounts/1
-        id: 1
-        name: test
-      href: /accounts/1/bottles/1
-      id: 1
-      links:
-        account:
-          href: /accounts/1
-          id: 1
-      name: Number 8
-      rating: 3
-      varietal: Merlot
-      vineyard: Asti
-      vintage: 2012
-    - account:
-        created_at: 2015-09-23T11:51:57-07:00
-        created_by: me@goa.design
-        href: /accounts/1
-        id: 1
-        name: test
-      href: /accounts/1/bottles/1
-      id: 1
-      links:
-        account:
-          href: /accounts/1
-          id: 1
-      name: Number 8
-      rating: 3
-      varietal: Merlot
-      vineyard: Asti
-      vintage: 2012
-    items:
-      $ref: '#/definitions/Bottle'
-    title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
-    type: array
   BottleLinks:
     description: BottleLinks contains links to related resources of Bottle.
     example:
@@ -397,7 +173,337 @@ definitions:
     - name
     title: UpdateAccountPayload
     type: object
-  error:
+  application/vnd.account:
+    description: A tenant account (default view)
+    example:
+      created_at: 2015-09-23T11:51:57-07:00
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
+    properties:
+      created_at:
+        description: Date of creation
+        example: 2015-09-23T11:51:57-07:00
+        format: date-time
+        type: string
+      created_by:
+        description: Email of account owner
+        example: me@goa.design
+        format: email
+        type: string
+      href:
+        description: API href of account
+        example: /accounts/1
+        type: string
+      id:
+        description: ID of account
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: Name of account
+        example: test
+        type: string
+    required:
+    - id
+    - href
+    - name
+    - created_at
+    - created_by
+    title: 'Mediatype identifier: application/vnd.account+json'
+    type: object
+  application/vnd.account; type=collection:
+    description: AccountCollection is the media type for an array of Account (default
+      view)
+    example:
+    - created_at: 2015-09-23T11:51:57-07:00
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
+    items:
+      $ref: '#/definitions/Account'
+    title: 'Mediatype identifier: application/vnd.account+json; type=collection'
+    type: array
+  application/vnd.account; view=default:
+    description: A tenant account (default view)
+    example:
+      created_at: 2015-09-23T11:51:57-07:00
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
+    properties:
+      created_at:
+        description: Date of creation
+        example: 2015-09-23T11:51:57-07:00
+        format: date-time
+        type: string
+      created_by:
+        description: Email of account owner
+        example: me@goa.design
+        format: email
+        type: string
+      href:
+        description: API href of account
+        example: /accounts/1
+        type: string
+      id:
+        description: ID of account
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: Name of account
+        example: test
+        type: string
+    required:
+    - id
+    - href
+    - name
+    - created_at
+    - created_by
+    title: 'Mediatype identifier: application/vnd.account+json; view=default'
+    type: object
+  application/vnd.account; view=link:
+    description: A tenant account (link view)
+    example:
+      href: /accounts/1
+      id: 1
+    properties:
+      href:
+        description: API href of account
+        example: /accounts/1
+        type: string
+      id:
+        description: ID of account
+        example: 1
+        format: int64
+        type: integer
+    required:
+    - id
+    - href
+    title: 'Mediatype identifier: application/vnd.account+json; view=link'
+    type: object
+  application/vnd.account; view=tiny:
+    description: A tenant account (tiny view)
+    example:
+      href: /accounts/1
+      id: 1
+      name: test
+    properties:
+      href:
+        description: API href of account
+        example: /accounts/1
+        type: string
+      id:
+        description: ID of account
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: Name of account
+        example: test
+        type: string
+    required:
+    - id
+    - href
+    - name
+    title: 'Mediatype identifier: application/vnd.account+json; view=tiny'
+    type: object
+  application/vnd.bottle:
+    description: A bottle of wine (default view)
+    example:
+      account:
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
+      name: Number 8
+      rating: 3
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    properties:
+      account:
+        $ref: '#/definitions/AccountTiny'
+      href:
+        description: API href of bottle
+        example: /accounts/1/bottles/1
+        type: string
+      id:
+        description: ID of bottle
+        example: 1
+        format: int64
+        type: integer
+      links:
+        $ref: '#/definitions/BottleLinks'
+      name:
+        example: Number 8
+        minLength: 2
+        type: string
+      rating:
+        description: Rating of bottle between 1 and 5
+        example: 3
+        maximum: 5
+        minimum: 1
+        type: integer
+      varietal:
+        example: Merlot
+        minLength: 4
+        type: string
+      vineyard:
+        example: Asti
+        minLength: 2
+        type: string
+      vintage:
+        example: 2012
+        maximum: 2020
+        minimum: 1900
+        type: integer
+    required:
+    - id
+    - href
+    - name
+    - vineyard
+    - varietal
+    - vintage
+    title: 'Mediatype identifier: application/vnd.bottle+json'
+    type: object
+  application/vnd.bottle; type=collection:
+    description: BottleCollection is the media type for an array of Bottle (default
+      view)
+    example:
+    - account:
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
+      name: Number 8
+      rating: 3
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    - account:
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
+      name: Number 8
+      rating: 3
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    - account:
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
+      name: Number 8
+      rating: 3
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    items:
+      $ref: '#/definitions/Bottle'
+    title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
+    type: array
+  application/vnd.bottle; view=default:
+    description: A bottle of wine (default view)
+    example:
+      account:
+        created_at: 2015-09-23T11:51:57-07:00
+        created_by: me@goa.design
+        href: /accounts/1
+        id: 1
+        name: test
+      href: /accounts/1/bottles/1
+      id: 1
+      links:
+        account:
+          href: /accounts/1
+          id: 1
+      name: Number 8
+      rating: 3
+      varietal: Merlot
+      vineyard: Asti
+      vintage: 2012
+    properties:
+      account:
+        $ref: '#/definitions/AccountTiny'
+      href:
+        description: API href of bottle
+        example: /accounts/1/bottles/1
+        type: string
+      id:
+        description: ID of bottle
+        example: 1
+        format: int64
+        type: integer
+      links:
+        $ref: '#/definitions/BottleLinks'
+      name:
+        example: Number 8
+        minLength: 2
+        type: string
+      rating:
+        description: Rating of bottle between 1 and 5
+        example: 3
+        maximum: 5
+        minimum: 1
+        type: integer
+      varietal:
+        example: Merlot
+        minLength: 4
+        type: string
+      vineyard:
+        example: Asti
+        minLength: 2
+        type: string
+      vintage:
+        example: 2012
+        maximum: 2020
+        minimum: 1900
+        type: integer
+    required:
+    - id
+    - href
+    - name
+    - vineyard
+    - varietal
+    - vintage
+    title: 'Mediatype identifier: application/vnd.bottle+json; view=default'
+    type: object
+  application/vnd.goa.error:
     description: Error response media type (default view)
     example:
       code: invalid_value
@@ -590,7 +696,8 @@ paths:
         name: accountID
         required: true
         type: integer
-      - description: Filter by years
+      - collectionFormat: multi
+        description: Filter by years
         in: query
         items:
           type: integer

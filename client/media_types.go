@@ -568,10 +568,8 @@ type BottleLinksArray []*BottleLinks
 // Validate validates the BottleLinksArray type instance.
 func (ut BottleLinksArray) Validate() (err error) {
 	for _, e := range ut {
-		if e.Account != nil {
-			if err2 := e.Account.Validate(); err2 != nil {
-				err = goa.MergeErrors(err, err2)
-			}
+		if err2 := e.Validate(); err2 != nil {
+			err = goa.MergeErrors(err, err2)
 		}
 	}
 	return
