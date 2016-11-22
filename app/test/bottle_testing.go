@@ -55,9 +55,6 @@ func CreateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 400 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
 		return nil, e
 	}
 
@@ -134,9 +131,7 @@ func CreateBottleCreated(t goatest.TInterface, ctx context.Context, service *goa
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 201 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -205,9 +200,7 @@ func CreateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 404 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -782,9 +775,6 @@ func RateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 400 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
 		return nil, e
 	}
 
@@ -862,9 +852,7 @@ func RateBottleNoContent(t goatest.TInterface, ctx context.Context, service *goa
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 204 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -934,9 +922,7 @@ func RateBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 404 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -1340,9 +1326,6 @@ func UpdateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 400 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
 		return nil, e
 	}
 
@@ -1420,9 +1403,7 @@ func UpdateBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 204 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -1492,9 +1473,7 @@ func UpdateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 404 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 

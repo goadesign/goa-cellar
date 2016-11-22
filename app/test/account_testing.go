@@ -55,9 +55,6 @@ func CreateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 400 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
 		return nil, e
 	}
 
@@ -133,9 +130,7 @@ func CreateAccountCreated(t goatest.TInterface, ctx context.Context, service *go
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 201 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -915,9 +910,6 @@ func UpdateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 400 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
 		return nil, e
 	}
 
@@ -994,9 +986,7 @@ func UpdateAccountNoContent(t goatest.TInterface, ctx context.Context, service *
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 204 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
@@ -1065,9 +1055,7 @@ func UpdateAccountNotFound(t goatest.TInterface, ctx context.Context, service *g
 		if !ok {
 			panic(err) // bug
 		}
-		if e.ResponseStatus() != 404 {
-			t.Errorf("unexpected payload validation error: %+v", e)
-		}
+		t.Errorf("unexpected payload validation error: %+v", e)
 		return nil
 	}
 
