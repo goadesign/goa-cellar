@@ -55,7 +55,7 @@ definitions:
       name: test
     items:
       $ref: '#/definitions/Account'
-    title: 'Mediatype identifier: application/vnd.account+json; type=collection'
+    title: 'Mediatype identifier: application/vnd.account+json; type=collection; view=default'
     type: array
   AccountLink:
     description: A tenant account (link view)
@@ -218,7 +218,7 @@ definitions:
       vintage: 2012
     items:
       $ref: '#/definitions/Bottle'
-    title: 'Mediatype identifier: application/vnd.bottle+json; type=collection'
+    title: 'Mediatype identifier: application/vnd.bottle+json; type=collection; view=default'
     type: array
   BottleLinks:
     description: BottleLinks contains links to related resources of Bottle.
@@ -424,7 +424,7 @@ definitions:
           a string value.
         example: "400"
         type: string
-    title: 'Mediatype identifier: application/vnd.goa.error'
+    title: 'Mediatype identifier: application/vnd.goa.error; view=default'
     type: object
 externalDocs:
   description: goa guide
@@ -582,8 +582,7 @@ paths:
         name: accountID
         required: true
         type: integer
-      - collectionFormat: multi
-        description: Filter by years
+      - description: Filter by years
         in: query
         items:
           type: integer

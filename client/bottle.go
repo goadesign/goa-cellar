@@ -251,5 +251,10 @@ func (c *Client) WatchBottle(ctx context.Context, path string) (*websocket.Conn,
 		scheme = "ws"
 	}
 	u := url.URL{Host: c.Host, Scheme: scheme, Path: path}
-	return websocket.Dial(u.String(), "", u.String())
+	url_ := u.String()
+	cfg, err := websocket.NewConfig(url_, url_)
+	if err != nil {
+		return nil, err
+	}
+	return websocket.DialConfig(cfg)
 }
