@@ -582,7 +582,8 @@ paths:
         name: accountID
         required: true
         type: integer
-      - description: Filter by years
+      - collectionFormat: multi
+        description: Filter by years
         in: query
         items:
           type: integer
