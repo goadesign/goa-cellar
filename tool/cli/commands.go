@@ -153,7 +153,7 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 Payload example:
 
 {
-   "name": "test"
+   "name": "Ratione debitis."
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -169,12 +169,12 @@ Payload example:
 Payload example:
 
 {
-   "color": "white",
+   "color": "sparkling",
    "country": "USA",
    "name": "Number 8",
    "region": "Napa Valley",
    "review": "Great and inexpensive",
-   "sweetness": 1,
+   "sweetness": 4,
    "varietal": "Merlot",
    "vineyard": "Asti",
    "vintage": 2012
@@ -258,7 +258,7 @@ Payload example:
 Payload example:
 
 {
-   "rating": 3
+   "rating": 8279792463320557696
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp8.Run(c, args) },
 	}
@@ -302,7 +302,7 @@ Payload example:
 Payload example:
 
 {
-   "name": "test"
+   "name": "Sapiente expedita sit laboriosam placeat ducimus doloribus."
 }`,
 		RunE: func(cmd *cobra.Command, args []string) error { return tmp11.Run(c, args) },
 	}
@@ -318,12 +318,12 @@ Payload example:
 Payload example:
 
 {
-   "color": "white",
+   "color": "sparkling",
    "country": "USA",
    "name": "Number 8",
    "region": "Napa Valley",
    "review": "Great and inexpensive",
-   "sweetness": 1,
+   "sweetness": 4,
    "varietal": "Merlot",
    "vineyard": "Asti",
    "vintage": 2012

@@ -61,9 +61,9 @@ func CreateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
 	}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("POST", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -71,27 +71,27 @@ func CreateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	createCtx, err := app.NewCreateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	createCtx, __err := app.NewCreateBottleContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	createCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Create(createCtx)
+	__err = ctrl.Create(createCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of error", resp)
 		}
 	}
@@ -138,9 +138,9 @@ func CreateBottleCreated(t goatest.TInterface, ctx context.Context, service *goa
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
 	}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("POST", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -148,18 +148,18 @@ func CreateBottleCreated(t goatest.TInterface, ctx context.Context, service *goa
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	createCtx, err := app.NewCreateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	createCtx, __err := app.NewCreateBottleContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	createCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Create(createCtx)
+	__err = ctrl.Create(createCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 201 {
 		t.Errorf("invalid response status code: got %+v, expected 201", rw.Code)
@@ -207,9 +207,9 @@ func CreateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v/bottles", accountID),
 	}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("POST", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -217,18 +217,18 @@ func CreateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	createCtx, err := app.NewCreateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	createCtx, __err := app.NewCreateBottleContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	createCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Create(createCtx)
+	__err = ctrl.Create(createCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -276,17 +276,17 @@ func DeleteBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	deleteCtx, err := app.NewDeleteBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	deleteCtx, _err := app.NewDeleteBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Delete(deleteCtx)
+	_err = ctrl.Delete(deleteCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
@@ -342,17 +342,17 @@ func DeleteBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	deleteCtx, err := app.NewDeleteBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	deleteCtx, _err := app.NewDeleteBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Delete(deleteCtx)
+	_err = ctrl.Delete(deleteCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 204 {
 		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
@@ -400,17 +400,17 @@ func DeleteBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	deleteCtx, err := app.NewDeleteBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	deleteCtx, _err := app.NewDeleteBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Delete(deleteCtx)
+	_err = ctrl.Delete(deleteCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -473,17 +473,17 @@ func ListBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	listCtx, err := app.NewListBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
@@ -554,17 +554,17 @@ func ListBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	listCtx, err := app.NewListBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -627,17 +627,17 @@ func ListBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	listCtx, err := app.NewListBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -649,9 +649,9 @@ func ListBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.BottleCollection", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -712,17 +712,17 @@ func ListBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	listCtx, err := app.NewListBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -734,9 +734,9 @@ func ListBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.BottleTinyCollection", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -766,16 +766,6 @@ func RateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		service.Encoder.Register(newEncoder, "*/*")
 	}
 
-	// Validate payload
-	err := payload.Validate()
-	if err != nil {
-		e, ok := err.(goa.ServiceError)
-		if !ok {
-			panic(err) // bug
-		}
-		return nil, e
-	}
-
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
@@ -792,18 +782,18 @@ func RateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	rateCtx, _err := app.NewRateBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 	rateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Rate(rateCtx)
+	_err = ctrl.Rate(rateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
@@ -843,17 +833,6 @@ func RateBottleNoContent(t goatest.TInterface, ctx context.Context, service *goa
 		service.Encoder.Register(newEncoder, "*/*")
 	}
 
-	// Validate payload
-	err := payload.Validate()
-	if err != nil {
-		e, ok := err.(goa.ServiceError)
-		if !ok {
-			panic(err) // bug
-		}
-		t.Errorf("unexpected payload validation error: %+v", e)
-		return nil
-	}
-
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
@@ -870,18 +849,18 @@ func RateBottleNoContent(t goatest.TInterface, ctx context.Context, service *goa
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	rateCtx, _err := app.NewRateBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 	rateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Rate(rateCtx)
+	_err = ctrl.Rate(rateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 204 {
 		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
@@ -913,17 +892,6 @@ func RateBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		service.Encoder.Register(newEncoder, "*/*")
 	}
 
-	// Validate payload
-	err := payload.Validate()
-	if err != nil {
-		e, ok := err.(goa.ServiceError)
-		if !ok {
-			panic(err) // bug
-		}
-		t.Errorf("unexpected payload validation error: %+v", e)
-		return nil
-	}
-
 	// Setup request context
 	rw := httptest.NewRecorder()
 	u := &url.URL{
@@ -940,18 +908,18 @@ func RateBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	rateCtx, err := app.NewRateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	rateCtx, _err := app.NewRateBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 	rateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Rate(rateCtx)
+	_err = ctrl.Rate(rateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -999,17 +967,17 @@ func ShowBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	showCtx, err := app.NewShowBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
@@ -1065,17 +1033,17 @@ func ShowBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	showCtx, err := app.NewShowBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -1123,17 +1091,17 @@ func ShowBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	showCtx, err := app.NewShowBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -1145,9 +1113,9 @@ func ShowBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.Bottle", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -1193,17 +1161,17 @@ func ShowBottleOKFull(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	showCtx, err := app.NewShowBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -1215,9 +1183,9 @@ func ShowBottleOKFull(t goatest.TInterface, ctx context.Context, service *goa.Se
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.BottleFull", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -1263,17 +1231,17 @@ func ShowBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	showCtx, err := app.NewShowBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -1285,9 +1253,9 @@ func ShowBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.BottleTiny", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -1332,9 +1300,9 @@ func UpdateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
 	}
-	req, err := http.NewRequest("PATCH", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("PATCH", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -1343,27 +1311,27 @@ func UpdateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	updateCtx, __err := app.NewUpdateBottleContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	updateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Update(updateCtx)
+	__err = ctrl.Update(updateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of error", resp)
 		}
 	}
@@ -1410,9 +1378,9 @@ func UpdateBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
 	}
-	req, err := http.NewRequest("PATCH", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("PATCH", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -1421,18 +1389,18 @@ func UpdateBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	updateCtx, __err := app.NewUpdateBottleContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	updateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Update(updateCtx)
+	__err = ctrl.Update(updateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 204 {
 		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
@@ -1480,9 +1448,9 @@ func UpdateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v/bottles/%v", accountID, bottleID),
 	}
-	req, err := http.NewRequest("PATCH", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("PATCH", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -1491,18 +1459,18 @@ func UpdateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	updateCtx, err := app.NewUpdateBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	updateCtx, __err := app.NewUpdateBottleContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	updateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Update(updateCtx)
+	__err = ctrl.Update(updateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -1550,17 +1518,17 @@ func WatchBottleBadRequest(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
-	watchCtx, err := app.NewWatchBottleContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	watchCtx, _err := app.NewWatchBottleContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Watch(watchCtx)
+	_err = ctrl.Watch(watchCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)

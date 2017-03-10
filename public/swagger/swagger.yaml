@@ -233,12 +233,12 @@ definitions:
     type: object
   BottlePayload:
     example:
-      color: white
+      color: sparkling
       country: USA
       name: Number 8
       region: Napa Valley
       review: Great and inexpensive
-      sweetness: 1
+      sweetness: 4
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -250,7 +250,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: white
+        example: sparkling
         type: string
       country:
         example: USA
@@ -269,7 +269,7 @@ definitions:
         minLength: 3
         type: string
       sweetness:
-        example: 1
+        example: 4
         maximum: 5
         minimum: 1
         type: integer
@@ -290,11 +290,10 @@ definitions:
     type: object
   CreateAccountPayload:
     example:
-      name: test
+      name: Ratione debitis.
     properties:
       name:
-        description: Name of account
-        example: test
+        example: Ratione debitis.
         type: string
     required:
     - name
@@ -302,12 +301,12 @@ definitions:
     type: object
   CreateBottlePayload:
     example:
-      color: white
+      color: sparkling
       country: USA
       name: Number 8
       region: Napa Valley
       review: Great and inexpensive
-      sweetness: 1
+      sweetness: 4
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -319,7 +318,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: white
+        example: sparkling
         type: string
       country:
         example: USA
@@ -338,7 +337,7 @@ definitions:
         minLength: 3
         type: string
       sweetness:
-        example: 1
+        example: 4
         maximum: 5
         minimum: 1
         type: integer
@@ -365,13 +364,11 @@ definitions:
     type: object
   RateBottlePayload:
     example:
-      rating: 3
+      rating: 8.2797926e+18
     properties:
       rating:
-        description: Rating of bottle between 1 and 5
-        example: 3
-        maximum: 5
-        minimum: 1
+        example: 8.2797926e+18
+        format: int64
         type: integer
     required:
     - rating
@@ -379,11 +376,10 @@ definitions:
     type: object
   UpdateAccountPayload:
     example:
-      name: test
+      name: Sapiente expedita sit laboriosam placeat ducimus doloribus.
     properties:
       name:
-        description: Name of account
-        example: test
+        example: Sapiente expedita sit laboriosam placeat ducimus doloribus.
         type: string
     required:
     - name

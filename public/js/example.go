@@ -10,7 +10,9 @@
 
 package js
 
-import "github.com/goadesign/goa"
+import (
+	"github.com/goadesign/goa"
+)
 
 // MountController mounts the JavaScript example controller under "/js".
 // This is just an example, not the best way to do this. A better way would be to specify a file

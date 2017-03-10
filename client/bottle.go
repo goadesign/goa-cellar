@@ -144,7 +144,6 @@ func (c *Client) NewListBottleRequest(ctx context.Context, path string, years []
 
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
-	// Rating of bottle between 1 and 5
 	Rating int `form:"rating" json:"rating" xml:"rating"`
 }
 

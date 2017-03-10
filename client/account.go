@@ -21,7 +21,6 @@ import (
 
 // CreateAccountPayload is the account create action payload.
 type CreateAccountPayload struct {
-	// Name of account
 	Name string `form:"name" json:"name" xml:"name"`
 }
 
@@ -157,7 +156,6 @@ func (c *Client) NewShowAccountRequest(ctx context.Context, path string) (*http.
 
 // UpdateAccountPayload is the account update action payload.
 type UpdateAccountPayload struct {
-	// Name of account
 	Name string `form:"name" json:"name" xml:"name"`
 }
 

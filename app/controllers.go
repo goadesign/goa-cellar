@@ -55,7 +55,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewCreateAccountContext(ctx, service)
+		rctx, err := NewCreateAccountContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -77,7 +77,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewDeleteAccountContext(ctx, service)
+		rctx, err := NewDeleteAccountContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -93,7 +93,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListAccountContext(ctx, service)
+		rctx, err := NewListAccountContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -109,7 +109,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowAccountContext(ctx, service)
+		rctx, err := NewShowAccountContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -125,7 +125,7 @@ func MountAccountController(service *goa.Service, ctrl AccountController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewUpdateAccountContext(ctx, service)
+		rctx, err := NewUpdateAccountContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -225,7 +225,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewCreateBottleContext(ctx, service)
+		rctx, err := NewCreateBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -247,7 +247,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewDeleteBottleContext(ctx, service)
+		rctx, err := NewDeleteBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -263,7 +263,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewListBottleContext(ctx, service)
+		rctx, err := NewListBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -279,7 +279,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewRateBottleContext(ctx, service)
+		rctx, err := NewRateBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -301,7 +301,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewShowBottleContext(ctx, service)
+		rctx, err := NewShowBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -317,7 +317,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewUpdateBottleContext(ctx, service)
+		rctx, err := NewUpdateBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -339,7 +339,7 @@ func MountBottleController(service *goa.Service, ctrl BottleController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewWatchBottleContext(ctx, service)
+		rctx, err := NewWatchBottleContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
@@ -397,11 +397,6 @@ func unmarshalRateBottlePayload(ctx context.Context, service *goa.Service, req *
 	if err := service.DecodeRequest(req, payload); err != nil {
 		return err
 	}
-	if err := payload.Validate(); err != nil {
-		// Initialize payload with private data structure so it can be logged
-		goa.ContextRequest(ctx).Payload = payload
-		return err
-	}
 	goa.ContextRequest(ctx).Payload = payload.Publicize()
 	return nil
 }
@@ -439,7 +434,7 @@ func MountHealthController(service *goa.Service, ctrl HealthController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewHealthHealthContext(ctx, service)
+		rctx, err := NewHealthHealthContext(ctx, req, service)
 		if err != nil {
 			return err
 		}

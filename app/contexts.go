@@ -13,6 +13,7 @@ package app
 import (
 	"github.com/goadesign/goa"
 	"golang.org/x/net/context"
+	"net/http"
 	"strconv"
 	"unicode/utf8"
 )
@@ -27,18 +28,18 @@ type CreateAccountContext struct {
 
 // NewCreateAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller create action.
-func NewCreateAccountContext(ctx context.Context, service *goa.Service) (*CreateAccountContext, error) {
+func NewCreateAccountContext(ctx context.Context, r *http.Request, service *goa.Service) (*CreateAccountContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := CreateAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
 
 // createAccountPayload is the account create action payload.
 type createAccountPayload struct {
-	// Name of account
 	Name *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
 }
 
@@ -61,7 +62,6 @@ func (payload *createAccountPayload) Publicize() *CreateAccountPayload {
 
 // CreateAccountPayload is the account create action payload.
 type CreateAccountPayload struct {
-	// Name of account
 	Name string `form:"name" json:"name" xml:"name"`
 }
 
@@ -95,11 +95,12 @@ type DeleteAccountContext struct {
 
 // NewDeleteAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller delete action.
-func NewDeleteAccountContext(ctx context.Context, service *goa.Service) (*DeleteAccountContext, error) {
+func NewDeleteAccountContext(ctx context.Context, r *http.Request, service *goa.Service) (*DeleteAccountContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := DeleteAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -140,11 +141,12 @@ type ListAccountContext struct {
 
 // NewListAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller list action.
-func NewListAccountContext(ctx context.Context, service *goa.Service) (*ListAccountContext, error) {
+func NewListAccountContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListAccountContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
@@ -186,11 +188,12 @@ type ShowAccountContext struct {
 
 // NewShowAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller show action.
-func NewShowAccountContext(ctx context.Context, service *goa.Service) (*ShowAccountContext, error) {
+func NewShowAccountContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowAccountContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -248,11 +251,12 @@ type UpdateAccountContext struct {
 
 // NewUpdateAccountContext parses the incoming request URL and body, performs validations and creates the
 // context used by the account controller update action.
-func NewUpdateAccountContext(ctx context.Context, service *goa.Service) (*UpdateAccountContext, error) {
+func NewUpdateAccountContext(ctx context.Context, r *http.Request, service *goa.Service) (*UpdateAccountContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := UpdateAccountContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -268,7 +272,6 @@ func NewUpdateAccountContext(ctx context.Context, service *goa.Service) (*Update
 
 // updateAccountPayload is the account update action payload.
 type updateAccountPayload struct {
-	// Name of account
 	Name *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
 }
 
@@ -291,7 +294,6 @@ func (payload *updateAccountPayload) Publicize() *UpdateAccountPayload {
 
 // UpdateAccountPayload is the account update action payload.
 type UpdateAccountPayload struct {
-	// Name of account
 	Name string `form:"name" json:"name" xml:"name"`
 }
 
@@ -332,11 +334,12 @@ type CreateBottleContext struct {
 
 // NewCreateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller create action.
-func NewCreateBottleContext(ctx context.Context, service *goa.Service) (*CreateBottleContext, error) {
+func NewCreateBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*CreateBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := CreateBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -577,11 +580,12 @@ type DeleteBottleContext struct {
 
 // NewDeleteBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller delete action.
-func NewDeleteBottleContext(ctx context.Context, service *goa.Service) (*DeleteBottleContext, error) {
+func NewDeleteBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*DeleteBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := DeleteBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -636,11 +640,12 @@ type ListBottleContext struct {
 
 // NewListBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller list action.
-func NewListBottleContext(ctx context.Context, service *goa.Service) (*ListBottleContext, error) {
+func NewListBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*ListBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ListBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -711,11 +716,12 @@ type RateBottleContext struct {
 
 // NewRateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller rate action.
-func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottleContext, error) {
+func NewRateBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*RateBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := RateBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -743,7 +749,6 @@ func NewRateBottleContext(ctx context.Context, service *goa.Service) (*RateBottl
 
 // rateBottlePayload is the bottle rate action payload.
 type rateBottlePayload struct {
-	// Rating of bottle between 1 and 5
 	Rating *int `form:"rating,omitempty" json:"rating,omitempty" xml:"rating,omitempty"`
 }
 
@@ -751,16 +756,6 @@ type rateBottlePayload struct {
 func (payload *rateBottlePayload) Validate() (err error) {
 	if payload.Rating == nil {
 		err = goa.MergeErrors(err, goa.MissingAttributeError(`raw`, "rating"))
-	}
-	if payload.Rating != nil {
-		if *payload.Rating < 1 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, *payload.Rating, 1, true))
-		}
-	}
-	if payload.Rating != nil {
-		if *payload.Rating > 5 {
-			err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, *payload.Rating, 5, false))
-		}
 	}
 	return
 }
@@ -776,19 +771,7 @@ func (payload *rateBottlePayload) Publicize() *RateBottlePayload {
 
 // RateBottlePayload is the bottle rate action payload.
 type RateBottlePayload struct {
-	// Rating of bottle between 1 and 5
 	Rating int `form:"rating" json:"rating" xml:"rating"`
-}
-
-// Validate runs the validation rules defined in the design.
-func (payload *RateBottlePayload) Validate() (err error) {
-	if payload.Rating < 1 {
-		err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 1, true))
-	}
-	if payload.Rating > 5 {
-		err = goa.MergeErrors(err, goa.InvalidRangeError(`raw.rating`, payload.Rating, 5, false))
-	}
-	return
 }
 
 // NoContent sends a HTTP response with status code 204.
@@ -820,11 +803,12 @@ type ShowBottleContext struct {
 
 // NewShowBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller show action.
-func NewShowBottleContext(ctx context.Context, service *goa.Service) (*ShowBottleContext, error) {
+func NewShowBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*ShowBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := ShowBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -892,11 +876,12 @@ type UpdateBottleContext struct {
 
 // NewUpdateBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller update action.
-func NewUpdateBottleContext(ctx context.Context, service *goa.Service) (*UpdateBottleContext, error) {
+func NewUpdateBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*UpdateBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := UpdateBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -951,11 +936,12 @@ type WatchBottleContext struct {
 
 // NewWatchBottleContext parses the incoming request URL and body, performs validations and creates the
 // context used by the bottle controller watch action.
-func NewWatchBottleContext(ctx context.Context, service *goa.Service) (*WatchBottleContext, error) {
+func NewWatchBottleContext(ctx context.Context, r *http.Request, service *goa.Service) (*WatchBottleContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := WatchBottleContext{Context: ctx, ResponseData: resp, RequestData: req}
 	paramAccountID := req.Params["accountID"]
 	if len(paramAccountID) > 0 {
@@ -996,11 +982,12 @@ type HealthHealthContext struct {
 
 // NewHealthHealthContext parses the incoming request URL and body, performs validations and creates the
 // context used by the health controller health action.
-func NewHealthHealthContext(ctx context.Context, service *goa.Service) (*HealthHealthContext, error) {
+func NewHealthHealthContext(ctx context.Context, r *http.Request, service *goa.Service) (*HealthHealthContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
+	req.Request = r
 	rctx := HealthHealthContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }

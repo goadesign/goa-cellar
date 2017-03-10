@@ -61,36 +61,36 @@ func CreateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts"),
 	}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("POST", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	if ctx == nil {
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	createCtx, err := app.NewCreateAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	createCtx, __err := app.NewCreateAccountContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	createCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Create(createCtx)
+	__err = ctrl.Create(createCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of error", resp)
 		}
 	}
@@ -137,27 +137,27 @@ func CreateAccountCreated(t goatest.TInterface, ctx context.Context, service *go
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts"),
 	}
-	req, err := http.NewRequest("POST", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("POST", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	if ctx == nil {
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	createCtx, err := app.NewCreateAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	createCtx, __err := app.NewCreateAccountContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	createCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Create(createCtx)
+	__err = ctrl.Create(createCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 201 {
 		t.Errorf("invalid response status code: got %+v, expected 201", rw.Code)
@@ -204,17 +204,17 @@ func DeleteAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	deleteCtx, err := app.NewDeleteAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	deleteCtx, _err := app.NewDeleteAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Delete(deleteCtx)
+	_err = ctrl.Delete(deleteCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
@@ -269,17 +269,17 @@ func DeleteAccountNoContent(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	deleteCtx, err := app.NewDeleteAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	deleteCtx, _err := app.NewDeleteAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Delete(deleteCtx)
+	_err = ctrl.Delete(deleteCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 204 {
 		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
@@ -326,17 +326,17 @@ func DeleteAccountNotFound(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	deleteCtx, err := app.NewDeleteAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	deleteCtx, _err := app.NewDeleteAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Delete(deleteCtx)
+	_err = ctrl.Delete(deleteCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -382,17 +382,17 @@ func ListAccountOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	listCtx, err := app.NewListAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -404,9 +404,9 @@ func ListAccountOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.AccountCollection", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -450,17 +450,17 @@ func ListAccountOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	listCtx, err := app.NewListAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -472,9 +472,9 @@ func ListAccountOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.AccountLinkCollection", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -518,17 +518,17 @@ func ListAccountOKTiny(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	listCtx, err := app.NewListAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	listCtx, _err := app.NewListAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.List(listCtx)
+	_err = ctrl.List(listCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -540,9 +540,9 @@ func ListAccountOKTiny(t goatest.TInterface, ctx context.Context, service *goa.S
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.AccountTinyCollection", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -587,17 +587,17 @@ func ShowAccountBadRequest(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	showCtx, err := app.NewShowAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
@@ -652,17 +652,17 @@ func ShowAccountNotFound(t goatest.TInterface, ctx context.Context, service *goa
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	showCtx, err := app.NewShowAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)
@@ -709,17 +709,17 @@ func ShowAccountOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	showCtx, err := app.NewShowAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -731,9 +731,9 @@ func ShowAccountOK(t goatest.TInterface, ctx context.Context, service *goa.Servi
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.Account", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -778,17 +778,17 @@ func ShowAccountOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	showCtx, err := app.NewShowAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -800,9 +800,9 @@ func ShowAccountOKLink(t goatest.TInterface, ctx context.Context, service *goa.S
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.AccountLink", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -847,17 +847,17 @@ func ShowAccountOKTiny(t goatest.TInterface, ctx context.Context, service *goa.S
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	showCtx, err := app.NewShowAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	showCtx, _err := app.NewShowAccountContext(goaCtx, req, service)
+	if _err != nil {
+		panic("invalid test data " + _err.Error()) // bug
 	}
 
 	// Perform action
-	err = ctrl.Show(showCtx)
+	_err = ctrl.Show(showCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if _err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", _err, logBuf.String())
 	}
 	if rw.Code != 200 {
 		t.Errorf("invalid response status code: got %+v, expected 200", rw.Code)
@@ -869,9 +869,9 @@ func ShowAccountOKTiny(t goatest.TInterface, ctx context.Context, service *goa.S
 		if !ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of app.AccountTiny", resp)
 		}
-		err = mt.Validate()
-		if err != nil {
-			t.Errorf("invalid response media type: %s", err)
+		_err = mt.Validate()
+		if _err != nil {
+			t.Errorf("invalid response media type: %s", _err)
 		}
 	}
 
@@ -916,9 +916,9 @@ func UpdateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
 	}
-	req, err := http.NewRequest("PUT", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("PUT", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -926,27 +926,27 @@ func UpdateAccountBadRequest(t goatest.TInterface, ctx context.Context, service 
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	updateCtx, __err := app.NewUpdateAccountContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	updateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Update(updateCtx)
+	__err = ctrl.Update(updateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 400 {
 		t.Errorf("invalid response status code: got %+v, expected 400", rw.Code)
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got %+v, expected instance of error", resp)
 		}
 	}
@@ -993,9 +993,9 @@ func UpdateAccountNoContent(t goatest.TInterface, ctx context.Context, service *
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
 	}
-	req, err := http.NewRequest("PUT", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("PUT", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -1003,18 +1003,18 @@ func UpdateAccountNoContent(t goatest.TInterface, ctx context.Context, service *
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	updateCtx, __err := app.NewUpdateAccountContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	updateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Update(updateCtx)
+	__err = ctrl.Update(updateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 204 {
 		t.Errorf("invalid response status code: got %+v, expected 204", rw.Code)
@@ -1062,9 +1062,9 @@ func UpdateAccountNotFound(t goatest.TInterface, ctx context.Context, service *g
 	u := &url.URL{
 		Path: fmt.Sprintf("/cellar/accounts/%v", accountID),
 	}
-	req, err := http.NewRequest("PUT", u.String(), nil)
-	if err != nil {
-		panic("invalid test " + err.Error()) // bug
+	req, _err := http.NewRequest("PUT", u.String(), nil)
+	if _err != nil {
+		panic("invalid test " + _err.Error()) // bug
 	}
 	prms := url.Values{}
 	prms["accountID"] = []string{fmt.Sprintf("%v", accountID)}
@@ -1072,18 +1072,18 @@ func UpdateAccountNotFound(t goatest.TInterface, ctx context.Context, service *g
 		ctx = context.Background()
 	}
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "AccountTest"), rw, req, prms)
-	updateCtx, err := app.NewUpdateAccountContext(goaCtx, service)
-	if err != nil {
-		panic("invalid test data " + err.Error()) // bug
+	updateCtx, __err := app.NewUpdateAccountContext(goaCtx, req, service)
+	if __err != nil {
+		panic("invalid test data " + __err.Error()) // bug
 	}
 	updateCtx.Payload = payload
 
 	// Perform action
-	err = ctrl.Update(updateCtx)
+	__err = ctrl.Update(updateCtx)
 
 	// Validate response
-	if err != nil {
-		t.Fatalf("controller returned %s, logs:\n%s", err, logBuf.String())
+	if __err != nil {
+		t.Fatalf("controller returned %+v, logs:\n%s", __err, logBuf.String())
 	}
 	if rw.Code != 404 {
 		t.Errorf("invalid response status code: got %+v, expected 404", rw.Code)

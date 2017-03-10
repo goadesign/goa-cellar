@@ -160,7 +160,7 @@ var _ = Resource("bottle", func() {
 			Param("bottleID", Integer)
 		})
 		Payload(func() {
-			Member("rating")
+			Member("rating", Integer)
 			Required("rating")
 		})
 		Response(NoContent)
