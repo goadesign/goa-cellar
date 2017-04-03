@@ -442,6 +442,8 @@ paths:
     get:
       description: Perform health check.
       operationId: health#health
+      produces:
+      - text/plain
       responses:
         "200":
           description: OK
@@ -454,6 +456,8 @@ paths:
     get:
       description: Retrieve all accounts.
       operationId: account#list
+      produces:
+      - application/vnd.account+json; type=collection
       responses:
         "200":
           description: OK
@@ -473,6 +477,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/CreateAccountPayload'
+      produces:
+      - application/vnd.goa.error
       responses:
         "201":
           description: Resource created
@@ -499,6 +505,8 @@ paths:
         name: accountID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
       responses:
         "204":
           description: No Content
@@ -523,6 +531,9 @@ paths:
         name: accountID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.account+json
       responses:
         "200":
           description: OK
@@ -553,6 +564,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/UpdateAccountPayload'
+      produces:
+      - application/vnd.goa.error
       responses:
         "204":
           description: No Content
@@ -586,6 +599,9 @@ paths:
         name: years
         required: false
         type: array
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.bottle+json; type=collection
       responses:
         "200":
           description: OK
@@ -617,6 +633,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/CreateBottlePayload'
+      produces:
+      - application/vnd.goa.error
       responses:
         "201":
           description: Resource created
@@ -650,6 +668,8 @@ paths:
         name: bottleID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
       responses:
         "204":
           description: No Content
@@ -678,6 +698,9 @@ paths:
         name: bottleID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
+      - application/vnd.bottle+json
       responses:
         "200":
           description: OK
@@ -712,6 +735,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/BottlePayload'
+      produces:
+      - application/vnd.goa.error
       responses:
         "204":
           description: No Content
@@ -745,6 +770,8 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/RateBottlePayload'
+      produces:
+      - application/vnd.goa.error
       responses:
         "204":
           description: No Content
@@ -774,6 +801,8 @@ paths:
         name: bottleID
         required: true
         type: integer
+      produces:
+      - application/vnd.goa.error
       responses:
         "101":
           description: Switching Protocols
