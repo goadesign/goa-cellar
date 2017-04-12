@@ -12,11 +12,11 @@ package test
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
 	"github.com/goadesign/goa/goatest"
-	"golang.org/x/net/context"
 	"io"
 	"log"
 	"net/http"

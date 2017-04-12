@@ -11,8 +11,8 @@
 package app
 
 import (
+	"context"
 	"github.com/goadesign/goa"
-	"golang.org/x/net/context"
 	"net/http"
 	"strconv"
 	"unicode/utf8"

@@ -12,8 +12,8 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"fmt"
-	"golang.org/x/net/context"
 	"golang.org/x/net/websocket"
 	"net/http"
 	"net/url"
@@ -69,7 +69,9 @@ func (c *Client) NewCreateBottleRequest(ctx context.Context, path string, payloa
 		return nil, err
 	}
 	header := req.Header
-	if contentType != "*/*" {
+	if contentType == "*/*" {
+		header.Set("Content-Type", "application/json")
+	} else {
 		header.Set("Content-Type", contentType)
 	}
 	return req, nil
@@ -184,7 +186,9 @@ func (c *Client) NewRateBottleRequest(ctx context.Context, path string, payload 
 		return nil, err
 	}
 	header := req.Header
-	if contentType != "*/*" {
+	if contentType == "*/*" {
+		header.Set("Content-Type", "application/json")
+	} else {
 		header.Set("Content-Type", contentType)
 	}
 	return req, nil
@@ -258,7 +262,9 @@ func (c *Client) NewUpdateBottleRequest(ctx context.Context, path string, payloa
 		return nil, err
 	}
 	header := req.Header
-	if contentType != "*/*" {
+	if contentType == "*/*" {
+		header.Set("Content-Type", "application/json")
+	} else {
 		header.Set("Content-Type", contentType)
 	}
 	return req, nil

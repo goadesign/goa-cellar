@@ -11,8 +11,8 @@
 package client
 
 import (
+	"context"
 	"fmt"
-	"golang.org/x/net/context"
 	"net/http"
 	"net/url"
 )

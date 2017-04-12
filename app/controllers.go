@@ -11,9 +11,9 @@
 package app
 
 import (
+	"context"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/cors"
-	"golang.org/x/net/context"
 	"net/http"
 )
 

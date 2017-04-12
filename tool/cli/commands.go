@@ -11,6 +11,7 @@
 package cli
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa"
@@ -18,7 +19,6 @@ import (
 	goaclient "github.com/goadesign/goa/client"
 	uuid "github.com/goadesign/goa/uuid"
 	"github.com/spf13/cobra"
-	"golang.org/x/net/context"
 	"log"
 	"os"
 	"path"

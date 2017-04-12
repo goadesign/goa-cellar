@@ -12,8 +12,8 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"fmt"
-	"golang.org/x/net/context"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -59,7 +59,9 @@ func (c *Client) NewCreateAccountRequest(ctx context.Context, path string, paylo
 		return nil, err
 	}
 	header := req.Header
-	if contentType != "*/*" {
+	if contentType == "*/*" {
+		header.Set("Content-Type", "application/json")
+	} else {
 		header.Set("Content-Type", contentType)
 	}
 	return req, nil
@@ -195,7 +197,9 @@ func (c *Client) NewUpdateAccountRequest(ctx context.Context, path string, paylo
 		return nil, err
 	}
 	header := req.Header
-	if contentType != "*/*" {
+	if contentType == "*/*" {
+		header.Set("Content-Type", "application/json")
+	} else {
 		header.Set("Content-Type", contentType)
 	}
 	return req, nil
