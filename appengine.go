@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"google.golang.org/appengine"
+
 	"github.com/go-kit/kit/log"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
@@ -20,7 +22,7 @@ const (
 	bucketName = "artifacts.cellar.goa.design"
 )
 
-func init() {
+func main() {
 	// Configure logging for appengine
 	w := log.NewSyncWriter(os.Stderr)
 	logger := log.NewLogfmtLogger(w)
@@ -59,5 +61,6 @@ func init() {
 	app.MountSwaggerController(service, sc)
 
 	// Setup HTTP handler
-	http.HandleFunc("/", service.Mux.ServeHTTP)
+	http.Handle("/", service.Mux)
+	appengine.Main()
 }
