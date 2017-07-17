@@ -7,7 +7,7 @@ type PublicController struct {
 	*goa.Controller
 }
 
-// NewPublicController creates a public controller.
+// NewPublic creates a public controller.
 func NewPublic(service *goa.Service) *PublicController {
 	return &PublicController{Controller: service.NewController("PublicController")}
 }
