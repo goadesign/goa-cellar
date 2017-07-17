@@ -30,7 +30,7 @@ func TestListAccount(t *testing.T) {
 	for k, tc := range cases {
 		db.Reset()
 		for i := 0; i < tc.NumAccounts; i++ {
-			createAccount(db, i)
+			createAccount(db)
 		}
 
 		// Call generated test helper, this checks that the returned media type is of the
@@ -79,7 +79,7 @@ func TestShowAccount(t *testing.T) {
 
 	for k, tc := range cases {
 		db.Reset()
-		a := createAccount(db, 0)
+		a := createAccount(db)
 		a.CreatedAt = tc.CreatedAt
 		a.CreatedBy = tc.CreatedBy
 		db.SaveAccount(*a)
@@ -121,7 +121,7 @@ func TestDeleteAccount(t *testing.T) {
 	)
 
 	db.Reset()
-	createAccount(db, 0)
+	createAccount(db)
 
 	// Call generated test helper, this checks that the returned media type is of the
 	// correct type (i.e. uses view "default") and validates the media type.
@@ -188,7 +188,7 @@ func TestUpdateAccount(t *testing.T) {
 
 	for k, tc := range cases {
 		db.Reset()
-		a := createAccount(db, 0)
+		a := createAccount(db)
 		payload := &app.UpdateAccountPayload{Name: tc.Name}
 		test.UpdateAccountNoContent(t, ctx, service, ctrl, a.ID, payload)
 		account, ok := db.GetAccount(1)

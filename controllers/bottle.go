@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"io"
+	"time"
 
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa-cellar/app"
@@ -13,7 +14,7 @@ import (
 // ToBottleMedia converts a bottle model into a bottle media type
 func ToBottleMedia(a *store.AccountModel, b *store.BottleModel) *app.Bottle {
 	account := ToAccountMediaTiny(a)
-	link := ToAccountLink(a)
+	link := ToAccountLink(a.ID)
 	return &app.Bottle{
 		Account:  account,
 		Href:     app.BottleHref(b.AccountID, b.ID),
@@ -24,6 +25,19 @@ func ToBottleMedia(a *store.AccountModel, b *store.BottleModel) *app.Bottle {
 		Varietal: b.Varietal,
 		Vineyard: b.Vineyard,
 		Vintage:  b.Vintage,
+	}
+}
+
+// ToBottleMediaTiny builds an bottle media type with tiny view from an bottle model.
+func ToBottleMediaTiny(bottle *store.BottleModel) *app.BottleTiny {
+	link := ToAccountLink(bottle.AccountID)
+
+	return &app.BottleTiny{
+		ID:     bottle.ID,
+		Href:   app.BottleHref(bottle.AccountID, bottle.ID),
+		Links:  &app.BottleLinks{Account: link},
+		Name:   bottle.Name,
+		Rating: bottle.Rating,
 	}
 }
 
@@ -53,7 +67,7 @@ func (b *BottleController) List(ctx *app.ListBottleContext) error {
 	if err != nil {
 		return ctx.NotFound()
 	}
-	bs := make([]*app.Bottle, len(bottles))
+	bs := make(app.BottleCollection, len(bottles))
 	for i, bt := range bottles {
 		a, ok := b.db.GetAccount(bt.AccountID)
 		if !ok {
@@ -70,7 +84,7 @@ func (b *BottleController) Show(ctx *app.ShowBottleContext) error {
 	if !ok {
 		return ctx.NotFound()
 	}
-	bottle, ok := b.db.GetBottle(ctx.AccountID, ctx.BottleID)
+	bottle, ok := b.db.GetBottle(account.ID, ctx.BottleID)
 	if !ok {
 		return ctx.NotFound()
 	}
@@ -83,7 +97,7 @@ func (b *BottleController) Watch(ctx *app.WatchBottleContext) error {
 	return nil
 }
 
-// Echo the data received on the WebSocket.
+// Watcher echos the data received on the WebSocket.
 func Watcher(accountID, bottleID int) websocket.Handler {
 	return func(ws *websocket.Conn) {
 		watched := fmt.Sprintf("Account: %d, Bottle: %d", accountID, bottleID)
@@ -102,6 +116,8 @@ func (b *BottleController) Create(ctx *app.CreateBottleContext) error {
 	bottle.Name = payload.Name
 	bottle.Vintage = payload.Vintage
 	bottle.Vineyard = payload.Vineyard
+	bottle.CreatedAt = time.Now()
+	bottle.UpdatedAt = bottle.CreatedAt
 	if payload.Varietal != "" {
 		bottle.Varietal = payload.Varietal
 	}
@@ -159,6 +175,8 @@ func (b *BottleController) Update(ctx *app.UpdateBottleContext) error {
 	if payload.Review != nil {
 		bottle.Review = payload.Review
 	}
+	bottle.UpdatedAt = time.Now()
+
 	b.db.SaveBottle(bottle)
 	return ctx.NoContent()
 }
@@ -180,6 +198,7 @@ func (b *BottleController) Rate(ctx *app.RateBottleContext) error {
 		return ctx.NotFound()
 	}
 	bottle.Rating = &ctx.Payload.Rating
+	bottle.UpdatedAt = time.Now()
 	b.db.SaveBottle(bottle)
 	return ctx.NoContent()
 }

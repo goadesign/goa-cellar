@@ -43,7 +43,7 @@ type BottleModel struct {
 	Region    *string
 	Review    *string
 	Sweetness *int
-	UpdatedAt *time.Time
+	UpdatedAt time.Time
 	Varietal  string
 	Vineyard  string
 	Vintage   int
@@ -132,7 +132,7 @@ func NewDB() *DB {
 				Kind:      "wine",
 				Vineyard:  "Wild Horse",
 				Varietal:  "Pinot Noir",
-				Vintage:   2012,
+				Vintage:   2010,
 				Color:     "red",
 				Sweetness: &one,
 				Country:   &usa,
@@ -250,16 +250,14 @@ func (db *DB) GetBottlesByYears(account int, years []int) ([]BottleModel, error)
 	}
 	var res []BottleModel
 	for _, b := range bottles {
-		selected := false
 		for _, y := range years {
 			if y == b.Vintage {
-				selected = true
-				break
+				goto selected
 			}
 		}
-		if selected {
-			res = append(res, *b)
-		}
+		continue
+	selected:
+		res = append(res, *b)
 	}
 	return res, nil
 }
@@ -273,18 +271,25 @@ func (db *DB) NewBottle(account int) (model BottleModel, err error) {
 	}
 	bottles, _ := db.bottles[account]
 	newID := 0
-	taken := true
-	for ; taken; newID++ {
-		taken = false
+	for {
+		// newID has to be incremented in the loop, not
+		// in the for statement, otherwise it gets
+		// incremented on break, we skip the first
+		// available new ID, and all new bottle IDs
+		// get the identical second available new ID
+		newID++
 		for _, b := range bottles {
 			if b.ID == newID {
-				taken = true
-				break
+				goto taken
 			}
 		}
+		break
+	taken:
+		continue
 	}
 	model = BottleModel{ID: newID, AccountID: account}
-	db.bottles[newID] = append(db.bottles[newID], &model)
+	model.CreatedAt = time.Now()
+	db.bottles[account] = append(db.bottles[account], &model)
 	return
 }
 
@@ -292,7 +297,18 @@ func (db *DB) NewBottle(account int) (model BottleModel, err error) {
 func (db *DB) SaveBottle(model BottleModel) {
 	db.Lock()
 	defer db.Unlock()
-	db.bottles[model.AccountID] = append(db.bottles[model.AccountID], &model)
+
+	bottles, found := db.bottles[model.AccountID]
+	if found {
+		for i := 0; i < len(bottles); i++ {
+			if bottles[i].ID == model.ID {
+				bottles[i] = &model
+				break
+			}
+		}
+	} else {
+		db.bottles[model.AccountID] = append(db.bottles[model.AccountID], &model)
+	}
 }
 
 // DeleteBottle deletes bottle from bottlesbase.

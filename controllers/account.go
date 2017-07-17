@@ -29,10 +29,10 @@ func ToAccountMediaTiny(account *store.AccountModel) *app.AccountTiny {
 }
 
 // ToAccountLink builds an account link from an account model.
-func ToAccountLink(account *store.AccountModel) *app.AccountLink {
+func ToAccountLink(accountID int) *app.AccountLink {
 	return &app.AccountLink{
-		ID:   account.ID,
-		Href: app.AccountHref(account.ID),
+		ID:   accountID,
+		Href: app.AccountHref(accountID),
 	}
 }
 
