@@ -61,9 +61,6 @@ func (b *BottleController) List(ctx *app.ListBottleContext) error {
 	var err error
 	if ctx.Years != nil {
 		bottles, err = b.db.GetBottlesByYears(ctx.AccountID, ctx.Years)
-		if err != nil {
-			return ctx.NotFound()
-		}
 	} else {
 		bottles, err = b.db.GetBottles(ctx.AccountID)
 	}
