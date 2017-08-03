@@ -53,6 +53,11 @@ definitions:
       href: /accounts/1
       id: 1
       name: test
+    - created_at: 2015-09-23T11:51:57-07:00
+      created_by: me@goa.design
+      href: /accounts/1
+      id: 1
+      name: test
     items:
       $ref: '#/definitions/Account'
     title: 'Mediatype identifier: application/vnd.account+json; type=collection; view=default'
@@ -201,21 +206,6 @@ definitions:
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
-    - account:
-        href: /accounts/1
-        id: 1
-        name: test
-      href: /accounts/1/bottles/1
-      id: 1
-      links:
-        account:
-          href: /accounts/1
-          id: 1
-      name: Number 8
-      rating: 3
-      varietal: Merlot
-      vineyard: Asti
-      vintage: 2012
     items:
       $ref: '#/definitions/Bottle'
     title: 'Mediatype identifier: application/vnd.bottle+json; type=collection; view=default'
@@ -233,12 +223,12 @@ definitions:
     type: object
   BottlePayload:
     example:
-      color: sparkling
+      color: white
       country: USA
       name: Number 8
       region: Napa Valley
       review: Great and inexpensive
-      sweetness: 4
+      sweetness: 1
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -250,7 +240,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: sparkling
+        example: white
         type: string
       country:
         example: USA
@@ -269,7 +259,7 @@ definitions:
         minLength: 3
         type: string
       sweetness:
-        example: 4
+        example: 1
         maximum: 5
         minimum: 1
         type: integer
@@ -290,10 +280,11 @@ definitions:
     type: object
   CreateAccountPayload:
     example:
-      name: Ratione debitis.
+      name: test
     properties:
       name:
-        example: Ratione debitis.
+        description: Name of account
+        example: test
         type: string
     required:
     - name
@@ -301,12 +292,12 @@ definitions:
     type: object
   CreateBottlePayload:
     example:
-      color: sparkling
+      color: white
       country: USA
       name: Number 8
       region: Napa Valley
       review: Great and inexpensive
-      sweetness: 4
+      sweetness: 1
       varietal: Merlot
       vineyard: Asti
       vintage: 2012
@@ -318,7 +309,7 @@ definitions:
         - rose
         - yellow
         - sparkling
-        example: sparkling
+        example: white
         type: string
       country:
         example: USA
@@ -337,7 +328,7 @@ definitions:
         minLength: 3
         type: string
       sweetness:
-        example: 4
+        example: 1
         maximum: 5
         minimum: 1
         type: integer
@@ -364,11 +355,13 @@ definitions:
     type: object
   RateBottlePayload:
     example:
-      rating: 8.2797926e+18
+      rating: 3
     properties:
       rating:
-        example: 8.2797926e+18
-        format: int64
+        description: Rating of bottle between 1 and 5
+        example: 3
+        maximum: 5
+        minimum: 1
         type: integer
     required:
     - rating
@@ -376,10 +369,11 @@ definitions:
     type: object
   UpdateAccountPayload:
     example:
-      name: Sapiente expedita sit laboriosam placeat ducimus doloribus.
+      name: test
     properties:
       name:
-        example: Sapiente expedita sit laboriosam placeat ducimus doloribus.
+        description: Name of account
+        example: test
         type: string
     required:
     - name
@@ -591,8 +585,7 @@ paths:
         name: accountID
         required: true
         type: integer
-      - collectionFormat: multi
-        description: Filter by years
+      - description: Filter by years
         in: query
         items:
           type: integer

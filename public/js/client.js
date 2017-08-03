@@ -26,7 +26,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.createAccount = function (path, data, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'post',
@@ -46,7 +46,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.createBottle = function (path, data, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'post',
@@ -65,7 +65,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.deleteAccount = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'delete',
@@ -83,7 +83,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.deleteBottle = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'delete',
@@ -101,7 +101,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.healthHealth = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'get',
@@ -119,7 +119,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.listAccount = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'get',
@@ -138,7 +138,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.listBottle = function (path, years, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'get',
@@ -160,7 +160,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.rateBottle = function (path, data, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'put',
@@ -179,7 +179,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.showAccount = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'get',
@@ -197,7 +197,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.showBottle = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'get',
@@ -216,7 +216,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.updateAccount = function (path, data, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'put',
@@ -236,7 +236,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.updateBottle = function (path, data, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'patch',
@@ -255,7 +255,7 @@ define(['axios'] , function (axios) {
   // The content of the config object is described here: https://github.com/mzabriskie/axios#request-api
   // This function returns a promise which raises an error if the HTTP response is a 4xx or 5xx.
   client.watchBottle = function (path, config) {
-    cfg = {
+    var cfg = {
       timeout: timeout,
       url: urlPrefix + path,
       method: 'get',
