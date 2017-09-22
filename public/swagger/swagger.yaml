@@ -7,7 +7,7 @@ definitions:
   Account:
     description: A tenant account (default view)
     example:
-      created_at: 2015-09-23T11:51:57-07:00
+      created_at: 2015-09-23T18:51:57Z
       created_by: me@goa.design
       href: /accounts/1
       id: 1
@@ -15,7 +15,7 @@ definitions:
     properties:
       created_at:
         description: Date of creation
-        example: 2015-09-23T11:51:57-07:00
+        example: 2015-09-23T18:51:57Z
         format: date-time
         type: string
       created_by:
@@ -48,12 +48,12 @@ definitions:
     description: AccountCollection is the media type for an array of Account (default
       view)
     example:
-    - created_at: 2015-09-23T11:51:57-07:00
+    - created_at: 2015-09-23T18:51:57Z
       created_by: me@goa.design
       href: /accounts/1
       id: 1
       name: test
-    - created_at: 2015-09-23T11:51:57-07:00
+    - created_at: 2015-09-23T18:51:57Z
       created_by: me@goa.design
       href: /accounts/1
       id: 1
@@ -526,8 +526,8 @@ paths:
         required: true
         type: integer
       produces:
-      - application/vnd.goa.error
       - application/vnd.account+json
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -585,7 +585,8 @@ paths:
         name: accountID
         required: true
         type: integer
-      - description: Filter by years
+      - collectionFormat: multi
+        description: Filter by years
         in: query
         items:
           type: integer
@@ -593,8 +594,8 @@ paths:
         required: false
         type: array
       produces:
-      - application/vnd.goa.error
       - application/vnd.bottle+json; type=collection
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK
@@ -692,8 +693,8 @@ paths:
         required: true
         type: integer
       produces:
-      - application/vnd.goa.error
       - application/vnd.bottle+json
+      - application/vnd.goa.error
       responses:
         "200":
           description: OK

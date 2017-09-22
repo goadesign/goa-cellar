@@ -17,7 +17,7 @@ DEPEND=	bitbucket.org/pkg/inflect \
 	github.com/goadesign/goa \
 	github.com/goadesign/goa/goagen \
 	github.com/goadesign/goa/logging/logrus \
-	github.com/Sirupsen/logrus \
+	github.com/sirupsen/logrus \
 	gopkg.in/yaml.v2 \
 	golang.org/x/tools/cmd/goimports
 
