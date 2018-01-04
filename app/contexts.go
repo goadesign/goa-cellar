@@ -83,7 +83,9 @@ func (ctx *CreateAccountContext) Created() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *CreateAccountContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -124,7 +126,9 @@ func (ctx *DeleteAccountContext) NoContent() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *DeleteAccountContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -155,7 +159,9 @@ func NewListAccountContext(ctx context.Context, r *http.Request, service *goa.Se
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OK(r AccountCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	}
 	if r == nil {
 		r = AccountCollection{}
 	}
@@ -164,7 +170,9 @@ func (ctx *ListAccountContext) OK(r AccountCollection) error {
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKLink(r AccountLinkCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	}
 	if r == nil {
 		r = AccountLinkCollection{}
 	}
@@ -173,7 +181,9 @@ func (ctx *ListAccountContext) OKLink(r AccountLinkCollection) error {
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListAccountContext) OKTiny(r AccountTinyCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json; type=collection")
+	}
 	if r == nil {
 		r = AccountTinyCollection{}
 	}
@@ -214,25 +224,33 @@ func NewShowAccountContext(ctx context.Context, r *http.Request, service *goa.Se
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OK(r *Account) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKLink sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OKLink(r *AccountLink) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowAccountContext) OKTiny(r *AccountTiny) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.account+json")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *ShowAccountContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -317,7 +335,9 @@ func (ctx *UpdateAccountContext) NoContent() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *UpdateAccountContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -563,7 +583,9 @@ func (ctx *CreateBottleContext) Created() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *CreateBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -623,7 +645,9 @@ func (ctx *DeleteBottleContext) NoContent() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *DeleteBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -680,7 +704,9 @@ func NewListBottleContext(ctx context.Context, r *http.Request, service *goa.Ser
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OK(r BottleCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	}
 	if r == nil {
 		r = BottleCollection{}
 	}
@@ -689,7 +715,9 @@ func (ctx *ListBottleContext) OK(r BottleCollection) error {
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json; type=collection")
+	}
 	if r == nil {
 		r = BottleTinyCollection{}
 	}
@@ -698,7 +726,9 @@ func (ctx *ListBottleContext) OKTiny(r BottleTinyCollection) error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *ListBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -809,7 +839,9 @@ func (ctx *RateBottleContext) NoContent() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *RateBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -863,25 +895,33 @@ func NewShowBottleContext(ctx context.Context, r *http.Request, service *goa.Ser
 
 // OK sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OK(r *Bottle) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKFull sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKFull(r *BottleFull) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // OKTiny sends a HTTP response with status code 200.
 func (ctx *ShowBottleContext) OKTiny(r *BottleTiny) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.bottle+json")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 200, r)
 }
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *ShowBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -942,7 +982,9 @@ func (ctx *UpdateBottleContext) NoContent() error {
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *UpdateBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -996,7 +1038,9 @@ func NewWatchBottleContext(ctx context.Context, r *http.Request, service *goa.Se
 
 // BadRequest sends a HTTP response with status code 400.
 func (ctx *WatchBottleContext) BadRequest(r error) error {
-	ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "application/vnd.goa.error")
+	}
 	return ctx.ResponseData.Service.Send(ctx.Context, 400, r)
 }
 
@@ -1021,7 +1065,9 @@ func NewHealthHealthContext(ctx context.Context, r *http.Request, service *goa.S
 
 // OK sends a HTTP response with status code 200.
 func (ctx *HealthHealthContext) OK(resp []byte) error {
-	ctx.ResponseData.Header().Set("Content-Type", "text/plain")
+	if ctx.ResponseData.Header().Get("Content-Type") == "" {
+		ctx.ResponseData.Header().Set("Content-Type", "text/plain")
+	}
 	ctx.ResponseData.WriteHeader(200)
 	_, err := ctx.ResponseData.Write(resp)
 	return err

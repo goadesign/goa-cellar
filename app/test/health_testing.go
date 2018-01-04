@@ -62,7 +62,12 @@ func HealthHealthOK(t goatest.TInterface, ctx context.Context, service *goa.Serv
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "HealthTest"), rw, req, prms)
 	healthCtx, _err := app.NewHealthHealthContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil
 	}
 
 	// Perform action

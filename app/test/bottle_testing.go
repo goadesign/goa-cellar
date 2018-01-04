@@ -73,7 +73,11 @@ func CreateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	createCtx, __err := app.NewCreateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		return nil, _e
 	}
 	createCtx.Payload = payload
 
@@ -89,9 +93,9 @@ func CreateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	}
 	var mt error
 	if resp != nil {
-		var _ok bool
-		mt, _ok = resp.(error)
-		if !_ok {
+		var __ok bool
+		mt, __ok = resp.(error)
+		if !__ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}
@@ -150,7 +154,12 @@ func CreateBottleCreated(t goatest.TInterface, ctx context.Context, service *goa
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	createCtx, __err := app.NewCreateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", _e)
+		return nil
 	}
 	createCtx.Payload = payload
 
@@ -219,7 +228,12 @@ func CreateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	createCtx, __err := app.NewCreateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", _e)
+		return nil
 	}
 	createCtx.Payload = payload
 
@@ -278,7 +292,11 @@ func DeleteBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	deleteCtx, _err := app.NewDeleteBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		return nil, e
 	}
 
 	// Perform action
@@ -293,9 +311,9 @@ func DeleteBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}
@@ -344,7 +362,12 @@ func DeleteBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	deleteCtx, _err := app.NewDeleteBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil
 	}
 
 	// Perform action
@@ -402,7 +425,12 @@ func DeleteBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	deleteCtx, _err := app.NewDeleteBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil
 	}
 
 	// Perform action
@@ -475,7 +503,11 @@ func ListBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		return nil, e
 	}
 
 	// Perform action
@@ -490,9 +522,9 @@ func ListBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}
@@ -556,7 +588,12 @@ func ListBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil
 	}
 
 	// Perform action
@@ -629,7 +666,12 @@ func ListBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil, nil
 	}
 
 	// Perform action
@@ -644,9 +686,9 @@ func ListBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	}
 	var mt app.BottleCollection
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(app.BottleCollection)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(app.BottleCollection)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.BottleCollection", resp, resp)
 		}
 		_err = mt.Validate()
@@ -714,7 +756,12 @@ func ListBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	listCtx, _err := app.NewListBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil, nil
 	}
 
 	// Perform action
@@ -729,9 +776,9 @@ func ListBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 	}
 	var mt app.BottleTinyCollection
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(app.BottleTinyCollection)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(app.BottleTinyCollection)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.BottleTinyCollection", resp, resp)
 		}
 		_err = mt.Validate()
@@ -794,7 +841,11 @@ func RateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, __err := app.NewRateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		return nil, _e
 	}
 	rateCtx.Payload = payload
 
@@ -810,9 +861,9 @@ func RateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	}
 	var mt error
 	if resp != nil {
-		var _ok bool
-		mt, _ok = resp.(error)
-		if !_ok {
+		var __ok bool
+		mt, __ok = resp.(error)
+		if !__ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}
@@ -872,7 +923,12 @@ func RateBottleNoContent(t goatest.TInterface, ctx context.Context, service *goa
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, __err := app.NewRateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", _e)
+		return nil
 	}
 	rateCtx.Payload = payload
 
@@ -942,7 +998,12 @@ func RateBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	rateCtx, __err := app.NewRateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", _e)
+		return nil
 	}
 	rateCtx.Payload = payload
 
@@ -1001,7 +1062,11 @@ func ShowBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		return nil, e
 	}
 
 	// Perform action
@@ -1016,9 +1081,9 @@ func ShowBottleBadRequest(t goatest.TInterface, ctx context.Context, service *go
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}
@@ -1067,7 +1132,12 @@ func ShowBottleNotFound(t goatest.TInterface, ctx context.Context, service *goa.
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil
 	}
 
 	// Perform action
@@ -1125,7 +1195,12 @@ func ShowBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil, nil
 	}
 
 	// Perform action
@@ -1140,9 +1215,9 @@ func ShowBottleOK(t goatest.TInterface, ctx context.Context, service *goa.Servic
 	}
 	var mt *app.Bottle
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(*app.Bottle)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(*app.Bottle)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.Bottle", resp, resp)
 		}
 		_err = mt.Validate()
@@ -1195,7 +1270,12 @@ func ShowBottleOKFull(t goatest.TInterface, ctx context.Context, service *goa.Se
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil, nil
 	}
 
 	// Perform action
@@ -1210,9 +1290,9 @@ func ShowBottleOKFull(t goatest.TInterface, ctx context.Context, service *goa.Se
 	}
 	var mt *app.BottleFull
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(*app.BottleFull)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(*app.BottleFull)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.BottleFull", resp, resp)
 		}
 		_err = mt.Validate()
@@ -1265,7 +1345,12 @@ func ShowBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	showCtx, _err := app.NewShowBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", e)
+		return nil, nil
 	}
 
 	// Perform action
@@ -1280,9 +1365,9 @@ func ShowBottleOKTiny(t goatest.TInterface, ctx context.Context, service *goa.Se
 	}
 	var mt *app.BottleTiny
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(*app.BottleTiny)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(*app.BottleTiny)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of app.BottleTiny", resp, resp)
 		}
 		_err = mt.Validate()
@@ -1345,7 +1430,11 @@ func UpdateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, __err := app.NewUpdateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		return nil, _e
 	}
 	updateCtx.Payload = payload
 
@@ -1361,9 +1450,9 @@ func UpdateBottleBadRequest(t goatest.TInterface, ctx context.Context, service *
 	}
 	var mt error
 	if resp != nil {
-		var _ok bool
-		mt, _ok = resp.(error)
-		if !_ok {
+		var __ok bool
+		mt, __ok = resp.(error)
+		if !__ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}
@@ -1423,7 +1512,12 @@ func UpdateBottleNoContent(t goatest.TInterface, ctx context.Context, service *g
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, __err := app.NewUpdateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", _e)
+		return nil
 	}
 	updateCtx.Payload = payload
 
@@ -1493,7 +1587,12 @@ func UpdateBottleNotFound(t goatest.TInterface, ctx context.Context, service *go
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	updateCtx, __err := app.NewUpdateBottleContext(goaCtx, req, service)
 	if __err != nil {
-		panic("invalid test data " + __err.Error()) // bug
+		_e, _ok := __err.(goa.ServiceError)
+		if !_ok {
+			panic("invalid test data " + __err.Error()) // bug
+		}
+		t.Errorf("unexpected parameter validation error: %+v", _e)
+		return nil
 	}
 	updateCtx.Payload = payload
 
@@ -1552,7 +1651,11 @@ func WatchBottleBadRequest(t goatest.TInterface, ctx context.Context, service *g
 	goaCtx := goa.NewContext(goa.WithAction(ctx, "BottleTest"), rw, req, prms)
 	watchCtx, _err := app.NewWatchBottleContext(goaCtx, req, service)
 	if _err != nil {
-		panic("invalid test data " + _err.Error()) // bug
+		e, ok := _err.(goa.ServiceError)
+		if !ok {
+			panic("invalid test data " + _err.Error()) // bug
+		}
+		return nil, e
 	}
 
 	// Perform action
@@ -1567,9 +1670,9 @@ func WatchBottleBadRequest(t goatest.TInterface, ctx context.Context, service *g
 	}
 	var mt error
 	if resp != nil {
-		var ok bool
-		mt, ok = resp.(error)
-		if !ok {
+		var _ok bool
+		mt, _ok = resp.(error)
+		if !_ok {
 			t.Fatalf("invalid response media: got variable of type %T, value %+v, expected instance of error", resp, resp)
 		}
 	}

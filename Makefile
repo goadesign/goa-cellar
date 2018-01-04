@@ -56,4 +56,4 @@ ae-build:
 
 ae-deploy: ae-build
 	cd $(HOME)/cellar
-	python2 appcfg.py update .
+	gcloud app deploy --project goa-cellar
